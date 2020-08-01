@@ -94,8 +94,3 @@ def sliding_window(a,ws,ss = None,flatten = True):
     # remove any dimensions with size 1
     dim = list(filter(lambda i : i != 1,dim))
     return strided.reshape(dim)
-
-ws = (200,31)
-ss = (25,31)
-a = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/L01_S07_R01.csv") 
-a=a.values
