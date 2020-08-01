@@ -72,7 +72,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
 
 
 
-def example_creating_windows_file(k):
+def example_creating_windows_file(k, data_x, labels):
         # Sliding window approach
 
     print("Starting sliding window")
