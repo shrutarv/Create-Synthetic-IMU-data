@@ -131,7 +131,7 @@ for i,j in zip(FileList_x, FileList_y):
     data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13/" + j) 
     data_y = data_y.values
     labels = data_y
-    data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14/" + i) 
+    data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13/" + i) 
     data_x = data_x.values
     data_x=data_x[:,1:31]
     example_creating_windows_file(k)
