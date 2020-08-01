@@ -3,7 +3,10 @@ import sys
 import numpy as np
 import os
 import pickle
-NUM_CLASSES = 6
+from sliding_window import sliding_window
+import glob
+
+NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -69,17 +72,16 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
 
 
 
-def example_creating_windows_file():
+def example_creating_windows_file(k):
         # Sliding window approach
 
     print("Starting sliding window")
     X, y, y_all = opp_sliding_window(data_x, labels.astype(int),
                                      sliding_window_length,
                                      sliding_window_step, label_pos_end = False)
-    counter_seq = 1
+    counter_seq = 0
     for f in range(X.shape[0]):
        # try:
-        
         sys.stdout.write('\r' + 'Creating sequence file '
                                 'number {} with id {}'.format(f, counter_seq))
         sys.stdout.flush()
@@ -87,19 +89,54 @@ def example_creating_windows_file():
         # print "Creating sequence file number {} with id {}".format(f, counter_seq)
         seq = np.reshape(X[f], newshape = (1, X.shape[1], X.shape[2]))
         seq = np.require(seq, dtype=np.float)
-
+        dir = data_dir + "seq_" + str(k) + "_" + str(counter_seq) + ".pkl"
         obj = {"data" : seq, "label" : y[f], "labels" : y_all[f]}
-        f = open(os.path.join(data_dir, 'seq_{0:06}.pkl'.format(counter_seq)), 'wb')
+        #f = open(os.path.join(dir, 'seq_{0:06}.pkl'.format(counter_seq)), 'wb')
+        f = open(dir, 'wb')
         pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
         counter_seq += 1
         f.close()
+ 
+    
+ws = (200,31)
+ss = (25,31)
+sliding_window_length = 200    
+sliding_window_step = 25
+data_dir =  "/data/sawasthi/data/testData"
+
+#for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+    
+#    print (np.shape(i[:,0]))
+FileList_y = []
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+FileList_y = glob.glob('*labels.csv')
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+List = glob.glob('*labels.csv')
+FileList_y = FileList_y + List
+        
+FileList_x = []
+#os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13')
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+FileList_x = glob.glob('*.csv')
+#os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+List = glob.glob('*.csv')
+FileList_x = FileList_x + List
+set_x = set(FileList_x)
+set_y = set(FileList_y)
+FileList_x = list(set_x - set_y)
+k = 0 
+for i,j in zip(FileList_x, FileList_y):
+    k += 1
+    data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13/" + j) 
+    data_y = data_y.values
+    labels = data_y
+    data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14/" + i) 
+    data_x = data_x.values
+    data_x=data_x[:,1:31]
+    example_creating_windows_file(k)
+    #if(k == 2):
+     #   break
     
 
-data_dir =  "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/"
-data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/L01_S07_R01_labels.csv") 
-data_y = data_y.values
-data_x = a
-data_x=data_x[:,1:31]
-for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
-    print (np.shape(i[:,0]))
