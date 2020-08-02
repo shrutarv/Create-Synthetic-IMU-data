@@ -110,7 +110,7 @@ data_dir =  "/data/sawasthi/data/testData/"
     
 #    print (np.shape(i[:,0]))
 FileList_y = []
-os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
 #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13')
 FileList_y = glob.glob('*labels.csv')
@@ -120,7 +120,7 @@ FileList_y = glob.glob('*labels.csv')
         
 FileList_x = []
 #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13')
-os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
 FileList_x = glob.glob('*.csv')
 #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
@@ -133,7 +133,7 @@ FileList_x = list(set_x - set_y)
 FileList_x.sort()
 FileList_y.sort()
 k = 0 
-folder_name = "P14"
+folder_name = "P13"
 for i,j in zip(FileList_x, FileList_y):
     k += 1
     data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + "/" + j) 
