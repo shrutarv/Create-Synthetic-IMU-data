@@ -17,12 +17,12 @@ if torch.cuda.is_available():
     if not cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
         
-def getTrainData():
+def getTrainData(path):
         
     all_datasets = []
     train_data = []
-    
-    path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    #path = '/data/sawasthi/data/trainData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #while folder_counter < 10:
         #some code to get path_to_imgs which is the location of the image folder
     train_dataset = CustomDataSet(path)
@@ -39,12 +39,12 @@ def getTrainData():
         
     return train_data
 
-def getTrainDataLabels():
+def getTrainDataLabels(path):
         
     all_datasets = []
     train_data = []
-    
-    path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    #path = '/data/sawasthi/data/testData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #while folder_counter < 10:
         #some code to get path_to_imgs which is the location of the image folder
     train_dataset = CustomDataSetTest(path)
@@ -73,7 +73,26 @@ def normalize(data,ws):
     data_new = torch.tensor(data_new)        
     return data_new
 
-def Training(train_x, train_y, noise):
+def Testing(test_x, test_y):
+    with torch.no_grad():
+        for i in range(len(test_x)):
+                
+            x = test_x[i]
+            y = test_y[i]
+            x = torch.tensor(x)
+            x = np.reshape(x,(30,200))
+            x = x.float()
+            out = model(x.unsqueeze(1).contiguous())
+            loss = criterion(out.view(-1, n_classes), y.view(-1))
+            pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+            correct = pred.eq(y.data.view_as(pred)).cpu().sum()
+            counter = out.view(-1, n_classes).size(0)
+            print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
+                loss.item(), 100. * correct / counter))
+        return loss.item()
+    
+
+def Training(train_x, train_y, noise, model_path):
         
     global batch_size, seq_len, iters, epochs
     model.train()
@@ -100,10 +119,11 @@ def Training(train_x, train_y, noise):
         if i % 50 == 49:    # print every 2000 mini-batches
             print(' loss: ', (total_loss / 50))
             total_loss = 0.0
+    torch.save(model.state_dict(), model_path)
     print('Finished Training')
     
 ws = 200
-#with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/seq_1_1.pkl', 'rb') as f:
+#with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/seq_S13_29_457.pkl', 'rb') as f:
  #   pk = pickle.load(f)
 #train = pk['data']
 #train = np.transpose(train)
@@ -144,26 +164,20 @@ print("model loaded")
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-
-def evaluate():
-    model.eval()
-    with torch.no_grad():
-        out = model(test_x.unsqueeze(1).contiguous())
-        loss = criterion(out.view(-1, n_classes), test_y.view(-1))
-        pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-        correct = pred.eq(test_y.data.view_as(pred)).cpu().sum()
-        counter = out.view(-1, n_classes).size(0)
-        print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
-            loss.item(), 100. * correct / counter))
-        return loss.item()
-
-train_x = getTrainData()
-train_y = getTrainDataLabels()
+model_path = '/data/sawasthi/data/model/'
+path = '/data/sawasthi/data/trainData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+train_x = getTrainData(path)
+train_y = getTrainDataLabels(path)
 train_y = torch.tensor(train_y)
 noise = np.random.normal(0,1,(30,200))
 noise = torch.tensor(noise)
 noise = noise.float()
-Training(train_x, train_y, noise)
-
+Training(train_x, train_y, noise, model_path)
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+path = '/data/sawasthi/data/testData/'
+test_x = getTrainData(path)
+test_y = getTrainDataLabels(path)
+Testing(test_x, test_y)
        
          
