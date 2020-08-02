@@ -150,7 +150,7 @@ dropout = 0.2
 model = TemporalConvNet(kernel_size, dropout)
 model = model.float()
 #model.load_state_dict(torch.load())
-print("model loaded")
+#print("model loaded")
 #model.cuda()
 #train_x = train_x.cuda()
 #train_y = train_y.cuda()
@@ -164,7 +164,7 @@ print("model loaded")
 
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
-model_path = '/data/sawasthi/data/model/'
+model_path = '/data/sawasthi/data/model/model.pth'
 path = '/data/sawasthi/data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path)
