@@ -72,7 +72,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
 
 
 
-def example_creating_windows_file(k, data_x, labels):
+def example_creating_windows_file(k, folder_name, data_x, labels):
         # Sliding window approach
 
     print("Starting sliding window")
@@ -89,7 +89,7 @@ def example_creating_windows_file(k, data_x, labels):
         # print "Creating sequence file number {} with id {}".format(f, counter_seq)
         seq = np.reshape(X[f], newshape = (1, X.shape[1], X.shape[2]))
         seq = np.require(seq, dtype=np.float)
-        dir = data_dir + "seq_" + str(k) + "_" + str(counter_seq) + ".pkl"
+        dir = data_dir + "seq_" + folder_name + "_" + str(k) + "_" + str(counter_seq) + ".pkl"
         obj = {"data" : seq, "label" : y[f], "labels" : y_all[f]}
         #f = open(os.path.join(dir, 'seq_{0:06}.pkl'.format(counter_seq)), 'wb')
         f = open(dir, 'wb')
@@ -133,19 +133,20 @@ FileList_x = list(set_x - set_y)
 FileList_x.sort()
 FileList_y.sort()
 k = 0 
+folder_name = "P14/"
 for i,j in zip(FileList_x, FileList_y):
     k += 1
-    data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14/" + j) 
+    data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + j) 
     #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
-    #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/" + j) 
+    #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" +folder_name + j) 
     data_y = data_y.values
     labels = data_y
-    data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14/" + i) 
+    data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + i) 
     #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
     #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/" + i)
     data_x = data_x.values
     data_x=data_x[:,1:31]
-    example_creating_windows_file(k, data_x, labels)
+    example_creating_windows_file(k, folder_name, data_x, labels)
     #if(k == 2):
      #   break
     
