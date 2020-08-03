@@ -189,8 +189,8 @@ model = model.float()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 model_path = '/data/sawasthi/data/model/model.pth'
-#path = '/data/sawasthi/data/trainData/'
-path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+path = '/data/sawasthi/data/trainData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path)
 train_y = getTrainDataLabels(path)
 train_y = torch.tensor(train_y)
@@ -198,8 +198,8 @@ noise = np.random.normal(0,1,(30,200))
 noise = torch.tensor(noise)
 noise = noise.float()
 Training(train_x, train_y, noise, model_path)
-path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-#path = '/data/sawasthi/data/testData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+path = '/data/sawasthi/data/testData/'
 test_x = getTrainData(path)
 test_y = getTrainDataLabels(path)
 Testing(test_x, test_y)
