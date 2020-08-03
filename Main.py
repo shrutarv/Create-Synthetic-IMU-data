@@ -10,6 +10,7 @@ import pickle
 from DataLoader import CustomDataSet, CustomDataSetTest
 from torch.utils.data import DataLoader
 from Temp_Block import TemporalConvNet
+from sklearn.metrics import confusion_matrix
 
 cuda = "True"
 torch.manual_seed(1111)
@@ -74,6 +75,8 @@ def normalize(data,ws):
     return data_new
 
 def Testing(test_x, test_y):
+    trueValue = []
+    prediction = []
     with torch.no_grad():
         for i in range(len(test_x)):
                 
@@ -83,14 +86,34 @@ def Testing(test_x, test_y):
             x = np.reshape(x,(30,200))
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
+            _,predicted = torch.max(out, 1)
             loss = criterion(out.view(-1, n_classes), y.view(-1))
             pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+            trueValue.append(y.tolist())
+            prediction.append(predicted.tolist())
             correct = pred.eq(y.data.view_as(pred)).cpu().sum()
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
                 loss.item(), 100. * correct / counter))
+        cm = confusion_matrix(trueValue, prediction)
+        precision, recall = performance_metrics(cm)
+        
         return loss.item()
     
+def performance_metrics(cm):
+    precision = []
+    recall = []
+    for i in range(len(cm)):
+        tp = cm[i,i]
+        fp = cm.sum(axis=0)[i] - cm[i,i]
+        fn = cm.sum(axis=1)[i] - cm[i,i]
+        precision.append(tp/(tp + fp))
+        recall.append(tp/(tp+fn))
+        print("Class",i," - precision", precision[i], "Recall",recall[i] )
+    
+    prec_avg = sum(precision)/len(precision)
+    rec_avg = sum(recall)/len(recall)
+    return precision, recall
 
 def Training(train_x, train_y, noise, model_path):
         
