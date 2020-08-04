@@ -91,6 +91,12 @@ def Testing(test_x, test_y):
             pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
             trueValue.append(y.tolist())
             prediction.append(predicted.tolist())
+            flat_list_pred = [item for sublist in prediction for item in sublist]
+            flat_list_true = [item for sublist in trueValue for item in sublist]
+            print("predicted list")
+            unique(flat_list_pred)
+            print("true list")
+            unique(flat_list_true)
             correct = pred.eq(y.data.view_as(pred)).cpu().sum()
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
@@ -101,6 +107,15 @@ def Testing(test_x, test_y):
         
         return loss.item()
     
+def unique(list1): 
+      
+    # insert the list to the set 
+    list_set = set(list1) 
+    # convert the set to the list 
+    unique_list = (list(list_set)) 
+    for x in unique_list: 
+        print(x)
+      
 def performance_metrics(cm):
     precision = []
     recall = []
@@ -143,7 +158,7 @@ def Training(train_x, train_y, noise, model_path):
         if i % 50 == 49:    # print every 2000 mini-batches
             print(' loss: ', (total_loss / 50))
             total_loss = 0.0
-    torch.save(model.state_dict(), model_path)
+    #torch.save(model.state_dict(), model_path)
     print('Finished Training')
     
 ws = 200
@@ -189,11 +204,12 @@ model = model.float()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 model_path = '/data/sawasthi/data/model/model.pth'
+#model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
 path = '/data/sawasthi/data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path)
 train_y = getTrainDataLabels(path)
-train_y = torch.tensor(train_y)
+#train_y = torch.tensor(train_y)
 noise = np.random.normal(0,1,(30,200))
 noise = torch.tensor(noise)
 noise = noise.float()
