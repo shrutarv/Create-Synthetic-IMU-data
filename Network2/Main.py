@@ -105,7 +105,9 @@ def Testing(test_x, test_y):
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
         precision, recall = performance_metrics(cm)
-        
+        precision, recall = get_precision_recall(trueValue, prediction)
+        print(precision)
+        print(recall)
         return loss.item()
     
 def unique(list1): 
@@ -116,7 +118,42 @@ def unique(list1):
     unique_list = (list(list_set)) 
     for x in unique_list: 
         print(x)
-      
+ 
+def get_precision_recall(targets, predictions):
+        precision = torch.zeros((8))
+        recall = torch.zeros((8))
+        predictions = torch.tensor(predictions)
+        targets = torch.tensor(targets)
+        x = torch.ones(predictions.size())
+        y = torch.zeros(predictions.size())
+
+        #x = x.to('cuda', dtype=torch.long)
+        #y = y.to('cuda', dtype=torch.long)
+
+        for c in range(8):
+            selected_elements = torch.where(predictions == c, x, y)
+            non_selected_elements = torch.where(predictions == c, y, x)
+
+            target_elements = torch.where(targets == c, x, y)
+            non_target_elements = torch.where(targets == c, y, x)
+
+            true_positives = torch.sum(target_elements * selected_elements)
+            false_positives = torch.sum(non_target_elements * selected_elements)
+
+            false_negatives = torch.sum(target_elements * non_selected_elements)
+
+            try:
+                precision[c] = true_positives.item() / float((true_positives + false_positives).item())
+                recall[c] = true_positives.item() / float((true_positives + false_negatives).item())
+
+            except:
+                # logging.error('        Network_User:    Train:    In Class {} true_positives {} false_positives {} false_negatives {}'.format(c, true_positives.item(),
+                #                                                                                                                              false_positives.item(),
+                #                                                                                                                              false_negatives.item()))
+                continue
+
+        return precision, recall
+        
 def performance_metrics(cm):
     precision = []
     recall = []
@@ -138,7 +175,7 @@ def Training(train_x, train_y, noise, model_path):
     model.train()
     total_loss = 0
     n_classes = 8
-    for i in range(len(train_x)):
+    for i in range(len(100)):
         x = train_x[i]
         x = normalize(x, ws)
         y = train_y[i]
