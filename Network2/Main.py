@@ -104,7 +104,7 @@ def Testing(test_x, test_y):
                 loss.item(), 100. * correct / counter))
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
-        precision, recall = performance_metrics(cm)
+        #precision, recall = performance_metrics(cm)
         precision, recall = get_precision_recall(trueValue, prediction)
         print(precision)
         print(recall)
