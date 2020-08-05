@@ -287,7 +287,7 @@ test_y = getTrainDataLabels(path)
 Testing(test_x, test_y, batch_size)
       
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-with open('/data/sawasthi/data/result.csv', 'w', newline='') as myfile:
+with open('/data/sawasthi/data/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(accuracy)
      wr.writerow(l)
