@@ -175,7 +175,7 @@ def Training(train_x, train_y, noise, model_path):
     model.train()
     total_loss = 0
     n_classes = 8
-    for i in range(len(100)):
+    for i in range(100):
         x = train_x[i]
         x = normalize(x, ws)
         y = train_y[i]
