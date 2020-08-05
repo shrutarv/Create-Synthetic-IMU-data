@@ -11,6 +11,8 @@ from DataLoader import CustomDataSet, CustomDataSetTest
 from torch.utils.data import DataLoader
 from Network import Network
 from sklearn.metrics import confusion_matrix
+import matplotlib.pyplot as plt
+import csv
 
 cuda = "True"
 torch.manual_seed(1111)
@@ -32,6 +34,7 @@ def getTrainData(path):
         
     final_dataset = torch.utils.data.ConcatDataset(all_datasets)
     train_loader = DataLoader(final_dataset, shuffle=False,
+                                      batch_size=3,
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
@@ -54,6 +57,7 @@ def getTrainDataLabels(path):
         
     final_dataset = torch.utils.data.ConcatDataset(all_datasets)
     train_loader = DataLoader(final_dataset, shuffle=False,
+                                      batch_size=3,
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
@@ -63,41 +67,53 @@ def getTrainDataLabels(path):
     return train_data
 
 def normalize(data,ws):
-    data_new = np.reshape(data,(200,30))
-    data_new = data_new.cpu().detach().numpy()
-    for i in range(data_new.shape[1]):
-        max = np.max(data_new[:,i])
-        min = np.min(data_new[:,i])
-        for j in range(ws-1):
-            data_new[j,i] = (data_new[j,i] - min)/(max - min)
-            
-    data_new = torch.tensor(data_new)        
-    return data_new
+    for k in range(len(data)):
+        list1 = []
+        temp = torch.tensor(list1)
+        data_new = data[k]    
+        data_new = torch.reshape(data_new,(200,30))
+        data_new = data_new.cpu().detach().numpy()
+        for i in range(data_new.shape[1]):
+            max = np.max(data_new[:,i])
+            min = np.min(data_new[:,i])
+            for j in range(ws-1):
+                data_new[j,i] = (data_new[j,i] - min)/(max - min)
+        data_new = np.reshape(data_new,(1,200,30))
+        data_new = torch.tensor(data_new).float()
+        temp = torch.cat((temp, data_new), 0)
+        #data_new = torch.tensor(data_new)        
+        return data_new
 
-def Testing(test_x, test_y):
+def Testing(test_x, test_y, batch_size):
+    i = 0
+    batch_size = 3
+    model.train()
+    total_loss = 0
+    n_classes = 8
     trueValue = []
     prediction = []
-    n_classes = 8
     with torch.no_grad():
-        for i in range(len(test_x)):
+        for batch  in range(0,len(train_x),batch_size):
                 
             x = test_x[i]
             y = test_y[i]
             x = torch.tensor(x)
-            x = np.reshape(x,(1,200,30))
+            x = np.reshape(x,(3,200,30))
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
             _,predicted = torch.max(out, 1)
             loss = criterion(out.view(-1, n_classes), y.view(-1))
             pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-            trueValue.append(y.tolist())
-            prediction.append(predicted.tolist())
-            flat_list_pred = [item for sublist in prediction for item in sublist]
-            flat_list_true = [item for sublist in trueValue for item in sublist]
-            print("predicted list")
-            unique(flat_list_pred)
-            print("true list")
-            unique(flat_list_true)
+            for m in range(len(y)):
+                
+                trueValue.append(y.tolist()[m])
+                prediction.append(predicted.tolist()[m])
+            #flat_list_pred = [item for sublist in prediction for item in sublist]
+            #flat_list_true = [item for sublist in trueValue for item in sublist]
+            #print("predicted list")
+            #unique(flat_list_pred)
+           # print("true list")
+            #unique(flat_list_true)
             correct = pred.eq(y.data.view_as(pred)).cpu().sum()
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
@@ -169,36 +185,42 @@ def performance_metrics(cm):
     rec_avg = sum(recall)/len(recall)
     return precision, recall
 
-def Training(train_x, train_y, noise, model_path):
-        
-    global batch_size, seq_len, iters, epochs
+def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
+    counter = 0        
+    i = 0
+    correct = 0
     model.train()
-    total_loss = 0
+    #total_loss = 0
     n_classes = 8
-    for i in range(100):
+    for batch  in range(50):#0,len(train_x)):
+        #start_ind = batch
+        #end_ind = start_ind + batch_size
         x = train_x[i]
-        x = normalize(x, ws)
         y = train_y[i]
+        
+        x = normalize(x, ws)
         
         optimizer.zero_grad()
         x = x.float()
         x = x + noise
-        x = np.reshape(x,(1,200,30))
+        x = np.reshape(x,(3,200,30))
         out = model(x.unsqueeze(1).contiguous())
         #out = model(x)
         loss = criterion(out.view(-1, n_classes), y.view(-1))
-        #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-        #correct += pred.eq(y.data.view_as(pred)).cpu().sum()
-        #counter += out.view(-1, n_classes).size(0)
+        pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+        correct += pred.eq(y.data.view_as(pred)).cpu().sum().item()
+        counter += out.view(-1, n_classes).size(0)
         
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
-        if i % 50 == 49:    # print every 2000 mini-batches
-            print(' loss: ', (total_loss / 50))
-            total_loss = 0.0
+        #if i % 50 == 49:    # print every 2000 mini-batches
+        #    print(' loss: ', (total_loss / 50))
+         #   total_loss = 0.0
+        i +=1
     #torch.save(model.state_dict(), model_path)
     print('Finished Training')
+    return total_loss/batch, 100.*correct/counter
 
 config = {
     "NB_sensor_channels":30,
@@ -224,8 +246,8 @@ model = model.float()
 #criterion = nn.CrossEntropyLoss()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
-
-
+epochs = 5
+batch_size = 3
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 model_path = '/data/sawasthi/data/model/model.pth'
@@ -235,14 +257,35 @@ path = '/data/sawasthi/data/trainData/'
 train_x = getTrainData(path)
 train_y = getTrainDataLabels(path)
 #train_y = torch.tensor(train_y)
-noise = np.random.normal(0,1,(200,30))
+noise = np.random.normal(0,1,(batch_size,200,30))
 noise = torch.tensor(noise)
 noise = noise.float()
-Training(train_x, train_y, noise, model_path)
+l = []
+tot_loss = 0
+temp = []
+accuracy = []
+for i in range(epochs):
+    lo, acc = Training(train_x, train_y, noise, model_path, batch_size, tot_loss)
+    l.append(lo)
+    accuracy.append(acc)
+ep = list(range(1,epochs+1))   
+plt.subplot(1,2,1)
+plt.title('epoch vs loss')
+plt.plot(ep,l)
+plt.subplot(1,2,2)
+plt.title('epoch vs accuracy')
+plt.plot(ep,accuracy)
+plt.savefig('/data/sawasthi/data/result.png') 
+#plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
 path = '/data/sawasthi/data/testData/'
 test_x = getTrainData(path)
 test_y = getTrainDataLabels(path)
-Testing(test_x, test_y)
-       
+Testing(test_x, test_y, batch_size)
+      
+#with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+with open('/data/sawasthi/data/result.csv', 'w', newline='') as myfile:
+     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+     wr.writerow(accuracy)
+     wr.writerow(l)
          
