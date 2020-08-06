@@ -47,7 +47,7 @@ class CustomDataSetTest(Dataset):
         return len(self.all_files)
 
     def __getitem__(self, idx):
-        print(idx)
+        #print(idx)
         file = os.path.join(self.main_dir, self.all_files[idx])
         f = open(file,'rb')
         #image = Image.open(img_loc).convert("RGB")
