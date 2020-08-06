@@ -195,7 +195,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
     model.train()
     #total_loss = 0
     n_classes = 8
-    for batch  in range(50):#0,len(train_x)):
+    for batch  in range(0,len(train_x)):
         #start_ind = batch
         #end_ind = start_ind + batch_size
         x = train_x[i]
