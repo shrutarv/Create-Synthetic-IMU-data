@@ -222,7 +222,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
             total_loss = 0.0
         i +=1
     #torch.save(model.state_dict(), model_path)
-    print('Finished Training')
+    
     return total_loss/batch, 100.*correct/counter
 
 config = {
@@ -267,10 +267,12 @@ l = []
 tot_loss = 0
 temp = []
 accuracy = []
+print('Start Training')
 for i in range(epochs):
     lo, acc = Training(train_x, train_y, noise, model_path, batch_size, tot_loss)
     l.append(lo)
     accuracy.append(acc)
+print('Finished Training')
 ep = list(range(1,epochs+1))   
 plt.subplot(1,2,1)
 plt.title('epoch vs loss')
@@ -284,8 +286,9 @@ plt.savefig('/data/sawasthi/data/result.png')
 path = '/data/sawasthi/data/testData/'
 test_x = getTrainData(path)
 test_y = getTrainDataLabels(path)
+print('Start Testing')
 Testing(test_x, test_y, batch_size)
-      
+print('Finished Testing')
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
 with open('/data/sawasthi/data/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
