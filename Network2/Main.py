@@ -253,6 +253,7 @@ epochs = 100
 batch_size = 3
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+print('getting train and test data')
 model_path = '/data/sawasthi/data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
 path = '/data/sawasthi/data/trainData/'
