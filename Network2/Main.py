@@ -250,7 +250,7 @@ model = model.float()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 epochs = 100
-batch_size = 3
+batch_size = 32
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 print('getting train and test data')
