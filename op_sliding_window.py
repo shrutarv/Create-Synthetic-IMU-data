@@ -160,8 +160,8 @@ for i,j in zip(FileList_x, FileList_y):
     data_x=data_x[:,1:31]
     data_x = normalize(data_x)
     example_creating_windows_file(k, folder_name, data_x, labels)
-    if(k == 2):
-        break
+    #if(k == 2):
+     #   break
     
 
     
