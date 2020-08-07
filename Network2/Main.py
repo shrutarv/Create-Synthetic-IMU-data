@@ -89,7 +89,7 @@ def normalize(data,ws):
 
 def Testing(test_x, test_y, batch_size):
     i = 0
-    batch_size = 3
+    
     model.train()
     total_loss = 0
     n_classes = 8
@@ -235,7 +235,7 @@ config = {
     "num_classes":8,
     "reshape_input":False
     }
-ws=200
+ws=100
 model = Network(config)
 model = model.float()
 #model.load_state_dict(torch.load())
@@ -249,10 +249,10 @@ model = model.float()
 #criterion = nn.CrossEntropyLoss()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
-epochs = 100
-batch_size = 32
+epochs = 2
+batch_size = 200
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
 model_path = '/data/sawasthi/data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
@@ -260,6 +260,11 @@ path = '/data/sawasthi/data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path, batch_size)
 train_y = getTrainDataLabels(path, batch_size)
+path = '/data/sawasthi/data/testData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+
+test_x = getTrainData(path, batch_size)
+test_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
 noise = np.random.normal(0,1,(batch_size,200,30))
 noise = torch.tensor(noise)
@@ -283,10 +288,7 @@ plt.title('epoch vs accuracy')
 plt.plot(ep,accuracy)
 plt.savefig('/data/sawasthi/data/result.png') 
 #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-path = '/data/sawasthi/data/testData/'
-test_x = getTrainData(path)
-test_y = getTrainDataLabels(path)
+
 print('Start Testing')
 Testing(test_x, test_y, batch_size)
 print('Finished Testing')
