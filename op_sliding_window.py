@@ -119,9 +119,10 @@ data_dir =  "/data/sawasthi/data/MoCAP_data/testData/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 
 #    print (np.shape(i[:,0]))
-folder_name = "S13"
+folder_name = "P13"
 FileList_y = []
-os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/P06" + folder_name)
+os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+#os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/P06/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
 #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
 FileList_y = glob.glob('*labels.csv')
