@@ -23,7 +23,7 @@ if torch.cuda.is_available():
     if not cuda:
         print("WARNING: You have a CUDA device, so you should probably run with --cuda")
         
-def getTrainData(path):
+def getTrainData(path,batch_size):
         
     all_datasets = []
     train_data = []
@@ -37,7 +37,7 @@ def getTrainData(path):
         
     final_dataset = torch.utils.data.ConcatDataset(all_datasets)
     train_loader = DataLoader(final_dataset, shuffle=False,
-                                      batch_size=3,
+                                      batch_size=batch_size,
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
@@ -46,7 +46,7 @@ def getTrainData(path):
         
     return train_data
 
-def getTrainDataLabels(path):
+def getTrainDataLabels(path,batch_size):
         
     all_datasets = []
     train_data = []
@@ -60,7 +60,7 @@ def getTrainDataLabels(path):
         
     final_dataset = torch.utils.data.ConcatDataset(all_datasets)
     train_loader = DataLoader(final_dataset, shuffle=False,
-                                      batch_size=3,
+                                      batch_size=batch_size,
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
@@ -252,14 +252,14 @@ model = model.float()
 epochs = 100
 batch_size = 32
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
+optimizer = optim.Adam(model.parameters(), lr=0.001, momentum=0.9)
 print('getting train and test data')
 model_path = '/data/sawasthi/data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
 path = '/data/sawasthi/data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-train_x = getTrainData(path)
-train_y = getTrainDataLabels(path)
+train_x = getTrainData(path, batch_size)
+train_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
 noise = np.random.normal(0,1,(batch_size,200,30))
 noise = torch.tensor(noise)
