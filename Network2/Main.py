@@ -105,7 +105,7 @@ def Testing(test_x, test_y, batch_size):
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
             _,predicted = torch.max(out, 1)
-            loss = criterion(out.view(-1, n_classes), y.view(-1))
+            loss1 = criterion(out.view(-1, n_classes), y.view(-1))
             pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
             for m in range(len(y)):
                 
@@ -120,7 +120,7 @@ def Testing(test_x, test_y, batch_size):
             correct = pred.eq(y.data.view_as(pred)).cpu().sum()
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
-                loss.item(), 100. * correct / counter))
+                loss1.item(), 100. * correct / counter))
             index += 1
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
@@ -128,7 +128,7 @@ def Testing(test_x, test_y, batch_size):
         precision, recall = get_precision_recall(trueValue, prediction)
         print(precision)
         print(recall)
-        return loss.item()
+        return loss1.item()
     
 def unique(list1): 
       
