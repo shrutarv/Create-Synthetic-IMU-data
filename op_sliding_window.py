@@ -86,7 +86,13 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
     print(y.shape)
     print(y_all.shape)
     counter_seq = 0
-    for f in range(X.shape[0]):
+    value = 0
+    if (X.shape[0]<y.shape[0]):
+        value = X.shape[0]
+    else:
+        value = y.shape[0]
+   # for f in range(X.shape[0]):
+    for f in range(value):
        # try:
         sys.stdout.write('\r' + 'Creating sequence file '
                                 'number {} with id {}'.format(f, counter_seq))
