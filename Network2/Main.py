@@ -90,8 +90,7 @@ def normalize(data,ws):
 
 def Testing(test_x, test_y, batch_size):
     index = 0
-    
-    loss = 0
+    global loss
     n_classes = 8
     trueValue = []
     prediction = []
