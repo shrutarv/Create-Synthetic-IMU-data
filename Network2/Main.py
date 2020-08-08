@@ -202,12 +202,10 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         x = train_x[i]
         y = train_y[i]
         
-        x = normalize(x, ws)
-        
         optimizer.zero_grad()
         x = x.float()
         x = x + noise
-        x = np.reshape(x,(3,200,30))
+        x = np.reshape(x,(batch_size,ws,features))
         out = model(x.unsqueeze(1).contiguous())
         #out = model(x)
         loss = criterion(out.view(-1, n_classes), y.view(-1))
@@ -228,7 +226,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
 
 config = {
     "NB_sensor_channels":30,
-    "sliding_window_length":200,
+    "sliding_window_length":100,
     "filter_size":5,
     "num_filters":64,
     "network":"cnn",
@@ -237,6 +235,7 @@ config = {
     "reshape_input":False
     }
 ws=100
+features = 30
 model = Network(config)
 model = model.float()
 #model.load_state_dict(torch.load())
@@ -271,7 +270,7 @@ path = '/data/sawasthi/data/testData/'
 test_x = getTrainData(path, batch_size)
 test_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
-noise = np.random.normal(0,1,(batch_size,200,30))
+noise = np.random.normal(0,1,(batch_size,ws,features))
 noise = torch.tensor(noise)
 noise = noise.float()
 l = []
