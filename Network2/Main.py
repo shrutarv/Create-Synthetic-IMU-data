@@ -91,8 +91,7 @@ def normalize(data,ws):
 def Testing(test_x, test_y, batch_size):
     i = 0
     
-    model.train()
-    total_loss = 0
+    
     n_classes = 8
     trueValue = []
     prediction = []
@@ -102,7 +101,7 @@ def Testing(test_x, test_y, batch_size):
             x = test_x[i]
             y = test_y[i]
             x = torch.tensor(x)
-            x = np.reshape(x,(3,200,30))
+            x = np.reshape(x,(batch_size,ws,features))
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
             _,predicted = torch.max(out, 1)
