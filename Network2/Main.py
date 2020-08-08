@@ -97,7 +97,7 @@ def Testing(test_x, test_y, batch_size):
     trueValue = []
     prediction = []
     with torch.no_grad():
-        for batch  in range(0,len(train_x),batch_size):
+        for batch in range(0,len(train_x),batch_size):
                 
             x = test_x[i]
             y = test_y[i]
@@ -122,6 +122,7 @@ def Testing(test_x, test_y, batch_size):
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
                 loss.item(), 100. * correct / counter))
+            i += 1
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
         #precision, recall = performance_metrics(cm)
@@ -196,7 +197,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
     model.train()
     #total_loss = 0
     n_classes = 8
-    for batch  in range(0,len(train_x)):
+    for batch in range(0,len(train_x)):
         #start_ind = batch
         #end_ind = start_ind + batch_size
         x = train_x[i]
@@ -222,7 +223,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         i +=1
     #torch.save(model.state_dict(), model_path)
     
-    return total_loss/batch, 100.*correct/counter
+    return total_loss/i, 100.*correct/counter
 
 config = {
     "NB_sensor_channels":30,
