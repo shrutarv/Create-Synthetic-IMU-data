@@ -89,8 +89,8 @@ def normalize(data,ws):
         return data_new
 
 def Testing(test_x, test_y, batch_size):
-    i = 0
-    global loss
+    index = 0
+    
     
     n_classes = 8
     trueValue = []
@@ -98,8 +98,8 @@ def Testing(test_x, test_y, batch_size):
     with torch.no_grad():
         for batch in range(0,len(train_x),batch_size):
                 
-            x = test_x[i]
-            y = test_y[i]
+            x = test_x[index]
+            y = test_y[index]
             x = torch.tensor(x)
             x = np.reshape(x,(batch_size,ws,features))
             x = x.float()
@@ -121,7 +121,7 @@ def Testing(test_x, test_y, batch_size):
             counter = out.view(-1, n_classes).size(0)
             print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
                 loss.item(), 100. * correct / counter))
-            i += 1
+            index += 1
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
         #precision, recall = performance_metrics(cm)
@@ -260,7 +260,7 @@ model = model.float()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 epochs = 2
-batch_size = 200
+batch_size = 50
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
