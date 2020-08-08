@@ -194,10 +194,11 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
     counter = 0        
    # i = 0
     correct = 0
+    
     model.train()
-    #total_loss = 0
+    total_loss = 0
     n_classes = 8
-    for i in range(0,len(train_x)/batch_size):
+    for i in range(0,int(len(train_x)/batch_size)):
         #start_ind = batch
         #end_ind = start_ind + batch_size
         x = train_x[i]
@@ -219,13 +220,12 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         total_loss += loss.item()
         if i % 50 == 49:    # print every 2000 mini-batches
             print(' loss: ', (total_loss / i))
-            
-        avg_loss = total_loss/i
+       
         i +=1
         
     #torch.save(model.state_dict(), model_path)
     
-    return avg_loss, 100.*correct/counter
+    return total_loss/i, 100.*correct/counter
 
 config = {
     "NB_sensor_channels":30,
