@@ -217,13 +217,15 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
-        if i % 500 == 49:    # print every 2000 mini-batches
-            print(' loss: ', (total_loss / 500))
-            total_loss = 0.0
+        if i % 50 == 49:    # print every 2000 mini-batches
+            print(' loss: ', (total_loss / i))
+            
+        avg_loss = total_loss/i
         i +=1
+        
     #torch.save(model.state_dict(), model_path)
     
-    return total_loss/i, 100.*correct/counter
+    return avg_loss, 100.*correct/counter
 
 config = {
     "NB_sensor_channels":30,
