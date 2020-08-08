@@ -31,6 +31,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     # Label from the end
     if label_pos_end:
         data_y = np.asarray([[i[-1]] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
+        print("sliding window"+ data_y)
     else:
     
         #Label from the middle
