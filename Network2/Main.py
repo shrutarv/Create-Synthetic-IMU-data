@@ -191,11 +191,11 @@ def performance_metrics(cm):
     return precision, recall
 
 def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
-    counter = 0        
-    global i, total_loss, counter
-    i = 0
+          
+    #global i, total_loss, counter
+    index = 0
     correct = 0
-    
+    counter = 0 
     model.train()
     total_loss = 0
     n_classes = 8
@@ -203,8 +203,8 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         #start_ind = batch
         #end_ind = start_ind + batch_size
         
-        x = train_x[i]
-        y = train_y[i]
+        x = train_x[index]
+        y = train_y[index]
         
         optimizer.zero_grad()
         x = x.float()
@@ -221,13 +221,13 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         optimizer.step()
         total_loss += loss.item()
         if i % 50 == 49:    # print every 2000 mini-batches
-            print(' loss: ', (total_loss / i))
+            print(' loss: ', (total_loss / index))
        
-        i +=1
+        index +=1
         
     #torch.save(model.state_dict(), model_path)
     
-    return total_loss/i, 100.*correct/counter
+    return total_loss/index, 100.*correct/counter
 
 config = {
     "NB_sensor_channels":30,
