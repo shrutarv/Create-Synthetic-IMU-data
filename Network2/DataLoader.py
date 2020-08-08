@@ -30,6 +30,10 @@ class CustomDataSet(Dataset):
         dat = pk['data']
        # train = np.transpose(dat)
         train = np.reshape(dat,(dat.shape[1],dat.shape[2]))
+        
+        #train = np.transpose(dat)
+        #train = np.reshape(train,(train.shape[0],(train.shape[1]))
+        
         tensor_file = torch.tensor(train)
         return tensor_file
     

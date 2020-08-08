@@ -70,6 +70,7 @@ def getTrainDataLabels(path,batch_size):
         
     return train_data
 
+# not called anymore. This method normalizes each attribute of a 2D matrix separately
 def normalize(data,ws):
     for k in range(len(data)):
         list1 = []
@@ -210,6 +211,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         x = x.float()
         x = x + noise
         x = np.reshape(x,(batch_size,ws,features))
+        #x = np.reshape(x,(batch_size,features,ws))
         out = model(x.unsqueeze(1).contiguous())
         #out = model(x)
         loss = criterion(out.view(-1, n_classes), y.view(-1))
@@ -260,8 +262,8 @@ model = model.float()
 #criterion = nn.CrossEntropyLoss()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
-epochs = 2
-batch_size = 10
+epochs = 20
+batch_size = 5
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
@@ -278,6 +280,7 @@ test_x = getTrainData(path, batch_size)
 test_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
 noise = np.random.normal(0,1,(batch_size,ws,features))
+#noise = np.random.normal(0,1,(batch_size,features,ws))
 noise = torch.tensor(noise)
 noise = noise.float()
 l = []
