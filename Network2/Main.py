@@ -192,15 +192,16 @@ def performance_metrics(cm):
 
 def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
     counter = 0        
-   # i = 0
+    i = 0
     correct = 0
     
     model.train()
     total_loss = 0
     n_classes = 8
-    for i in range(0,int(len(train_x)/batch_size)):
+    for j in range(0,int(len(train_x)/batch_size)):
         #start_ind = batch
         #end_ind = start_ind + batch_size
+        global i, total_loss
         x = train_x[i]
         y = train_y[i]
         
