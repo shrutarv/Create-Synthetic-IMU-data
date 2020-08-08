@@ -76,9 +76,11 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         # Sliding window approach
 
     print("Starting sliding window")
+    print(data_x.shape)
     X, y, y_all = opp_sliding_window(data_x, labels.astype(int),
                                      sliding_window_length,
                                      sliding_window_step, label_pos_end = False)
+    print(X.shape)
     counter_seq = 0
     for f in range(X.shape[0]):
        # try:
