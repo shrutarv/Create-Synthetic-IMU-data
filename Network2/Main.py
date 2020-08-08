@@ -227,6 +227,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         print(index)
     #torch.save(model.state_dict(), model_path)
     print(index)
+    index +=1
     return total_loss/index, 100.*correct/counter
 
 config = {
