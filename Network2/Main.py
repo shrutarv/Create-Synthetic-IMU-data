@@ -15,6 +15,7 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
+import pickle
 
 
 cuda = "True"
@@ -245,23 +246,27 @@ model = model.float()
 #train_y = train_y.cuda()
 #test_x = test_x.cuda()
 #test_y = test_y.cuda()
-
+data=[]
+file = open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/seq_S13_29_452.pkl', 'rb')
+data = pickle.load(file)
+# close the file
+file.close()
 #criterion = nn.CrossEntropyLoss()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 epochs = 2
-batch_size = 200
+batch_size = 3
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
-model_path = '/data/sawasthi/data/model/model.pth'
-#model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
-path = '/data/sawasthi/data/trainData/'
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+#model_path = '/data/sawasthi/data/model/model.pth'
+model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
+#path = '/data/sawasthi/data/trainData/'
+path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path, batch_size)
 train_y = getTrainDataLabels(path, batch_size)
-path = '/data/sawasthi/data/testData/'
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+#path = '/data/sawasthi/data/testData/'
+path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
 
 test_x = getTrainData(path, batch_size)
 test_y = getTrainDataLabels(path, batch_size)
