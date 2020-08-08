@@ -261,7 +261,7 @@ model = model.float()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 epochs = 2
-batch_size = 50
+batch_size = 10
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
