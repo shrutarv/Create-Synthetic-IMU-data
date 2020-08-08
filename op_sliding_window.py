@@ -81,6 +81,8 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
                                      sliding_window_length,
                                      sliding_window_step, label_pos_end = False)
     print(X.shape)
+    print(y.shape)
+    print(y_all.shape)
     counter_seq = 0
     for f in range(X.shape[0]):
        # try:
