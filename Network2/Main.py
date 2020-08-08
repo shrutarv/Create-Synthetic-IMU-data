@@ -92,6 +92,8 @@ def Testing(test_x, test_y, batch_size):
     index = 0
     model.eval()
     n_classes = 8
+    loss = 0
+    loss = torch.tensor(loss)
     trueValue = []
     prediction = []
     with torch.no_grad():
