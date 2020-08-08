@@ -52,7 +52,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
                     labels[0] = idy  
                     labels[1:] = attrs
                     data_y_labels.append(labels)
-                print("sliding window"+ data_y_labels.shape)
+                print("sliding window"+ len(data_y_labels))
                 data_y_labels = np.asarray(data_y_labels)
                 
             
