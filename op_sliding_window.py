@@ -53,7 +53,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
                     labels[1:] = attrs
                     data_y_labels.append(labels)
                 data_y_labels = np.asarray(data_y_labels)
-                print("sliding window"+ data_y)
+                print("sliding window"+ data_y_labels)
             
             except:
                 print("Sliding window: error with the counting {}".format(count_l))
