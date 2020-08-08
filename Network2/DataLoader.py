@@ -29,7 +29,7 @@ class CustomDataSet(Dataset):
         f.close()
         dat = pk['data']
        # train = np.transpose(dat)
-        train = np.reshape(dat,(dat.shape[1]dat.shape[2]))
+        train = np.reshape(dat,(dat.shape[1],dat.shape[2]))
         tensor_file = torch.tensor(train)
         return tensor_file
     
