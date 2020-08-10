@@ -252,8 +252,8 @@ config = {
     "num_classes":8,
     "reshape_input":False
     }
-ws=100
-features = 30
+ws=200
+features = 126
 accumulation_steps = 5
 model = Network(config)
 model = model.float()
@@ -269,18 +269,18 @@ model = model.float()
 #data = pickle.load(file)
 # close the file
 #file.close()
-epochs = 30
-batch_size = 64
+epochs = 10
+batch_size = 200
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.0001)
+optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
-model_path = '/data/sawasthi/data/model/model.pth'
+model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
-path = '/data/sawasthi/data/trainData/'
+path = '/data/sawasthi/data/MoCAP_data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 train_x = getTrainData(path, batch_size)
 train_y = getTrainDataLabels(path, batch_size)
-path = '/data/sawasthi/data/testData/'
+path = '/data/sawasthi/data/MoCAP_data/testData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
 
 test_x = getTrainData(path, batch_size)
@@ -307,14 +307,14 @@ plt.plot(ep,l)
 plt.subplot(1,2,2)
 plt.title('epoch vs accuracy')
 plt.plot(ep,accuracy)
-plt.savefig('/data/sawasthi/data/result.png') 
+plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
 #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
 
 print('Start Testing')
 Testing(test_x, test_y, batch_size)
 print('Finished Testing')
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-with open('/data/sawasthi/data/result.csv', 'w') as myfile:
+with open('/data/sawasthi/data/results/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(accuracy)
      wr.writerow(l)
