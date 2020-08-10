@@ -92,7 +92,7 @@ def normalize(data,ws):
 def Testing(test_x, test_y, batch_size):
     index = 0
     model.eval()
-    n_classes = 8
+    # n_classes = 8
     loss = 0
     loss = torch.tensor(loss)
     trueValue = []
@@ -108,7 +108,7 @@ def Testing(test_x, test_y, batch_size):
             x = np.reshape(x,(batch_size,ws,features))
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
-            print(out)
+            print("Next Batch result",out)
             _,predicted = torch.max(out, 1)
             #loss = criterion(out.view(-1, n_classes), y.view(-1))
             #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
@@ -268,10 +268,10 @@ model = model.float()
 #criterion = nn.CrossEntropyLoss()
 #lr = args.lr
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
-epochs = 20
-batch_size = 100
+epochs = 30
+batch_size = 64
 criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
+optimizer = optim.Adam(model.parameters(), lr=0.0001)
 print('getting train and test data')
 model_path = '/data/sawasthi/data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
