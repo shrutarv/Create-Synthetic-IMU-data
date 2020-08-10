@@ -97,18 +97,22 @@ def Testing(test_x, test_y, batch_size):
     loss = torch.tensor(loss)
     trueValue = []
     prediction = []
+    total = 0
+    correct = 0
     with torch.no_grad():
         for batch in range(0,len(test_x),batch_size):
-                
+            
             x = test_x[index]
             y = test_y[index]
             x = torch.tensor(x)
             x = np.reshape(x,(batch_size,ws,features))
             x = x.float()
             out = model(x.unsqueeze(1).contiguous())
+            print(out)
             _,predicted = torch.max(out, 1)
-            loss = criterion(out.view(-1, n_classes), y.view(-1))
-            pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+            #loss = criterion(out.view(-1, n_classes), y.view(-1))
+            #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+            #print(pred)
             for m in range(len(y)):
                 
                 trueValue.append(y.tolist()[m])
@@ -119,11 +123,13 @@ def Testing(test_x, test_y, batch_size):
             #unique(flat_list_pred)
            # print("true list")
             #unique(flat_list_true)
-            correct = pred.eq(y.data.view_as(pred)).cpu().sum()
-            counter = out.view(-1, n_classes).size(0)
-            print('\nTest set: Average loss: {:.8f}  |  Accuracy: {:.4f}\n'.format(
-                loss.item(), 100. * correct / counter))
+            #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
+            total += y.size(0)
+            correct += (predicted == y).sum().item()
+            #counter = out.view(-1, n_classes).size(0)
             index += 1
+        print('\nTest set:  Accuracy: {:.4f}\n'.format(100. * correct / total))
+            
         cm = confusion_matrix(trueValue, prediction)
         print(cm)
         #precision, recall = performance_metrics(cm)
