@@ -197,7 +197,7 @@ def performance_metrics(cm):
     rec_avg = sum(recall)/len(recall)
     return precision, recall
 
-def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
+def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumulation_steps):
           
     #global i, total_loss, counter
     index = 0
@@ -212,8 +212,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         
         x = train_x[index]
         y = train_y[index]
-        
-        optimizer.zero_grad()
+       # optimizer.zero_grad()
         x = x.float()
         x = x + noise
         x = np.reshape(x,(batch_size,ws,features))
@@ -226,7 +225,11 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         counter += out.view(-1, n_classes).size(0)
         
         loss.backward()
-        optimizer.step()
+        if (index + 1) % accumulation_steps == 0:   
+          optimizer.step()
+          # zero the parameter gradients
+          optimizer.zero_grad()
+        #optimizer.step()
         total_loss += loss.item()
         #if index % 50 == 49:    # print every 2000 mini-batches
         print(' loss: ', (total_loss / (index + 1)))
@@ -251,6 +254,7 @@ config = {
     }
 ws=100
 features = 30
+accumulation_steps = 5
 model = Network(config)
 model = model.float()
 #model.load_state_dict(torch.load())
@@ -265,9 +269,6 @@ model = model.float()
 #data = pickle.load(file)
 # close the file
 #file.close()
-#criterion = nn.CrossEntropyLoss()
-#lr = args.lr
-#optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 epochs = 30
 batch_size = 64
 criterion = nn.CrossEntropyLoss()
@@ -295,7 +296,7 @@ temp = []
 accuracy = []
 print('Start Training')
 for i in range(epochs):
-    lo, acc = Training(train_x, train_y, noise, model_path, batch_size, tot_loss)
+    lo, acc = Training(train_x, train_y, noise, model_path, batch_size, tot_loss, accumulation_steps)
     l.append(lo)
     accuracy.append(acc)
 print('Finished Training')
@@ -317,4 +318,3 @@ with open('/data/sawasthi/data/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(accuracy)
      wr.writerow(l)
-         
