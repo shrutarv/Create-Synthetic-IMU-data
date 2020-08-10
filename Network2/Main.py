@@ -98,7 +98,7 @@ def Testing(test_x, test_y, batch_size):
     trueValue = []
     prediction = []
     with torch.no_grad():
-        for batch in range(0,len(train_x),batch_size):
+        for batch in range(0,len(test_x),batch_size):
                 
             x = test_x[index]
             y = test_y[index]
@@ -222,8 +222,8 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss):
         loss.backward()
         optimizer.step()
         total_loss += loss.item()
-        if i % 50 == 49:    # print every 2000 mini-batches
-            print(' loss: ', (total_loss / index))
+        #if index % 50 == 49:    # print every 2000 mini-batches
+        print(' loss: ', (total_loss / (index + 1)))
        
         index +=1
         print(index)
