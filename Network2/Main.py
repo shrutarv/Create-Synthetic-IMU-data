@@ -269,8 +269,8 @@ model = model.float()
 #data = pickle.load(file)
 # close the file
 #file.close()
-epochs = 30
-batch_size = 50
+epochs = 50
+batch_size = 32
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 print('getting train and test data')
