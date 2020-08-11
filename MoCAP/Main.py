@@ -243,8 +243,8 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     return total_loss/index, 100.*correct/counter
 
 config = {
-    "NB_sensor_channels":30,
-    "sliding_window_length":100,
+    "NB_sensor_channels":126,
+    "sliding_window_length":200,
     "filter_size":5,
     "num_filters":64,
     "network":"cnn",
@@ -270,20 +270,20 @@ model = model.float()
 # close the file
 #file.close()
 epochs = 10
-batch_size = 200
+batch_size = 3
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
-model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
-#model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
-path = '/data/sawasthi/data/MoCAP_data/trainData/'
+#model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+#path = '/data/sawasthi/data/MoCAP_data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
 train_x = getTrainData(path, batch_size)
 train_y = getTrainDataLabels(path, batch_size)
-path = '/data/sawasthi/data/MoCAP_data/testData/'
+#path = '/data/sawasthi/data/MoCAP_data/testData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
 test_x = getTrainData(path, batch_size)
 test_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
