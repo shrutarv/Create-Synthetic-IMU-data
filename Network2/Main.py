@@ -100,7 +100,7 @@ def Testing(test_x, test_y, batch_size):
     total = 0
     correct = 0
     with torch.no_grad():
-        for batch in range(0,len(test_x),batch_size):
+        for batch in range(0,len(test_x)):
             
             x = test_x[index]
             y = test_y[index]
@@ -237,7 +237,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
         index +=1
         print(index)
     #torch.save(model.state_dict(), model_path)
-    print(index)
+    #print(index)
     index +=1
     counter+=1
     return total_loss/index, 100.*correct/counter
@@ -270,7 +270,7 @@ model = model.float()
 # close the file
 #file.close()
 epochs = 30
-batch_size = 64
+batch_size = 200
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 print('getting train and test data')

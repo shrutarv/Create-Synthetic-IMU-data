@@ -206,7 +206,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     model.train()
     total_loss = 0
     n_classes = 8
-    for j in range(0,int(len(train_x)/batch_size)):
+    for j in range(0,len(train_x)):
         #start_ind = batch
         #end_ind = start_ind + batch_size
         
@@ -237,7 +237,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
         index +=1
         print(index)
     #torch.save(model.state_dict(), model_path)
-    print(index)
+    #print(index)
     index +=1
     counter+=1
     return total_loss/index, 100.*correct/counter
@@ -274,15 +274,16 @@ batch_size = 200
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 print('getting train and test data')
-model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
-#model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
-path = '/data/sawasthi/data/MoCAP_data/trainData/'
+#model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+#path = '/data/sawasthi/data/MoCAP_data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
 train_x = getTrainData(path, batch_size)
 train_y = getTrainDataLabels(path, batch_size)
-path = '/data/sawasthi/data/MoCAP_data/testData/'
+#path = '/data/sawasthi/data/MoCAP_data/testData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-
+path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
 test_x = getTrainData(path, batch_size)
 test_y = getTrainDataLabels(path, batch_size)
 #train_y = torch.tensor(train_y)
@@ -307,14 +308,16 @@ plt.plot(ep,l)
 plt.subplot(1,2,2)
 plt.title('epoch vs accuracy')
 plt.plot(ep,accuracy)
-plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
+#plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
 #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
 
 print('Start Testing')
 Testing(test_x, test_y, batch_size)
 print('Finished Testing')
+with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-with open('/data/sawasthi/data/results/result.csv', 'w') as myfile:
+#with open('/data/sawasthi/data/results/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(accuracy)
      wr.writerow(l)
