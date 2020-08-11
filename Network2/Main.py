@@ -270,7 +270,7 @@ model = model.float()
 # close the file
 #file.close()
 epochs = 30
-batch_size = 200
+batch_size = 50
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.0001)
 print('getting train and test data')
