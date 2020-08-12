@@ -22,20 +22,28 @@ class CustomDataSet(Dataset):
 
     def __getitem__(self, idx):
         file = os.path.join(self.main_dir, self.all_files[idx])
+        #print(idx)
         f = open(file,'rb')
         #image = Image.open(img_loc).convert("RGB")
         #tensor_image = self.transform(image)
-        pk = pickle.load(f)
+        data = pickle.load(f)
         f.close()
-        dat = pk['data']
-       # train = np.transpose(dat)
-        train = np.reshape(dat,(dat.shape[1],dat.shape[2]))
+        X = data['data']
+       
+        y = data['label']
+        Y = data['labels']
+        
+        window_data = {"data" : X, "label" : y, "labels" : Y}
+
+        return window_data
+        # train = np.transpose(dat)
+#        train = np.reshape(dat,(dat.shape[1],dat.shape[2]))
         
         #train = np.transpose(dat)
         #train = np.reshape(train,(train.shape[0],(train.shape[1]))
         
-        tensor_file = torch.tensor(train)
-        return tensor_file
+ #       tensor_file = torch.tensor(train)
+  #      return tensor_file
     
 class CustomDataSetTest(Dataset):
     def __init__(self, main_dir, transform=None):
