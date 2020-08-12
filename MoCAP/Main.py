@@ -26,18 +26,18 @@ if torch.cuda.is_available():
         
 def getTrainData(path,batch_size):
         
-    all_datasets = []
+    
     train_data = []
     #path = '/data/sawasthi/data/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #while folder_counter < 10:
         #some code to get path_to_imgs which is the location of the image folder
     train_dataset = CustomDataSet(path)
-    all_datasets.append(train_dataset)
+    #all_datasets.append(train_dataset)
     
         
-    final_dataset = torch.utils.data.ConcatDataset(all_datasets)
-    train_loader = DataLoader(final_dataset, shuffle=False,
+    #final_dataset = torch.utils.data.ConcatDataset(train_dataset)
+    train_loader = DataLoader(train_dataset, shuffle=False,
                                       batch_size=batch_size,
                                        num_workers=0,
                                        pin_memory=True,
@@ -49,18 +49,18 @@ def getTrainData(path,batch_size):
 
 def getTrainDataLabels(path,batch_size):
         
-    all_datasets = []
+   
     train_data = []
     #path = '/data/sawasthi/data/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #while folder_counter < 10:
         #some code to get path_to_imgs which is the location of the image folder
     train_dataset = CustomDataSetTest(path)
-    all_datasets.append(train_dataset)
+   # all_datasets.append(train_dataset)
     
         
-    final_dataset = torch.utils.data.ConcatDataset(all_datasets)
-    train_loader = DataLoader(final_dataset, shuffle=False,
+    #final_dataset = torch.utils.data.ConcatDataset(all_datasets)
+    train_loader = DataLoader(train_dataset, shuffle=False,
                                       batch_size=batch_size,
                                        num_workers=0,
                                        pin_memory=True,
@@ -71,6 +71,7 @@ def getTrainDataLabels(path,batch_size):
     return train_data
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
+'''
 def normalize(data,ws):
     for k in range(len(data)):
         list1 = []
@@ -88,56 +89,17 @@ def normalize(data,ws):
         temp = torch.cat((temp, data_new), 0)
         #data_new = torch.tensor(data_new)        
         return data_new
+'''
+def Testing(test_x, test_y):
+     with torch.no_grad():
+        
+        test_x = test_x.float()
+        out = model(test_x)
+        print("Next Batch result")
+        _,predicted = torch.max(out, 1)
+            
+     return predicted
 
-def Testing(test_x, test_y, batch_size):
-    index = 0
-    model.eval()
-    # n_classes = 8
-    loss = 0
-    loss = torch.tensor(loss)
-    trueValue = []
-    prediction = []
-    total = 0
-    correct = 0
-    with torch.no_grad():
-        for batch in range(0,len(test_x),batch_size):
-            
-            x = test_x[index]
-            y = test_y[index]
-            x = torch.tensor(x)
-            x = np.reshape(x,(batch_size,ws,features))
-            x = x.float()
-            out = model(x.unsqueeze(1).contiguous())
-            print("Next Batch result",out)
-            _,predicted = torch.max(out, 1)
-            #loss = criterion(out.view(-1, n_classes), y.view(-1))
-            #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-            #print(pred)
-            for m in range(len(y)):
-                
-                trueValue.append(y.tolist()[m])
-                prediction.append(predicted.tolist()[m])
-            #flat_list_pred = [item for sublist in prediction for item in sublist]
-            #flat_list_true = [item for sublist in trueValue for item in sublist]
-            #print("predicted list")
-            #unique(flat_list_pred)
-           # print("true list")
-            #unique(flat_list_true)
-            #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
-            total += y.size(0)
-            correct += (predicted == y).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
-            index += 1
-        print('\nTest set:  Accuracy: {:.4f}\n'.format(100. * correct / total))
-            
-        cm = confusion_matrix(trueValue, prediction)
-        print(cm)
-        #precision, recall = performance_metrics(cm)
-        precision, recall = get_precision_recall(trueValue, prediction)
-        print(precision)
-        print(recall)
-        return loss.item()
-    
 def unique(list1): 
       
     # insert the list to the set 
@@ -206,41 +168,44 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     model.train()
     total_loss = 0
     n_classes = 8
-    for j in range(0,len(train_x)):
-        #start_ind = batch
-        #end_ind = start_ind + batch_size
-        
-        x = train_x[index]
-        y = train_y[index]
-       # optimizer.zero_grad()
-        x = x.float()
-        x = x + noise
-        x = np.reshape(x,(batch_size,ws,features))
-        #x = np.reshape(x,(batch_size,features,ws))
-        out = model(x.unsqueeze(1).contiguous())
-        #out = model(x)
-        loss = criterion(out.view(-1, n_classes), y.view(-1))
-        pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-        correct += pred.eq(y.data.view_as(pred)).cpu().sum().item()
-        counter += out.view(-1, n_classes).size(0)
-        
-        loss.backward()
-        if (index + 1) % accumulation_steps == 0:   
-          optimizer.step()
-          # zero the parameter gradients
-          optimizer.zero_grad()
-        #optimizer.step()
-        total_loss += loss.item()
-        #if index % 50 == 49:    # print every 2000 mini-batches
-        print(' loss: ', (total_loss / (index + 1)))
-       
-        index +=1
-        print(index)
+    
+ #start_ind = batch
+ #end_ind = start_ind + batch_size
+ 
+ #x = train_x[index]
+ #y = train_y[index]
+# optimizer.zero_grad()
+    train_x = train_x.float()
+    train_x = train_x + noise
+    #x = np.reshape(x,(batch_size,ws,features))
+    #x = np.reshape(x,(batch_size,features,ws))
+    #out = model(x.unsqueeze(1).contiguous())
+    out = model(train_x)
+    #out = model(x)
+    train_y = train_y.long()
+    loss = criterion(out.view(-1, n_classes), train_y.view(-1))
+    
+    pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+    correct += pred.eq(train_y.data.view_as(pred)).cpu().sum().item()
+    counter += out.view(-1, n_classes).size(0)
+    
+    loss.backward()
+    if (index + 1) % accumulation_steps == 0:   
+      optimizer.step()
+      # zero the parameter gradients
+      optimizer.zero_grad()
+    #optimizer.step()
+    #total_loss += loss.item()
+    #if index % 50 == 49:    # print every 2000 mini-batches
+    print(' loss: ', loss.item())
+    
+    
+   
     #torch.save(model.state_dict(), model_path)
     #print(index)
-    index +=1
+    
     counter+=1
-    return total_loss/index, 100.*correct/counter
+    return loss.item(), correct
 
 config = {
     "NB_sensor_channels":126,
@@ -257,51 +222,55 @@ features = 126
 accumulation_steps = 5
 model = Network(config)
 model = model.float()
-#model.load_state_dict(torch.load())
-#print("model loaded")
-#model.cuda()
-#train_x = train_x.cuda()
-#train_y = train_y.cuda()
-#test_x = test_x.cuda()
-#test_y = test_y.cuda()
-#data=[]
-#file = open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/seq_S07_1_0.pkl', 'rb')
-#data = pickle.load(file)
-# close the file
-#file.close()
+trueValue = np.array([], dtype=np.int64)
+prediction = np.array([], dtype=np.int64)
+correct = 0
+total_loss = 0.0
+total_correct = 0
 epochs = 10
 batch_size = 200
+l = []
+tot_loss = 0
+temp = []
+accuracy = []
+
+#model.load_state_dict(torch.load())
+#print("model loaded")
+noise = np.random.normal(0,1,(batch_size,1,ws,features))
+#noise = np.random.normal(0,1,(batch_size,features,ws))
+noise = torch.tensor(noise)
+noise = noise.float()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-print('getting train and test data')
+
 model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
 path = '/data/sawasthi/data/MoCAP_data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-train_x = getTrainData(path, batch_size)
-train_y = getTrainDataLabels(path, batch_size)
-path = '/data/sawasthi/data/MoCAP_data/testData/'
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-test_x = getTrainData(path, batch_size)
-test_y = getTrainDataLabels(path, batch_size)
-#train_y = torch.tensor(train_y)
-noise = np.random.normal(0,1,(batch_size,ws,features))
-#noise = np.random.normal(0,1,(batch_size,features,ws))
-noise = torch.tensor(noise)
-noise = noise.float()
-l = []
-tot_loss = 0
-temp = []
-accuracy = []
+train_dataset = CustomDataSet(path)
+dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                              batch_size=batch_size,
+                               num_workers=0,
+                               pin_memory=True,
+                               drop_last=True)
+
 print('Start Training')
-for i in range(epochs):
-    lo, acc = Training(train_x, train_y, noise, model_path, batch_size, tot_loss, accumulation_steps)
-    l.append(lo)
-    accuracy.append(acc)
+for e in range(epochs):
+      
+      #loop per batch:
+      for b, harwindow_batched in enumerate(dataLoader_train):
+          train_batch_v = harwindow_batched["data"]
+          train_batch_l = harwindow_batched["label"][:, 0]
+          
+          lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
+          total_loss += lo
+          total_correct += correct
+      l.append(total_loss/((e+1)*(b + 1)))
+      accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
+
 print('Finished Training')
-ep = list(range(1,epochs+1))   
+ep = list(range(1,e+1))   
 plt.subplot(1,2,1)
 plt.title('epoch vs loss')
 plt.plot(ep,l)
@@ -313,11 +282,46 @@ plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png')
 #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
 
 print('Start Testing')
-Testing(test_x, test_y, batch_size)
+path = '/data/sawasthi/data/MoCAP_data/testData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+test_dataset = CustomDataSet(path)
+dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                              batch_size=batch_size,
+                               num_workers=0,
+                               pin_memory=True,
+                               drop_last=True)
+for b, harwindow_batched in enumerate(dataLoader_test):
+    test_batch_v = harwindow_batched["data"]
+    test_batch_l = harwindow_batched["label"][:, 0]
+    
+    predicted = Testing(test_batch_v, test_batch_l)
+    trueValue = np.concatenate((trueValue, test_batch_l))
+    prediction = np.concatenate((prediction,predicted))
+     #flat_list_pred = [item for sublist in prediction for item in sublist]
+     #flat_list_true = [item for sublist in trueValue for item in sublist]
+     #print("predicted list")
+     #unique(flat_list_pred)
+    # print("true list")
+     #unique(flat_list_true)
+     #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
+    test_batch_l = test_batch_l.long()
+    correct += (predicted == test_batch_l).sum().item()
+    #counter = out.view(-1, n_classes).size(0)
+
+print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / ((b + 1)*batch_size)))
+    
+cm = confusion_matrix(trueValue, prediction)
+print(cm)
+#precision, recall = performance_metrics(cm)
+precision, recall = get_precision_recall(trueValue, prediction)
+print(precision)
+print(recall)
+
 print('Finished Testing')
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
 #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-with open('/data/sawasthi/data/results/result.csv', 'w') as myfile:
+with open('/data/sawasthi/data/MoCAP_data/results/result.csv', 'w') as myfile:
      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
      wr.writerow(accuracy)
      wr.writerow(l)
