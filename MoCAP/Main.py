@@ -225,15 +225,39 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     print('Start Training')
+    correct = 0
+    counter = 0 
+    total_loss = 0
+    n_classes = 8
     for e in range(epochs):
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
+              train_batch_v = train_batch_v.float()
+              train_batch_v = train_batch_v + noise
               
-              lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
-              total_loss += lo
+              out = model(train_batch_v)
+              
+              train_batch_l = train_batch_l.long()
+              #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
+              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
+              pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+              correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
+              counter += out.view(-1, n_classes).size(0)
+              
+              loss.backward()
+              if (b + 1) % accumulation_steps == 0:   
+                optimizer.step()
+                # zero the parameter gradients
+                optimizer.zero_grad()
+                print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
+              
+             
+ 
+              #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
+              total_loss += loss.item()
               total_correct += correct
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
