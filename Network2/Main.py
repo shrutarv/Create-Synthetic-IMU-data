@@ -206,8 +206,6 @@ if __name__ == '__main__':
     ws=100
     features = 30
     accumulation_steps = 5
-    model = Network(config)
-    model = model.float()
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     correct = 0
@@ -216,10 +214,10 @@ if __name__ == '__main__':
     epochs = 5
     batch_size = 10
     l = []
-    tot_loss = 0
-    temp = []
     accuracy = []
     
+    model = Network(config)
+    model = model.float()
     #model.load_state_dict(torch.load())
     #print("model loaded")
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
@@ -227,7 +225,7 @@ if __name__ == '__main__':
     noise = torch.tensor(noise)
     noise = noise.float()
     criterion = nn.NLLLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
     #model_path = '/data/sawasthi/data/model/model.pth'
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
@@ -264,8 +262,10 @@ if __name__ == '__main__':
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
               loss = criterion(out,train_batch_l)*(1/accumulation_steps)
-              pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-              correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
+              #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
+              predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+              correct = torch.sum(train_batch_l == predicted_classes)
+              #correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
               counter += out.size(0)
               
               loss.backward()
@@ -276,7 +276,7 @@ if __name__ == '__main__':
               #optimizer.step()
               #total_loss += loss.item()
               #if index % 50 == 49:    # print every 2000 mini-batches
-              print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
+              print(' loss: ', loss.item(), 'accuracy in percent',100.*correct.item()/counter)
               
              
  
