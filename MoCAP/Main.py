@@ -227,7 +227,7 @@ prediction = np.array([], dtype=np.int64)
 correct = 0
 total_loss = 0.0
 total_correct = 0
-epochs = 10
+epochs =6
 batch_size = 200
 l = []
 tot_loss = 0
@@ -257,7 +257,7 @@ dataLoader_train = DataLoader(train_dataset, shuffle=True,
 
 print('Start Training')
 for e in range(epochs):
-      
+      print("next epoch")
       #loop per batch:
       for b, harwindow_batched in enumerate(dataLoader_train):
           train_batch_v = harwindow_batched["data"]
@@ -270,7 +270,7 @@ for e in range(epochs):
       accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
 
 print('Finished Training')
-ep = list(range(1,e+1))   
+ep = list(range(1,e+2))   
 plt.subplot(1,2,1)
 plt.title('epoch vs loss')
 plt.plot(ep,l)

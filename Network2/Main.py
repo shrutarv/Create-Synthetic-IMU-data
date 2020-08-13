@@ -227,8 +227,8 @@ prediction = np.array([], dtype=np.int64)
 correct = 0
 total_loss = 0.0
 total_correct = 0
-epochs = 10
-batch_size = 100
+epochs = 5
+batch_size = 200
 l = []
 tot_loss = 0
 temp = []
@@ -242,10 +242,11 @@ noise = torch.tensor(noise)
 noise = noise.float()
 criterion = nn.CrossEntropyLoss()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
-model_path = '/data/sawasthi/data/model/model.pth'
-#model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+#model_path = '/data/sawasthi/data/model/model.pth'
+model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
-path = '/data/sawasthi/data/trainData/'
+path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+#path = '/data/sawasthi/data/trainData/'
 #path = '/data/sawasthi/data/MoCAP_data/trainData/'
 #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
 #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -271,7 +272,7 @@ for e in range(epochs):
       accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
 
 print('Finished Training')
-ep = list(range(1,e+1))   
+ep = list(range(1,e+2))   
 plt.subplot(1,2,1)
 plt.title('epoch vs loss')
 plt.plot(ep,l)
