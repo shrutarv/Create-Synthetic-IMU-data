@@ -90,24 +90,7 @@ def normalize(data,ws):
         #data_new = torch.tensor(data_new)        
         return data_new
 '''
-def Testing(test_x, test_y):
-     with torch.no_grad():
-        
-        test_x = test_x.float()
-        out = model(test_x)
-        print("Next Batch result")
-        _,predicted = torch.max(out, 1)
-            
-     return predicted
 
-def unique(list1): 
-      
-    # insert the list to the set 
-    list_set = set(list1) 
-    # convert the set to the list 
-    unique_list = (list(list_set)) 
-    for x in unique_list: 
-        print(x)
  
 def get_precision_recall(targets, predictions):
         precision = torch.zeros((8))
@@ -283,7 +266,7 @@ if __name__ == '__main__':
               loss = criterion(out,train_batch_l)*(1/accumulation_steps)
               pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
               correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
-              counter += out.view(-1, n_classes).size(0)
+              counter += out.size(0)
               
               loss.backward()
               if (b + 1) % accumulation_steps == 0:   
@@ -324,26 +307,26 @@ if __name__ == '__main__':
     test_dataset = CustomDataSet(path)
     dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                   batch_size=batch_size)
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        test_batch_v = harwindow_batched["data"]
-        test_batch_l = harwindow_batched["label"][:, 0]
+    total = 0.0
+    with torch.no_grad():
+            
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            test_batch_v = harwindow_batched["data"]
+            test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_v = test_batch_v.float()
+            out = model(test_batch_v)
+            #print("Next Batch result")
+            _,predicted = torch.max(out, 1)
+            #predicted = Testing(test_batch_v, test_batch_l)
+            trueValue = np.concatenate((trueValue, test_batch_l))
+            prediction = np.concatenate((prediction,predicted))
+            total += test_batch_l.size(0) 
+            test_batch_l = test_batch_l.long()
+            correct += (predicted == test_batch_l).sum().item()
+            #counter = out.view(-1, n_classes).size(0)
         
-        predicted = Testing(test_batch_v, test_batch_l)
-        trueValue = np.concatenate((trueValue, test_batch_l))
-        prediction = np.concatenate((prediction,predicted))
-         #flat_list_pred = [item for sublist in prediction for item in sublist]
-         #flat_list_true = [item for sublist in trueValue for item in sublist]
-         #print("predicted list")
-         #unique(flat_list_pred)
-        # print("true list")
-         #unique(flat_list_true)
-         #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
-        test_batch_l = test_batch_l.long()
-        correct += (predicted == test_batch_l).sum().item()
-        #counter = out.view(-1, n_classes).size(0)
-    
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / ((b + 1)*batch_size)))
-        
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+                
     cm = confusion_matrix(trueValue, prediction)
     print(cm)
     #precision, recall = performance_metrics(cm)
