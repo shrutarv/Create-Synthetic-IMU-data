@@ -197,7 +197,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     #optimizer.step()
     #total_loss += loss.item()
     #if index % 50 == 49:    # print every 2000 mini-batches
-    print(' loss: ', loss.item())
+    print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
     
     
    
@@ -207,18 +207,19 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     counter+=1
     return loss.item(), correct
 
-config = {
-    "NB_sensor_channels":30,
-    "sliding_window_length":100,
-    "filter_size":5,
-    "num_filters":64,
-    "network":"cnn",
-    "output":"softmax",
-    "num_classes":8,
-    "reshape_input":False
-    }
-
 if __name__ == '__main__':
+    config = {
+        "NB_sensor_channels":30,
+        "sliding_window_length":100,
+        "filter_size":5,
+        "num_filters":64,
+        "network":"cnn",
+        "output":"softmax",
+        "num_classes":8,
+        "reshape_input":False
+        }
+
+
     ws=100
     features = 30
     accumulation_steps = 5
@@ -230,7 +231,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 5
-    batch_size = 200
+    batch_size = 10
     l = []
     tot_loss = 0
     temp = []
@@ -248,9 +249,9 @@ if __name__ == '__main__':
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-    path = '/data/sawasthi/data/trainData/'
+    #path = '/data/sawasthi/data/trainData/'
     #path = '/data/sawasthi/data/MoCAP_data/trainData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
     dataLoader_train = DataLoader(train_dataset, shuffle=True,
@@ -264,6 +265,7 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
+              print(b)
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               

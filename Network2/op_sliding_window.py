@@ -118,11 +118,11 @@ def normalize(data):
                 data[i,j] = (data[i,j] - min)/(max - min)
     return data
     
-#ws = (100,31)
-ws = (200,134)  #for MoCAP
-ss = (25,134)     #for MoCAP
-#ss = (25,31)
-sliding_window_length = 200   # for MoCAP
+ws = (100,31)
+#ws = (200,134)  #for MoCAP
+#ss = (25,134)     #for MoCAP
+ss = (25,31)
+sliding_window_length = 100   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 25
 #data_dir =  "/data/sawasthi/data/MoCAP_data/testData/"
