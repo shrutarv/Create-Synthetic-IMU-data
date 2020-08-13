@@ -217,116 +217,118 @@ config = {
     "num_classes":8,
     "reshape_input":False
     }
-ws=100
-features = 30
-accumulation_steps = 5
-model = Network(config)
-model = model.float()
-trueValue = np.array([], dtype=np.int64)
-prediction = np.array([], dtype=np.int64)
-correct = 0
-total_loss = 0.0
-total_correct = 0
-epochs = 5
-batch_size = 200
-l = []
-tot_loss = 0
-temp = []
-accuracy = []
 
-#model.load_state_dict(torch.load())
-#print("model loaded")
-noise = np.random.normal(0,1,(batch_size,1,ws,features))
-#noise = np.random.normal(0,1,(batch_size,features,ws))
-noise = torch.tensor(noise)
-noise = noise.float()
-criterion = nn.CrossEntropyLoss()
-optimizer = optim.Adam(model.parameters(), lr=0.001)
-#model_path = '/data/sawasthi/data/model/model.pth'
-model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
-#model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
-path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-#path = '/data/sawasthi/data/trainData/'
-#path = '/data/sawasthi/data/MoCAP_data/trainData/'
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-train_dataset = CustomDataSet(path)
-dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                              batch_size=batch_size,
-                               num_workers=0,
-                               pin_memory=True,
-                               drop_last=True)
-
-print('Start Training')
-for e in range(epochs):
-      
-      #loop per batch:
-      for b, harwindow_batched in enumerate(dataLoader_train):
-          train_batch_v = harwindow_batched["data"]
-          train_batch_l = harwindow_batched["label"][:, 0]
-          
-          lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
-          total_loss += lo
-          total_correct += correct
-      l.append(total_loss/((e+1)*(b + 1)))
-      accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
-
-print('Finished Training')
-ep = list(range(1,e+2))   
-plt.subplot(1,2,1)
-plt.title('epoch vs loss')
-plt.plot(ep,l)
-plt.subplot(1,2,2)
-plt.title('epoch vs accuracy')
-plt.plot(ep,accuracy)
-#plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
-#plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-#plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-plt.savefig('/data/sawasthi/data/result.png') 
-
-print('Start Testing')
-path = '/data/sawasthi/data/testData/'
-#path = '/data/sawasthi/data/MoCAP_data/testData/'
-#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-#path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-test_dataset = CustomDataSet(path)
-dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                              batch_size=batch_size,
-                               num_workers=0,
-                               pin_memory=True,
-                               drop_last=True)
-for b, harwindow_batched in enumerate(dataLoader_test):
-    test_batch_v = harwindow_batched["data"]
-    test_batch_l = harwindow_batched["label"][:, 0]
+if __name__ == '__main__':
+    ws=100
+    features = 30
+    accumulation_steps = 5
+    model = Network(config)
+    model = model.float()
+    trueValue = np.array([], dtype=np.int64)
+    prediction = np.array([], dtype=np.int64)
+    correct = 0
+    total_loss = 0.0
+    total_correct = 0
+    epochs = 5
+    batch_size = 200
+    l = []
+    tot_loss = 0
+    temp = []
+    accuracy = []
     
-    predicted = Testing(test_batch_v, test_batch_l)
-    trueValue = np.concatenate((trueValue, test_batch_l))
-    prediction = np.concatenate((prediction,predicted))
-     #flat_list_pred = [item for sublist in prediction for item in sublist]
-     #flat_list_true = [item for sublist in trueValue for item in sublist]
-     #print("predicted list")
-     #unique(flat_list_pred)
-    # print("true list")
-     #unique(flat_list_true)
-     #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
-    test_batch_l = test_batch_l.long()
-    correct += (predicted == test_batch_l).sum().item()
-    #counter = out.view(-1, n_classes).size(0)
-
-print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / ((b + 1)*batch_size)))
+    #model.load_state_dict(torch.load())
+    #print("model loaded")
+    noise = np.random.normal(0,1,(batch_size,1,ws,features))
+    #noise = np.random.normal(0,1,(batch_size,features,ws))
+    noise = torch.tensor(noise)
+    noise = noise.float()
+    criterion = nn.CrossEntropyLoss()
+    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    #model_path = '/data/sawasthi/data/model/model.pth'
+    model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+    path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    #path = '/data/sawasthi/data/trainData/'
+    #path = '/data/sawasthi/data/MoCAP_data/trainData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+    train_dataset = CustomDataSet(path)
+    dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
     
-cm = confusion_matrix(trueValue, prediction)
-print(cm)
-#precision, recall = performance_metrics(cm)
-precision, recall = get_precision_recall(trueValue, prediction)
-print(precision)
-print(recall)
-
-print('Finished Testing')
-#with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
-#with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-with open('/data/sawasthi/data/result.csv', 'w') as myfile:
-     wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-     wr.writerow(accuracy)
-     wr.writerow(l)
-         
+    print('Start Training')
+    for e in range(epochs):
+          print("next epoch")
+          #loop per batch:
+          for b, harwindow_batched in enumerate(dataLoader_train):
+              train_batch_v = harwindow_batched["data"]
+              train_batch_l = harwindow_batched["label"][:, 0]
+              
+              lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
+              total_loss += lo
+              total_correct += correct
+          l.append(total_loss/((e+1)*(b + 1)))
+          accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
+    
+    print('Finished Training')
+    ep = list(range(1,e+2))   
+    plt.subplot(1,2,1)
+    plt.title('epoch vs loss')
+    plt.plot(ep,l)
+    plt.subplot(1,2,2)
+    plt.title('epoch vs accuracy')
+    plt.plot(ep,accuracy)
+    #plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
+    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+    plt.savefig('/data/sawasthi/data/result.png') 
+    
+    print('Start Testing')
+    path = '/data/sawasthi/data/testData/'
+    #path = '/data/sawasthi/data/MoCAP_data/testData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    for b, harwindow_batched in enumerate(dataLoader_test):
+        test_batch_v = harwindow_batched["data"]
+        test_batch_l = harwindow_batched["label"][:, 0]
+        
+        predicted = Testing(test_batch_v, test_batch_l)
+        trueValue = np.concatenate((trueValue, test_batch_l))
+        prediction = np.concatenate((prediction,predicted))
+         #flat_list_pred = [item for sublist in prediction for item in sublist]
+         #flat_list_true = [item for sublist in trueValue for item in sublist]
+         #print("predicted list")
+         #unique(flat_list_pred)
+        # print("true list")
+         #unique(flat_list_true)
+         #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
+        test_batch_l = test_batch_l.long()
+        correct += (predicted == test_batch_l).sum().item()
+        #counter = out.view(-1, n_classes).size(0)
+    
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / ((b + 1)*batch_size)))
+        
+    cm = confusion_matrix(trueValue, prediction)
+    print(cm)
+    #precision, recall = performance_metrics(cm)
+    precision, recall = get_precision_recall(trueValue, prediction)
+    print(precision)
+    print(recall)
+    
+    print('Finished Testing')
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+    with open('/data/sawasthi/data/result.csv', 'w') as myfile:
+         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+         wr.writerow(accuracy)
+         wr.writerow(l)
+             
