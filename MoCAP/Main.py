@@ -102,7 +102,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     #optimizer.step()
     #total_loss += loss.item()
     
-    print(' loss: ', loss.item())
+    print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
     
     
    
