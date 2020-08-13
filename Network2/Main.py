@@ -295,10 +295,7 @@ if __name__ == '__main__':
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
     dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
+                                  batch_size=batch_size)
     for b, harwindow_batched in enumerate(dataLoader_test):
         test_batch_v = harwindow_batched["data"]
         test_batch_l = harwindow_batched["label"][:, 0]
