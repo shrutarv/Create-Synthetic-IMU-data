@@ -252,7 +252,7 @@ if __name__ == '__main__':
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-                print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
+              print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
               
              
  
@@ -284,25 +284,25 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        test_batch_v = harwindow_batched["data"]
-        test_batch_l = harwindow_batched["label"][:, 0]
+    total = 0.0
+    with torch.no_grad():
+            
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            test_batch_v = harwindow_batched["data"]
+            test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_v = test_batch_v.float()
+            out = model(test_batch_v)
+            #print("Next Batch result")
+            _,predicted = torch.max(out, 1)
+            #predicted = Testing(test_batch_v, test_batch_l)
+            trueValue = np.concatenate((trueValue, test_batch_l))
+            prediction = np.concatenate((prediction,predicted))
+            total += test_batch_l.size(0) 
+            test_batch_l = test_batch_l.long()
+            correct += (predicted == test_batch_l).sum().item()
+            #counter = out.view(-1, n_classes).size(0)
         
-        predicted = Testing(test_batch_v, test_batch_l)
-        trueValue = np.concatenate((trueValue, test_batch_l))
-        prediction = np.concatenate((prediction,predicted))
-         #flat_list_pred = [item for sublist in prediction for item in sublist]
-         #flat_list_true = [item for sublist in trueValue for item in sublist]
-         #print("predicted list")
-         #unique(flat_list_pred)
-        # print("true list")
-         #unique(flat_list_true)
-         #correct = pred.eq(y.data.view_as(pred)).cpu().sum()
-        test_batch_l = test_batch_l.long()
-        correct += (predicted == test_batch_l).sum().item()
-        #counter = out.view(-1, n_classes).size(0)
-    
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / ((b + 1)*batch_size)))
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
         
     cm = confusion_matrix(trueValue, prediction)
     print(cm)
