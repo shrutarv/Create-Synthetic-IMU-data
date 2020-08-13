@@ -189,20 +189,19 @@ if __name__ == '__main__':
     ws=200
     features = 126
     accumulation_steps = 5
-    model = Network(config)
-    model = model.float()
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs =6
-    batch_size = 200
+    epochs = 3
+    batch_size = 300
     l = []
     tot_loss = 0
-    temp = []
     accuracy = []
     
+    model = Network(config)
+    model = model.float()
     #model.load_state_dict(torch.load())
     #print("model loaded")
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
@@ -210,7 +209,7 @@ if __name__ == '__main__':
     noise = torch.tensor(noise)
     noise = noise.float()
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.Adam(model.parameters(), lr=0.0001)
     
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
