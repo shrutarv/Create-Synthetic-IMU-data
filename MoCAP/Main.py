@@ -101,7 +101,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
       optimizer.zero_grad()
     #optimizer.step()
     #total_loss += loss.item()
-    #if index % 50 == 49:    # print every 2000 mini-batches
+    
     print(' loss: ', loss.item())
     
     
@@ -173,19 +173,19 @@ def performance_metrics(cm):
     return precision, recall
 
 
-
-config = {
-    "NB_sensor_channels":126,
-    "sliding_window_length":200,
-    "filter_size":5,
-    "num_filters":64,
-    "network":"cnn",
-    "output":"softmax",
-    "num_classes":8,
-    "reshape_input":False
-    }
-
 if __name__ == '__main__':
+    config = {
+        "NB_sensor_channels":126,
+        "sliding_window_length":200,
+        "filter_size":5,
+        "num_filters":64,
+        "network":"cnn",
+        "output":"softmax",
+        "num_classes":8,
+        "reshape_input":False
+        }
+
+
     ws=200
     features = 126
     accumulation_steps = 5
