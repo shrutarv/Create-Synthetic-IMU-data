@@ -263,7 +263,7 @@ if __name__ == '__main__':
               
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l)
               pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
               correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
               counter += out.size(0)
