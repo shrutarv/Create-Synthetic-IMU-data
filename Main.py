@@ -201,7 +201,7 @@ model = model.float()
 #optimizer = getattr(optim, args.optim)(model.parameters(), lr=lr)
 
 
-criterion = nn.CrossEntropyLoss()
+criterion = nn.NLLLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
 model_path = '/data/sawasthi/data/model/model.pth'
 #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'
