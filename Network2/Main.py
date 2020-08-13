@@ -251,7 +251,7 @@ if __name__ == '__main__':
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     path = '/data/sawasthi/data/trainData/'
     #path = '/data/sawasthi/data/MoCAP_data/trainData/'
-    path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+   # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
     dataLoader_train = DataLoader(train_dataset, shuffle=True,
