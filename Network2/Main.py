@@ -271,6 +271,7 @@ if __name__ == '__main__':
               loss.backward()
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
+                loss.backward()
                 # zero the parameter gradients
                 optimizer.zero_grad()
               #optimizer.step()
