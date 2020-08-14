@@ -268,7 +268,7 @@ if __name__ == '__main__':
               #correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
               counter += out.size(0)
               
-              loss.backward()
+              #loss.backward()
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 loss.backward()
