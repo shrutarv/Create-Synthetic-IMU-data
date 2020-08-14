@@ -224,8 +224,8 @@ if __name__ == '__main__':
     #noise = np.random.normal(0,1,(batch_size,features,ws))
     noise = torch.tensor(noise)
     noise = noise.float()
-    criterion = nn.NLLLoss()
-    #criterion = nn.CrossEntropyLoss()
+    #criterion = nn.NLLLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     #model_path = '/data/sawasthi/data/model/model.pth'
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
@@ -243,7 +243,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     print('Start Training')
-    
+    acc = 0
     correct = 0
     counter = 0 
     total_loss = 0
@@ -279,7 +279,7 @@ if __name__ == '__main__':
               #total_loss += loss.item()
               #if index % 50 == 49:    # print every 2000 mini-batches
               print(' loss: ', loss.item(), 'accuracy in percent',100.*correct.item()/counter)
-              
+              acc = correct.item()/counter
              
  
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
