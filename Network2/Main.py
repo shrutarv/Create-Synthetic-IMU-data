@@ -224,7 +224,8 @@ if __name__ == '__main__':
     #noise = np.random.normal(0,1,(batch_size,features,ws))
     noise = torch.tensor(noise)
     noise = noise.float()
-    criterion = nn.NLLLoss()
+    #criterion = nn.NLLLoss()
+    criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     #model_path = '/data/sawasthi/data/model/model.pth'
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
