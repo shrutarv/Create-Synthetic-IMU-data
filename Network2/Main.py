@@ -247,6 +247,7 @@ if __name__ == '__main__':
     counter = 0 
     total_loss = 0
     n_classes = 8
+    model.train()
     for e in range(epochs):
           print("next epoch")
           #loop per batch:
