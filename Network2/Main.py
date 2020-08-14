@@ -268,7 +268,7 @@ if __name__ == '__main__':
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               correct = torch.sum(train_batch_l == predicted_classes)
               #correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
-              counter += out.size(0)
+              counter = out.size(0)
               
               loss.backward()
               if (b + 1) % accumulation_steps == 0:   
