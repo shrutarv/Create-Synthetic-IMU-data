@@ -16,7 +16,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
 import pickle
-
+import pandas as pd
 
 cuda = "True"
 torch.manual_seed(1111)
@@ -173,7 +173,49 @@ def performance_metrics(cm):
     return precision, recall
 
 
+def max_min_values(data, values):
+    temp_values = []
+    data = data.numpy()
+    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
+    for i in range(data_x.shape[0]):
+        temp_values = []
+        for attr in range(data.shape[2]):
+            attribute = []
+            temp_max = np.max(data[i,:,attr])
+            temp_min = np.min(data[i,:,attr])
+            if (values[attr][0] > temp_max):
+                attribute.append(values[attr][0])
+            else:
+                attribute.append(temp_max)
+            if(values[attr][1] < temp_min):
+                attribute.append(values[attr][1])
+            else:
+                attribute.append(temp_min)
+            temp_values.append(attribute)  
+        values = temp_values
+    return values
+   
+
+def normalize(data, min_max):
+    
+    data = data.numpy()
+    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
+    for i in range(data.shape[0]):
+        for j in range(data.shape[2]):
+            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
+    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    data = torch.tensor(data)
+    return data
+
+    
 if __name__ == '__main__':
+    
+    if torch.cuda.is_available():  
+          dev = "cuda:2" 
+    else:  
+          dev = "cpu"  
+          
+    device = torch.device(dev)
     config = {
         "NB_sensor_channels":126,
         "sliding_window_length":200,
@@ -202,12 +244,14 @@ if __name__ == '__main__':
     
     model = Network(config)
     model = model.float()
+    model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
     #noise = np.random.normal(0,1,(batch_size,features,ws))
     noise = torch.tensor(noise)
     noise = noise.float()
+    noise.to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     
@@ -223,6 +267,22 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
+    print("preparing data for normalisation")
+    # Normalise the data
+    value = []
+    for k in range(999):
+        temp_list = []
+        max = -9999
+        min = 9999
+        temp_list.append(max)
+        temp_list.append(min)
+        value.append(temp_list)
+        
+    for b, harwindow_batched in enumerate(dataLoader_train):
+        data_x = harwindow_batched["data"]
+        data_x.to(device)
+        value = max_min_values(data_x,value)
+    
     print('Start Training')
     correct = 0
     counter = 0 
@@ -232,8 +292,12 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
+              break
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
+              train_batch_v.to(device)
+              train_batch_l.to(device)
+              train_batch_v = normalize(train_batch_v)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
               
@@ -242,8 +306,8 @@ if __name__ == '__main__':
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
               loss = criterion(out,train_batch_l)*(1/accumulation_steps)
-              pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-              correct += pred.eq(train_batch_l.data.view_as(pred)).cpu().sum().item()
+              predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+              correct = torch.sum(train_batch_l == predicted_classes)
               counter += out.view(-1, n_classes).size(0)
               
               loss.backward()
@@ -289,6 +353,8 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_v.to(device)
+            test_batch_l.to(device)
             test_batch_v = test_batch_v.float()
             out = model(test_batch_v)
             #print("Next Batch result")

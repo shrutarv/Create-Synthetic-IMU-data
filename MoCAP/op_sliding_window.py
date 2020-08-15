@@ -5,6 +5,7 @@ import os
 import pickle
 from sliding_window import sliding_window
 import glob
+import csv
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -110,14 +111,24 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         print("dumping")
         f.close()
  
-def normalize(data):
-    max = np.max(data)
-    min = np.min(data)
-    for i in range(data.shape[0]):
-            for j in range(data.shape[1]):
-                data[i,j] = (data[i,j] - min)/(max - min)
-    return data
-    
+def max_min_values(data, values):
+    temp_values = []
+    for i in range(data_x.shape[1]):
+        attribute = []
+        temp_max = np.max(data[:,i])
+        temp_min = np.min(data[:,i])
+        if (values[i][0] > temp_max):
+            attribute.append(values[i][0])
+        else:
+            attribute.append(temp_max)
+        if(values[i][1] < temp_min):
+            attribute.append(values[i][1])
+        else:
+            attribute.append(temp_min)
+        temp_values.append(attribute)  
+    values = temp_values
+    return values
+   
 #ws = (100,31)
 ws = (200,134)  #for MoCAP
 ss = (25,134)     #for MoCAP
@@ -159,6 +170,16 @@ FileList_x = list(set_x - set_y)
 FileList_x.sort()
 FileList_y.sort()
 k = 0 
+value =[]
+
+for k in range(999):
+    temp_list = []
+    max = -9999
+    min = 9999
+    temp_list.append(max)
+    temp_list.append(min)
+    value.append(temp_list)
+    
 
 for i,j in zip(FileList_x, FileList_y):
     k += 1
@@ -175,10 +196,14 @@ for i,j in zip(FileList_x, FileList_y):
     data_x = data_x.values
     data_x = np.delete(data_x,np.s_[68:74], axis=1)
     data_x = data_x[:,2:128]
-    data_x = normalize(data_x)
+    
     example_creating_windows_file(k, folder_name, data_x, labels)
     if(k == 2):
         break
     
+with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/max_min.csv', 'w') as myfile:
+      wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+      wr.writerow(["max","min"])
+      wr.writerows(value[:])
+      
 
-    
