@@ -91,7 +91,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     loss = criterion(out.view(-1, n_classes), train_y.view(-1))
     
     pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-    correct += pred.eq(train_y.data.view_as(pred)).cpu().sum().item()
+    correct += pred.eq(train_y.data.view_as(pred)).sum().item()
     counter += out.view(-1, n_classes).size(0)
     
     loss.backward()
@@ -111,16 +111,7 @@ def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumul
     
     counter+=1
     return loss.item(), correct
-
-def Testing(test_x, test_y):
-     with torch.no_grad():
-        
-        test_x = test_x.float()
-        out = model(test_x)
-        print("Next Batch result")
-        _,predicted = torch.max(out, 1)
-            
-     return predicted
+    
 
 def get_precision_recall(targets, predictions):
         precision = torch.zeros((8))
@@ -266,7 +257,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    
+    dataLoader_train.to(device)
     print("preparing data for normalisation")
     # Normalise the data
     value = []
@@ -295,8 +286,8 @@ if __name__ == '__main__':
               break
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
-              train_batch_v.to(device)
-              train_batch_l.to(device)
+              #train_batch_v.to(device)
+              #train_batch_l.to(device)
               train_batch_v = normalize(train_batch_v)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
