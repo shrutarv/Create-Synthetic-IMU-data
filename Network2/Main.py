@@ -275,6 +275,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
    
+    print("preparing data for normalisation")
     # Normalise the data
     value = []
     for k in range(999):
