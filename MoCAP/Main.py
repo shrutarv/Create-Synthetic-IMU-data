@@ -242,7 +242,7 @@ if __name__ == '__main__':
     #noise = np.random.normal(0,1,(batch_size,features,ws))
     noise = torch.tensor(noise)
     noise = noise.float()
-    noise.to(device)
+    
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
     
