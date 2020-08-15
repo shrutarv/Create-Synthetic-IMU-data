@@ -5,6 +5,7 @@ import os
 import pickle
 from sliding_window import sliding_window
 import glob
+import csv
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -67,12 +68,6 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     return data_x.astype(np.float32), data_y_labels.astype(np.uint8), data_y_all.astype(np.uint8)
 
 
-
-
-
-
-
-
 def example_creating_windows_file(k, folder_name, data_x, labels):
         # Sliding window approach
 
@@ -110,14 +105,7 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         print("dumping")
         f.close()
  
-def normalize(data):
-    max = np.max(data)
-    min = np.min(data)
-    for i in range(data.shape[0]):
-            for j in range(data.shape[1]):
-                data[i,j] = (data[i,j] - min)/(max - min)
-    return data
-    
+
 ws = (100,31)
 #ws = (200,134)  #for MoCAP
 #ss = (25,134)     #for MoCAP
@@ -127,18 +115,18 @@ sliding_window_length = 100   # for MoCAP
 sliding_window_step = 25
 #data_dir =  "/data/sawasthi/data/MoCAP_data/testData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-#data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+#data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 
 #    print (np.shape(i[:,0]))
-folder_name = "S13"
+folder_name = "S07"
 FileList_y = []
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
-#os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
-os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
+#os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
 FileList_y = glob.glob('*labels.csv')
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
 #List = glob.glob('*labels.csv')
@@ -159,26 +147,36 @@ FileList_x = list(set_x - set_y)
 FileList_x.sort()
 FileList_y.sort()
 k = 0 
+value =[]
+
+for k in range(999):
+    temp_list = []
+    max = -9999
+    min = 9999
+    temp_list.append(max)
+    temp_list.append(min)
+    value.append(temp_list)
+    
 
 for i,j in zip(FileList_x, FileList_y):
     k += 1
     #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
     #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
-    #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
-    data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+    data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+    #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
     data_y = data_y.values
     labels = data_y
     #data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
     #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
-    #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
-    data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+    data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
+    #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
     data_x = data_x.values
-    data_x = np.delete(data_x,np.s_[68:74], axis=1)
-    data_x = data_x[:,2:128]
-    data_x = normalize(data_x)
+    #data_x = np.delete(data_x,np.s_[68:74], axis=1)
+    data_x = data_x[:,1:31]
+    
     example_creating_windows_file(k, folder_name, data_x, labels)
-    if(k == 2):
+    if(k == 1):
         break
     
 
-    
+
