@@ -220,7 +220,7 @@ def normalize(data, min_max):
     for i in range(data.shape[0]):
         for j in range(data.shape[2]):
             data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
-    data = data.reshape(data.shape[0],1,data.shape[2], data.shape[3])
+    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     data = torch.tensor(data)
     return data
 
