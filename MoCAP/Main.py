@@ -235,7 +235,7 @@ if __name__ == '__main__':
     
     model = Network(config)
     model = model.float()
-    model.to(device)
+    model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
@@ -291,7 +291,7 @@ if __name__ == '__main__':
               train_batch_v = normalize(train_batch_v, value)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
-              train_batch_v.to(device)
+              train_batch_v = train_batch_v.to(device)
               print(train_batch_v.device)
               out = model(train_batch_v)
               
