@@ -228,7 +228,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 3
-    batch_size = 300
+    batch_size = 100
     l = []
     tot_loss = 0
     accuracy = []
@@ -287,7 +287,7 @@ if __name__ == '__main__':
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
-              #train_batch_l.to(device)
+              train_batch_l = train_batch_l.to(device)
               train_batch_v = normalize(train_batch_v, value)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
