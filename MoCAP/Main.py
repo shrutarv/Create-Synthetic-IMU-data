@@ -287,7 +287,7 @@ if __name__ == '__main__':
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
-              train_batch_l = train_batch_l.to(device)
+              #train_batch_l = train_batch_l.to(device)
               train_batch_v = normalize(train_batch_v, value)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
@@ -299,7 +299,7 @@ if __name__ == '__main__':
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
               loss = criterion(out,train_batch_l)*(1/accumulation_steps)
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-              predicted_classes = predicted_classes.to(device)
+              #predicted_classes = predicted_classes.to(device)
               correct = torch.sum(train_batch_l == predicted_classes)
               counter += out.view(-1, n_classes).size(0)
               
