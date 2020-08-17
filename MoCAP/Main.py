@@ -299,6 +299,7 @@ if __name__ == '__main__':
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
               loss = criterion(out,train_batch_l)*(1/accumulation_steps)
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+              predicted_classes = predicted_classes.to(device)
               correct = torch.sum(train_batch_l == predicted_classes)
               counter += out.view(-1, n_classes).size(0)
               
