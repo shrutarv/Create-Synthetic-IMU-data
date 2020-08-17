@@ -263,10 +263,10 @@ if __name__ == '__main__':
     value = []
     for k in range(999):
         temp_list = []
-        max = -9999
-        min = 9999
-        temp_list.append(max)
-        temp_list.append(min)
+        maxim = -9999
+        minim = 9999
+        temp_list.append(maxim)
+        temp_list.append(minim)
         value.append(temp_list)
         
     for b, harwindow_batched in enumerate(dataLoader_train):
@@ -292,6 +292,7 @@ if __name__ == '__main__':
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
               train_batch_v.to(device)
+              print(train_batch_v.device)
               out = model(train_batch_v)
               
               train_batch_l = train_batch_l.long()
