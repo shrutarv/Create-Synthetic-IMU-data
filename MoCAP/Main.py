@@ -292,7 +292,7 @@ if __name__ == '__main__':
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
               train_batch_v = train_batch_v.to(device)
-              print(train_batch_v.device)
+              #print(train_batch_v.device)
               out = model(train_batch_v)
               
               train_batch_l = train_batch_l.long()
