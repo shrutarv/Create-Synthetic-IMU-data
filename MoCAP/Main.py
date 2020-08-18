@@ -301,16 +301,14 @@ if __name__ == '__main__':
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               predicted_classes = predicted_classes.to(device)
               correct = torch.sum(train_batch_l == predicted_classes)
-              correct = correct.to(device)
               counter += out.view(-1, n_classes).size(0)
-              counter = torch.tensor(counter)
-              counter = counter.to(device)
+              
               loss.backward()
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-              print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
+              print(' loss: ', loss.item(), 'accuracy in percent',correct/counter)
               
              
  
