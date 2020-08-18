@@ -339,6 +339,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     total = 0.0
+    correct = 0.0
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
@@ -349,13 +350,14 @@ if __name__ == '__main__':
             test_batch_v = test_batch_v.float()
             out = model(test_batch_v)
             #print("Next Batch result")
-            _,predicted = torch.max(out, 1)
+            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
             trueValue = np.concatenate((trueValue, test_batch_l))
-            prediction = np.concatenate((prediction,predicted))
+            prediction = np.concatenate((prediction,predicted_classes))
             total += test_batch_l.size(0) 
             test_batch_l = test_batch_l.long()
-            correct += (predicted == test_batch_l).sum().item()
+            predicted_classes = predicted_classes.to(device)
+            correct += (predicted_classes == test_batch_l).sum().item()
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
