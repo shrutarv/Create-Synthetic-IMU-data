@@ -198,6 +198,14 @@ def normalize(data, min_max):
     data = torch.tensor(data)
     return data
 
+def F1_score(precision, recall):
+    prec = precision.numpy()
+    rec = recall.numpy()
+    score = []
+    for i in range(len(prec)):
+        score.append(2*prec[i]*rec[i]/(prec[i] + rec[i]))
+    return score
+    
     
 if __name__ == '__main__':
     
@@ -366,8 +374,10 @@ if __name__ == '__main__':
     print(cm)
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
-    print(precision)
-    print(recall)
+    F1 = F1_score(precision, recall)
+    print("precision", precision)
+    print("recall", recall)
+    print("F1 score", F1)
     
     print('Finished Testing')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
