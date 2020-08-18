@@ -303,6 +303,7 @@ if __name__ == '__main__':
               correct = torch.sum(train_batch_l == predicted_classes)
               correct = correct.to(device)
               counter += out.view(-1, n_classes).size(0)
+              counter = torch.tensor(counter)
               counter = counter.to(device)
               loss.backward()
               if (b + 1) % accumulation_steps == 0:   
