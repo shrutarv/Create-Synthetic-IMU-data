@@ -147,16 +147,7 @@ FileList_x = list(set_x - set_y)
 FileList_x.sort()
 FileList_y.sort()
 k = 0 
-value =[]
 
-for k in range(999):
-    temp_list = []
-    max = -9999
-    min = 9999
-    temp_list.append(max)
-    temp_list.append(min)
-    value.append(temp_list)
-    
 
 for i,j in zip(FileList_x, FileList_y):
     k += 1

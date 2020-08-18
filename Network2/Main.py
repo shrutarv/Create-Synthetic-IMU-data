@@ -226,6 +226,12 @@ def normalize(data, min_max):
     return data
 
 if __name__ == '__main__':
+     
+    if torch.cuda.is_available():  
+          dev = "cuda:1" 
+    else:  
+          dev = "cpu"  
+    device = torch.device(dev)
     config = {
         "NB_sensor_channels":30,
         "sliding_window_length":100,
@@ -253,6 +259,7 @@ if __name__ == '__main__':
     
     model = Network(config)
     model = model.float()
+    model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
@@ -306,11 +313,11 @@ if __name__ == '__main__':
               
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
-              
+              train_batch_l = train_batch_l.to(device)
               train_batch_v = normalize(train_batch_v, value)
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
-              
+              train_batch_v = train_batch_v.to(device)
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))

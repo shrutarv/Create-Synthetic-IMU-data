@@ -228,7 +228,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 3
-    batch_size = 50
+    batch_size = 1
     l = []
     tot_loss = 0
     accuracy = []
@@ -346,8 +346,8 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-            test_batch_v.to(device)
-            test_batch_l.to(device)
+            test_batch_v = test_batch_v.to(device)
+            test_batch_l = test_batch_l.to(device)
             test_batch_v = test_batch_v.float()
             out = model(test_batch_v)
             #print("Next Batch result")
