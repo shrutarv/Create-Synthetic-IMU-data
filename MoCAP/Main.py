@@ -18,36 +18,6 @@ import csv
 import pickle
 import pandas as pd
 
-cuda = "True"
-torch.manual_seed(1111)
-if torch.cuda.is_available():
-    if not cuda:
-        print("WARNING: You have a CUDA device, so you should probably run with --cuda")
-        
-def getTrainData(path,batch_size):
-        
-    
-    train_data = []
-    #path = '/data/sawasthi/data/trainData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
-    #while folder_counter < 10:
-        #some code to get path_to_imgs which is the location of the image folder
-    train_dataset = CustomDataSet(path)
-    #all_datasets.append(train_dataset)
-    
-        
-    #final_dataset = torch.utils.data.ConcatDataset(train_dataset)
-    train_loader = DataLoader(train_dataset, shuffle=False,
-                                      batch_size=batch_size,
-                                       num_workers=0,
-                                       pin_memory=True,
-                                       drop_last=True)
-    for idx, input_seq  in enumerate(train_loader):
-        train_data.append(input_seq)
-        
-    return train_data
-
-
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
 '''
@@ -70,49 +40,10 @@ def normalize(data,ws):
         return data_new
 '''
 
-def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumulation_steps):
-          
-    #global i, total_loss, counter
-    index = 0
-    correct = 0
-    counter = 0 
-    model.train()
-    total_loss = 0
-    n_classes = 8
-    
-    train_x = train_x.float()
-    train_x = train_x + noise
-    #x = np.reshape(x,(batch_size,ws,features))
-    #x = np.reshape(x,(batch_size,features,ws))
-    #out = model(x.unsqueeze(1).contiguous())
-    out = model(train_x)
-    #out = model(x)
-    train_y = train_y.long()
-    loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-    
-    pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-    correct += pred.eq(train_y.data.view_as(pred)).sum().item()
-    counter += out.view(-1, n_classes).size(0)
-    
-    loss.backward()
-    if (index + 1) % accumulation_steps == 0:   
-      optimizer.step()
-      # zero the parameter gradients
-      optimizer.zero_grad()
-    #optimizer.step()
-    #total_loss += loss.item()
-    
-    print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
-    
-    
-   
-    #torch.save(model.state_dict(), model_path)
-    #print(index)
-    
-    counter+=1
-    return loss.item(), correct
-    
-
+'''
+Calculates precision and recall for all class using confusion matrix (cm)
+returns list of precision and recall values
+'''  
 def get_precision_recall(targets, predictions):
         precision = torch.zeros((8))
         recall = torch.zeros((8))
@@ -148,6 +79,8 @@ def get_precision_recall(targets, predictions):
 
         return precision, recall
         
+
+    
 def performance_metrics(cm):
     precision = []
     recall = []
@@ -200,6 +133,7 @@ min_max - list of max and min values for all channels across the entire training
 
 output
 returns normalized data between [0,1]
+
 '''
 def normalize(data, min_max):
     
@@ -212,6 +146,9 @@ def normalize(data, min_max):
     data = torch.tensor(data)
     return data
 
+'''
+returns a list of F1 score for all classes
+'''
 def F1_score(precision, recall):
     prec = precision.numpy()
     rec = recall.numpy()
