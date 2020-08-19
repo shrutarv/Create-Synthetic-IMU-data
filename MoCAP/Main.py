@@ -108,22 +108,22 @@ def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
     data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    for i in range(data_x.shape[0]):
-        temp_values = []
-        for attr in range(data.shape[2]):
-            attribute = []
-            temp_max = np.max(data[i,:,attr])
-            temp_min = np.min(data[i,:,attr])
-            if (values[attr][0] > temp_max):
-                attribute.append(values[attr][0])
-            else:
-                attribute.append(temp_max)
-            if(values[attr][1] < temp_min):
-                attribute.append(values[attr][1])
-            else:
-                attribute.append(temp_min)
-            temp_values.append(attribute)  
-        values = temp_values
+    
+    temp_values = []
+    for attr in range(data.shape[2]):
+        attribute = []
+        temp_max = np.max(data[:,:,attr])
+        temp_min = np.min(data[:,:,attr])
+        if (values[attr][0] > temp_max):
+            attribute.append(values[attr][0])
+        else:
+            attribute.append(temp_max)
+        if(values[attr][1] < temp_min):
+            attribute.append(values[attr][1])
+        else:
+            attribute.append(temp_min)
+        temp_values.append(attribute)  
+    values = temp_values
     return values
    
 '''
