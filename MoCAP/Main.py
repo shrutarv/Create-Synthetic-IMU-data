@@ -163,7 +163,14 @@ def performance_metrics(cm):
     rec_avg = sum(recall)/len(recall)
     return precision, recall
 
+'''
+Create a list with max and min values for each channel for the input data
+data - input in form [batch size, 1, window size, channels]
+values - input argument having the max and min values of all channels from the previous iteration.
+         Compares these previous values to current min and max values and updates
+output - returns a list with max and min values for all channels
 
+'''
 def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
@@ -186,7 +193,14 @@ def max_min_values(data, values):
         values = temp_values
     return values
    
+'''
+Input
+data - input matrix to normalize
+min_max - list of max and min values for all channels across the entire training and test data
 
+output
+returns normalized data between [0,1]
+'''
 def normalize(data, min_max):
     
     data = data.numpy()
@@ -267,7 +281,8 @@ if __name__ == '__main__':
                                    drop_last=True)
   
     print("preparing data for normalisation")
-    # Normalise the data
+    
+    # Initialise values list to store max and min values across all channels
     value = []
     for k in range(999):
         temp_list = []
@@ -281,7 +296,23 @@ if __name__ == '__main__':
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    
+        
+    # Test data    
+    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+        
+    for b, harwindow_batched in enumerate(dataLoader_test):
+        data_x = harwindow_batched["data"]
+        data_x.to(device)
+        value = max_min_values(data_x,value)
+         
     print('Start Training')
     correct = 0
     counter = 0 
@@ -337,15 +368,6 @@ if __name__ == '__main__':
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
     print('Start Testing')
-    path = '/data/sawasthi/data/MoCAP_data/testData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
     total = 0.0
     correct = 0.0
     with torch.no_grad():
@@ -353,9 +375,11 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_l = normalize(test_batch_l, value)
+            test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
-            test_batch_v = test_batch_v.float()
+            
             out = model(test_batch_v)
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
