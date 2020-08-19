@@ -143,53 +143,7 @@ def performance_metrics(cm):
     rec_avg = sum(recall)/len(recall)
     return precision, recall
 
-def Training(train_x, train_y, noise, model_path,batch_size, total_loss, accumulation_steps):
-          
-    #global i, total_loss, counter
-    index = 0
-    correct = 0
-    counter = 0 
-    
-    total_loss = 0
-    n_classes = 8
-    
- #start_ind = batch
- #end_ind = start_ind + batch_size
- 
- #x = train_x[index]
- #y = train_y[index]
-# optimizer.zero_grad()
-    train_x = train_x.float()
-    train_x = train_x + noise
-    #x = np.reshape(x,(batch_size,ws,features))
-    #x = np.reshape(x,(batch_size,features,ws))
-    #out = model(x.unsqueeze(1).contiguous())
-    out = model(train_x)
-    #out = model(x)
-    train_y = train_y.long()
-    #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-    loss = criterion(out,train_y)*(1/accumulation_steps)
-    pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
-    correct += pred.eq(train_y.data.view_as(pred)).cpu().sum().item()
-    counter += out.view(-1, n_classes).size(0)
-    
-    loss.backward()
-    if (index + 1) % accumulation_steps == 0:   
-      optimizer.step()
-      # zero the parameter gradients
-      optimizer.zero_grad()
-    #optimizer.step()
-    #total_loss += loss.item()
-    #if index % 50 == 49:    # print every 2000 mini-batches
-    print(' loss: ', loss.item(), 'accuracy in percent',100.*correct/counter)
-    
-    index += 1
-   
-    #torch.save(model.state_dict(), model_path)
-    #print(index)
-    
-    
-    return loss.item(), correct
+
 
 def max_min_values(data, values):
     temp_values = []
@@ -321,7 +275,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l.view(-1))*(1/accumulation_steps)
               #pred = out.view(-1, n_classes).data.max(1, keepdim=True)[1]
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               predicted_classes = predicted_classes.to(device)
@@ -369,6 +323,7 @@ if __name__ == '__main__':
     dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                   batch_size=batch_size)
     total = 0.0
+    correct = 0.0
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):

@@ -117,6 +117,7 @@ class Network(nn.Module):
             x = x.permute(0, 3, 1, 2)
 
         if self.config["network"] == "cnn":
+            print(x.shape)
             x = F.relu(self.conv1_1(x))
             x = F.relu(self.conv1_2(x))
             #x12 = F.max_pool2d(x12, (2, 1))
@@ -124,7 +125,7 @@ class Network(nn.Module):
             x = F.relu(self.conv2_1(x))
             x = F.relu(self.conv2_2(x))
             # x = F.max_pool2d(x, (2, 1))
-
+            print(x.shape)
             # view is reshape
             x = x.view(-1, x.size()[1] * x.size()[2] * x.size()[3])
             x = F.relu(self.fc3(x))
