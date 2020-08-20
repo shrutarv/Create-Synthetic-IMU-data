@@ -286,7 +286,7 @@ if __name__ == '__main__':
                 # zero the parameter gradients
                 optimizer.zero_grad()
               b = list(model.parameters())[0].clone()
-              torch.equal(a.data, b.data)
+              print(torch.equal(a.data, b.data))
               print(' loss: ', loss.item(), 'accuracy in percent',100.*correct.item()/counter)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
