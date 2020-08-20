@@ -250,11 +250,15 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
+    for param in model.parameters():
+        param.requires_grad = False
+    
     print('Start Training')
     correct = 0
     counter = 0 
     total_loss = 0
     n_classes = 8
+    model.train()
     for e in range(epochs):
           print("next epoch")
           #loop per batch:
