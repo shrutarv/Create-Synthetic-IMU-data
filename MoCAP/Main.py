@@ -312,7 +312,7 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-            test_batch_l = normalize(test_batch_l, value)
+            test_batch_v = normalize(test_batch_v, value)
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
