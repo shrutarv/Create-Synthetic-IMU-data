@@ -244,12 +244,12 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    
+    '''
     for b, harwindow_batched in enumerate(dataLoader_test):
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    
+    '''
     
     print('Start Training')
     correct = 0
