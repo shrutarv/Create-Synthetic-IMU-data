@@ -228,12 +228,12 @@ if __name__ == '__main__':
         temp_list.append(maxim)
         temp_list.append(minim)
         value.append(temp_list)
-    '''    
+      
     for b, harwindow_batched in enumerate(dataLoader_train):
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    '''
+    
     # Test data    
     path = '/data/sawasthi/data/MoCAP_data/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
@@ -244,14 +244,12 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
+    
     for b, harwindow_batched in enumerate(dataLoader_test):
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    '''
-    for param in model.parameters():
-        param.requires_grad = False
+    
     
     print('Start Training')
     correct = 0
