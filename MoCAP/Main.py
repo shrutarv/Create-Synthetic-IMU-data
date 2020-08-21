@@ -228,7 +228,7 @@ if __name__ == '__main__':
         temp_list.append(maxim)
         temp_list.append(minim)
         value.append(temp_list)
-   '''   
+    '''   
     for b, harwindow_batched in enumerate(dataLoader_train):
         data_x = harwindow_batched["data"]
         data_x.to(device)
