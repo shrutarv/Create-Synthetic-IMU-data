@@ -103,7 +103,7 @@ values - input argument having the max and min values of all channels from the p
          Compares these previous values to current min and max values and updates
 output - returns a list with max and min values for all channels
 
-'''
+'''  # Calculate max min and save it to save time.
 def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
@@ -149,7 +149,7 @@ def normalize(data, min_max):
 '''
 returns a list of F1 score for all classes
 '''
-def F1_score(precision, recall):
+def F1_score(precision, recall): # calculate in torch. Compute accuracy
     prec = precision.numpy()
     rec = recall.numpy()
     score = []
@@ -196,7 +196,7 @@ if __name__ == '__main__':
     model = model.float()
     model = model.to(device)
     #model.load_state_dict(torch.load())
-    #print("model loaded")
+    #print("model loaded")   # 
     noise = np.random.normal(0,1,(batch_size,1,ws,features))
     #noise = np.random.normal(0,1,(batch_size,features,ws))
     noise = torch.tensor(noise)
@@ -275,7 +275,7 @@ if __name__ == '__main__':
               
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l)#*(1/accumulation_steps)
               predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               predicted_classes = predicted_classes.to(device)
               correct += torch.sum(train_batch_l == predicted_classes)
