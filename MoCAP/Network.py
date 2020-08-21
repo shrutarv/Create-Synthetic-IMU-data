@@ -81,12 +81,14 @@ class Network(nn.Module):
                                      kernel_size=(self.config['filter_size'], 1),
                                      stride=1, padding=0)
 
+            # CHECK: RESHAPE IFS ARENT NEEDED AS YOU ARENT GONNA REHAPE
             if self.config["reshape_input"]:
                 self.fc3 = nn.Linear(self.config['num_filters'] * int(Wx) * int(self.config['NB_sensor_channels'] / 3),
                                      256)
             else:
                 self.fc3 = nn.Linear(self.config['num_filters'] * int(Wx) * self.config['NB_sensor_channels'], 256)
 
+        #CHECK, THE CNN IMU WONT BE USED BY YOU.
         # set the Conv layers
         if self.config["network"] == "cnn_imu":
             # later
@@ -97,6 +99,7 @@ class Network(nn.Module):
         elif self.config["network"] == "cnn_imu":
             self.fc4 = nn.Linear(256 * 5, 256)
 
+        # CHECK, YOU DONT NEED THE ATTRIBUTES PART
         if self.config['output'] == 'softmax': 
             self.fc5 = nn.Linear(256, self.config['num_classes'])
         elif self.config['output'] == 'attribute':  
@@ -111,6 +114,7 @@ class Network(nn.Module):
     
 
     def forward(self, x):
+        # YOU DONT NEED THIS
         if self.config["reshape_input"]:
             x = x.permute(0, 2, 1, 3)
             x = x.view(x.size()[0], x.size()[1], int(x.size()[3] / 3), 3)
