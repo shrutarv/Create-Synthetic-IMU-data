@@ -203,8 +203,8 @@ if __name__ == '__main__':
     noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0001)
-    
+    #optimizer = optim.Adam(model.parameters(), lr=0.0001)
+    optimizer = optim.SGD(model.parameters(), lr=0.001, momentum=0.9)
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     path = '/data/sawasthi/data/MoCAP_data/trainData/'
