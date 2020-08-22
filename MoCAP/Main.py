@@ -204,7 +204,7 @@ if __name__ == '__main__':
         
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     value = df.values.tolist()
-    print(len(value), len(value[0]))
+    print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
     model = model.to(device)
