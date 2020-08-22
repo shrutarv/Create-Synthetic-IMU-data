@@ -160,7 +160,7 @@ def F1_score(precision, recall): # calculate in torch. Compute accuracy
     
 def metrics(predictions, true, correct):
     counter = 0.0
-    predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+    predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.cuda.LongTensor)
     accuracy = torch.sum(true == predicted_classes)
     #predicted_classes = predicted_classes.to(device)
     correct = torch.sum(true == predicted_classes)
@@ -203,6 +203,7 @@ if __name__ == '__main__':
     accuracy = []
         
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     value = df.values.tolist()
     print(len(df),len(value), len(value[0]))
     model = Network(config)
