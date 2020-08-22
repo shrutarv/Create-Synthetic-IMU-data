@@ -14,7 +14,7 @@ def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
     data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    print(data.shape)
+    #print(data.shape)
     temp_values = []
     for attr in range(data.shape[2]):
         attribute = []
@@ -81,7 +81,7 @@ for b, harwindow_batched in enumerate(dataLoader_train):
     data_x = harwindow_batched["data"]
     data_x.to(device)
     value = max_min_values(data_x,value)
-print(len(value),len(value[0]))
+print("size of max min list of list", len(value),len(value[0]))
 with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv", 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
     fc.writerow(["max","min"])
