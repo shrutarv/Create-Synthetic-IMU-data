@@ -135,14 +135,23 @@ output
 returns normalized data between [0,1]
 
 '''
-def normalize(data, min_max):
-    print(len(min_max), len(min_max[0]))
+def normalize(data, min_max, string):
+    #print(len(min_max), len(min_max[0]))
     data = data.numpy()
-    print(data.shape)
+    #print(data.shape)
     data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
     for i in range(data.shape[0]):
         for j in range(data.shape[2]):
             data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
+    test = np.array(data[:,:,:])
+    if (string=="train"):
+        if(np.max(test)>1):
+            print("Error")
+        if(np.min(test)<0):
+            print("Error")
+    if (string=="test"):
+        test[test > 1] = 1
+        test[test < 0] = 0
     data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     data = torch.tensor(data)
     return data
@@ -263,7 +272,7 @@ if __name__ == '__main__':
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
-              train_batch_v = normalize(train_batch_v, value)
+              train_batch_v = normalize(train_batch_v, value, "train")
               train_batch_v = train_batch_v.float()
               train_batch_v = train_batch_v + noise
               train_batch_v = train_batch_v.to(device)
