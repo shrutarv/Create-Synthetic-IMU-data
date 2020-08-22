@@ -160,9 +160,9 @@ def F1_score(precision, recall): # calculate in torch. Compute accuracy
     
 def metrics(predictions, true, correct):
     counter = 0.0
-    predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.cuda.LongTensor)
+    predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+    predicted_classes = predicted_classes.to(device)
     accuracy = torch.sum(true == predicted_classes)
-    #predicted_classes = predicted_classes.to(device)
     correct = torch.sum(true == predicted_classes)
     counter = true.size(0)
     accuracy = 100.*correct.item()/counter
