@@ -191,6 +191,9 @@ if __name__ == '__main__':
     l = []
     tot_loss = 0
     accuracy = []
+        
+    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    value = df.values.tolist()
     
     model = Network(config)
     model = model.float()
@@ -217,23 +220,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
   
-    print("preparing data for normalisation")
-    
-    # Initialise values list to store max and min values across all channels
-    value = []
-    for k in range(999):
-        temp_list = []
-        maxim = -9999
-        minim = 9999
-        temp_list.append(maxim)
-        temp_list.append(minim)
-        value.append(temp_list)
-      
-    for b, harwindow_batched in enumerate(dataLoader_train):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    
+   
     # Test data    
     path = '/data/sawasthi/data/MoCAP_data/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'

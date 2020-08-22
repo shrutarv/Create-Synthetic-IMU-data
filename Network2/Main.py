@@ -144,8 +144,29 @@ def performance_metrics(cm):
     return precision, recall
 
 
-
 def max_min_values(data, values):
+    temp_values = []
+    data = data.numpy()
+    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
+    
+    temp_values = []
+    for attr in range(data.shape[2]):
+        attribute = []
+        temp_max = np.max(data[:,:,attr])
+        temp_min = np.min(data[:,:,attr])
+        if (values[attr][0] > temp_max):
+            attribute.append(values[attr][0])
+        else:
+            attribute.append(temp_max)
+        if(values[attr][1] < temp_min):
+            attribute.append(values[attr][1])
+        else:
+            attribute.append(temp_min)
+        temp_values.append(attribute)  
+    values = temp_values
+    return values
+   
+def max_min(data, values):
     temp_values = []
     data = data.numpy()
     data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
@@ -252,7 +273,22 @@ if __name__ == '__main__':
     for b, harwindow_batched in enumerate(dataLoader_train):
         data_x = harwindow_batched["data"]
         value = max_min_values(data_x,value)
-    
+        
+    # Test data    
+    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+        
+    for b, harwindow_batched in enumerate(dataLoader_test):
+        data_x = harwindow_batched["data"]
+        data_x.to(device)
+        value = max_min_values(data_x,value)
     print('Start Training')
     acc = 0
     correct = 0
@@ -264,7 +300,7 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              
+              break
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_l = train_batch_l.to(device)
