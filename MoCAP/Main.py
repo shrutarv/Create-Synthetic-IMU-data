@@ -157,6 +157,15 @@ def F1_score(precision, recall): # calculate in torch. Compute accuracy
         score.append(2*prec[i]*rec[i]/(prec[i] + rec[i]))
     return score
     
+def metrics(predictions, true, correct):
+    counter = 0.0
+    predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+    accuracy = torch.sum(true == predicted_classes)
+    #predicted_classes = predicted_classes.to(device)
+    correct = torch.sum(true == predicted_classes)
+    counter = true.size(0)
+    accuracy = 100.*correct.item()/counter
+    return accuracy, correct
     
 if __name__ == '__main__':
     
@@ -240,7 +249,6 @@ if __name__ == '__main__':
     
     print('Start Training')
     correct = 0
-    counter = 0 
     total_loss = 0
     n_classes = 8
     model.train()
@@ -259,14 +267,14 @@ if __name__ == '__main__':
               train_batch_v = train_batch_v.to(device)
               #print(train_batch_v.device)
               out = model(train_batch_v)
-              
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
               loss = criterion(out,train_batch_l)#*(1/accumulation_steps)
-              predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-              predicted_classes = predicted_classes.to(device)
-              correct += torch.sum(train_batch_l == predicted_classes)
-              counter += out.size(0)
+              #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+              #predicted_classes = predicted_classes.to(device)
+              
+              #correct += torch.sum(train_batch_l == predicted_classes)
+              #counter += out.size(0)
               a = list(model.parameters())[0].clone() 
               loss.backward()
               
@@ -276,13 +284,14 @@ if __name__ == '__main__':
                 optimizer.zero_grad()
               b = list(model.parameters())[0].clone()
               print(torch.equal(a.data, b.data))
-              print(' loss: ', loss.item(), 'accuracy in percent',100.*correct.item()/counter)
+              accuracy, correct = metrics(out, train_batch_l, correct)
+              print(' loss: ', loss.item(), 'accuracy in percent',accuracy)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
           l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*correct/((e+1)*(b + 1)*batch_size))
+          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
     
     print('Finished Training')
     ep = list(range(1,e+2))   
