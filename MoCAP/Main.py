@@ -138,6 +138,7 @@ returns normalized data between [0,1]
 def normalize(data, min_max):
     
     data = data.numpy()
+    print(data.shape)
     data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
     for i in range(data.shape[0]):
         for j in range(data.shape[2]):
