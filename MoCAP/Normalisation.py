@@ -5,7 +5,6 @@ Created on Sat Aug 22 07:53:30 2020
 @author: Shrutarv
 """
 import numpy as np
-from DataLoader import CustomDataSet, CustomDataSetTest
 from torch.utils.data import DataLoader
 import torch
 import csv
@@ -43,6 +42,7 @@ returns normalized data between [0,1]
 '''
 
 path = '/data/sawasthi/data/MoCAP_data/trainData/'
+#path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/'
 batch_size = 50
 if torch.cuda.is_available():  
           dev = "cuda:1" 
@@ -72,6 +72,7 @@ for b, harwindow_batched in enumerate(dataLoader_train):
     data_x.to(device)
     value = max_min_values(data_x,value)
 print("size of max min list of list", len(value),len(value[0]))
+
 with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv", 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
     fc.writerow(["max","min"])

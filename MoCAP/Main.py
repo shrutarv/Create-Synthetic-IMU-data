@@ -220,10 +220,8 @@ if __name__ == '__main__':
     model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
-    noise = np.random.normal(0,1,(batch_size,1,ws,features))
-    #noise = np.random.normal(0,1,(batch_size,features,ws))
-    noise = torch.tensor(noise)
-    noise = noise.float()
+    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+    #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=0.0001)
@@ -274,6 +272,10 @@ if __name__ == '__main__':
               train_batch_l = train_batch_l.to(device)
               train_batch_v = normalize(train_batch_v, value, "train")
               train_batch_v = train_batch_v.float()
+              noise = normal.sample((train_batch_v.size()))
+              noise = noise.reshape(train_batch_v.size())
+              noise = noise.to(device, dtype=torch.float)
+
               train_batch_v = train_batch_v + noise
               train_batch_v = train_batch_v.to(device)
               #print(train_batch_v.device)
@@ -324,7 +326,7 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-            test_batch_v = normalize(test_batch_v, value)
+            test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
