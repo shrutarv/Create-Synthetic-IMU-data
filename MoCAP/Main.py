@@ -146,9 +146,9 @@ def normalize(data, min_max, string):
     test = np.array(data[:,:,:])
     if (string=="train"):
         if(np.max(test)>1):
-            print("Error")
+            print("Error",np.max(test))
         if(np.min(test)<0):
-            print("Error")
+            print("Error",np.min(test))
     if (string=="test"):
         test[test > 1] = 1
         test[test < 0] = 0
