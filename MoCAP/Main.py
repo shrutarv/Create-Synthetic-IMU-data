@@ -167,11 +167,12 @@ def F1_score(precision, recall): # calculate in torch. Compute accuracy
         score.append(2*prec[i]*rec[i]/(prec[i] + rec[i]))
     return score
     
-def metrics(predictions, true, correct):
+def metrics(predictions, true):
     counter = 0.0
+    correct = 0.0
     predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
     predicted_classes = predicted_classes.to(device)
-    accuracy = torch.sum(true == predicted_classes)
+    
     correct = torch.sum(true == predicted_classes)
     counter = true.size(0)
     accuracy = 100.*correct.item()/counter
@@ -289,16 +290,16 @@ if __name__ == '__main__':
               
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
-              a = list(model.parameters())[0].clone() 
+              #a = list(model.parameters())[0].clone() 
               loss.backward()
               
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-              b = list(model.parameters())[0].clone()
-              print(torch.equal(a.data, b.data))
-              accuracy, correct = metrics(out, train_batch_l, correct)
+              #b = list(model.parameters())[0].clone()
+              #print(torch.equal(a.data, b.data))
+              accuracy, correct = metrics(out, train_batch_l)
               print(' loss: ', loss.item(), 'accuracy in percent',accuracy)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
