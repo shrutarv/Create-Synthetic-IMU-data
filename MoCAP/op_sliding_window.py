@@ -136,14 +136,14 @@ ss = (25,134)     #for MoCAP
 sliding_window_length = 200   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 25
-data_dir =  "/data/sawasthi/data/MoCAP_data/trainData/"
+data_dir =  "/data/sawasthi/data/MoCAP_data/testData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 
 #    print (np.shape(i[:,0]))
-folder_name = "P10"
+folder_name = "P13"
 FileList_y = []
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
