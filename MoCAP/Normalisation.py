@@ -84,6 +84,7 @@ for b, harwindow_batched in enumerate(dataLoader_train):
 print(len(value),len(value[0]))
 with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv", 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
+    fc.writerow(["max","min"])
     fc.writerows(value)
     
 
