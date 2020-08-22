@@ -145,9 +145,9 @@ def normalize(data, min_max, string):
             data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
     test = np.array(data[:,:,:])
     if (string=="train"):
-        if(np.max(test)>1):
+        if(np.max(test)>1.001):
             print("Error",np.max(test))
-        if(np.min(test)<0):
+        if(np.min(test)<-0.001):
             print("Error",np.min(test))
     if (string=="test"):
         test[test > 1] = 1
@@ -206,7 +206,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 10
+    epochs = 20
     batch_size = 50
     l = []
     tot_loss = 0
@@ -299,8 +299,8 @@ if __name__ == '__main__':
                 optimizer.zero_grad()
               #b = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, b.data))
-              accuracy, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',accuracy)
+              acc, correct = metrics(out, train_batch_l)
+              print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
