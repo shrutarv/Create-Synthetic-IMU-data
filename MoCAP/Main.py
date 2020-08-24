@@ -159,14 +159,38 @@ def normalize(data, min_max, string):
 '''
 returns a list of F1 score for all classes
 '''
-def F1_score(precision, recall): # calculate in torch. Compute accuracy
-    prec = precision.numpy()
-    rec = recall.numpy()
-    score = []
-    for i in range(len(prec)):
-        score.append(2*prec[i]*rec[i]/(prec[i] + rec[i]))
-    return score
-    
+def f1_score(targets, preds):
+        # Accuracy
+        
+        predictions = torch.argmax(preds, dim=1)
+        precision, recall = get_precision_recall(targets, predictions)
+        proportions = torch.zeros(config['num_classes'])
+
+        
+        for c in range(config['num_classes']):
+            proportions[c] = torch.sum(targets == c).item() / float(targets.size()[0])
+        
+        logging.info(' Metric:    \nPrecision: \n{}\nRecall\n{}'.format(precision, recall))
+
+        multi_pre_rec = precision * recall
+        sum_pre_rec = precision + recall
+
+        multi_pre_rec[torch.isnan(multi_pre_rec)] = 0
+        sum_pre_rec[torch.isnan(sum_pre_rec)] = 0
+
+        # F1 weighted
+        weighted_f1 = proportions * (multi_pre_rec / sum_pre_rec)
+        weighted_f1[np.isnan(weighted_f1)] = 0
+
+        F1_weighted = torch.sum(weighted_f1) * 2
+
+        # F1 mean
+        f1 = multi_pre_rec / sum_pre_rec
+        f1[torch.isnan(f1)] = 0
+
+        F1_mean = torch.sum(f1) * 2 / self.config['num_classes']
+
+        return F1_weighted, F1_mean
 def metrics(predictions, true):
     counter = 0.0
     correct = 0.0
@@ -351,7 +375,7 @@ if __name__ == '__main__':
     print(cm)
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
-    F1 = F1_score(precision, recall)
+    F1 = F1_score(trueValue, prediction)
     print("precision", precision)
     print("recall", recall)
     print("F1 score", F1)
