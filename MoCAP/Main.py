@@ -161,7 +161,7 @@ returns a list of F1 score for all classes
 '''
 def F1_score(targets, preds, precision, recall):
         # Accuracy
-        
+        targets = torch.tensor(targets)
         #predictions = torch.argmax(preds, dim=1)
         #precision, recall = get_precision_recall(targets, preds)
         proportions = torch.zeros(config['num_classes'])
