@@ -159,11 +159,11 @@ def normalize(data, min_max, string):
 '''
 returns a list of F1 score for all classes
 '''
-def F1_score(targets, preds):
+def F1_score(targets, preds, precision, recall):
         # Accuracy
         
-        predictions = torch.argmax(preds, dim=1)
-        precision, recall = get_precision_recall(targets, predictions)
+        #predictions = torch.argmax(preds, dim=1)
+        #precision, recall = get_precision_recall(targets, preds)
         proportions = torch.zeros(config['num_classes'])
 
         for c in range(config['num_classes']):
@@ -225,7 +225,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 20
+    epochs = 40
     batch_size = 50
     l = []
     tot_loss = 0
@@ -370,7 +370,7 @@ if __name__ == '__main__':
     print(cm)
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
-    F1_weighted, F1_mean = F1_score(trueValue, prediction)
+    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
     print("precision", precision)
     print("recall", recall)
     print("F1 weighted", F1_weighted)
