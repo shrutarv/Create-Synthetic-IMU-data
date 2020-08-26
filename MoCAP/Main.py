@@ -260,11 +260,11 @@ if __name__ == '__main__':
   
    
     # Test data    
-    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    path = '/data/sawasthi/data/MoCAP_data/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+    validation_dataset = CustomDataSet(path)
+    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
                                   batch_size=batch_size,
                                    num_workers=0,
                                    pin_memory=True,
@@ -339,12 +339,12 @@ if __name__ == '__main__':
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
-    print('Start Testing')
+    print('Start Validation')
     total = 0.0
     correct = 0.0
     with torch.no_grad():
             
-        for b, harwindow_batched in enumerate(dataLoader_test):
+        for b, harwindow_batched in enumerate(dataLoader_validation):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
             test_batch_v = normalize(test_batch_v, value,"test")
@@ -376,7 +376,7 @@ if __name__ == '__main__':
     print("F1 weighted", F1_weighted)
     print("F1 mean",F1_mean)
     
-    print('Finished Testing')
+    print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
     with open('/data/sawasthi/data/MoCAP_data/results/result.csv', 'w') as myfile:
