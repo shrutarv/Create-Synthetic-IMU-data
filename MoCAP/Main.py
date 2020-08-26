@@ -226,7 +226,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 50
-    batch_size = 400
+    batch_size = 40
     l = []
     tot_loss = 0
     accuracy = []
