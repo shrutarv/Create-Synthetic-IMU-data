@@ -15,7 +15,7 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
-import pickle
+
 import pandas as pd
 
 
@@ -256,8 +256,8 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 3
-    batch_size = 50
+    epochs = 1
+    batch_size = 80
     l = []
     tot_loss = 0
     accuracy = []
@@ -291,12 +291,23 @@ if __name__ == '__main__':
                                    drop_last=True)
   
    
-    # Test data    
+    # Validation data    
     path = '/data/sawasthi/data/MoCAP_data/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
     dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    
+    # Test data    
+    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                   batch_size=batch_size,
                                    num_workers=0,
                                    pin_memory=True,
@@ -389,13 +400,18 @@ if __name__ == '__main__':
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
-    print('Start Validation')
+    print('Start Testing')
     
     total = 0.0
     correct = 0.0
+    trueValue = np.array([], dtype=np.int64)
+    prediction = np.array([], dtype=np.int64)
+    total_loss = 0.0
+    model = torch.load(model, model_path)
+    model.eval()
     with torch.no_grad():
             
-        for b, harwindow_batched in enumerate(dataLoader_validation):
+        for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
             test_batch_v = normalize(test_batch_v, value,"test")
