@@ -197,6 +197,39 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
     
+def validation(dataLoader_validation):
+    total = 0.0
+    correct = 0.0
+    trueValue = np.array([], dtype=np.int64)
+    prediction = np.array([], dtype=np.int64)
+    total_loss = 0.0
+    with torch.no_grad():
+            
+        for b, harwindow_batched in enumerate(dataLoader_validation):
+            test_batch_v = harwindow_batched["data"]
+            test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_v = normalize(test_batch_v, value,"test")
+            test_batch_v = test_batch_v.float()
+            test_batch_v = test_batch_v.to(device)
+            test_batch_l = test_batch_l.to(device)
+            test_batch_l = test_batch_l.long()
+            out = model(test_batch_v)
+            loss = criterion(out,train_batch_l)
+            #print("Next Batch result")
+            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+            #predicted = Testing(test_batch_v, test_batch_l)
+            trueValue = np.concatenate((trueValue, test_batch_l))
+            prediction = np.concatenate((prediction,predicted_classes))
+            total += test_batch_l.size(0) 
+            test_batch_l = test_batch_l.long()
+            predicted_classes = predicted_classes.to(device)
+            correct += (predicted_classes == test_batch_l).sum().item()
+            total_loss += loss.item()
+            #counter = out.view(-1, n_classes).size(0)
+        
+    print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
+    return (100. * correct / total, loss.item()/(b+1))
+        
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
@@ -220,13 +253,11 @@ if __name__ == '__main__':
     ws=200
     features = 126
     accumulation_steps = 5
-    trueValue = np.array([], dtype=np.int64)
-    prediction = np.array([], dtype=np.int64)
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 50
-    batch_size = 40
+    epochs = 20
+    batch_size = 80
     l = []
     tot_loss = 0
     accuracy = []
@@ -281,8 +312,11 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0
     n_classes = 8
-    model.train()
+    best_acc = 0.0
+    validation_loss = []
+    validation_acc = []
     for e in range(epochs):
+          model.train()
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
@@ -304,7 +338,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l)#*(1/accumulation_steps)
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
@@ -325,22 +359,38 @@ if __name__ == '__main__':
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
+          
+          model.eval()
+          val_acc, val_loss =  validation(dataLoader_validation)
+          validation_loss.append(val_loss)
+          validation_acc.append(val_acc)
+          if (val_acc >= best_acc):
+              torch.save(model, model_path)
+              print("model saved on epoch", e)
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
+          torch.save(model, model_path)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
+    plt.subplot(2,2,1)
+    plt.title('Training: epoch vs loss')
     plt.plot(ep,l)
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
+    plt.subplot(2,2,2)
+    plt.title('Training: epoch vs accuracy')
     plt.plot(ep,accuracy)
+    plt.subplot(2,2,3)
+    plt.title('Validation: epoch vs loss')
+    plt.plot(ep,validation_loss)
+    plt.subplot(2,2,4)
+    plt.title('Validation: epoch vs accuracy')
+    plt.plot(ep,validation_acc)
     plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
     print('Start Validation')
+    
     total = 0.0
     correct = 0.0
     with torch.no_grad():
