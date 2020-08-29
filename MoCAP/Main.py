@@ -256,7 +256,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 1
+    epochs = 30
     batch_size = 50
     l = []
     tot_loss = 0
@@ -381,6 +381,7 @@ if __name__ == '__main__':
           if (val_acc >= best_acc):
               torch.save(model, model_path)
               print("model saved on epoch", e)
+              best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           torch.save(model, model_path)
@@ -411,6 +412,7 @@ if __name__ == '__main__':
     prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
     model = torch.load(model_path)
+    print("best model loaded")
     model.eval()
     with torch.no_grad():
             

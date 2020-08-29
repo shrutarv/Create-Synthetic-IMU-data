@@ -142,6 +142,7 @@ target_filename = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/target_path/pamap2.pk
 data = get_PAMAP2_data(dataset, target_filename)
 data_x = data[0][0]
 labels = data[0][1]
+labels = np.reshape(labels,(len(labels),1))
 k = 0
 example_creating_windows_file(k, data_x, labels)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
