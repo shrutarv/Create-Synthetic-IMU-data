@@ -279,7 +279,7 @@ if __name__ == '__main__':
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     path = '/data/sawasthi/data/MoCAP_data/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -326,15 +326,12 @@ if __name__ == '__main__':
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
-    x= 0
     for e in range(epochs):
           model.train()
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              x += 1
-              if (x==50):
-                  break
+              
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
@@ -410,7 +407,7 @@ if __name__ == '__main__':
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
-    model = torch.load(model_path)
+    model = torch.load(model, model_path)
     model.eval()
     with torch.no_grad():
             
