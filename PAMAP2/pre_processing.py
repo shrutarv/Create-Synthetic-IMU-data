@@ -337,14 +337,14 @@ def generate_data(dataset, target_filename):
    # pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     #f.close()
 
-    return obj
+    return X_train,y_train,X_val, y_val, X_test, y_test
 
 
 
 
 def get_PAMAP2_data(pamap2_dataset, output):
     
-    obj = generate_data(pamap2_dataset, output)
+    X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, output)
         
     print ('Done')
-    return obj
+    return X_train,y_train,X_val, y_val, X_test, y_test

@@ -69,11 +69,6 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
 
 
 
-
-
-
-
-
 def example_creating_windows_file(k, folder_name, data_x, labels):
         # Sliding window approach
 
@@ -178,7 +173,7 @@ for i,j in zip(FileList_x, FileList_y):
     #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
     #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
     data_y = data_y.values
-    labels = data_y
+    labels = data_y[:,0]
     data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
     #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
     #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
@@ -188,7 +183,7 @@ for i,j in zip(FileList_x, FileList_y):
     data_x = data_x[:,2:128]
     
     example_creating_windows_file(k, folder_name, data_x, labels)
-    #if(k == 2):
+9    #if(k == 2):
       #  break
 
       
