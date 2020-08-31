@@ -352,7 +352,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)#*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l)*(1/accumulation_steps)
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
@@ -369,6 +369,7 @@ if __name__ == '__main__':
               print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
               print(' loss: ', loss.item(), 'accuracy in percent',acc)
+              print(' loss without div: ', (criterion(out,train_batch_l)).item())
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
