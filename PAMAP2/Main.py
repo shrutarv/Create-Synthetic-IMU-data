@@ -335,13 +335,13 @@ if __name__ == '__main__':
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
-              #train_batch_l = train_batch_l.to(device)
-              #train_batch_v = normalize(train_batch_v, value, "train")
+              train_batch_l = train_batch_l.to(device)
+              
               train_batch_v = train_batch_v.float()
-              #train_batch_v = train_batch_v.to(device)
+              train_batch_v = train_batch_v.to(device)
               noise = normal.sample((train_batch_v.size()))
               noise = noise.reshape(train_batch_v.size())
-              #noise = noise.to(device, dtype=torch.float)
+              noise = noise.to(device, dtype=torch.float)
 
               train_batch_v = train_batch_v + noise
               
