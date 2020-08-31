@@ -214,7 +214,7 @@ def validation(dataLoader_validation):
             test_batch_l = test_batch_l.to(device)
             test_batch_l = test_batch_l.long()
             out = model(test_batch_v)
-            loss = criterion(out,train_batch_l)
+            loss = criterion(out,test_batch_l)
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
