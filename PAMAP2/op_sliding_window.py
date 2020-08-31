@@ -68,7 +68,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     
     return data_x.astype(np.float32), data_y_labels.astype(np.uint8), data_y_all.astype(np.uint8)
 
-def example_creating_windows_file(k, data_x, labels):
+def example_creating_windows_file(k, data_x, labels, data_dir):
         # Sliding window approach
 
     print("Starting sliding window")
@@ -131,24 +131,39 @@ sliding_window_length = 200   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 25
 
-#data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
+data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
-dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-target_filename = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/target_path/pamap2.pkl'
+#dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+dataset = '/vol/actrec/PAMAP/PAMAP2_Dataset/'
+target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
-#data_x = data[0][0]
-#labels = data[0][1]
 label = Y_train.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-Y_train = np.reshape(Y_train,(len(label),1))
 X = X_train.astype(object)
 k = 0
-example_creating_windows_file(k, X, lab)
+example_creating_windows_file(k, X, lab, data_dir)
+
+data_dir =  "/data/sawasthi/data/PAMAP2/testData/"
+label = Y_test.astype(int)
+lab = np.zeros((len(label),20), dtype=int)
+lab[:,0] = label
+X = X_test.astype(object)
+k = 0
+example_creating_windows_file(k, X, lab,data_dir)
+
+data_dir =  "/data/sawasthi/data/PAMAP2/validationData/"
+label = Y_val.astype(int)
+lab = np.zeros((len(label),20), dtype=int)
+lab[:,0] = label
+#Y_train = np.reshape(Y_train,(len(label),1))
+X = X_val.astype(object)
+k = 0
+example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
