@@ -190,7 +190,7 @@ def metrics(predictions, true):
     counter = 0.0
     correct = 0.0
     predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
-    predicted_classes = predicted_classes.to(device)
+    #predicted_classes = predicted_classes.to(device)
     
     correct = torch.sum(true == predicted_classes)
     counter = true.size(0)
@@ -208,7 +208,7 @@ def validation(dataLoader_validation):
         for b, harwindow_batched in enumerate(dataLoader_validation):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-            test_batch_v = normalize(test_batch_v, value,"test")
+            #test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
@@ -239,7 +239,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":126,
+        "NB_sensor_channels":40,
         "sliding_window_length":200,
         "filter_size":5,
         "num_filters":64,
@@ -262,9 +262,9 @@ if __name__ == '__main__':
     tot_loss = 0
     accuracy = []
         
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    value = df.values.tolist()
+    #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
@@ -280,8 +280,8 @@ if __name__ == '__main__':
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
-    path = '/data/sawasthi/data/MoCAP_data/trainData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+    #path = '/data/sawasthi/data/MoCAP_data/trainData/'
+    path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
     dataLoader_train = DataLoader(train_dataset, shuffle=True,
@@ -331,17 +331,17 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              
+              break
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
-              train_batch_l = train_batch_l.to(device)
-              train_batch_v = normalize(train_batch_v, value, "train")
+              #train_batch_l = train_batch_l.to(device)
+              #train_batch_v = normalize(train_batch_v, value, "train")
               train_batch_v = train_batch_v.float()
-              train_batch_v = train_batch_v.to(device)
+              #train_batch_v = train_batch_v.to(device)
               noise = normal.sample((train_batch_v.size()))
               noise = noise.reshape(train_batch_v.size())
-              noise = noise.to(device, dtype=torch.float)
+              #noise = noise.to(device, dtype=torch.float)
 
               train_batch_v = train_batch_v + noise
               
@@ -361,7 +361,7 @@ if __name__ == '__main__':
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
-                optimizer.zero_grad()
+                model.zero_grad()
               #b = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)

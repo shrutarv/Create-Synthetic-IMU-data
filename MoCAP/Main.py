@@ -256,7 +256,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 30
+    epochs = 3
     batch_size = 50
     l = []
     tot_loss = 0
@@ -364,7 +364,7 @@ if __name__ == '__main__':
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
-                optimizer.zero_grad()
+                model.zero_grad()
               #b = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
