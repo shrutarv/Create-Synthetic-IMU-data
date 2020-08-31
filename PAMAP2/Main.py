@@ -45,8 +45,8 @@ Calculates precision and recall for all class using confusion matrix (cm)
 returns list of precision and recall values
 '''  
 def get_precision_recall(targets, predictions):
-        precision = torch.zeros((8))
-        recall = torch.zeros((8))
+        precision = torch.zeros((config['num_classes']))
+        recall = torch.zeros((config['num_classes']))
         predictions = torch.tensor(predictions)
         targets = torch.tensor(targets)
         x = torch.ones(predictions.size())
@@ -55,7 +55,7 @@ def get_precision_recall(targets, predictions):
         #x = x.to('cuda', dtype=torch.long)
         #y = y.to('cuda', dtype=torch.long)
 
-        for c in range(8):
+        for c in range(len(precision)):
             selected_elements = torch.where(predictions == c, x, y)
             non_selected_elements = torch.where(predictions == c, y, x)
 
