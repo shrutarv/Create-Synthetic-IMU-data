@@ -245,14 +245,12 @@ if __name__ == '__main__':
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":8,
+        "num_classes":16,
         "reshape_input":False
         }
 
 
     ws=200
-    features = 40
-    n_classes = 16
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
