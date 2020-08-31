@@ -252,12 +252,12 @@ if __name__ == '__main__':
 
     ws=200
     features = 126
-    accumulation_steps = 5
+    accumulation_steps = 10
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 3
-    batch_size = 50
+    epochs = 30
+    batch_size = 40
     l = []
     tot_loss = 0
     accuracy = []
@@ -358,15 +358,15 @@ if __name__ == '__main__':
               
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
-              a = list(model.parameters())[0].clone() 
+             # a = list(model.parameters())[0].clone() 
               loss.backward()
               
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-              b = list(model.parameters())[0].clone()
-              print(torch.equal(a.data, b.data))
+              #b = list(model.parameters())[0].clone()
+              #print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
               print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
