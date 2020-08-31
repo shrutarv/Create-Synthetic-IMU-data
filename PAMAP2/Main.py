@@ -321,7 +321,7 @@ if __name__ == '__main__':
     print('Start Training')
     correct = 0
     total_loss = 0
-    
+    x = 0
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
@@ -330,7 +330,9 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              
+              if x==50:
+                  break
+              x +=1
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
@@ -361,8 +363,8 @@ if __name__ == '__main__':
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-              b = list(model.parameters())[0].clone()
-              print(torch.equal(a.data, b.data))
+              c = list(model.parameters())[0].clone()
+              print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
               print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
