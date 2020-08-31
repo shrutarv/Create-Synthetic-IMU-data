@@ -134,17 +134,21 @@ sliding_window_step = 25
 #data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files"
+data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
 dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 target_filename = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/target_path/pamap2.pkl'
-data = get_PAMAP2_data(dataset, target_filename)
-data_x = data[0][0]
-labels = data[0][1]
-labels = np.reshape(labels,(len(labels),1))
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
+#data_x = data[0][0]
+#labels = data[0][1]
+label = Y_train.astype(int)
+lab = np.zeros((len(label),20), dtype=int)
+lab[:,0] = label
+Y_train = np.reshape(Y_train,(len(label),1))
+X = X_train.astype(object)
 k = 0
-example_creating_windows_file(k, data_x, labels)
+example_creating_windows_file(k, X, lab)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
