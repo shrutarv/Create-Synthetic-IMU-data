@@ -408,7 +408,7 @@ if __name__ == '__main__':
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
-    model = torch.load(model, model_path)
+    model = torch.load(model_path)
     model.eval()
     with torch.no_grad():
             
