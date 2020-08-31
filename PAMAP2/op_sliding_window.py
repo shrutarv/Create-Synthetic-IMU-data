@@ -134,11 +134,11 @@ sliding_window_step = 25
 data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
+#data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-dataset = '/vol/actrec/PAMAP/PAMAP2_Dataset/'
+dataset = '/vol/actrec/PAMAP/'
 target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
 label = Y_train.astype(int)
