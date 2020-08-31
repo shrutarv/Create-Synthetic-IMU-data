@@ -361,7 +361,7 @@ if __name__ == '__main__':
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
-                model.zero_grad()
+                optimizer.zero_grad()
               #b = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
