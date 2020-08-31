@@ -332,9 +332,7 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              x += 1
-              if (x==50):
-                  break
+              
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
