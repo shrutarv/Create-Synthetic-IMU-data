@@ -354,15 +354,15 @@ if __name__ == '__main__':
               
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
-              #a = list(model.parameters())[0].clone() 
+              a = list(model.parameters())[0].clone() 
               loss.backward()
               
               if (b + 1) % accumulation_steps == 0:   
                 optimizer.step()
                 # zero the parameter gradients
                 optimizer.zero_grad()
-              #b = list(model.parameters())[0].clone()
-              #print(torch.equal(a.data, b.data))
+              b = list(model.parameters())[0].clone()
+              print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
               print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
