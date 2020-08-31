@@ -252,6 +252,7 @@ if __name__ == '__main__':
 
     ws=200
     features = 40
+    n_classes = 16
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
@@ -322,7 +323,7 @@ if __name__ == '__main__':
     print('Start Training')
     correct = 0
     total_loss = 0
-    n_classes = 8
+    
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
