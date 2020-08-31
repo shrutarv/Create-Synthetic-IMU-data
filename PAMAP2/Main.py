@@ -190,7 +190,7 @@ def metrics(predictions, true):
     counter = 0.0
     correct = 0.0
     predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
-    #predicted_classes = predicted_classes.to(device)
+    predicted_classes = predicted_classes.to(device)
     
     correct = torch.sum(true == predicted_classes)
     counter = true.size(0)
