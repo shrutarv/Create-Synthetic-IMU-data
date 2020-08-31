@@ -251,8 +251,8 @@ if __name__ == '__main__':
 
 
     ws=200
-    features = 126
-    accumulation_steps = 5
+    features = 40
+    accumulation_steps = 10
     correct = 0
     total_loss = 0.0
     total_correct = 0
@@ -278,10 +278,10 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+    model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
-    #path = '/data/sawasthi/data/MoCAP_data/trainData/'
-    path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+    path = '/data/sawasthi/data/PAMAP2/trainData/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
     dataLoader_train = DataLoader(train_dataset, shuffle=True,
@@ -292,7 +292,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/MoCAP_data/validationData/'
+    path = '/data/sawasthi/data/PAMAP2/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -303,7 +303,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    path = '/data/sawasthi/data/PAMAP2/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -349,7 +349,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)#*(1/accumulation_steps)
+              loss = criterion(out,train_batch_l)/accumulation_steps
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
@@ -396,7 +396,7 @@ if __name__ == '__main__':
     plt.subplot(2,2,4)
     plt.title('Validation: epoch vs accuracy')
     plt.plot(ep,validation_acc)
-    plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
+    plt.savefig('/data/sawasthi/data/PAMAP2/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -414,7 +414,7 @@ if __name__ == '__main__':
         for b, harwindow_batched in enumerate(dataLoader_test):
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-            test_batch_v = normalize(test_batch_v, value,"test")
+           # test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
@@ -446,7 +446,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/MoCAP_data/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/PAMAP2/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
