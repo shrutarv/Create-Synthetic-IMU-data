@@ -279,7 +279,7 @@ if __name__ == '__main__':
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -331,7 +331,7 @@ if __name__ == '__main__':
           print("next epoch")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-              break
+              
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
