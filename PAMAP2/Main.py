@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 80
     batch_size = 40
     l = []
     tot_loss = 0
@@ -377,6 +377,7 @@ if __name__ == '__main__':
           if (val_acc >= best_acc):
               torch.save(model, model_path)
               print("model saved on epoch", e)
+              best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           torch.save(model, model_path)

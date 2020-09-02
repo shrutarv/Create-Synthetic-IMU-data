@@ -1,2 +1,0 @@
-Start Training
-next epoch
