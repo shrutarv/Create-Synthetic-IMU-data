@@ -7,8 +7,12 @@ from sliding_window import sliding_window
 from pre_processing import *
 import glob
 import csv
+import pickle
 
-NUM_CLASSES = 8
+
+with open('S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/seq__0_0.pkl', 'rb') as f:
+    data = pickle.load(f)
+NUM_CLASSES = 18
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -124,23 +128,24 @@ def max_min_values(data, values):
     return values
    
 #ws = (100,31)
-ws = (200,40)  #for MoCAP
-ss = (25,40)     #for MoCAP
+ws = (200,112)  #for MoCAP
+ss = (25,112)     #for MoCAP
 #ss = (25,31)
 sliding_window_length = 200   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 25
-
-data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
+data_op= np.loadtxt('S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/S1-ADL2.dat')
+#data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-#data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
+data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
-#dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-dataset = '/vol/actrec/PAMAP/'
-target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
-X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
+dataset = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
+#dataset = '/vol/actrec/PAMAP/'
+#target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
+target_filename = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDatase/tOpportunityUCIDataset/pklfile/opportunity.pkl'
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_Opportunity_data(dataset, target_filename)
 label = Y_train.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
