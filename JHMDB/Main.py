@@ -103,7 +103,7 @@ values - input argument having the max and min values of all channels from the p
          Compares these previous values to current min and max values and updates
 output - returns a list with max and min values for all channels
 
-'''  # Calculate max min and save it to save time.
+  # Calculate max min and save it to save time.
 def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
@@ -125,38 +125,11 @@ def max_min_values(data, values):
         temp_values.append(attribute)  
     values = temp_values
     return values
-   
+   '''
 '''
-Input
-data - input matrix to normalize
-min_max - list of max and min values for all channels across the entire training and test data
-
 output
 returns normalized data between [0,1]
 
-'''
-def normalize(data, min_max, string):
-    #print(len(min_max), len(min_max[0]))
-    data = data.numpy()
-    #print(data.shape)
-    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    for i in range(data.shape[0]):
-        for j in range(data.shape[2]):
-            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
-    test = np.array(data[:,:,:])
-    if (string=="train"):
-        if(np.max(test)>1.001):
-            print("Error",np.max(test))
-        if(np.min(test)<-0.001):
-            print("Error",np.min(test))
-    if (string=="test"):
-        test[test > 1] = 1
-        test[test < 0] = 0
-    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
-    data = torch.tensor(data)
-    return data
-
-'''
 returns a list of F1 score for all classes
 '''
 def F1_score(targets, preds, precision, recall):
@@ -239,8 +212,8 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":40,
-        "sliding_window_length":200,
+        "NB_sensor_channels":30,
+        "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -250,7 +223,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=200
+    ws=100
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
@@ -277,9 +250,9 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
+    model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/PAMAP2/trainData/'
+    path = '/data/sawasthi/data/JHMDB/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -291,7 +264,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/PAMAP2/validationData/'
+    path = '/data/sawasthi/data/JHMDB/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -302,7 +275,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/PAMAP2/testData/'
+    path = '/data/sawasthi/data/JHMDB/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
