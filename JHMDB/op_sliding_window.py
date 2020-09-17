@@ -96,6 +96,7 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         # print "Creating sequence file number {} with id {}".format(f, counter_seq)
         seq = np.reshape(X[f], newshape = (1, X.shape[1], X.shape[2]))
         seq = np.require(seq, dtype=np.float)
+        # interpolation
         dir = data_dir + "seq_"  + "_" + str(k) + "_" + str(counter_seq) + ".pkl"
         obj = {"data" : seq, "label" : y[f], "labels" : y_all[f]}
         #f = open(os.path.join(dir, 'seq_{0:06}.pkl'.format(counter_seq)), 'wb')
@@ -143,7 +144,8 @@ def normalize(data, min_max, string):
 
 # up sampling rate
 up = 4
-df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+#df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
 data = df.values
 data_new = data[:,1:31]
 attr = np.zeros((100,1))
@@ -155,8 +157,25 @@ with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv
     fc.writerows(value)
 plt.plot(data[:,0],data[:,1])
 '''
+
 data = normalize(data,value, "train")
 print("train data normalized")
+
+x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+y_sampled = np.zeros((len(x_sampled),1))
+sampled_data = []
+for i in range(1,(data.shape[1]-1)):
+    #for index in range(12,len(data[0])*up-12):
+            
+        #data_new = data[index-12:index+12,:]   
+     
+     f = sp.interpolate.interp1d(data[:,0],data[:,i], kind='linear')
+     #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
+     sampled_data = f(x_sampled)
+     y_sampled = np.concatenate((y_sampled,np.reshape(sampled_data,(len(sampled_data),1)),axis=1))
+     y_sampled.append(f(x_sampled))
+     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+data = y_sampled
 #ws = (100,31)
 ws = (100,30) 
 ss = (25,30)     
@@ -174,7 +193,8 @@ sliding_window_step = 25
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 #dataset = '/vol/actrec/PAMAP/'
-data_dir =  '/data/sawasthi/data/JHMDB/trainData/'
+#data_dir =  '/data/sawasthi/data/JHMDB/trainData/'
+data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -182,8 +202,8 @@ X = data[:,1:31]
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("train data pickled")
-
-data_dir =  '/data/sawasthi/data/JHMDB/testData/'
+data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
+#data_dir =  '/data/sawasthi/data/JHMDB/testData/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
 data = df.values
 data = normalize(data,value, "test")
