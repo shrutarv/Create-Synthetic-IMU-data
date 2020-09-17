@@ -1,11 +1,11 @@
-myFolder = "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\joint_positions\brush_hair\"; % Define your working folder
 root_folder = "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\joint_positions\";
 savePath =  "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\train\";
-if ~isdir(myFolder)
-  errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
-  uiwait(warndlg(errorMessage));
-  return;
-end
+%if ~isdir(myFolder)
+ % errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
+  %uiwait(warndlg(errorMessage));
+  %return;
+%end
+
 filePattern_root = fullfile(root_folder, '*');
 Files_root = dir(filePattern_root);
 
@@ -16,7 +16,7 @@ for i = 5:length(Files_root)
     Files = dir(filePattern);
   
     
-    for k = 4:(length(Files)-6)
+    for k =(length(Files)-3):length(Files)
       if(Files(k).name == ".DS_Store")
         continue;
       end
@@ -42,4 +42,4 @@ time = transpose(linspace(0, 0.04*size(data,1),size(data,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
-writematrix(data,[savePath + 'train_data' + i + '_' + k + '.csv']);
+writematrix(data,[savePath + 'test_data' + i + '_' + k + '.csv']);

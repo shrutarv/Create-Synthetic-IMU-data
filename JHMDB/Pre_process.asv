@@ -16,7 +16,7 @@ for i = 5:length(Files_root)
     Files = dir(filePattern);
   
     
-    for k = 4:(length(Files)-6)
+    for k =(length(Files)-6):
       if(Files(k).name == ".DS_Store")
         continue;
       end
@@ -32,7 +32,7 @@ for i = 5:length(Files_root)
       labels(1:size(pos,3),1) = i - 4;
       t =reshape(pos,[size(pos,1)*size(pos,2),size(pos,3)]);
       t = transpose(t);
-      t = [time, t, labels];
+      t = [t, labels];
       data = [data;t];
       
     end
@@ -41,5 +41,5 @@ end
 time = transpose(linspace(0, 0.04*size(data,1),size(data,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
-data = 
-writematrix(data,[savePath + i + '_' + k + '.csv']);
+data = [empt;data];
+writematrix(data,[savePath + 'train_data' + i + '_' + k + '.csv']);

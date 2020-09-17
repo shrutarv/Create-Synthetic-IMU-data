@@ -122,47 +122,96 @@ def max_min_values(data, values):
         temp_values.append(attribute)  
     values = temp_values
     return values
+
+def normalize(data, min_max, string):
+    #print(len(min_max), len(min_max[0]))
+    data = data.numpy()
+    #print(data.shape)
+    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
+    for i in range(data.shape[0]):
+        for j in range(data.shape[2]):
+            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
+    test = np.array(data[:,:,:])
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    else:
+        test[test > 1] = 1
+        test[test < 0] = 0
+    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    data = torch.tensor(data)
+    return data
    
+
+# up sampling rate
+up = 4
+df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data25_39.csv')
+data = df.values
+data_new = data[:,1:31]
+attr = np.zeros((100,1))
+value = max_min_values(data_new)
+'''
+with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
+    fc = csv.writer(f, lineterminator='\n')
+    fc.writerow(["min","max"])
+    fc.writerows(value)
+plt.plot(data[:,0],data[:,1])
+'''
+data = normalize(data,value, "train")
+print("train data normalized")
 #ws = (100,31)
-ws = (100,30)  #for MoCAP
-ss = (25,30)     #for MoCAP
+ws = (100,30) 
+ss = (25,30)     
 #ss = (25,31)
-sliding_window_length = 100   # for MoCAP
+sliding_window_length = 100   
 #sliding_window_length = 100    
 sliding_window_step = 25
 
 
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-data = df.values
+#df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 #dataset = '/vol/actrec/PAMAP/'
-data_dir =  'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+data_dir =  '/data/sawasthi/data/JHMDB$/trainData/'
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = data[:,1:31]
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
+print("train data pickled")
 
-data_dir =  'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/test/pkl/'
+data_dir =  '/data/sawasthi/data/JHMDB$/testData/'
+df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data25_39.csv')
+data = df.values
+data = normalize(data,value, "test")
+print("test data normalized")
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = data[:,1:31]
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
+print("test data pickled")
 
-data_dir =  'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/validation/pkl/'
+data_dir =  '/data/sawasthi/data/JHMDB$/validationData/'
+df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data25_39.csv')
+data = df.values
+data = normalize(data,value, "validation")
+print("validation data normalized")
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = data[:,1:31]
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
+print("validation data pickled")
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
