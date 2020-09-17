@@ -16,7 +16,7 @@ for i = 5:length(Files_root)
     Files = dir(filePattern);
   
     
-    for k =(length(Files)-3):length(Files)
+    for k = (length(Files)-3):(length(Files))
       if(Files(k).name == ".DS_Store")
         continue;
       end
@@ -29,7 +29,7 @@ for i = 5:length(Files_root)
       fprintf(1, 'Now reading %s\n', fullFileName);
       matData = load(fullFileName);
       pos = matData.pos_img;
-      labels(1:size(pos,3),1) = i - 4;
+      labels(1:size(pos,3),1) = i - 5;
       t =reshape(pos,[size(pos,1)*size(pos,2),size(pos,3)]);
       t = transpose(t);
       t = [t, labels];
@@ -42,4 +42,4 @@ time = transpose(linspace(0, 0.04*size(data,1),size(data,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
-writematrix(data,[savePath + 'test_data' + i + '_' + k + '.csv']);
+writematrix(data,[savePath + 'test_data.csv']);

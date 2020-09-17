@@ -42,11 +42,13 @@ data = df.values
 data_new = data[:,1:31]
 attr = np.zeros((100,1))
 value = max_min_values(data_new)
+'''
 with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
     fc.writerow(["min","max"])
     fc.writerows(value)
 plt.plot(data[:,0],data[:,1])
+'''
 data = normalize(data,value)
 i=21
 index = 12
@@ -66,6 +68,7 @@ ws = 100
 ss = 1 
 k = 0
 data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/pkl_files/'
+
 for j in range((int((len(y_sampled[0])-ws)/ss)) + 1):    
      attr = np.zeros((100,1))
      
