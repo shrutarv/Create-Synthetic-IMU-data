@@ -103,7 +103,7 @@ values - input argument having the max and min values of all channels from the p
          Compares these previous values to current min and max values and updates
 output - returns a list with max and min values for all channels
 
-  # Calculate max min and save it to save time.
+'''  # Calculate max min and save it to save time.
 def max_min_values(data, values):
     temp_values = []
     data = data.numpy()
@@ -125,11 +125,38 @@ def max_min_values(data, values):
         temp_values.append(attribute)  
     values = temp_values
     return values
-   '''
+   
 '''
+Input
+data - input matrix to normalize
+min_max - list of max and min values for all channels across the entire training and test data
+
 output
 returns normalized data between [0,1]
 
+'''
+def normalize(data, min_max, string):
+    #print(len(min_max), len(min_max[0]))
+    data = data.numpy()
+    #print(data.shape)
+    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
+    for i in range(data.shape[0]):
+        for j in range(data.shape[2]):
+            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
+    test = np.array(data[:,:,:])
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    if (string=="test"):
+        test[test > 1] = 1
+        test[test < 0] = 0
+    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    data = torch.tensor(data)
+    return data
+
+'''
 returns a list of F1 score for all classes
 '''
 def F1_score(targets, preds, precision, recall):
@@ -212,18 +239,18 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":40,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":16,
+        "num_classes":21,
         "reshape_input":False
         }
 
 
-    ws=100
+    ws=200
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
@@ -369,7 +396,7 @@ if __name__ == '__main__':
     plt.subplot(2,2,4)
     plt.title('Validation: epoch vs accuracy')
     plt.plot(ep,validation_acc)
-    plt.savefig('/data/sawasthi/data/PAMAP2/results/result.png') 
+    plt.savefig('/data/sawasthi/data/JHMDB/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -419,7 +446,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/PAMAP2/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/JHMDB/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
