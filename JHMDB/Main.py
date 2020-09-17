@@ -233,7 +233,7 @@ def validation(dataLoader_validation):
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
-          dev = "cuda:2" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
@@ -251,11 +251,11 @@ if __name__ == '__main__':
 
 
     ws=100
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 20
+    epochs = 200
     batch_size = 20
     l = []
     tot_loss = 0
@@ -275,7 +275,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.0001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
