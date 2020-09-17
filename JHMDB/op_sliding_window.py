@@ -174,7 +174,7 @@ sliding_window_step = 25
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 #dataset = '/vol/actrec/PAMAP/'
-data_dir =  '/data/sawasthi/data/JHMDB$/trainData/'
+data_dir =  '/data/sawasthi/data/JHMDB/trainData/'
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -183,7 +183,7 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("train data pickled")
 
-data_dir =  '/data/sawasthi/data/JHMDB$/testData/'
+data_dir =  '/data/sawasthi/data/JHMDB/testData/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data25_39.csv')
 data = df.values
 data = normalize(data,value, "test")
@@ -196,7 +196,7 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("test data pickled")
 
-data_dir =  '/data/sawasthi/data/JHMDB$/validationData/'
+data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data25_39.csv')
 data = df.values
 data = normalize(data,value, "validation")
