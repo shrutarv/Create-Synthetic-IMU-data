@@ -105,23 +105,21 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         print("dumping")
         f.close()
  
-def max_min_values(data, values):
-    temp_values = []
-    for i in range(data_x.shape[1]):
+def max_min_values(data):
+    values = []
+    
+    #print(data.shape)
+    
+    for attr in range(data.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,i])
-        temp_min = np.min(data[:,i])
-        if (values[i][0] > temp_max):
-            attribute.append(values[i][0])
-        else:
-            attribute.append(temp_max)
-        if(values[i][1] < temp_min):
-            attribute.append(values[i][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
+        temp_max = np.max(data[:,attr])
+        temp_min = np.min(data[:,attr])
+        attribute.append(temp_min)
+        attribute.append(temp_max)
+        values.append(attribute)  
+    
     return values
+
 
 def normalize(data, min_max, string):
     #print(len(min_max), len(min_max[0]))
