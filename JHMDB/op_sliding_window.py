@@ -220,8 +220,8 @@ data_new = y_sampled[:,1:]
 
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-#data_dir =  '/data/sawasthi/data/JHMDB/trainData_a/'
-data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+data_dir =  '/data/sawasthi/data/JHMDB/trainData_a_acc/'
+#data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
 label = np.repeat(data[:,31],up).astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -233,7 +233,7 @@ example_creating_windows_file(k, X, lab, data_dir)
 print("train data pickled")
 
 #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-data_dir =  '/data/sawasthi/data/JHMDB/testData_a/'
+data_dir =  '/data/sawasthi/data/JHMDB/testData_a_acc/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
 data = df.values
 data = normalize(data,value, "test")
@@ -264,7 +264,7 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("test data pickled")
 
-data_dir =  '/data/sawasthi/data/JHMDB/validationData_a/'
+data_dir =  '/data/sawasthi/data/JHMDB/validationData_a_acc/'
 #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
 data = df.values
