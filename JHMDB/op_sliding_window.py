@@ -142,7 +142,8 @@ def normalize(data, min_max, string):
     #data = torch.tensor(data)
     return data
    
-
+# The training, test and validation data have been separately interpolated and 
+# up sampled
 # up sampling rate
 up = 4
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
@@ -161,7 +162,7 @@ plt.plot(data[:,0],data[:,1])
 
 data = normalize(data,value, "train")
 print("train data normalized")
-
+# time sampled
 x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
 y_sampled = np.zeros((len(x_sampled),1))
 sampled_data = []
@@ -179,7 +180,7 @@ for i in range(1,(data.shape[1]-1)):
      
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-data = y_sampled[:,1:]
+data_new = y_sampled[:,1:]
 
 #ws = (100,31)
 ws = (100,30) 
@@ -188,7 +189,7 @@ ss = (25,30)
 sliding_window_length = 100   
 #sliding_window_length = 100    
 sliding_window_step = 25
-
+# creating labels
 
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
@@ -200,10 +201,12 @@ sliding_window_step = 25
 #dataset = '/vol/actrec/PAMAP/'
 data_dir =  '/data/sawasthi/data/JHMDB/trainData_a/'
 #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-label = data[:,31].astype(int)
+label = np.repeat(data[:,31],up).astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-X = data[:,1:31]
+#X = data[:,1:31]
+X = data_new[:,1:31]
+
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("train data pickled")
@@ -213,10 +216,28 @@ df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_da
 data = df.values
 data = normalize(data,value, "test")
 print("test data normalized")
-label = data[:,31].astype(int)
+x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+y_sampled = np.zeros((len(x_sampled),1))
+sampled_data = []
+for i in range(1,(data.shape[1]-1)):
+    #for index in range(12,len(data[0])*up-12):
+            
+        #data_new = data[index-12:index+12,:]   
+     
+     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+     #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
+     sampled_data = f(x_sampled)
+     resample = sp.splrep(x_sampled,sampled_data)
+     acc = sp.splev(x_sampled,resample, der=2)
+     y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+     
+     #y_sampled.append(f(x_sampled))
+     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+data_new = y_sampled[:,1:]
+label = np.repeat(data[:,31],up).astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-X = data[:,1:31]
+X = data_new
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("test data pickled")
@@ -227,10 +248,28 @@ df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validat
 data = df.values
 data = normalize(data,value, "validation")
 print("validation data normalized")
-label = data[:,31].astype(int)
+x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+y_sampled = np.zeros((len(x_sampled),1))
+sampled_data = []
+for i in range(1,(data.shape[1]-1)):
+    #for index in range(12,len(data[0])*up-12):
+            
+        #data_new = data[index-12:index+12,:]   
+     
+     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+     #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
+     sampled_data = f(x_sampled)
+     resample = sp.splrep(x_sampled,sampled_data)
+     acc = sp.splev(x_sampled,resample, der=2)
+     y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+     
+     #y_sampled.append(f(x_sampled))
+     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+data_new = y_sampled[:,1:]
+label = np.repeat(data[:,31],up).astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-X = data[:,1:31]
+X = data_new
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("validation data pickled")
