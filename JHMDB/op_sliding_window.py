@@ -7,6 +7,7 @@ from sliding_window import sliding_window
 from pre_processing import *
 import glob
 import csv
+import scipy as sp
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -127,7 +128,7 @@ def normalize(data, min_max, string):
     
     for j in range(1,len(data[0])-1):
         data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,:])
+    test = np.array(data[:,1:31])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -172,10 +173,14 @@ for i in range(1,(data.shape[1]-1)):
      f = sp.interpolate.interp1d(data[:,0],data[:,i], kind='linear')
      #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
      sampled_data = f(x_sampled)
-     y_sampled = np.concatenate((y_sampled,np.reshape(sampled_data,(len(sampled_data),1)),axis=1))
-     y_sampled.append(f(x_sampled))
+     resample = sp.interpolate.splrep(x_sampled,sampled_data)
+     acc = sp.interpolate.splev(x_sampled,resample, der=2)
+     y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+     
+     #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-data = y_sampled
+data = y_sampled[:,1:]
+
 #ws = (100,31)
 ws = (100,30) 
 ss = (25,30)     
@@ -193,8 +198,8 @@ sliding_window_step = 25
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 #dataset = '/vol/actrec/PAMAP/'
-#data_dir =  '/data/sawasthi/data/JHMDB/trainData/'
-data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+data_dir =  '/data/sawasthi/data/JHMDB/trainData_a/'
+#data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
 label = data[:,31].astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -202,8 +207,8 @@ X = data[:,1:31]
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("train data pickled")
-data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-#data_dir =  '/data/sawasthi/data/JHMDB/testData/'
+#data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
+data_dir =  '/data/sawasthi/data/JHMDB/testData_a/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
 data = df.values
 data = normalize(data,value, "test")
@@ -216,7 +221,8 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 print("test data pickled")
 
-data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
+data_dir =  '/data/sawasthi/data/JHMDB/validationData_a/'
+#data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
 df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
 data = df.values
 data = normalize(data,value, "validation")
