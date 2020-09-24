@@ -7,7 +7,7 @@ from sliding_window import sliding_window
 from pre_processing import *
 import glob
 import csv
-import scipy as sp
+#import scipy as sp
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
