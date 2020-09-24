@@ -7,7 +7,7 @@ from sliding_window import sliding_window
 from pre_processing import *
 import glob
 import csv
-#import scipy as sp
+import scipy.interpolate as sp
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -170,11 +170,11 @@ for i in range(1,(data.shape[1]-1)):
             
         #data_new = data[index-12:index+12,:]   
      
-     f = sp.interpolate.interp1d(data[:,0],data[:,i], kind='linear')
+     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
      #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
      sampled_data = f(x_sampled)
-     resample = sp.interpolate.splrep(x_sampled,sampled_data)
-     acc = sp.interpolate.splev(x_sampled,resample, der=2)
+     resample = sp.splrep(x_sampled,sampled_data)
+     acc = sp.splev(x_sampled,resample, der=2)
      y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
      
      #y_sampled.append(f(x_sampled))
