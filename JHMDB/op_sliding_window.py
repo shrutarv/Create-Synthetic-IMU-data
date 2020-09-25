@@ -196,7 +196,7 @@ for i in range(1,(data.shape[1]-1)):
      print(i)
      acc = np.array([0], float)
      for index in range(50,len(data)-49):
-         
+         print(index)
          data_new = data[index-50:index+50,:]   
          x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
          #sampled_data = f(x_sampled[index-50:index+50,:])
@@ -241,17 +241,26 @@ x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
 y_sampled = np.zeros((len(x_sampled),1))
 sampled_data = []
 for i in range(1,(data.shape[1]-1)):
-    #for index in range(12,len(data[0])*up-12):
-            
-        #data_new = data[index-12:index+12,:]   
-     
-     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
-     #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
-     sampled_data = f(x_sampled)
-     resample = sp.splrep(x_sampled,sampled_data)
-     acc = sp.splev(x_sampled,resample, der=2)
-     y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
-     
+     print(i)
+     acc = np.array([0], float)
+     for index in range(50,len(data)-49):
+         print(index)
+         data_new = data[index-50:index+50,:]   
+         x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
+         #sampled_data = f(x_sampled[index-50:index+50,:])
+         #resample = sp.splrep(data_new[:,0],data_new[:,i])
+         resample = sp.splrep(data[:,0],data[:,i])
+         temp_acc = sp.splev(x_samp,resample, der=2)
+         data[index-50:index+50,i] = temp_acc[0::4]
+         if(index==50):
+             acc = np.concatenate((acc,temp_acc[0:198]))
+         acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
+         if(index==len(data)-50):
+             acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
+         
+    
+     y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
+         
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 data_new = y_sampled[:,1:]
@@ -273,17 +282,26 @@ x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
 y_sampled = np.zeros((len(x_sampled),1))
 sampled_data = []
 for i in range(1,(data.shape[1]-1)):
-    #for index in range(12,len(data[0])*up-12):
-            
-        #data_new = data[index-12:index+12,:]   
-     
-     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
-     #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
-     sampled_data = f(x_sampled)
-     resample = sp.splrep(x_sampled,sampled_data)
-     acc = sp.splev(x_sampled,resample, der=2)
-     y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
-     
+     print(i)
+     acc = np.array([0], float)
+     for index in range(50,len(data)-49):
+         print(index)
+         data_new = data[index-50:index+50,:]   
+         x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
+         #sampled_data = f(x_sampled[index-50:index+50,:])
+         #resample = sp.splrep(data_new[:,0],data_new[:,i])
+         resample = sp.splrep(data[:,0],data[:,i])
+         temp_acc = sp.splev(x_samp,resample, der=2)
+         data[index-50:index+50,i] = temp_acc[0::4]
+         if(index==50):
+             acc = np.concatenate((acc,temp_acc[0:198]))
+         acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
+         if(index==len(data)-50):
+             acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
+         
+    
+     y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
+         
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 data_new = y_sampled[:,1:]
