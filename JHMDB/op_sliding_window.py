@@ -142,183 +142,171 @@ def normalize(data, min_max, string):
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
     return data
-   
-# The training, test and validation data have been separately interpolated and 
-# up sampled
-# up sampling rate
-up = 4
-#ws = (100,31)
-ws = (100,30) 
-ss = (25,30)     
-#ss = (25,31)
-sliding_window_length = 100   
-#sliding_window_length = 100    
-sliding_window_step = 25
 
-df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
-#df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
-data = df.values
-data_new = data[:,1:31]
-attr = np.zeros((100,1))
-value = max_min_values(data_new)
-'''
-with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
-    fc = csv.writer(f, lineterminator='\n')
-    fc.writerow(["min","max"])
-    fc.writerows(value)
-plt.plot(data[:,0],data[:,1])
-'''
 
-data = normalize(data,value, "train")
-print("train data normalized")
-# time sampled
-x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-y_sampled = np.zeros((len(x_sampled),1))
-#sampled_data = []
-#y_sampled2 = np.zeros((len(x_sampled),1))
-
-'''
-for i in range(1,(data.shape[1]-1)):
-    #for index in range(12,len(data[0])*up-12):
-            
-        #data_new = data[index-12:index+12,:]   
-     
-     f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+if __name__ == '__main__':
+    # The training, test and validation data have been separately interpolated and 
+    # up sampled
+    # up sampling rate
+    up = 4
+    #ws = (100,31)
+    ws = (100,30) 
+    ss = (25,30)     
+    #ss = (25,31)
+    sliding_window_length = 100   
+    #sliding_window_length = 100    
+    sliding_window_step = 25
     
-     sampled_data = f(x_sampled)
-     #resample2 = sp.splrep(data[:,0],data[:,i])
-     acc2 = sp.splev(x_sampled,resample2, der=2)
-     y_sampled2 = np.concatenate((y_sampled2,np.reshape(acc2,(len(acc2),1))),axis=1)
-     
-     #y_sampled.append(f(x_sampled))
-     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-'''
-for i in range(1,(data.shape[1]-1)):
-     print(i)
-     acc = np.array([0], float)
-     for index in range(50,len(data)-49):
-         print(index)
-         data_new = data[index-50:index+50,:]   
-         x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
-         #sampled_data = f(x_sampled[index-50:index+50,:])
-         #resample = sp.splrep(data_new[:,0],data_new[:,i])
-         resample = sp.splrep(data[:,0],data[:,i])
-         temp_acc = sp.splev(x_samp,resample, der=2)
-         data[index-50:index+50,i] = temp_acc[0::4]
-         if(index==50):
-             acc = np.concatenate((acc,temp_acc[0:198]))
-         acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
-         if(index==len(data)-50):
-             acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
-         
+    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
+    data = df.values
+    data_new = data[:,1:31]
+    attr = np.zeros((100,1))
+    value = max_min_values(data_new)
+    '''
+    with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
+        fc = csv.writer(f, lineterminator='\n')
+        fc.writerow(["min","max"])
+        fc.writerows(value)
+    plt.plot(data[:,0],data[:,1])
+    '''
     
-     y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
+    data = normalize(data,value, "train")
+    print("train data normalized")
+    # time sampled
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    y_sampled = np.zeros((len(x_sampled)-2,1))
+    #sampled_data = []
+    #y_sampled2 = np.zeros((len(x_sampled),1))
+    
+    
+    for i in range(1,(data.shape[1]-1)):
+        #for index in range(12,len(data[0])*up-12):
+                
+            #data_new = data[index-12:index+12,:]   
          
-     #y_sampled.append(f(x_sampled))
-     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-data_new = y_sampled[:,1:]
-# creating labels
-
-#data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-#df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-data_dir =  '/data/sawasthi/data/JHMDB/trainData_a_acc/'
-#data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-label = np.repeat(data[:,31],up).astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
-#X = data[:,1:31]
-X = data_new
-k = 0
-example_creating_windows_file(k, X, lab, data_dir)
-print("train data pickled")
-
-#data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-data_dir =  '/data/sawasthi/data/JHMDB/testData_a_acc/'
-df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
-data = df.values
-data = normalize(data,value, "test")
-print("test data normalized")
-x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-y_sampled = np.zeros((len(x_sampled),1))
-sampled_data = []
-for i in range(1,(data.shape[1]-1)):
-     print(i)
-     acc = np.array([0], float)
-     for index in range(50,len(data)-49):
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
         
-         data_new = data[index-50:index+50,:]   
-         x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
-         #sampled_data = f(x_sampled[index-50:index+50,:])
-         #resample = sp.splrep(data_new[:,0],data_new[:,i])
-         resample = sp.splrep(data[:,0],data[:,i])
-         temp_acc = sp.splev(x_samp,resample, der=2)
-         data[index-50:index+50,i] = temp_acc[0::4]
-         if(index==50):
-             acc = np.concatenate((acc,temp_acc[0:198]))
-         acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
-         if(index==len(data)-50):
-             acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
+         sampled_data = f(x_sampled)
+         acc = np.diff(sampled_data,2)
+         #resample = sp.splrep(data[:,0],data[:,i])
+         #acc = sp.splev(x_sampled,resample, der=2)
+         y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
          
-    
-     y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
-         
+         #y_sampled.append(f(x_sampled))
+         # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+    '''
+    for i in range(1,(data.shape[1]-1)):
+         print(i)
+         acc = np.array([0], float)
+         for index in range(50,len(data)-49):
+             print(index)
+             data_new = data[index-50:index+50,:]   
+             x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
+             #sampled_data = f(x_sampled[index-50:index+50,:])
+             #resample = sp.splrep(data_new[:,0],data_new[:,i])
+             resample = sp.splrep(data[:,0],data[:,i])
+             temp_acc = sp.splev(x_samp,resample, der=2)
+             data[index-50:index+50,i] = temp_acc[0::4]
+             if(index==50):
+                 acc = np.concatenate((acc,temp_acc[0:198]))
+             acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
+             if(index==len(data)-50):
+                 acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
+             
+        
+         y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
+    '''         
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-data_new = y_sampled[:,1:]
-label = np.repeat(data[:,31],up).astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
-X = data_new
-k = 0
-example_creating_windows_file(k, X, lab, data_dir)
-print("test data pickled")
 
-data_dir =  '/data/sawasthi/data/JHMDB/validationData_a_acc/'
-#data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
-data = df.values
-data = normalize(data,value, "validation")
-print("validation data normalized")
-x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-y_sampled = np.zeros((len(x_sampled),1))
-sampled_data = []
-for i in range(1,(data.shape[1]-1)):
-     print(i)
-     acc = np.array([0], float)
-     for index in range(50,len(data)-49):
-         
-         data_new = data[index-50:index+50,:]   
-         x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
-         #sampled_data = f(x_sampled[index-50:index+50,:])
-         #resample = sp.splrep(data_new[:,0],data_new[:,i])
-         resample = sp.splrep(data[:,0],data[:,i])
-         temp_acc = sp.splev(x_samp,resample, der=2)
-         data[index-50:index+50,i] = temp_acc[0::4]
-         if(index==50):
-             acc = np.concatenate((acc,temp_acc[0:198]))
-         acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
-         if(index==len(data)-50):
-             acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
-         
+    data_new = y_sampled[:,1:]
+    # creating labels
     
-     y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
+    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+    data_dir =  '/data/sawasthi/data/JHMDB/trainData_a_acc/'
+    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    label = np.repeat(data[:,31],up).astype(int)
+    lab = np.zeros((len(label),20), dtype=int)
+    lab[:,0] = label
+    #X = data[:,1:31]
+    X = data_new
+    k = 0
+    example_creating_windows_file(k, X, lab, data_dir)
+    print("train data pickled")
+    
+    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
+    data_dir =  '/data/sawasthi/data/JHMDB/testData_a_acc/'
+    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+    data = df.values
+    data = normalize(data,value, "test")
+    print("test data normalized")
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    y_sampled = np.zeros((len(x_sampled),1))
+    sampled_data = []
+    for i in range(1,(data.shape[1]-1)):
+        #for index in range(12,len(data[0])*up-12):
+                
+            #data_new = data[index-12:index+12,:]   
          
-     #y_sampled.append(f(x_sampled))
-     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-data_new = y_sampled[:,1:]
-label = np.repeat(data[:,31],up).astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
-X = data_new
-k = 0
-example_creating_windows_file(k, X, lab, data_dir)
-print("validation data pickled")
-#os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
-#os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
-#os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
-#os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
-#os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
-
-
-      
-
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+        
+         sampled_data = f(x_sampled)
+         acc = np.diff(sampled_data,2)
+         #resample = sp.splrep(data[:,0],data[:,i])
+         #acc = sp.splev(x_sampled,resample, der=2)
+         y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+         
+         #y_sampled.append(f(x_sampled))
+         # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+    data_new = y_sampled[:,1:]
+    label = np.repeat(data[:,31],up).astype(int)
+    lab = np.zeros((len(label),20), dtype=int)
+    lab[:,0] = label
+    X = data_new
+    k = 0
+    example_creating_windows_file(k, X, lab, data_dir)
+    print("test data pickled")
+    
+    data_dir =  '/data/sawasthi/data/JHMDB/validationData_a_acc/'
+    #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
+    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    data = df.values
+    data = normalize(data,value, "validation")
+    print("validation data normalized")
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    y_sampled = np.zeros((len(x_sampled),1))
+    sampled_data = []
+    for i in range(1,(data.shape[1]-1)):
+        #for index in range(12,len(data[0])*up-12):
+                
+            #data_new = data[index-12:index+12,:]   
+         
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+        
+         sampled_data = f(x_sampled)
+         acc = np.diff(sampled_data,2)
+         #resample = sp.splrep(data[:,0],data[:,i])
+         #acc = sp.splev(x_sampled,resample, der=2)
+         y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+             
+         #y_sampled.append(f(x_sampled))
+         # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+    data_new = y_sampled[:,1:]
+    label = np.repeat(data[:,31],up).astype(int)
+    lab = np.zeros((len(label),20), dtype=int)
+    lab[:,0] = label
+    X = data_new
+    k = 0
+    example_creating_windows_file(k, X, lab, data_dir)
+    print("validation data pickled")
+    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+    #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
+    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+    #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
+    #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+    
+    
+          
+    
