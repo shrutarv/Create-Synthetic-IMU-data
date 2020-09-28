@@ -243,7 +243,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "test")
     print("test data normalized")
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-    y_sampled = np.zeros((len(x_sampled),1))
+    y_sampled = np.zeros((len(x_sampled)-2,1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
@@ -276,7 +276,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "validation")
     print("validation data normalized")
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-    y_sampled = np.zeros((len(x_sampled),1))
+    y_sampled = np.zeros((len(x_sampled)-2,1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
