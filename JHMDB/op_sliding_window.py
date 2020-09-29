@@ -143,7 +143,34 @@ def normalize(data, min_max, string):
     #data = torch.tensor(data)
     return data
 
+def derivative(f,a,method='central',h=0.00001):
+    '''Compute the difference formula for f'(a) with step size h.
 
+    Parameters
+    ----------
+    f : function
+        Vectorized function of one variable
+    a : number
+        Compute derivative at x = a
+    method : string
+        Difference formula: 'forward', 'backward' or 'central'
+    h : number
+        Step size in difference formula
+
+    Returns
+    -------
+    float
+        Difference formula:
+            central: f(a+h) - f(a-h))/2h
+            forward: f(a+h) - f(a))/h
+            backward: f(a) - f(a-h))/h            
+    '''
+    ret = []
+    for i in range(len(a)):
+        res = (f(a[i] + h) - f(a[i] - h))/(2*h)
+        ret.append(res)
+    return ret  
+        
 if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
@@ -175,7 +202,7 @@ if __name__ == '__main__':
     print("train data normalized")
     # time sampled
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-    y_sampled = np.zeros((len(x_sampled)-2,1))
+    y_sampled = np.zeros((len(x_sampled),1))
     #sampled_data = []
     #y_sampled2 = np.zeros((len(x_sampled),1))
     
@@ -185,16 +212,17 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
         
          sampled_data = f(x_sampled)
-         acc = np.diff(sampled_data,2)
+         acc = derivative(f, x_sampled)
+         #acc = np.diff(sampled_data,2)
          #resample = sp.splrep(data[:,0],data[:,i])
-         #acc = sp.splev(x_sampled,resample, der=2)
+         #acc2 = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
          
          #y_sampled.append(f(x_sampled))
-         # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
+         plt.plot(x_sampled[1:400],acc[1:400],'b',x_sampled[1:400],sampled_data[1:400],'g')
     '''
     for i in range(1,(data.shape[1]-1)):
          print(i)
@@ -253,7 +281,7 @@ if __name__ == '__main__':
          f = sp.interp1d(data[:,0],data[:,i], kind='linear')
         
          sampled_data = f(x_sampled)
-         acc = np.diff(sampled_data,2)
+         acc = derivative(f, x_sampled)
          #resample = sp.splrep(data[:,0],data[:,i])
          #acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
@@ -286,7 +314,7 @@ if __name__ == '__main__':
          f = sp.interp1d(data[:,0],data[:,i], kind='linear')
         
          sampled_data = f(x_sampled)
-         acc = np.diff(sampled_data,2)
+         acc = derivative(f, x_sampled)
          #resample = sp.splrep(data[:,0],data[:,i])
          #acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
