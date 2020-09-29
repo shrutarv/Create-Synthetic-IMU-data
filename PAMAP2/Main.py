@@ -228,7 +228,7 @@ def validation(dataLoader_validation):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
-    return (100. * correct / total, loss.item()/(b+1))
+    return (100. * correct / total, total_loss/(b+1))
         
 if __name__ == '__main__':
     
