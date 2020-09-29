@@ -278,7 +278,7 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
         
          sampled_data = f(x_sampled)
          acc = derivative(f, x_sampled)
@@ -311,7 +311,7 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+         f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
         
          sampled_data = f(x_sampled)
          acc = derivative(f, x_sampled)
