@@ -218,7 +218,7 @@ if __name__ == '__main__':
         data = df.values
         data = normalize(data,value, "test")
         print("test data normalized")
-        y_sampled = np.zeros((np.ceil(data.shape[0]/down),1))
+        y_sampled = np.zeros((np.ceil(data.shape[0]/down)),1)
                 
         for i in range(1,(data.shape[1]-1)):
             #for index in range(12,len(data[0])*up-12):
