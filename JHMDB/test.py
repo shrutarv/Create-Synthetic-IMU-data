@@ -11,6 +11,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import csv
 import pickle
+from scipy.interpolate import UnivariateSpline
 
 def max_min_values(data):
     values = []
@@ -54,19 +55,28 @@ data = normalize(data,value)
 i=10
 index = 12
 x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-y_sampled = np.zeros((len(x_sampled),1))
+y_sampled2 = np.zeros((len(x_sampled),1))
 sampled_data = []
 for i in range(1,(data.shape[1]-1)):
+     print(i)
     #for index in range(12,len(data[0])*up-12):
             
         #data_new = data[index-12:index+12,:]   
+     resample2 = sp.splrep(data[:,0],data[:,i])
+     temp = sp.splev(x_sampled,resample2, der=0)
+     y_sampled2 = np.concatenate((y_sampled2,np.reshape(temp,(len(temp),1))),axis=1)
      
+     spl = UnivariateSpline(data[:,0],data[:,i], k=4, s=0) 
+     sampled_data = spl(x_sampled)
+     y = spl.derivative(1)
+     '''
      f = sp.interpolate.interp1d(data[:,0],data[:,i], kind='linear')
      #f = sp.interpolate.UnivariateSpline(data[:,0],data[:,1])
      sampled_data = f(x_sampled)
-     y_sampled = np.concatenate((y_sampled,np.reshape(sampled_data,(len(sampled_data),1))),axis=1)
+     y_sampled2 = np.concatenate((y_sampled2,np.reshape(sampled_data,(len(sampled_data),1))),axis=1)
+     '''
 plt.title("Blue: Sampled values.  Red: True Values")
-plt.plot(data[1:100,0],data[1:100,i],'r',x_sampled[1:400],y_sampled[1:400,i],'o')
+plt.plot(data[1:100,0],data[1:100,i],'r',x_sampled[1:400],y_sampled2[1:400,31],'g')
 
 ws = 100
 ss = 1 
@@ -107,6 +117,6 @@ plt.plot(data[1:100,0],data[1:100,i],'o',x_sampled[1:399],resample2[1:399],'r')
 '''
 for i in range(1,10,2):
     print(i)
-with open('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/seq__0_846.pkl', 'rb') as f:
-    d = pickle.load(f)
+with open('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/seq__0_506.pkl', 'rb') as f:
+    d2 = pickle.load(f)
 '''

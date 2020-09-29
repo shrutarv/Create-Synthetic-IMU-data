@@ -14,9 +14,10 @@ for i = 4:length(Files_root)
     
     filePattern = fullfile(root_folder + Files_root(i).name + "\");
     Files = dir(filePattern);
-  
+    % 4:length(Files)-7     length(Files)-7:length(Files)-4
     % 4:ceil(0.7*(length(Files)))      (ceil(0.7*(length(Files)))+1):floor(0.85*(length(Files)))
-    for k = (floor(0.85*(length(Files)))+1):length(Files)
+    %(floor(0.85*(length(Files)))+1):length(Files)
+    for k = length(Files)-4:length(Files)
       if(Files(k).name == ".DS_Store")
         continue;
       end
@@ -29,7 +30,7 @@ for i = 4:length(Files_root)
       fprintf(1, 'Now reading %s\n', fullFileName);
       matData = load(fullFileName);
       pos = matData.pos_img;
-      labels(1:size(pos,3),1) = i - 5;
+      labels(1:size(pos,3),1) = i - 4;
       t =reshape(pos,[size(pos,1)*size(pos,2),size(pos,3)]);
       t = transpose(t);
       t = [t, labels];
