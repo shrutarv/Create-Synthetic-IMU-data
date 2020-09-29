@@ -212,14 +212,13 @@ if __name__ == '__main__':
         print("train data pickled")
         
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
-    
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
         data = df.values
         data = normalize(data,value, "test")
         print("test data normalized")
-        y_sampled = np.zeros((int(data.shape[0]/down),1))
+        y_sampled = np.zeros((np.ceil(data.shape[0]/down),1))
                 
         for i in range(1,(data.shape[1]-1)):
             #for index in range(12,len(data[0])*up-12):
