@@ -228,7 +228,7 @@ def validation(dataLoader_validation):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
-    return (100. * correct / total, loss.item()/(b+1))
+    return (100. * correct / total, total_loss/(b+1))
         
 if __name__ == '__main__':
     
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 200
     batch_size = 20
     l = []
     tot_loss = 0
@@ -395,7 +395,7 @@ if __name__ == '__main__':
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
     plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation loss')
+    plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/JHMDB/results/result_a.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
