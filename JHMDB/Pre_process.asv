@@ -10,13 +10,13 @@ filePattern_root = fullfile(root_folder, '*');
 Files_root = dir(filePattern_root);
 
 data = [];
-for i = 4:length(Files_root)
+for i = 5:length(Files_root)
     
     filePattern = fullfile(root_folder + Files_root(i).name + "\");
     Files = dir(filePattern);
   
-    % 4:ceil(0.7*(length(Files)))      (ceil(0.7*(length(Files)))+1):floor(0.85*(length(Files)))
-    for k = (floor(0.85*(length(Files)))+1):length(Files)
+    
+    for k = 1:int(0.7(length(Files))
       if(Files(k).name == ".DS_Store")
         continue;
       end

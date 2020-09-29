@@ -212,13 +212,13 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
+         #f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
         
-         sampled_data = f(x_sampled)
-         acc = derivative(f, x_sampled)
+         s#ampled_data = f(x_sampled)
+         #acc = derivative(f, x_sampled)
          #acc = np.diff(sampled_data,2)
-         #resample = sp.splrep(data[:,0],data[:,i])
-         #acc2 = sp.splev(x_sampled,resample, der=2)
+         resample = sp.splrep(data[:,0],data[:,i])
+         acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
          
          #y_sampled.append(f(x_sampled))
@@ -278,12 +278,12 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
+        #f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
         
-         sampled_data = f(x_sampled)
-         acc = derivative(f, x_sampled)
-         #resample = sp.splrep(data[:,0],data[:,i])
-         #acc = sp.splev(x_sampled,resample, der=2)
+         #sampled_data = f(x_sampled)
+         #acc = derivative(f, x_sampled)
+         resample = sp.splrep(data[:,0],data[:,i])
+         acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
          
          #y_sampled.append(f(x_sampled))
@@ -311,12 +311,12 @@ if __name__ == '__main__':
                 
             #data_new = data[index-12:index+12,:]   
          
-         f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
+         #f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
         
-         sampled_data = f(x_sampled)
-         acc = derivative(f, x_sampled)
-         #resample = sp.splrep(data[:,0],data[:,i])
-         #acc = sp.splev(x_sampled,resample, der=2)
+         #sampled_data = f(x_sampled)
+         #acc = derivative(f, x_sampled)
+         resample = sp.splrep(data[:,0],data[:,i])
+         acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
              
          #y_sampled.append(f(x_sampled))
