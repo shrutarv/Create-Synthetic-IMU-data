@@ -214,7 +214,7 @@ if __name__ == '__main__':
          
          #f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
         
-         s#ampled_data = f(x_sampled)
+         #sampled_data = f(x_sampled)
          #acc = derivative(f, x_sampled)
          #acc = np.diff(sampled_data,2)
          resample = sp.splrep(data[:,0],data[:,i])
