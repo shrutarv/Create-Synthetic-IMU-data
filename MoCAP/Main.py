@@ -228,7 +228,7 @@ def validation(dataLoader_validation):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
-    return (100. * correct / total, loss.item()/(b+1))
+    return (100. * correct / total, total_loss/(b+1))
         
 if __name__ == '__main__':
     
@@ -386,18 +386,16 @@ if __name__ == '__main__':
     
     print('Finished Training')
     ep = list(range(1,e+2))   
-    plt.subplot(2,2,1)
-    plt.title('Training: epoch vs loss')
-    plt.plot(ep,l)
-    plt.subplot(2,2,2)
-    plt.title('Training: epoch vs accuracy')
-    plt.plot(ep,accuracy)
-    plt.subplot(2,2,3)
-    plt.title('Validation: epoch vs loss')
-    plt.plot(ep,validation_loss)
-    plt.subplot(2,2,4)
-    plt.title('Validation: epoch vs accuracy')
-    plt.plot(ep,validation_acc)
+    plt.subplot(1,2,1)
+    plt.title('epoch vs loss')
+    plt.plot(ep,l, 'r', label='training loss')
+    plt.plot(ep,validation_loss, 'g',label='validation loss')
+    plt.legend()
+    plt.subplot(1,2,2)
+    plt.title('epoch vs accuracy')
+    plt.plot(ep,accuracy,label='training accuracy')
+    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.legend()
     plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
