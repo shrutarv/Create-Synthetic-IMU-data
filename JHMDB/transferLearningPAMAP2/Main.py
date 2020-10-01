@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import csv
 import logging
 import pandas as pd
-import torchvision.models as model
+#import torchvision.models as model
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
 '''
@@ -298,9 +298,7 @@ if __name__ == '__main__':
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+   
     model_path = '/data/sawasthi/data/BerkleyMHAD/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
@@ -308,6 +306,9 @@ if __name__ == '__main__':
     model_load = model_load.to(device)
     print("model loaded")  
     model = set_required_grad(model_load)
+    #optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
+    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
