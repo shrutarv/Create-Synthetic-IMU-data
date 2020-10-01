@@ -239,7 +239,7 @@ if __name__ == '__main__':
              resample = sp.splrep(data[:,0],data_norm[:,i])
              acc = sp.splev(data[:,0],resample, der=2)
              acc_sampled = acc[::down].copy()
-             print(y_sampled.shape, acc_sampled.shape)
+             #print(y_sampled.shape, acc_sampled.shape)
              y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
               
              #y_sampled.append(f(x_sampled))
