@@ -166,6 +166,7 @@ if __name__ == '__main__':
     #value = np.concatenate((m1,m2),axis=1)
     #value =  np.load('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy')
     value = np.load('/data/sawasthi/data/BerkleyMHAD/value.npy')
+    '''
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/train_data.csv", chunksize=10000):
         #df = pd.read_csv('/data/sawasthi/data/BerkleyMHAD/train_data.csv')
@@ -213,9 +214,9 @@ if __name__ == '__main__':
         k = 0
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
-        
-    #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
-    for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
+    '''   
+    for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
+    #for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
@@ -238,8 +239,9 @@ if __name__ == '__main__':
              resample = sp.splrep(data[:,0],data_norm[:,i])
              acc = sp.splev(data[:,0],resample, der=2)
              acc_sampled = acc[::down].copy()
+             print(y_sampled.shape, acc_sampled.shape)
              y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
-             
+              
              #y_sampled.append(f(x_sampled))
             # time_sampled =data[:,0][::down] 
             # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
@@ -283,6 +285,7 @@ if __name__ == '__main__':
              resample = sp.splrep(data[:,0],data_norm[:,i])
              acc = sp.splev(data[:,0],resample, der=2)
              acc_sampled = acc[::down].copy()
+             
              y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
              
              #y_sampled.append(f(x_sampled))
