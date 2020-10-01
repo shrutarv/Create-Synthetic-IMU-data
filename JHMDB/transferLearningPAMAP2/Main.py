@@ -17,7 +17,7 @@ import matplotlib.pyplot as plt
 import csv
 import logging
 import pandas as pd
-
+import torchvision.models as model
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
 '''
@@ -292,11 +292,10 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
-    model = Network(config)
-    model = model.float()
-    model = model.to(device)
-    #model.load_state_dict(torch.load())
-    #print("model loaded")   # 
+    model_load = model.load_state_dict(torch.load('/data/sawasthi/data/BerkleyMHAD/model/model.pth'))
+    model_load = model_load.to(device)
+    print("model loaded")   # 
+    model = set_required_grad(model)
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -307,7 +306,7 @@ if __name__ == '__main__':
     model_path = '/data/sawasthi/data/BerkleyMHAD/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/BerkleyMHAD/trainData/'
+    path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -320,7 +319,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/BerkleyMHAD/validationData/'
+    path = '/data/sawasthi/data/PAMAP2/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -332,7 +331,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/BerkleyMHAD/testData/'
+    path = '/data/sawasthi/data/PAMAP2/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -424,7 +423,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,label='training accuracy')
     plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/BerkleyMHAD/results/result.png') 
+    plt.savefig('/data/sawasthi/data/PAMAP2/results/result_tl.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -474,7 +473,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/BerkleyMHAD/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/PAMAP2/results/result_tl.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
