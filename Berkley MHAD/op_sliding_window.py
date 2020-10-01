@@ -114,25 +114,25 @@ def max_min_values(data, values):
         attribute = []
         temp_max = np.max(data[:,i])
         temp_min = np.min(data[:,i])
-        if (values[i][0] > temp_max):
+        if (values[i][0] < temp_min):
             attribute.append(values[i][0])
         else:
-            attribute.append(temp_max)
-        if(values[i][1] < temp_min):
+            attribute.append(temp_min)
+        if(values[i][1] > temp_max):
             attribute.append(values[i][1])
         else:
-            attribute.append(temp_min)
+            attribute.append(temp_max)
         temp_values.append(attribute)  
     values = temp_values
     return values
 
 
-def normalize(data, min_max, string):
+def normalize(data_x, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
-    for j in range(1,len(data[0])-1):
-        data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,1:31])
+    for j in range(len(data_x[0])):
+        data_x[:,j] = (data_x[:,j] - min_max[j][0])/(min_max[j][1] - min_max[j][0]) 
+    test = np.array(data[:,1:data_x.shape[1]])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -144,7 +144,7 @@ def normalize(data, min_max, string):
         test[test < 0] = 0
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
-    return data
+    return data_x
 
 
 if __name__ == '__main__':   
@@ -161,8 +161,9 @@ if __name__ == '__main__':
     sliding_window_step = 25
     #m2 = np.repeat(-999,102)
     #m1 = np.repeat(999,102)
-   # m1 = np.reshape(m1,(len(m1),1))
-   # m2 = np.reshape(m2,(len(m2),1))
+    #m1 = np.reshape(m1,(len(m1),1))
+    #m2 = np.reshape(m2,(len(m2),1))
+    #value = np.concatenate((m1,m2),axis=1)
     #value =  np.load('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy')
     value = np.load('/data/sawasthi/data/BerkleyMHAD/value.npy')
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
@@ -171,7 +172,11 @@ if __name__ == '__main__':
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
         data_new = data[:,1:103]
-        data = normalize(data_new,value, "train")
+        #value = max_min_values(data_new,value)
+        #save_data = np.asarray(value)
+        #np.save('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy',save_data)
+        #break;
+        data2 = normalize(data_new,value, "train")
         print("train data normalized")
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
