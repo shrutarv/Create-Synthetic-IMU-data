@@ -215,8 +215,8 @@ if __name__ == '__main__':
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
     '''   
-    for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
-    #for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
+    #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
+    for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
