@@ -227,7 +227,7 @@ if __name__ == '__main__':
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
         y_sampled = np.zeros((int(np.ceil(data.shape[0]/down)),1))
-                
+        print(y_sampled.shape)        
         for i in range(data_norm.shape[1]):
             #for index in range(12,len(data[0])*up-12):
                     
