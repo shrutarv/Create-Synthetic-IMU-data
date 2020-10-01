@@ -213,7 +213,8 @@ if __name__ == '__main__':
         k = 0
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
-    
+        
+    #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
@@ -247,7 +248,7 @@ if __name__ == '__main__':
         data_sampled = y_sampled[:,1:]
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-        data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
+       
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/'
         label = np.repeat(data[:,103],down).astype(int)
         lab = np.zeros((len(label),20), dtype=int)
@@ -265,11 +266,13 @@ if __name__ == '__main__':
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
         data = df.values
         data_new = data[:,1:103]
-        data = normalize(data_new,value, "train")
+        data_norm = normalize(data_new,value, "validation")
         print("validation data normalized")
+        # time sampled
+        #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
         y_sampled = np.zeros((int(data.shape[0]/down),1))
                 
-        for i in range(1,(data_norm.shape[1]-1)):
+        for i in range(data_norm.shape[1]):
             #for index in range(12,len(data[0])*up-12):
                     
                 #data_new = data[index-12:index+12,:]   
@@ -277,7 +280,7 @@ if __name__ == '__main__':
              #f = sp.interp1d(data[:,0],data[:,i], kind='linear')
              #acc = np.diff(data[:,i],2)
              #sampled_data = f(x_sampled)
-             resample = sp.splrep(data[:,0],data[:,i])
+             resample = sp.splrep(data[:,0],data_norm[:,i])
              acc = sp.splev(data[:,0],resample, der=2)
              acc_sampled = acc[::down].copy()
              y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
@@ -287,18 +290,18 @@ if __name__ == '__main__':
             # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
             # plt.plot(data[1:500,0],data[1:500,70],'g')
              
-        data_new = y_sampled[:,1:]
+        data_sampled = y_sampled[:,1:]
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-        data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
+       
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/'
         label = np.repeat(data[:,103],down).astype(int)
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #X = data[:,1:31]
-        X = data_new
+        X = data_sampled
         k = 0
-        example_creating_windows_file(k, X, lab, data_dir)
+        example_creating_windows_file(k, X, lab, data_dir)  
         print("validation data pickled")
         #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
         #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
