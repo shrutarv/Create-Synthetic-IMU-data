@@ -74,14 +74,14 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         # Sliding window approach
 
     print("Starting sliding window")
-    print(data_x.shape)
-    print(labels.shape)
+    #print(data_x.shape)
+    #print(labels.shape)
     X, y, y_all = opp_sliding_window(data_x, labels,
                                      sliding_window_length,
                                      sliding_window_step, label_pos_end = False)
-    print(X.shape)
-    print(y.shape)
-    print(y_all.shape)
+    #print(X.shape)
+    #print(y.shape)
+   # print(y_all.shape)
     counter_seq = 0
     value = 0
     if (X.shape[0]<y.shape[0]):
@@ -91,9 +91,9 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
    # for f in range(X.shape[0]):
     for f in range(value):
        # try:
-        sys.stdout.write('\r' + 'Creating sequence file '
-                                'number {} with id {}'.format(f, counter_seq))
-        sys.stdout.flush()
+        #sys.stdout.write('\r' + 'Creating sequence file '
+         #                       'number {} with id {}'.format(f, counter_seq))
+        #sys.stdout.flush()
 
         # print "Creating sequence file number {} with id {}".format(f, counter_seq)
         seq = np.reshape(X[f], newshape = (1, X.shape[1], X.shape[2]))
