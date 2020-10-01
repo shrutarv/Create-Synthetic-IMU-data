@@ -292,10 +292,8 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
-    model_load = model.load_state_dict(torch.load('/data/sawasthi/data/BerkleyMHAD/model/model.pth'))
-    model_load = model_load.to(device)
-    print("model loaded")   # 
-    model = set_required_grad(model)
+     
+    
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -306,6 +304,10 @@ if __name__ == '__main__':
     model_path = '/data/sawasthi/data/BerkleyMHAD/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+    model_load = torch.load(model_path)
+    model_load = model_load.to(device)
+    print("model loaded")  
+    model = set_required_grad(model_load)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
