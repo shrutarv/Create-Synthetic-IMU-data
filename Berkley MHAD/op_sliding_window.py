@@ -166,7 +166,7 @@ if __name__ == '__main__':
     #value = np.concatenate((m1,m2),axis=1)
     #value =  np.load('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy')
     value = np.load('/data/sawasthi/data/BerkleyMHAD/value.npy')
-    '''
+    k = 0
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/train_data.csv", chunksize=10000):
         #df = pd.read_csv('/data/sawasthi/data/BerkleyMHAD/train_data.csv')
@@ -211,10 +211,10 @@ if __name__ == '__main__':
         lab[:,0] = label
         #X = data[:,1:31]
         X = data_sampled
-        k = 0
+        k += 1
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
-    '''   
+    k = 0
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
@@ -258,10 +258,11 @@ if __name__ == '__main__':
         lab[:,0] = label
         #X = data[:,1:31]
         X = data_sampled
-        k = 0
+        k += 1
         example_creating_windows_file(k, X, lab, data_dir)
         print("test data pickled")
-        
+    
+    k = 0
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/validation_data.csv", chunksize=10000):
             
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/validationData/'
@@ -304,7 +305,7 @@ if __name__ == '__main__':
         lab[:,0] = label
         #X = data[:,1:31]
         X = data_sampled
-        k = 0
+        k += 1
         example_creating_windows_file(k, X, lab, data_dir)  
         print("validation data pickled")
         #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
