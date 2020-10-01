@@ -290,7 +290,8 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-     
+  
+   
     # Validation data    
     path = '/data/sawasthi/data/BerkleyMHAD/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
