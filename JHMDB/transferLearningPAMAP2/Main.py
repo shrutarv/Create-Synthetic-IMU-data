@@ -302,11 +302,11 @@ if __name__ == '__main__':
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    model_load = torch.load(model_path)
-    model_load.eval()
-    model_load = model_load.to(device)
+    model = torch.load(model_path)
+    model.eval()
+    model = model.to(device)
     print("model loaded")  
-    model = set_required_grad(model_load)
+    model = set_required_grad(model)
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
