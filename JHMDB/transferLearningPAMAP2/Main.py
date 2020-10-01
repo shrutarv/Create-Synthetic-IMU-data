@@ -299,10 +299,11 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
    
-    model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
+    model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     model_load = torch.load(model_path)
+    model_load.eval()
     model_load = model_load.to(device)
     print("model loaded")  
     model = set_required_grad(model_load)
@@ -407,7 +408,7 @@ if __name__ == '__main__':
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
+              torch.save(model.state, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
