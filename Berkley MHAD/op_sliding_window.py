@@ -108,19 +108,22 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         print("dumping")
         f.close()
  
-def max_min_values(data):
-    values = []
-    
-    #print(data.shape)
-    
-    for attr in range(data.shape[1]):
+def max_min_values(data, values):
+    temp_values = []
+    for i in range(data.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,attr])
-        temp_min = np.min(data[:,attr])
-        attribute.append(temp_min)
-        attribute.append(temp_max)
-        values.append(attribute)  
-    
+        temp_max = np.max(data[:,i])
+        temp_min = np.min(data[:,i])
+        if (values[i][0] > temp_max):
+            attribute.append(values[i][0])
+        else:
+            attribute.append(temp_max)
+        if(values[i][1] < temp_min):
+            attribute.append(values[i][1])
+        else:
+            attribute.append(temp_min)
+        temp_values.append(attribute)  
+    values = temp_values
     return values
 
 
@@ -156,24 +159,19 @@ if __name__ == '__main__':
     sliding_window_length = 100   
     #sliding_window_length = 100    
     sliding_window_step = 25
-    m = 0
-    # for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
+    #m2 = np.repeat(-999,102)
+    #m1 = np.repeat(999,102)
+   # m1 = np.reshape(m1,(len(m1),1))
+   # m2 = np.reshape(m2,(len(m2),1))
+    #value =  np.load('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy')
+    value = np.load('/data/sawasthi/data/BerkleyMHAD/value.npy')
+    #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/train_data.csv", chunksize=10000):
         #df = pd.read_csv('/data/sawasthi/data/BerkleyMHAD/train_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
-        data_new = data[:,1:104]
-        attr = np.zeros((100,1))
-        value = max_min_values(data_new)
-        '''
-        with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
-            fc = csv.writer(f, lineterminator='\n')
-            fc.writerow(["min","max"])
-            fc.writerows(value)
-        plt.plot(data[:,0],data[:,1])
-        '''
-        
-        data = normalize(data,value, "train")
+        data_new = data[:,1:103]
+        data = normalize(data_new,value, "train")
         print("train data normalized")
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
@@ -210,13 +208,14 @@ if __name__ == '__main__':
         k = 0
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
-        
+    
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
         data = df.values
-        data = normalize(data,value, "test")
+        data_new = data[:,1:103]
+        data = normalize(data_new,value, "train")
         print("test data normalized")
         y_sampled = np.zeros((int(np.ceil(data.shape[0]/down)),1))
                 
@@ -258,7 +257,8 @@ if __name__ == '__main__':
         #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
         data = df.values
-        data = normalize(data,value, "validation")
+        data_new = data[:,1:103]
+        data = normalize(data_new,value, "train")
         print("validation data normalized")
         y_sampled = np.zeros((int(data.shape[0]/down),1))
                 
