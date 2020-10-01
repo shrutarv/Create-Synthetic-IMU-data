@@ -15,7 +15,7 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
-
+import torchvision.models as model
 import pandas as pd
 
 
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 2
     batch_size = 20
     l = []
     tot_loss = 0
@@ -408,7 +408,7 @@ if __name__ == '__main__':
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
-    model = torch.load(model_path)
+    model = model.load_state_dict(torch.load(model_path))
     model.eval()
     with torch.no_grad():
             
