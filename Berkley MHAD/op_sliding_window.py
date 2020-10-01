@@ -127,12 +127,12 @@ def max_min_values(data, values):
     return values
 
 
-def normalize(data_x, min_max, string):
+def normalize(data_n, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
-    for j in range(len(data_x[0])):
-        data_x[:,j] = (data_x[:,j] - min_max[j][0])/(min_max[j][1] - min_max[j][0]) 
-    test = np.array(data[:,1:data_x.shape[1]])
+    for j in range(len(data_n[0])):
+        data_n[:,j] = (data_n[:,j] - min_max[j][0])/(min_max[j][1] - min_max[j][0]) 
+    test = np.array(data[:,1:data_n.shape[1]])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -144,7 +144,7 @@ def normalize(data_x, min_max, string):
         test[test < 0] = 0
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
-    return data_x
+    return data_n
 
 
 if __name__ == '__main__':   
