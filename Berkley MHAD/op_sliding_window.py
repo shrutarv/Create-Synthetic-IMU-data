@@ -105,7 +105,7 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         f = open(dir, 'wb')
         pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
         counter_seq += 1
-        print("dumping")
+        #print("dumping")
         f.close()
  
 def max_min_values(data, values):
