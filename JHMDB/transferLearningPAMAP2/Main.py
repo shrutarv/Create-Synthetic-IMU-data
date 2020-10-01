@@ -299,8 +299,8 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
    
-    #model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
-    model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+    model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     model_load = torch.load(model_path)
     model_load.eval()
