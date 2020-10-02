@@ -282,7 +282,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 80
+    epochs = 2
     batch_size = 20
     l = []
     tot_loss = 0
@@ -408,7 +408,7 @@ if __name__ == '__main__':
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model.state, model_path)
+              torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
