@@ -11,7 +11,7 @@ import torch.optim as optim
 import pickle
 from DataLoader import CustomDataSet, CustomDataSetTest
 from torch.utils.data import DataLoader
-
+from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
@@ -293,7 +293,7 @@ if __name__ == '__main__':
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
      
-    
+    PAMAP_net = Network(config)
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -306,7 +306,18 @@ if __name__ == '__main__':
     model.eval()
     model = model.to(device)
     print("model loaded")  
-    model = set_required_grad(model)
+    
+    PAMAP_net.conv1_1.weight = model.conv1_1.weight
+    PAMAP_net.conv1_2.weight = model.conv1_2.weight
+    PAMAP_net.conv1_1.bias = model.conv1_1.bias
+    PAMAP_net.conv1_2.bias = model.conv1_2.bias
+    
+    PAMAP_net.conv2_1.weight = model.conv2_1.weight
+    PAMAP_net.conv2_2.weight = model.conv2_2.weight
+    PAMAP_net.conv2_1.bias = model.conv2_1.bias
+    PAMAP_net.conv2_2.bias = model.conv2_2.bias
+    
+    model = set_required_grad(PAMAP_net)
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(filter(lambda p: p.requires_grad, model.parameters()), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
