@@ -273,7 +273,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "network":'cnn'
+        
         }
 
 
@@ -306,7 +306,7 @@ if __name__ == '__main__':
     model.eval()
     model = model.to(device)
     print("model loaded")  
-    
+    '''
     PAMAP_net.conv1_1.weight = model.conv1_1.weight
     PAMAP_net.conv1_2.weight = model.conv1_2.weight
     PAMAP_net.conv1_1.bias = model.conv1_1.bias
@@ -316,8 +316,11 @@ if __name__ == '__main__':
     PAMAP_net.conv2_2.weight = model.conv2_2.weight
     PAMAP_net.conv2_1.bias = model.conv2_1.bias
     PAMAP_net.conv2_2.bias = model.conv2_2.bias
-    
-    model = set_required_grad(PAMAP_net)
+    '''
+    model = set_required_grad(model)
+    model.fc4 = PAMAP_net.fc3
+    model.fc4 = PAMAP_net.fc4
+    model.fc5 = PAMAP_net.fc5
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(filter(lambda p: p.requires_grad, model.parameters()), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
