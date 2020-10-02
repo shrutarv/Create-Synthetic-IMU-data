@@ -272,7 +272,8 @@ if __name__ == '__main__':
         "network":"cnn",
         "output":"softmax",
         "num_classes":16,
-        "reshape_input":False
+        "reshape_input":False,
+        "network":'cnn'
         }
 
 
