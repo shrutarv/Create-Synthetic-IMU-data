@@ -321,6 +321,7 @@ if __name__ == '__main__':
     model.fc4 = PAMAP_net.fc3
     model.fc4 = PAMAP_net.fc4
     model.fc5 = PAMAP_net.fc5
+    model.softmax = PAMAP_net.softmax
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(filter(lambda p: p.requires_grad, model.parameters()), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
