@@ -383,7 +383,7 @@ if __name__ == '__main__':
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          torch.save(model, model_path)
+          #torch.save(model, model_path)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
