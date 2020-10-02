@@ -282,7 +282,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 2
+    epochs = 80
     batch_size = 20
     l = []
     tot_loss = 0
@@ -350,7 +350,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    
+    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -408,7 +408,7 @@ if __name__ == '__main__':
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
+              torch.save(model, model_path_tl)
               print("model saved on epoch", e)
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
@@ -438,7 +438,7 @@ if __name__ == '__main__':
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
-    model = torch.load(model_path)
+    model = torch.load(model_path_tl)
     model.eval()
     with torch.no_grad():
             
