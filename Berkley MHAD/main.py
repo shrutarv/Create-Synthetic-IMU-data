@@ -295,7 +295,7 @@ if __name__ == '__main__':
     model = Network(config)
     model = model.float()
     model = model.to(device)
-    #model.load_state_dict(torch.load())
+    #model.load_state_dict(torch.load('/data/sawasthi/data/BerkleyMHAD/model/model.pth'))
     #print("model loaded")   # 
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
