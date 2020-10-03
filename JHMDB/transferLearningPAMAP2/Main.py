@@ -324,7 +324,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 1
+    epochs = 150
     batch_size = 40
     l = []
     tot_loss = 0
@@ -341,7 +341,7 @@ if __name__ == '__main__':
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
-    model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
+    #model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
