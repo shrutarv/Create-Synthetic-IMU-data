@@ -255,6 +255,47 @@ def set_required_grad(network):
                 pv.requires_grad = False
 
         return network
+    
+def load_weights(network):
+        model_dict = network.state_dict()
+        # 1. filter out unnecessary keys
+        logging.info('        Network_User:        Loading Weights')
+
+        #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning']).state_dict()
+        #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
+        logging.info('        Network_User:        Pretrained model loaded')
+
+        #for k, v in pretrained_dict.items():
+        #    print(k)
+
+        if config["network"] == 'cnn':
+            list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias']
+        elif config["network"] == 'cnn_imu':
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight', 'conv_RL_2_2.bias']
+
+        pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in list_layers}
+        #print(pretrained_dict)
+
+        logging.info('        Network_User:        Pretrained layers selected')
+        # 2. overwrite entries in the existing state dict
+        model_dict.update(pretrained_dict)
+        logging.info('        Network_User:        Pretrained layers selected')
+        # 3. load the new state dict
+        network.load_state_dict(model_dict)
+        logging.info('        Network_User:        Weights loaded')
+
+        return network
         
 if __name__ == '__main__':
     
@@ -273,7 +314,8 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        
+        #"folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model.pth'
+        "folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
@@ -294,17 +336,17 @@ if __name__ == '__main__':
     #print(len(df),len(value), len(value[0]))
      
     PAMAP_net = Network(config)
+    PAMAP_net.init_weights()
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
-   
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    model = torch.load(model_path)
-    model.eval()
-    model = model.to(device)
+    #model = torch.load(model_path)
+    # transformed_net 
+    model = load_weights(PAMAP_net)
     print("model loaded")  
     '''
     PAMAP_net.conv1_1.weight = model.conv1_1.weight
@@ -316,12 +358,13 @@ if __name__ == '__main__':
     PAMAP_net.conv2_2.weight = model.conv2_2.weight
     PAMAP_net.conv2_1.bias = model.conv2_1.bias
     PAMAP_net.conv2_2.bias = model.conv2_2.bias
-    '''
+    
     model = set_required_grad(model)
     model.fc4 = PAMAP_net.fc3
     model.fc4 = PAMAP_net.fc4
     model.fc5 = PAMAP_net.fc5
     model.softmax = PAMAP_net.softmax
+    '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(filter(lambda p: p.requires_grad, model.parameters()), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
