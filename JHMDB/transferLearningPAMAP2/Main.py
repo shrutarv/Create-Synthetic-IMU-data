@@ -347,6 +347,7 @@ if __name__ == '__main__':
     #model = torch.load(model_path)
     # transformed_net 
     model = load_weights(PAMAP_net)
+    model = model.to(device)
     print("model loaded")  
     '''
     PAMAP_net.conv1_1.weight = model.conv1_1.weight
