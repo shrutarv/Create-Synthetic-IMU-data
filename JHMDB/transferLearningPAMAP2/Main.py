@@ -314,8 +314,8 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        #"folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model.pth'
-        "folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model.pth'
+        #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
@@ -341,7 +341,7 @@ if __name__ == '__main__':
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
-    model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
+    model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
