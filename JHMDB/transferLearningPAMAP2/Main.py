@@ -367,7 +367,7 @@ if __name__ == '__main__':
     model.softmax = PAMAP_net.softmax
     '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(filter(lambda p: p.requires_grad, model.parameters()), lr=0.00001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
