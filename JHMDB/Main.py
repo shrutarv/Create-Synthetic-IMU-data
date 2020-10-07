@@ -279,8 +279,8 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #lmbda = lambda epoch: 0.95
-    scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
-    #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer)
+    #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
+    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
@@ -376,8 +376,6 @@ if __name__ == '__main__':
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
               #print(' loss: ', loss.item(), 'accuracy in percent',acc)
-              for param_group in optimizer.param_groups:
-                  print(param_group['lr'])        
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
@@ -393,6 +391,9 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
+          for param_group in optimizer.param_groups:
+              print(param_group['lr'])        
+             
           scheduler.step(val_loss)
     
     print('Finished Training')
