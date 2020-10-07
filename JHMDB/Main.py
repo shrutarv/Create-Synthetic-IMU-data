@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 200
+    epochs = 100
     batch_size = 20
     l = []
     tot_loss = 0
@@ -337,7 +337,7 @@ if __name__ == '__main__':
     for e in range(epochs):
           
           model.train()
-          print("next epoch")
+          print("epoch ", e)
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
@@ -393,7 +393,7 @@ if __name__ == '__main__':
           #torch.save(model, model_path)
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
-              param_group['lr'] = 0.95*param_group['lr']
+              param_group['lr'] = 0.97*param_group['lr']
           #scheduler.step(val_loss)
     
     print('Finished Training')
