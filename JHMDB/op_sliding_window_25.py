@@ -175,14 +175,14 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 4
+    
     #ws = (100,31)
-    ws = (100,30) 
-    ss = (25,30)     
+    ws = (25,30) 
+    ss = (10,30)     
     #ss = (25,31)
-    sliding_window_length = 100   
+    sliding_window_length = 25   
     #sliding_window_length = 100    
-    sliding_window_step = 25
+    sliding_window_step = 10
     
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
@@ -200,7 +200,7 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/data/JHMDB/trainData/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    label = np.repeat(data[:,31],up).astype(int)
+    label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -216,7 +216,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "test")
     print("test data normalized")
     data_new = data[:,1:31]
-    label = np.repeat(data[:,31],up).astype(int)
+    label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
@@ -232,7 +232,7 @@ if __name__ == '__main__':
     print("validation data normalized")
     data_new = data[:,1:31]
 
-    label = np.repeat(data[:,31],up).astype(int)
+    label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
