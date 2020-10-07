@@ -260,7 +260,7 @@ if __name__ == '__main__':
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.001
+    learning_rate = 0.01
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -280,7 +280,7 @@ if __name__ == '__main__':
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #lmbda = lambda epoch: 0.95
     #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
-   #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer)
+    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
@@ -394,7 +394,7 @@ if __name__ == '__main__':
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
              
-          #scheduler.step(val_loss)
+          scheduler.step(val_loss)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
