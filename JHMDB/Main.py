@@ -255,12 +255,12 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 300
+    epochs = 200
     batch_size = 20
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.00001
+    learning_rate = 0.01
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -331,9 +331,11 @@ if __name__ == '__main__':
     validation_loss = []
     validation_acc = []
     for e in range(epochs):
+          optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
           model.train()
           print("next epoch")
           #loop per batch:
+          learning_rate = learning_rate*0.95
           for b, harwindow_batched in enumerate(dataLoader_train):
              
               train_batch_v = harwindow_batched["data"]
