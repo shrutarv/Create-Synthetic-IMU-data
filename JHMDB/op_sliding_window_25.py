@@ -182,7 +182,7 @@ if __name__ == '__main__':
     #ss = (25,31)
     sliding_window_length = 25   
     #sliding_window_length = 100    
-    sliding_window_step = 10
+    sliding_window_step = 5
     
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
