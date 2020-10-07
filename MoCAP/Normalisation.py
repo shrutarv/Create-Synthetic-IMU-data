@@ -8,6 +8,7 @@ import numpy as np
 from torch.utils.data import DataLoader
 import torch
 import csv
+from DataLoader import CustomDataSet, CustomDataSetTest
 
 def max_min_values(data, values):
     temp_values = []
