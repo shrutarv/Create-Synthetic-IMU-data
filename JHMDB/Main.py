@@ -280,7 +280,7 @@ if __name__ == '__main__':
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #lmbda = lambda epoch: 0.95
     #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
-    scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
+    #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
@@ -393,8 +393,8 @@ if __name__ == '__main__':
           #torch.save(model, model_path)
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
-             
-          scheduler.step(val_loss)
+              param_group['lr'] = 0.95*param_group['lr']
+          #scheduler.step(val_loss)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
