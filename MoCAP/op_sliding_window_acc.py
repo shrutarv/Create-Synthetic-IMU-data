@@ -212,5 +212,5 @@ if __name__ == '__main__':
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
         data_y = data_y.values
         value = max_min_values(data_y, value)
-    np.savetxt("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/value.csv", value, delimiter=',')   
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
      
