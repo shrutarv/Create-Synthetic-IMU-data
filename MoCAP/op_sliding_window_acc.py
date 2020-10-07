@@ -125,7 +125,7 @@ def max_min_values(dat, values):
     return values
 
 if __name__ == '__main__':
-       
+    '''   
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -192,7 +192,7 @@ if __name__ == '__main__':
         #if(k == 2):
           #  break
       
-    '''    
+       ''' 
       # Save max min values
     value = []
     for k in range(200):
@@ -202,15 +202,15 @@ if __name__ == '__main__':
         temp_list.append(maxim)
         temp_list.append(minim)
         value.append(temp_list) 
-    os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" )
+    os.chdir("/data/sawasthi/data/MoCAP_data/train_csv/")
     FileList = glob.glob('*.csv')
     for i in FileList:
         
         #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
         #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
-        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
-        data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
+        data_y = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/" + i) 
+        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
         data_y = data_y.values
         value = max_min_values(data_y, value)
-        break
-     ''' 
+    np.savetxt("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/value.csv", value, delimiter=',')   
+     
