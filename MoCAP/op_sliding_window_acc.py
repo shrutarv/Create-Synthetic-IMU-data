@@ -124,8 +124,27 @@ def max_min_values(dat, values):
     values = temp_values
     return values
 
+def normalize(data_n, min_max, string):
+    #print(len(min_max), len(min_max[0]))
+    
+    for j in range(len(data_n[0])):
+        data_n[:,j] = (data_n[:,j] - min_max[j][0])/(min_max[j][1] - min_max[j][0]) 
+    test = np.array(data_n[:,1:data_n.shape[1]])
+        
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    else:
+        test[test > 1] = 1
+        test[test < 0] = 0
+    #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    #data = torch.tensor(data)
+    return data_n
+
 if __name__ == '__main__':
-       
+    '''
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -137,7 +156,7 @@ if __name__ == '__main__':
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
-    #data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
+    data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -193,7 +212,7 @@ if __name__ == '__main__':
         #if(k == 2):
           #  break
       
-    ''' 
+    
       # Save max min values
     value = []
     for k in range(200):
@@ -215,3 +234,11 @@ if __name__ == '__main__':
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
      '''
+    value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
+    value = value.values
+    data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
+    data = data.values
+    data_norm = normalize(data,value)
+    t = np.zeros((1,data_norm.shape[1]))
+    data_norm = np.concatenate((t,data_norm))
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
