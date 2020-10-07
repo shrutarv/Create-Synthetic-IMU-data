@@ -281,8 +281,7 @@ if __name__ == '__main__':
     #lmbda = lambda epoch: 0.95
     scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer)
-    for param_group in optimizer.param_groups:
-        print(param_group['lr'])
+    
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/JHMDB/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
@@ -376,8 +375,9 @@ if __name__ == '__main__':
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
-                      
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
+              for param_group in optimizer.param_groups:
+                  print(param_group['lr'])        
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
