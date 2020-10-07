@@ -106,12 +106,12 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         print("dumping")
         f.close()
  
-def max_min_values(data, values):
+def max_min_values(dat, values):
     temp_values = []
-    for i in range(data_x.shape[1]):
+    for i in range(dat.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,i])
-        temp_min = np.min(data[:,i])
+        temp_max = np.max(dat[:,i])
+        temp_min = np.min(dat[:,i])
         if (values[i][0] > temp_max):
             attribute.append(values[i][0])
         else:
@@ -140,17 +140,17 @@ if __name__ == '__main__':
     #data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-    data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
     folder_name = "S10"
     FileList_y = []
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
-    #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
+    os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
-    os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+   # os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
     FileList_y = glob.glob('*labels.csv')
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
     #List = glob.glob('*labels.csv')
@@ -172,24 +172,45 @@ if __name__ == '__main__':
     
     for i,j in zip(FileList_x, FileList_y):
         k += 1
-        #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
+        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
         #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
-        data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
         data_y = data_y.values
         labels = data_y[:,0]
-        #data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
+        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
         #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
-        data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+        #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = np.delete(data_x,np.s_[68:74], axis=1)
         data_x = data_x[:,2:128]
         trainData = np.concatenate((trainData,data_x))
-        np.savetxt("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/train10.csv", trainData)
+        
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train10.csv", trainData, delimiter=',')
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
           #  break
-    
-   
-    
+      
+    '''    
+      # Save max min values
+    value = []
+    for k in range(200):
+        temp_list = []
+        maxim = -9999
+        minim = 9999
+        temp_list.append(maxim)
+        temp_list.append(minim)
+        value.append(temp_list) 
+    os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" )
+    FileList = glob.glob('*.csv')
+    for i in FileList:
+        
+        #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
+        #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
+        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+        data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
+        data_y = data_y.values
+        value = max_min_values(data_y, value)
+        break
+     ''' 
