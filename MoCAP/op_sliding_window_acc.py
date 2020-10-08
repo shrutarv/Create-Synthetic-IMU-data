@@ -184,7 +184,8 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, labels, data_dir)
     print("train data pickled")
-    
+    '''
+    '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -279,6 +280,7 @@ if __name__ == '__main__':
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
     '''
+    '''
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
@@ -291,4 +293,46 @@ if __name__ == '__main__':
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
+    '''
     
+    trainData = np.empty([1, 1])
+    # training set : S01, S02,S03,S04,S07,S08,S09,S10
+    # validation set : S05,S11,S12
+    # test set : S06,13,14
+    data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
+    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+    #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+    FolderList = ['P01','P01','P03','P04','P07','P08','P09','P10']
+    #    print (np.shape(i[:,0]))
+    #folder_name = "P09"
+    for folder_name in FolderList:
+        
+        FileList_y = []
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+        os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+        #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
+        #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+        FileList_y = glob.glob('*labels.csv')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+        #List = glob.glob('*labels.csv')
+        #FileList_y = FileList_y + List
+                
+        
+        FileList_y.sort()
+        k = 0 
+        
+        for j in FileList_y:
+            k += 1
+            data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
+            #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+            data_y = data_y.values
+            labels = data_y[:,0]
+           
+            Data = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
+         
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv", Data, delimiter=',')
