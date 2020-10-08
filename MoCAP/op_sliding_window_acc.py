@@ -127,7 +127,7 @@ def normalize(data_n, min_max, string):
     
     for j in range(len(data_n[0])):
         data_n[:,j] = (data_n[:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1]) 
-    test = np.array(data_n[:,1:data_n.shape[1]])
+    test = np.array(data_n[:,:data_n.shape[1]])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -151,7 +151,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 25
     #df =  pd.read_csv('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/train10.csv',chunksize=1000)
-    df = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/test.csv')
+    df = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv')
     data = df.values
     sampled_time = np.linspace(0,len(data)/200,len(data))
     y_sampled = np.zeros((len(sampled_time),1))
@@ -173,9 +173,9 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  "/data/sawasthi/data/MoCAP_data/testData_acc/"
+    data_dir =  "/data/sawasthi/data/MoCAP_data/trainData_acc/"
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    labels = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/testLabels.csv')
+    labels = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv')
     labels = labels.values
     labels = np.reshape(labels,(len(labels),))
     lab = np.zeros((len(labels),20), dtype=int)
@@ -184,7 +184,7 @@ if __name__ == '__main__':
     X = data_new
     k = 0
     example_creating_windows_file(k,data_dir, X,lab)
-    print("test data pickled")
+    print("train data pickled")
     '''
     ## Concat all the training, test and validation data and save in a single file
     trainData = np.empty([1, 126])
