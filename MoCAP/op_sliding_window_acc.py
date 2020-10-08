@@ -183,7 +183,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, labels, data_dir)
+    example_creating_windows_file(k,data_dir, X, labels)
     print("train data pickled")
     
     '''
