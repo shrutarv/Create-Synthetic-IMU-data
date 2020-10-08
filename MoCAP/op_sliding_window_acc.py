@@ -300,7 +300,7 @@ if __name__ == '__main__':
     # validation set : S05,S11,S12
     # test set : S06,13,14
      #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    FolderList = ['P06','P13','P14']
+    FolderList = ['P05','P11','P12']
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
@@ -331,4 +331,4 @@ if __name__ == '__main__':
            
             Data = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/testLabels.csv", Data, delimiter=',')
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/validationLabels.csv", Data, delimiter=',')
