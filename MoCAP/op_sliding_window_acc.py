@@ -145,7 +145,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    
+    '''
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -153,7 +153,7 @@ if __name__ == '__main__':
     sliding_window_length = 200   # for MoCAP
     #sliding_window_length = 100    
     sliding_window_step = 25
-    '''
+    
     df = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/train.csv')
     data = df.values
     sampled_time = np.linspace(0,len(data)/200,len(data))
@@ -173,20 +173,19 @@ if __name__ == '__main__':
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
     data_new = y_sampled[:,1:]
     # creating labels
-    '''
+    
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  "/data/sawasthi/data/MoCAP_data/trainData_acc/"
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     labels = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv')
     labels = labels.values
-    print(np.unique(labels))
     #X = data[:,1:31]
-    #X = data_new
+    X = data_new
     k = 0
-    #example_creating_windows_file(k, X, labels, data_dir)
+    example_creating_windows_file(k, X, labels, data_dir)
     print("train data pickled")
-    
+    '''
     '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -281,8 +280,8 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    '''
-    '''
+    
+    
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
@@ -295,14 +294,14 @@ if __name__ == '__main__':
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
-    
+    '''
     
     trainData = np.empty([1, 1])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
      #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    FolderList = ['P05','P11','P12']
+    FolderList = ['P01','P02','P03','P04','P07','P08','P09','P10']
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
@@ -331,7 +330,7 @@ if __name__ == '__main__':
             data_y = data_y.values
             labels = data_y[:,0]
            
-            Data = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
+            trainData = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/validationLabels.csv", Data, delimiter=',')
-    '''
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/validationLabels.csv", trainData, delimiter=',')
+    
