@@ -177,6 +177,7 @@ if __name__ == '__main__':
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     labels = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv')
     labels = labels.values
+    labels = np.reshape(labels,(len(labels),))
     lab = np.zeros((len(labels),20), dtype=int)
     lab[:,0] = labels
     #X = data[:,1:31]
