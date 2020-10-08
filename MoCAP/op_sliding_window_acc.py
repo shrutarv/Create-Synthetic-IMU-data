@@ -299,12 +299,8 @@ if __name__ == '__main__':
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
-    data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
-    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    FolderList = ['P01','P01','P03','P04','P07','P08','P09','P10']
+     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+    FolderList = ['P06','P13','P14']
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
@@ -335,4 +331,4 @@ if __name__ == '__main__':
            
             Data = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv", Data, delimiter=',')
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/testLabels.csv", Data, delimiter=',')
