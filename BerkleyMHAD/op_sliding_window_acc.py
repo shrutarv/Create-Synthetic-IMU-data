@@ -181,7 +181,6 @@ if __name__ == '__main__':
         print("train data normalized")
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-        '''
         y_sampled = np.zeros((int(np.ceil(data.shape[0]/down)),1))
                 
         for i in range(data_norm.shape[1]):
@@ -201,17 +200,17 @@ if __name__ == '__main__':
             # time_sampled =data[:,0][::down] 
             # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
             # plt.plot(data[1:500,0],data[1:500,70],'g')
-        '''     
-       #data_sampled = y_sampled[:,1:]
+             
+        data_sampled = y_sampled[:,1:]
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-        data_dir =  '/data/sawasthi/data/BerkleyMHAD/trainData_orig/'
+        data_dir =  '/data/sawasthi/data/BerkleyMHAD/trainData/'
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/'
         label = np.repeat(data[:,103],down).astype(int)
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #X = data[:,1:31]
-        X = data_norm
+        X = data_sampled
         k += 1
         example_creating_windows_file(k, X, lab, data_dir)
         print("train data pickled")
@@ -219,7 +218,7 @@ if __name__ == '__main__':
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-        data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData_orig/'
+        data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
         data = df.values
         data_new = data[:,1:103]
@@ -228,7 +227,29 @@ if __name__ == '__main__':
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
        
-       #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        y_sampled = np.zeros((int(np.ceil(data.shape[0]/float(down))),1))
+             
+        for i in range(data_norm.shape[1]):
+            #for index in range(12,len(data[0])*up-12):
+                    
+                #data_new = data[index-12:index+12,:]   
+             
+             #f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+             #acc = np.diff(data[:,i],2)
+             #sampled_data = f(x_sampled)
+             resample = sp.splrep(data[:,0],data_norm[:,i])
+             acc = sp.splev(data[:,0],resample, der=2)
+             acc_sampled = acc[::down].copy()
+             #print(y_sampled.shape, acc_sampled.shape)
+             y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
+              
+             #y_sampled.append(f(x_sampled))
+            # time_sampled =data[:,0][::down] 
+            # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
+            # plt.plot(data[1:500,0],data[1:500,70],'g')
+             
+        data_sampled = y_sampled[:,1:]
+        #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
        
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/'
@@ -236,7 +257,7 @@ if __name__ == '__main__':
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #X = data[:,1:31]
-        X = data_norm
+        X = data_sampled
         k += 1
         example_creating_windows_file(k, X, lab, data_dir)
         print("test data pickled")
@@ -244,7 +265,7 @@ if __name__ == '__main__':
     k = 0
     for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/validation_data.csv", chunksize=10000):
             
-        data_dir =  '/data/sawasthi/data/BerkleyMHAD/validationData_orig/'
+        data_dir =  '/data/sawasthi/data/BerkleyMHAD/validationData/'
         #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
         data = df.values
@@ -253,13 +274,37 @@ if __name__ == '__main__':
         print("validation data normalized")
         # time sampled
         #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-        
+        y_sampled = np.zeros((int(np.ceil(data.shape[0]/float(down))),1))
+                
+        for i in range(data_norm.shape[1]):
+            #for index in range(12,len(data[0])*up-12):
+                    
+                #data_new = data[index-12:index+12,:]   
+             
+             #f = sp.interp1d(data[:,0],data[:,i], kind='linear')
+             #acc = np.diff(data[:,i],2)
+             #sampled_data = f(x_sampled)
+             resample = sp.splrep(data[:,0],data_norm[:,i])
+             acc = sp.splev(data[:,0],resample, der=2)
+             acc_sampled = acc[::down].copy()
+             
+             y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
+             
+             #y_sampled.append(f(x_sampled))
+            # time_sampled =data[:,0][::down] 
+            # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
+            # plt.plot(data[1:500,0],data[1:500,70],'g')
+             
+        data_sampled = y_sampled[:,1:]
+        #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+       
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/'
         label = np.repeat(data[:,103],down).astype(int)
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #X = data[:,1:31]
-        X = data_norm
+        X = data_sampled
         k += 1
         example_creating_windows_file(k, X, lab, data_dir)  
         print("validation data pickled")

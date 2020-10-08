@@ -152,6 +152,7 @@ if __name__ == '__main__':
     sliding_window_length = 200   # for MoCAP
     #sliding_window_length = 100    
     sliding_window_step = 25
+    '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -165,6 +166,7 @@ if __name__ == '__main__':
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
+        
         FileList_y = []
         #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
         os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
@@ -213,7 +215,7 @@ if __name__ == '__main__':
         #if(k == 2):
           #  break
       
-    '''
+    
       # Save max min values
     value = []
     for k in range(200):
