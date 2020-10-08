@@ -126,7 +126,7 @@ def normalize(data_n, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
     for j in range(len(data_n[0])):
-        data_n[:,j] = (data_n[:,j] - min_max[j][0])/(min_max[j][1] - min_max[j][0]) 
+        data_n[:,j] = (data_n[:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1]) 
     test = np.array(data_n[:,1:data_n.shape[1]])
         
     if (string=="train"):
@@ -185,8 +185,8 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k,data_dir, X,lab)
     print("validation data pickled")
-    
-    '''
+
+    ## Concat all the training, test and validation data and save in a single file
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -228,22 +228,18 @@ if __name__ == '__main__':
         
         for i,j in zip(FileList_x, FileList_y):
             k += 1
-            data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
-            #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
-            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
-            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+            #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
+            data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
             data_y = data_y.values
             labels = data_y[:,0]
-            data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
-            #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
-            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
-            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+            #data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
+            data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
             data_x = data_x.values
             data_x = np.delete(data_x,np.s_[68:74], axis=1)
             data_x = data_x[:,2:128]
             trainData = np.concatenate((trainData,data_x))
-    t = np.zeros((1,trainData.shape[1]))
-    trainData = np.concatenate((t,trainData))      
+    # = np.zeros((1,trainData.shape[1]))
+   #trainData = np.concatenate((t,trainData))      
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/test.csv", trainData, delimiter=',')
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
@@ -267,21 +263,7 @@ if __name__ == '__main__':
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["max","min"])
         fc.writerows(value)
-    
-    
-    os.chdir("/data/sawasthi/data/MoCAP_data/train_csv/")
-    FileList = glob.glob('*.csv')
-    for i in FileList:
-        
-        #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
-        #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
-        data_y = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/" + i) 
-        data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/train.csv") 
-        data_y = data_y.values
-        value = max_min_values(data_y, value)
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    
-    
+    ## Normalise the data
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
@@ -294,8 +276,8 @@ if __name__ == '__main__':
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
-    '''
-    '''
+    
+    ## Save labels of train,test and validation sets
     trainData = np.empty([1, 1])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -333,4 +315,8 @@ if __name__ == '__main__':
             trainData = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/testLabels.csv", trainData, delimiter=',')
-    '''
+    
+    with open("S:/MS A&R/4th Sem/Thesis/LaRa/seq__0_47084.pkl", 'rb') as f:
+        u = pickle._Unpickler( f )
+        u.encoding = 'latin1'
+        dat = u.load()
