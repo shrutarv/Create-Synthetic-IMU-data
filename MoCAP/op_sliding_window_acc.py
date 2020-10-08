@@ -290,7 +290,7 @@ if __name__ == '__main__':
     data_new = data[1:,:]
     data_norm = normalize(data_new,value,"train")
     print("normalized")
-    data_norm = np.concatenate(np.reshape(data[:,0],(len(data[:,0]),1)),data_norm,axis=1)
+    data_norm = np.concatenate((np.reshape(data[:,0],(len(data[:,0]),1)),data_norm),axis=1)
     print(np.unique(data_norm[:,0]))
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
