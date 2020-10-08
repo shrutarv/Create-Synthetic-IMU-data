@@ -184,8 +184,7 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, labels, data_dir)
     print("train data pickled")
-     '''
-    '''
+    
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -285,11 +284,10 @@ if __name__ == '__main__':
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
     print("read training data")
     data = data.values
-    data_new = data[:,1:]
-    data_norm = normalize(data_new,value,"train")
+    data_norm = normalize(data,value,"train")
     print("normalized")
     data_norm = np.concatenate((np.reshape(data[:,0],(len(data[:,0]),1)),data_norm),axis=1)
-    print(np.unique(data_norm[:,0]))
+    
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
