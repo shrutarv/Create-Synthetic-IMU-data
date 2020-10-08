@@ -145,7 +145,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    '''
+    
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, labels, data_dir)
     print("train data pickled")
-    '''
+    
     '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
     '''
-    
+    '''
     trainData = np.empty([1, 1])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
@@ -333,4 +333,4 @@ if __name__ == '__main__':
             trainData = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/testLabels.csv", trainData, delimiter=',')
-    
+    '''
