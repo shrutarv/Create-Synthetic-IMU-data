@@ -238,7 +238,7 @@ if __name__ == '__main__':
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
     data = data.values
-    data_norm = normalize(data,value)
+    data_norm = normalize(data,value,"train")
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
