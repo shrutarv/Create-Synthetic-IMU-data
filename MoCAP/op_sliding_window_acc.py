@@ -144,7 +144,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    
+    '''
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -223,6 +223,16 @@ if __name__ == '__main__':
         temp_list.append(maxim)
         temp_list.append(minim)
         value.append(temp_list) 
+    data_y = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
+    #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
+    data_y = data_y.values
+    value = max_min_values(data_y, value)
+    with open("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", 'w') as f:
+        fc = csv.writer(f, lineterminator='\n')
+        fc.writerow(["max","min"])
+        fc.writerows(value)
+    
+    '''  
     os.chdir("/data/sawasthi/data/MoCAP_data/train_csv/")
     FileList = glob.glob('*.csv')
     for i in FileList:
@@ -234,7 +244,7 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    
+    '''
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
