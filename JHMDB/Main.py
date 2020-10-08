@@ -257,11 +257,12 @@ if __name__ == '__main__':
     total_correct = 0
     epochs = 300
     batch_size = 20
+    lr_factor = 0.985
     l = []
     tot_loss = 0
     accuracy = []
     learning_rate = 0.001
-    print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+    print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -393,7 +394,7 @@ if __name__ == '__main__':
           #torch.save(model, model_path)
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
-              param_group['lr'] = 0.985*param_group['lr']
+              param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
     
     print('Finished Training')
