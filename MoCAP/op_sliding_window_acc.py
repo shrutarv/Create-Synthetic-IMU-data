@@ -6,6 +6,7 @@ import pickle
 from sliding_window import sliding_window
 import glob
 import csv
+import scipy.interpolate as sp
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -144,7 +145,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    
+    '''
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -152,6 +153,40 @@ if __name__ == '__main__':
     sliding_window_length = 200   # for MoCAP
     #sliding_window_length = 100    
     sliding_window_step = 25
+    
+    df = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/test.csv')
+    data = df.values
+    sampled_time = np.linspace(0,len(data)/200,len(data))
+    y_sampled = np.zeros((len(sampled_time),1))
+    for i in range(data.shape[1]-1):
+        #for index in range(12,len(data[0])*up-12):
+                
+            #data_new = data[index-12:index+12,:]   
+         
+         #f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
+        
+         #sampled_data = f(x_sampled)
+         #acc = derivative(f, x_sampled)
+         #acc = np.diff(sampled_data,2)
+         resample = sp.splrep(sampled_time,data[:,i])
+         acc = sp.splev(sampled_time,resample, der=2)
+         y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
+    data_new = y_sampled[:,1:]
+    # creating labels
+    
+    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+    data_dir =  "/data/sawasthi/data/MoCAP_data/trainData_acc/"
+    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    label = np.repeat(data[:,31]).astype(int)
+    lab = np.zeros((len(label),20), dtype=int)
+    lab[:,0] = label
+    #X = data[:,1:31]
+    X = data_new
+    k = 0
+    example_creating_windows_file(k, X, lab, data_dir)
+    print("train data pickled")
+    '''     
     '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -246,15 +281,18 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    
+    '''
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
     print("read training data")
     data = data.values
-    data_norm = normalize(data,value,"train")
+    data_new = data[1:,:]
+    data_norm = normalize(data_new,value,"train")
     print("normalized")
+    data_norm = np.concatenate((data[:,0],data_norm),axis=1)
+    print(np.unique(data_norm[:,0]))
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
-    '''
+    
