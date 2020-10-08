@@ -393,7 +393,7 @@ if __name__ == '__main__':
           #torch.save(model, model_path)
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
-              param_group['lr'] = 0.98*param_group['lr']
+              param_group['lr'] = 0.985*param_group['lr']
           #scheduler.step(val_loss)
     
     print('Finished Training')
