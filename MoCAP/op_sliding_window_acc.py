@@ -178,15 +178,13 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  "/data/sawasthi/data/MoCAP_data/trainData_acc/"
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    label = np.repeat(data[:,31]).astype(int)
-    lab = np.zeros((len(label),20), dtype=int)
-    lab[:,0] = label
+    labels = data[:,0]
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, labels, data_dir)
     print("train data pickled")
-     '''    
+     '''
     '''
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -277,7 +275,7 @@ if __name__ == '__main__':
         #data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
         #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
         data_y = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/" + i) 
-        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/" + i) 
+        data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/train.csv") 
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
@@ -287,7 +285,7 @@ if __name__ == '__main__':
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
     print("read training data")
     data = data.values
-    data_new = data[1:,:]
+    data_new = data[:,1:]
     data_norm = normalize(data_new,value,"train")
     print("normalized")
     data_norm = np.concatenate((np.reshape(data[:,0],(len(data[:,0]),1)),data_norm),axis=1)
