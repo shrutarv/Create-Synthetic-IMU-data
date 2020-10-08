@@ -332,5 +332,5 @@ if __name__ == '__main__':
            
             trainData = np.concatenate((trainData,np.reshape(labels,(len(labels),1))))
          
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/validationLabels.csv", trainData, delimiter=',')
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv", trainData, delimiter=',')
     
