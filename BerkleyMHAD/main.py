@@ -260,7 +260,7 @@ if __name__ == '__main__':
     l = []
     tot_loss = 0
     accuracy = []
-        
+    print("accumulation_steps ", accumulation_steps,"batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
