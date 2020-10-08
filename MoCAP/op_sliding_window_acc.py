@@ -244,7 +244,7 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    '''
+    
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
