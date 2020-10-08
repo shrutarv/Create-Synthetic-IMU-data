@@ -144,7 +144,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    '''
+    
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -206,13 +206,14 @@ if __name__ == '__main__':
             data_x = np.delete(data_x,np.s_[68:74], axis=1)
             data_x = data_x[:,2:128]
             trainData = np.concatenate((trainData,data_x))
-            
+    t = np.zeros((1,trainData.shape[1]))
+    trainData = np.concatenate((t,trainData))      
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train.csv", trainData, delimiter=',')
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
           #  break
       
-    
+    '''
       # Save max min values
     value = []
     for k in range(200):
@@ -233,7 +234,7 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-     '''
+    
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
@@ -244,3 +245,4 @@ if __name__ == '__main__':
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
+    '''
