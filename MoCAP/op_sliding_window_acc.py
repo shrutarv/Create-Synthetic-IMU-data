@@ -161,7 +161,7 @@ if __name__ == '__main__':
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    FolderList = ['P05','P11','P12']
+    FolderList = ['P06','P13','P14']
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
@@ -208,7 +208,7 @@ if __name__ == '__main__':
             trainData = np.concatenate((trainData,data_x))
     t = np.zeros((1,trainData.shape[1]))
     trainData = np.concatenate((t,trainData))      
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/validation.csv", trainData, delimiter=',')
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/test.csv", trainData, delimiter=',')
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
           #  break
