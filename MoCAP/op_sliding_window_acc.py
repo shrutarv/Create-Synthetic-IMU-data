@@ -74,14 +74,11 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         # Sliding window approach
 
     print("Starting sliding window")
-    print(data_x.shape)
-    print(labels.shape)
+   
     X, y, y_all = opp_sliding_window(data_x, labels.astype(int),
                                      sliding_window_length,
                                      sliding_window_step, label_pos_end = False)
-    print(X.shape)
-    print(y.shape)
-    print(y_all.shape)
+ 
     counter_seq = 0
     value = 0
     if (X.shape[0]<y.shape[0]):
@@ -98,7 +95,7 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         # print "Creating sequence file number {} with id {}".format(f, counter_seq)
         seq = np.reshape(X[f], newshape = (1, X.shape[1], X.shape[2]))
         seq = np.require(seq, dtype=np.float)
-        dir = data_dir + "seq_" + folder_name + "_" + str(k) + "_" + str(counter_seq) + ".pkl"
+        dir = data_dir + "seq_" + "_" + str(k) + "_" + str(counter_seq) + ".pkl"
         obj = {"data" : seq, "label" : y[f], "labels" : y_all[f]}
         #f = open(os.path.join(dir, 'seq_{0:06}.pkl'.format(counter_seq)), 'wb')
         f = open(dir, 'wb')
@@ -153,7 +150,7 @@ if __name__ == '__main__':
     sliding_window_length = 200   # for MoCAP
     #sliding_window_length = 100    
     sliding_window_step = 25
-    
+    #df =  pd.read_csv('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data_csv/train10.csv',chunksize=1000)
     df = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/train.csv')
     data = df.values
     sampled_time = np.linspace(0,len(data)/200,len(data))
@@ -180,10 +177,12 @@ if __name__ == '__main__':
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     labels = pd.read_csv('/data/sawasthi/data/MoCAP_data/train_csv/trainLabels.csv')
     labels = labels.values
+    lab = np.zeros((len(labels),20), dtype=int)
+    lab[:,0] = labels
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k,data_dir, X, labels)
+    example_creating_windows_file(k,data_dir, X,lab)
     print("train data pickled")
     
     '''
