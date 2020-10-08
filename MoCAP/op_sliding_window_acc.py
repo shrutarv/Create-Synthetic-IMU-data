@@ -213,7 +213,7 @@ if __name__ == '__main__':
         #if(k == 2):
           #  break
       
-    '''
+    
       # Save max min values
     value = []
     for k in range(200):
@@ -232,7 +232,7 @@ if __name__ == '__main__':
         fc.writerow(["max","min"])
         fc.writerows(value)
     
-    '''  
+    
     os.chdir("/data/sawasthi/data/MoCAP_data/train_csv/")
     FileList = glob.glob('*.csv')
     for i in FileList:
@@ -244,7 +244,7 @@ if __name__ == '__main__':
         data_y = data_y.values
         value = max_min_values(data_y, value)
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/value.csv", value, delimiter=',')   
-    
+    '''
     value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
     value = value.values
     data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
@@ -255,4 +255,4 @@ if __name__ == '__main__':
     t = np.zeros((1,data_norm.shape[1]))
     data_norm = np.concatenate((t,data_norm))
     np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
-    '''
+    
