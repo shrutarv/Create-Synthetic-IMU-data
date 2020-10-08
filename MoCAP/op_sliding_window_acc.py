@@ -155,7 +155,7 @@ if __name__ == '__main__':
     data = df.values
     sampled_time = np.linspace(0,len(data)/200,len(data))
     y_sampled = np.zeros((len(sampled_time),1))
-    for i in range(data.shape[1]-1):
+    for i in range(data.shape[1]):
         #for index in range(12,len(data[0])*up-12):
                 
             #data_new = data[index-12:index+12,:]   
@@ -169,7 +169,7 @@ if __name__ == '__main__':
          acc = sp.splev(sampled_time,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
     data_new = y_sampled[:,1:]
-    # creating labels
+   
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
@@ -185,7 +185,7 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k,data_dir, X,lab)
     print("validation data pickled")
-
+    '''
     ## Concat all the training, test and validation data and save in a single file
     trainData = np.empty([1, 126])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -244,7 +244,6 @@ if __name__ == '__main__':
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
           #  break
-      
     
       # Save max min values
     value = []
@@ -263,20 +262,7 @@ if __name__ == '__main__':
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["max","min"])
         fc.writerows(value)
-    ## Normalise the data
-    value = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/value.csv") 
-    value = value.values
-    data = pd.read_csv("/data/sawasthi/data/MoCAP_data/train_csv/train.csv") 
-    print("read training data")
-    data = data.values
-    data_norm = normalize(data,value,"train")
-    print("normalized")
-    data_norm = np.concatenate((np.reshape(data[:,0],(len(data[:,0]),1)),data_norm),axis=1)
-    
-    t = np.zeros((1,data_norm.shape[1]))
-    data_norm = np.concatenate((t,data_norm))
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train_normal.csv", data_norm, delimiter=',')
-    
+   
     ## Save labels of train,test and validation sets
     trainData = np.empty([1, 1])
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
@@ -320,3 +306,4 @@ if __name__ == '__main__':
         u = pickle._Unpickler( f )
         u.encoding = 'latin1'
         dat = u.load()
+        '''
