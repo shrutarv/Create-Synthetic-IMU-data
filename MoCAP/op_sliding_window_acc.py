@@ -142,7 +142,7 @@ def normalize(data_n, min_max, string):
     return data_n
 
 if __name__ == '__main__':
-    
+    '''
     #ws = (100,31)
     ws = (200,134)  #for MoCAP
     ss = (25,134)     #for MoCAP
@@ -194,12 +194,12 @@ if __name__ == '__main__':
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
-    data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
+    data_dir =  "/data/sawasthi/data/MoCAP_data/trainData/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    FolderList = ['P06','P13','P14']
+    FolderList = ['P01','P02','P03','P04','P07','P08','P09','P10']
     #    print (np.shape(i[:,0]))
     #folder_name = "P09"
     for folder_name in FolderList:
@@ -243,11 +243,11 @@ if __name__ == '__main__':
             trainData = np.concatenate((trainData,data_x))
     # = np.zeros((1,trainData.shape[1]))
    #trainData = np.concatenate((t,trainData))      
-    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/test.csv", trainData, delimiter=',')
+    np.savetxt("/data/sawasthi/data/MoCAP_data/train_csv/train.csv", trainData, delimiter=',')
         #example_creating_windows_file(k, folder_name, data_x, labels)
         #if(k == 2):
           #  break
-    
+    '''
       # Save max min values
     value = []
     for k in range(200):
