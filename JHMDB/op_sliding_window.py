@@ -170,6 +170,26 @@ def derivative(f,a,method='central',h=0.00001):
         res = (f(a[i] + h) - f(a[i] - h))/(2*h)
         ret.append(res)
     return ret  
+
+def plot_graphs(t_sampled,data,y_sampled):
+    plt.figure()
+    plt.plot(data[1:100,0],data[1:100,1])
+    plt.plot(data[1:100,0],data[1:100,3])
+    plt.plot(data[1:100,0],data[1:100,5])
+    plt.plot(data[1:100,0],data[1:100,7])
+    plt.plot(data[1:100,0],data[1:100,9])
+    plt.plot(data[1:100,0],data[1:100,11])
+   # plt.show()
+    plt.figure()
+    plt.plot(t_sampled[1:400],y_sampled[1:400,1])
+    plt.plot(t_sampled[1:400],y_sampled[1:400,3])
+    plt.plot(t_sampled[1:200,0],y_sampled[1:400,5])
+    plt.plot(t_sampled[1:200,0],y_sampled[1:400,7])
+    plt.plot(t_sampled[1:200,0],y_sampled[1:400,9])
+    plt.plot(t_sampled[1:200,0],y_sampled[1:400,11])
+    #plt.show()
+    
+    return
         
 if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
@@ -220,7 +240,7 @@ if __name__ == '__main__':
          resample = sp.splrep(data[:,0],data[:,i])
          acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
-         
+    plot_graphs(x_sampled,data,y_sampled)
          #y_sampled.append(f(x_sampled))
          #plt.plot(x_sampled[1:400],acc[1:400],'b',x_sampled[1:400],sampled_data[1:400],'g')
     '''
