@@ -171,25 +171,31 @@ def derivative(f,a,method='central',h=0.00001):
         ret.append(res)
     return ret  
 
-def plot_graphs(t_sampled,data,y_sampled):
+def plot_graphs(t_sampled,data,acceleration,sampled_dat):
     plt.figure()
-    plt.plot(data[1:100,0],data[1:100,1])
-    plt.plot(data[1:100,0],data[1:100,3])
-    plt.plot(data[1:100,0],data[1:100,5])
-    plt.plot(data[1:100,0],data[1:100,7])
-    plt.plot(data[1:100,0],data[1:100,9])
-    plt.plot(data[1:100,0],data[1:100,11])
-   # plt.show()
-    plt.figure()
-    plt.plot(t_sampled[1:400],y_sampled[1:400,1])
-    plt.plot(t_sampled[1:400],y_sampled[1:400,3])
-    plt.plot(t_sampled[1:200,0],y_sampled[1:400,5])
-    plt.plot(t_sampled[1:200,0],y_sampled[1:400,7])
-    plt.plot(t_sampled[1:200,0],y_sampled[1:400,9])
-    plt.plot(t_sampled[1:200,0],y_sampled[1:400,11])
-    #plt.show()
+    plt.plot(data[1:100,0],data[1:100,1],'k')
+    plt.plot(data[1:100,0],data[1:100,3],'b')
+    plt.plot(data[1:100,0],data[1:100,5],'g')
+    plt.plot(data[1:100,0],data[1:100,13],'r')
+    plt.plot(data[1:100,0],data[1:100,15],'y')
+    plt.plot(data[1:100,0],data[1:100,11],'c')
     
-    return
+    plt.figure()
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,0],'k')
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,2],'b')
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,4],'g')
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,12],'r')
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,14],'y')
+    plt.plot(t_sampled[1:400],sampled_dat[1:400,10],'c')
+    
+    plt.figure()
+    plt.plot(t_sampled[1:400],acceleration[1:400,0],'k')
+    plt.plot(t_sampled[1:400],acceleration[1:400,2],'b')
+    plt.plot(t_sampled[1:400],acceleration[1:400,4],'g')
+    plt.plot(t_sampled[1:400],acceleration[1:400,12],'r')
+    plt.plot(t_sampled[1:400],acceleration[1:400,14],'y')
+    plt.plot(t_sampled[1:400],acceleration[1:400,10],'c')
+        
         
 if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
@@ -223,7 +229,7 @@ if __name__ == '__main__':
     # time sampled
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     y_sampled = np.zeros((len(x_sampled),1))
-    #sampled_data = []
+    sampled_data = np.zeros((len(x_sampled),1))
     #y_sampled2 = np.zeros((len(x_sampled),1))
     
     
@@ -238,9 +244,10 @@ if __name__ == '__main__':
          #acc = derivative(f, x_sampled)
          #acc = np.diff(sampled_data,2)
          resample = sp.splrep(data[:,0],data[:,i])
+         sampled = sp.splev(x_sampled,resample)
          acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
-    plot_graphs(x_sampled,data,y_sampled)
+         sampled_data = np.concatenate((sampled_data,np.reshape(sampled,(len(sampled),1))),axis=1)
          #y_sampled.append(f(x_sampled))
          #plt.plot(x_sampled[1:400],acc[1:400],'b',x_sampled[1:400],sampled_data[1:400],'g')
     '''
@@ -269,6 +276,8 @@ if __name__ == '__main__':
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 
     data_new = y_sampled[:,1:]
+    plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
+    
     # creating labels
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"

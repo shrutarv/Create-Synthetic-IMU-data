@@ -6,6 +6,7 @@ from torch import nn
 import torch
 import pickle
 import numpy as np
+import random
 
 class CustomDataSet(Dataset):
     def __init__(self, main_dir, transform=None):
