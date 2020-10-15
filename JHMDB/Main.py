@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 300
+    epochs = 200
     batch_size = 20
     lr_factor = 0.98
     l = []
