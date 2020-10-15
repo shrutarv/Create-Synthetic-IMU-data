@@ -9,7 +9,10 @@ import glob
 import csv
 import scipy.interpolate as sp
 import matplotlib.pyplot as plt
-
+from scipy.interpolate import Rbf
+from scipy.interpolate import UnivariateSpline
+from scipy.interpolate import InterpolatedUnivariateSpline as IUS
+from scipy import interpolate
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
@@ -231,8 +234,15 @@ if __name__ == '__main__':
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
     #y_sampled2 = np.zeros((len(x_sampled),1))
+    y_spl = UnivariateSpline(data[:,0],data[:,2])
+    y_spl_2d = y_spl.derivative(n=2)
+    u = IUS(data[:,0],data[:,2])
+    u_der = u.derivative(2)
     
-    
+    f = interpolate.interp1d(data[:,0],data[:,2])
+    h = interpolate.approximate_taylor_polynomial(f, 0, 2, 5)
+    plt.plot(x_sampled[1:400],u(x_sampled[1:400]),'b',data[1:100,0],data[1:100,2],'g')
+    plt.plot(x_sampled[1:400],u_der(x_sampled[1:400]),'b',data[1:100,0],data[1:100,2],'g')
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
                 
