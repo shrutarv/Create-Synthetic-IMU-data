@@ -234,15 +234,6 @@ if __name__ == '__main__':
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
     #y_sampled2 = np.zeros((len(x_sampled),1))
-    y_spl = UnivariateSpline(data[:,0],data[:,2])
-    y_spl_2d = y_spl.derivative(n=2)
-    u = IUS(data[:,0],data[:,2])
-    u_der = u.derivative(2)
-    
-    f = interpolate.interp1d(data[:,0],data[:,2])
-    h = interpolate.approximate_taylor_polynomial(f, 0, 2, 5)
-    plt.plot(x_sampled[1:400],u(x_sampled[1:400]),'b',data[1:100,0],data[1:100,2],'g')
-    plt.plot(x_sampled[1:400],u_der(x_sampled[1:400]),'b',data[1:100,0],data[1:100,2],'g')
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
                 
@@ -286,7 +277,7 @@ if __name__ == '__main__':
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 
     data_new = y_sampled[:,1:]
-    plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
+    #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
     # creating labels
     
