@@ -124,12 +124,12 @@ def max_min_values(data, values):
     return values
    
 #ws = (100,31)
-ws = (200,40)  #for MoCAP
-ss = (25,40)     #for MoCAP
+ws = (100,40)  #for MoCAP
+ss = (22,40)     #for MoCAP
 #ss = (25,31)
-sliding_window_length = 200   # for MoCAP
+sliding_window_length = 100   # for MoCAP
 #sliding_window_length = 100    
-sliding_window_step = 25
+sliding_window_step = 22
 
 data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
