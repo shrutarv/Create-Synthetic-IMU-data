@@ -307,7 +307,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":40,
-        "sliding_window_length":200,
+        "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -319,7 +319,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=200
+    ws=100
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
@@ -329,6 +329,8 @@ if __name__ == '__main__':
     l = []
     tot_loss = 0
     accuracy = []
+    learning_rate = 0.00001
+    print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -367,7 +369,7 @@ if __name__ == '__main__':
     model.softmax = PAMAP_net.softmax
     '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
