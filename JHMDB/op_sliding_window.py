@@ -232,7 +232,7 @@ if __name__ == '__main__':
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 
-    data_new = data[:,1:]
+    data_new = data[:,1:31]
     #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
     # creating labels
@@ -256,8 +256,7 @@ if __name__ == '__main__':
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
-   
-    data_new = data[:,1:]
+    data_new = data[:,1:31]
     label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -272,8 +271,7 @@ if __name__ == '__main__':
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
-   
-    data_new = data[:,1:]
+    data_new = data[:,1:31]
     label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
