@@ -286,7 +286,7 @@ def generate_data(dataset, target_filename):
     
     print ('Processing dataset files ...')
     for filename in PAMAP2_DATA_FILES:
-        if counter_files <= 9:
+        if counter_files <= 4:
             # Train partition
             try:
                 print ('Train... file {0}'.format(filename))
