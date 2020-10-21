@@ -307,7 +307,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":40,
-        "sliding_window_length":100,
+        "sliding_window_length":200,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -319,7 +319,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=200
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/PAMAP2/trainData_33Hz/'
+    path = '/data/sawasthi/data/PAMAP2/trainData_30Hz/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -384,7 +384,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/PAMAP2/validationData_33Hz/'
+    path = '/data/sawasthi/data/PAMAP2/validationData_30Hz/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -396,7 +396,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/PAMAP2/testData_33Hz/'
+    path = '/data/sawasthi/data/PAMAP2/testData_30Hz/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
