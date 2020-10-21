@@ -251,7 +251,7 @@ def process_dataset_file(data):
     print ("data_y shape {}".format(data_y.shape))
     print ("data_t shape {}".format(data_t.shape))
     
-    #data_t, data_x, data_y = downsampling(data_t, data_x, data_y)
+    data_t, data_x, data_y = downsampling(data_t, data_x, data_y)
     
 
     print ("data_x shape {}".format(data_x.shape))
