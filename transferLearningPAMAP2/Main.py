@@ -314,7 +314,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model.pth'
+        "folder_exp_base_fine_tuning": '/home/sawasthi/BerkleyMHAD/model/model_acc.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/PAMAP2/trainData_30Hz/'
+    path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -384,7 +384,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/PAMAP2/validationData_30Hz/'
+    path = '/data/sawasthi/data/PAMAP2/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -396,7 +396,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/PAMAP2/testData_30Hz/'
+    path = '/data/sawasthi/data/PAMAP2/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -411,7 +411,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
+    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl_BM.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
