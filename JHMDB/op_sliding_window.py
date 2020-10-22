@@ -205,11 +205,11 @@ if __name__ == '__main__':
    
     #ws = (100,31)
     ws = (100,30) 
-    ss = (2,30)     
+    ss = (20,30)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 2
+    sliding_window_step = 20
     
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
@@ -251,7 +251,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/data/JHMDB/testData_2ss/'
+    data_dir =  '/data/sawasthi/data/JHMDB/testData_a_20ss/'
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/data/JHMDB/validationData_2ss/'
+    data_dir =  '/data/sawasthi/data/JHMDB/validationData_a_20ss/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
     data = df.values

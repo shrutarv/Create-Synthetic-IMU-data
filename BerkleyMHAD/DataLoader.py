@@ -6,13 +6,14 @@ from torch import nn
 import torch
 import pickle
 import numpy as np
+import random
 
 class CustomDataSet(Dataset):
     def __init__(self, main_dir, transform=None):
         self.main_dir = main_dir
         #self.transform = transform
         self.all_files = os.listdir(main_dir)
-        
+        random.shuffle(self.all_files)
         #for file_name in self.all_files:
           #  if '.txt' in file_name: self.total_imgs.remove(file_name)
           #  if file_name == 'semantic': self.total_imgs.remove('semantic')
