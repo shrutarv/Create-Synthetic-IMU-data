@@ -198,7 +198,7 @@ if __name__ == '__main__':
     k = 0
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
     for df in pd.read_csv("/home/sawasthi/BerkleyMHAD/train_data.csv", chunksize=10000):
-        break
+        
         #df = pd.read_csv('/data/sawasthi/data/BerkleyMHAD/train_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
