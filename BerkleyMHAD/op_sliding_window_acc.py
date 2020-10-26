@@ -196,8 +196,8 @@ if __name__ == '__main__':
     #value =  np.load('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/value.npy')
     value = np.load('/data/sawasthi/data/BerkleyMHAD/value.npy')
     k = 0
-    for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
-    #for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/train_data.csv", chunksize=10000):
+    #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/train_data.csv", chunksize=10000):
+    for df in pd.read_csv("/home/sawasthi/BerkleyMHAD/train_data.csv", chunksize=10000):
         break
         #df = pd.read_csv('/data/sawasthi/data/BerkleyMHAD/train_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
@@ -263,7 +263,7 @@ if __name__ == '__main__':
         print("train data pickled")
     k = 0
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/test_data.csv", chunksize=10000):
-    for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/test_data.csv", chunksize=10000):
+    for df in pd.read_csv("/home/sawasthi/BerkleyMHAD/test_data.csv", chunksize=10000):
         #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/testData/'
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
@@ -318,7 +318,7 @@ if __name__ == '__main__':
         print("test data pickled")
     
     k = 0
-    for df in pd.read_csv("/data/sawasthi/data/BerkleyMHAD/validation_data.csv", chunksize=10000):
+    for df in pd.read_csv("//home/sawasthi/BerkleyMHAD/validation_data.csv", chunksize=10000):
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/validation_data.csv", chunksize=10000):
             
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/validationData/'
