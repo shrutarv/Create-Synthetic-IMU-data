@@ -179,7 +179,7 @@ if __name__ == '__main__':
     sliding_window_length = 100   
     #sliding_window_length = 100    
     sliding_window_step = 20
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    #df = pd.read_csv('/data/sawasthi/data/CAD60/train_data.csv')
     df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
@@ -203,10 +203,11 @@ if __name__ == '__main__':
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
+    '''
     u = IUS(data[:,0],data[:,2])
     out = u(x_sampled)
     u_der = u.derivative(2)
-    
+    '''
     #y_sampled2 = np.zeros((len(x_sampled),1))
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
@@ -251,15 +252,14 @@ if __name__ == '__main__':
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 
     data_new = y_sampled[:,1:]
-    plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
+    #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
     # creating labels
     
-    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/JHMDB/trainData_a_20ss/'
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    label = np.repeat(data[:,31],up).astype(int)
+    #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
+    data_dir =  '/data/sawasthi/data/CAD60/trainData/'
+    label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -268,9 +268,8 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/data/JHMDB/testData_a_20ss/'
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+    data_dir =  '/data/sawasthi/data/CAD60/testData/'
+    df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -294,7 +293,7 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,31],up).astype(int)
+    label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
@@ -302,9 +301,8 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/data/JHMDB/validationData_a_20ss/'
-    #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
+    data_dir =  '/data/sawasthi/data/CAD60/validationData/'
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
@@ -327,7 +325,7 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,31],up).astype(int)
+    label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
