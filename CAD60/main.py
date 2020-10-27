@@ -239,7 +239,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":102,
+        "NB_sensor_channels":45,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -277,10 +277,10 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/BerkleyMHAD/model/model_acc.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_acc.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/BerkleyMHAD/trainData/'
+    path = '/data/sawasthi/data/CAD60/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -291,9 +291,9 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
   
-   
+    '''
     # Validation data    
-    path = '/data/sawasthi/data/BerkleyMHAD/validationData/'
+    path = '/data/sawasthi/data/CAD60/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -303,9 +303,9 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    
+    '''
     # Test data    
-    path = '/data/sawasthi/data/BerkleyMHAD/testData/'
+    path = '/data/sawasthi/data/CAD60/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -374,13 +374,13 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path)
-              print("model saved on epoch", e)
-              best_acc = val_acc
+          #val_acc, val_loss =  validation(dataLoader_validation)
+          #validation_loss.append(val_loss)
+          #validation_acc.append(val_acc)
+          #if (val_acc >= best_acc):
+          torch.save(model, model_path)
+          print("model saved on epoch", e)
+            #  best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           torch.save(model, model_path)
@@ -397,7 +397,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,label='training accuracy')
     plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/BerkleyMHAD/results/result.png') 
+    plt.savefig('/data/sawasthi/data/CAD60/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -447,7 +447,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/BerkleyMHAD/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/CAD60/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
