@@ -179,8 +179,8 @@ if __name__ == '__main__':
     sliding_window_length = 100   
     #sliding_window_length = 100    
     sliding_window_step = 20
-    #df = pd.read_csv('/data/sawasthi/data/CAD60/train_data.csv')
-    df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/CAD60/train_data.csv')
+   # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
     value = max_min_values(data_new)
@@ -300,7 +300,7 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
-    
+    '''
     df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
     data_dir =  '/data/sawasthi/data/CAD60/validationData/'
     data = df.values
@@ -337,7 +337,7 @@ if __name__ == '__main__':
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
-    
+    '''
     
           
     
