@@ -306,15 +306,15 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":40,
+        "NB_sensor_channels":45,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":16,
+        "num_classes":12,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/home/sawasthi/BerkleyMHAD/model/model_acc.pth'
+        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_acc.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
