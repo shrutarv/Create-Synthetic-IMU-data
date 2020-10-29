@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 180
+    epochs = 1
     batch_size = 20
     l = []
     tot_loss = 0
@@ -410,6 +410,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     model = torch.load(model_path)
     model.eval()
+    
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
@@ -424,7 +425,7 @@ if __name__ == '__main__':
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l))
+            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             prediction = np.concatenate((prediction,predicted_classes))
             total += test_batch_l.size(0) 
             test_batch_l = test_batch_l.long()
