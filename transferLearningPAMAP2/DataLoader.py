@@ -7,6 +7,8 @@ import torch
 import pickle
 import numpy as np
 import random
+import sys  
+sys.setdefaultencoding('utf8')
 
 class CustomDataSet(Dataset):
     def __init__(self, main_dir, transform=None):
