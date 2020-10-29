@@ -9,7 +9,7 @@ import sys
 import time
 import torch.optim as optim
 import pickle
-from DataLoader import CustomDataSet, CustomDataSetTest
+from DataLoader import CustomDataSet
 from torch.utils.data import DataLoader
 from Network import Network
 from sklearn.metrics import confusion_matrix
