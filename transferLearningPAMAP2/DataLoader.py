@@ -7,8 +7,6 @@ import torch
 import pickle
 import numpy as np
 import random
-import sys  
-sys.setdefaultencoding('utf8')
 
 class CustomDataSet(Dataset):
     def __init__(self, main_dir, transform=None):
@@ -26,7 +24,7 @@ class CustomDataSet(Dataset):
     def __getitem__(self, idx):
         file = os.path.join(self.main_dir, self.all_files[idx])
         #print(idx)
-        f = open(file,'rb')
+        f = open(file,'rb',encoding="utf-8")
         #image = Image.open(img_loc).convert("RGB")
         #tensor_image = self.transform(image)
         data = pickle.load(f)
