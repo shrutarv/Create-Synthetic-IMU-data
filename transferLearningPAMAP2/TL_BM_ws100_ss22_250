@@ -1,0 +1,1 @@
+('epoch: ', 250, 'batch_size: ', 40, 'accumulation steps: ', 10, 'ws: ', 100, 'learning_rate: ', 1e-05)
