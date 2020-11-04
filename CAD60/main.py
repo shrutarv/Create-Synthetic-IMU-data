@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 160
+    epochs = 100
     batch_size = 20
     lr_factor = 0.98
     l = []
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/CAD60/model/model_acc_tf.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_acc_test.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     path = '/data/sawasthi/data/CAD60/all_data/'
@@ -311,7 +311,7 @@ if __name__ == '__main__':
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(test_dataset, shuffle=False,
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                   batch_size=batch_size,
                                    num_workers=0,
                                    pin_memory=True,
@@ -376,36 +376,37 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path)
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
+          #val_acc, val_loss =  validation(dataLoader_validation)
+          #validation_loss.append(val_loss)
+          #validation_acc.append(val_acc)
+         # if (val_acc >= best_acc):
+          #    torch.save(model, model_path)
+         #     print("model saved on epoch", e)
+        #      best_acc = val_acc
+        #  l.append(total_loss/((e+1)*(b + 1)))
+        #  accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
     
+    torch.save(model, model_path)
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
     plt.title('epoch vs loss')
     plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
+    #plt.plot(ep,validation_loss, 'g',label='validation loss')
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
     plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    #plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/CAD60/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    '''
+    
     print('Start Testing')
     
     total = 0.0
@@ -458,4 +459,3 @@ if __name__ == '__main__':
          wr.writerow(accuracy)
          wr.writerow(l)
              
-'''
