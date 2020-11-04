@@ -311,7 +311,7 @@ if __name__ == '__main__':
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+    dataLoader_validation = DataLoader(test_dataset, shuffle=False,
                                   batch_size=batch_size,
                                    num_workers=0,
                                    pin_memory=True,
@@ -376,13 +376,13 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
-          #val_acc, val_loss =  validation(dataLoader_validation)
-          #validation_loss.append(val_loss)
-          #validation_acc.append(val_acc)
-          #if (val_acc >= best_acc):
-          torch.save(model, model_path)
-          print("model saved on epoch", e)
-            #  best_acc = val_acc
+          val_acc, val_loss =  validation(dataLoader_validation)
+          validation_loss.append(val_loss)
+          validation_acc.append(val_acc)
+          if (val_acc >= best_acc):
+              torch.save(model, model_path)
+              print("model saved on epoch", e)
+              best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           torch.save(model, model_path)
@@ -395,12 +395,12 @@ if __name__ == '__main__':
     plt.subplot(1,2,1)
     plt.title('epoch vs loss')
     plt.plot(ep,l, 'r', label='training loss')
-    #plt.plot(ep,validation_loss, 'g',label='validation loss')
+    plt.plot(ep,validation_loss, 'g',label='validation loss')
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
     plt.plot(ep,accuracy,label='training accuracy')
-    #plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/CAD60/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
