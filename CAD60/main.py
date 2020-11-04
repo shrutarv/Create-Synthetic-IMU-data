@@ -257,10 +257,12 @@ if __name__ == '__main__':
     total_correct = 0
     epochs = 160
     batch_size = 20
+    lr_factor = 0.98
     l = []
     tot_loss = 0
     accuracy = []
-    print("accumulation_steps ", accumulation_steps,"batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
+    learning_rate = 0.001
+    print("accumulation_steps ", accumulation_steps,"lr_factor: ", lr_factor,"batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
@@ -275,7 +277,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/home/sawasthi/CAD60/model/model_acc_tf.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
@@ -384,6 +386,9 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           torch.save(model, model_path)
+          for param_group in optimizer.param_groups:
+              print(param_group['lr'])        
+              param_group['lr'] = lr_factor*param_group['lr']
     
     print('Finished Training')
     ep = list(range(1,e+2))   
