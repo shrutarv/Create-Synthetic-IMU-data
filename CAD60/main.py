@@ -218,7 +218,7 @@ def validation(dataLoader_validation):
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l))
+            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             prediction = np.concatenate((prediction,predicted_classes))
             total += test_batch_l.size(0) 
             test_batch_l = test_batch_l.long()
@@ -385,7 +385,7 @@ if __name__ == '__main__':
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          torch.save(model, model_path)
+          
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
