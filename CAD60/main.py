@@ -383,8 +383,8 @@ if __name__ == '__main__':
           #    torch.save(model, model_path)
          #     print("model saved on epoch", e)
         #      best_acc = val_acc
-        #  l.append(total_loss/((e+1)*(b + 1)))
-        #  accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
+          l.append(total_loss/((e+1)*(b + 1)))
+          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
