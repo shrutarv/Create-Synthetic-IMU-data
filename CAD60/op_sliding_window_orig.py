@@ -287,6 +287,7 @@ if __name__ == '__main__':
          #sampled_data = f(x_sampled)
          #acc = derivative(f, x_sampled)
          resample = sp.splrep(data[:,0],data[:,i])
+         sampled = sp.splev(x_sampled,resample)
          #acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(sampled,(len(sampled),1))),axis=1)
          
