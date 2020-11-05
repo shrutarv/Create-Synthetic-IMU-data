@@ -329,7 +329,7 @@ if __name__ == '__main__':
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.000005
+    learning_rate = 0.00001
     print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
