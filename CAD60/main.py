@@ -279,7 +279,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/CAD60/model/model_acc_test.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_acc_adap.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     path = '/data/sawasthi/data/CAD60/all_data/'
@@ -305,7 +305,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
+
     # Test data    
     path = '/data/sawasthi/data/CAD60/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
@@ -316,7 +316,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
+    
     for b, harwindow_batched in enumerate(dataLoader_test):
         data_x = harwindow_batched["data"]
         data_x.to(device)
@@ -391,6 +391,7 @@ if __name__ == '__main__':
               param_group['lr'] = lr_factor*param_group['lr']
     
     torch.save(model, model_path)
+    '''
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)

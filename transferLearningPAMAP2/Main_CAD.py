@@ -314,7 +314,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_acc_tf.pth'
+        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_acc_test.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
@@ -324,12 +324,12 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 80
+    epochs = 40
     batch_size = 40
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.00001
+    learning_rate = 0.000005
     print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
