@@ -135,15 +135,14 @@ ss = (12,112)     #for MoCAP
 sliding_window_length = 24   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 12
-data_op= np.loadtxt('S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/S1-ADL2.dat')
 #data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/"
+data_dir = "/data/sawasthi/data/opportunity/trainData/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
-dataset = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
-#dataset = '/vol/actrec/PAMAP/'
+#dataset = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
+dataset = '/vol/actrec/Opportunity/dataset/'
 #target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 target_filename = ' '
 X_train,Y_train,X_val, Y_val, X_test, Y_test = get_Opportunity_data(dataset, target_filename)
@@ -154,7 +153,7 @@ X = X_train.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
-data_dir =  "/data/sawasthi/data/PAMAP2/testData/"
+data_dir =  "/data/sawasthi/data/opportunity/testData/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -162,7 +161,7 @@ X = X_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
-data_dir =  "/data/sawasthi/data/PAMAP2/validationData/"
+data_dir =  "/data/sawasthi/data/opportunity/validationData/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
