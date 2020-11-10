@@ -13,6 +13,9 @@ data = [];
 label = [];
 final = [];
 %iter = randi([3 2328],2328,1);
+% train 1:1350
+% validation 1350:1840
+% test 1840:2326
 for j = 1840:2328
     i = iter(j);
     labels = [];
