@@ -110,24 +110,42 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         print("dumping")
         f.close()
  
-def max_min_values(data, values):
-    temp_values = []
-    for i in range(data_x.shape[1]):
+
+def normalize(data, max_min, string):
+    #print(len(min_max), len(min_max[0]))
+    
+    for j in range(1,len(data[0])-1):
+        data[:,j] = (data[:,j] - max_min[j-1][1])/(max_min[j-1][0] - max_min[j-1][1]) 
+    test = np.array(data[:,1:len(data[0])-1])
+        
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    else:
+        test[test > 1] = 1
+        test[test < 0] = 0
+    #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    #data = torch.tensor(data)
+    return data
+    
+ 
+def max_min_values(data):
+    values = []
+    
+    #print(data.shape)
+    
+    for attr in range(data.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,i])
-        temp_min = np.min(data[:,i])
-        if (values[i][0] > temp_max):
-            attribute.append(values[i][0])
-        else:
-            attribute.append(temp_max)
-        if(values[i][1] < temp_min):
-            attribute.append(values[i][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
+        temp_max = np.max(data[:,attr])
+        temp_min = np.min(data[:,attr])
+        attribute.append(temp_min)
+        attribute.append(temp_max)
+        values.append(attribute)  
+    
     return values
-   
+
 #ws = (100,31)
 ws = (24,112)  #for MoCAP
 ss = (12,112)     #for MoCAP
@@ -135,6 +153,14 @@ ss = (12,112)     #for MoCAP
 sliding_window_length = 24   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 12
+value = []
+for k in range(200):
+    temp_list = []
+    maxim = -9999
+    minim = 9999
+    temp_list.append(maxim)
+    temp_list.append(minim)
+    value.append(temp_list)
 #data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
@@ -146,6 +172,12 @@ dataset = '/vol/actrec/Opportunity/dataset/'
 #target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 target_filename = ' '
 X_train,Y_train,X_val, Y_val, X_test, Y_test = get_Opportunity_data(dataset, target_filename)
+value = max_min_values(X_train, value)
+with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Opportunity/norm_values.csv", 'w') as f:
+    fc = csv.writer(f, lineterminator='\n')
+    fc.writerow(["max","min"])
+    fc.writerows(value)
+X_train = normalize(X_train, value,"train")    
 label = Y_train.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -153,6 +185,7 @@ X = X_train.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
+X_test = normalize(X_test, value,"test")  
 data_dir =  "/data/sawasthi/data/opportunity/testData/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
@@ -161,6 +194,7 @@ X = X_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
+X_val = normalize(X_val, value,"validation")  
 data_dir =  "/data/sawasthi/data/opportunity/validationData/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
