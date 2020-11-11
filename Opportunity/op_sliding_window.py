@@ -153,14 +153,7 @@ ss = (12,112)     #for MoCAP
 sliding_window_length = 24   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 12
-value = []
-for k in range(200):
-    temp_list = []
-    maxim = -9999
-    minim = 9999
-    temp_list.append(maxim)
-    temp_list.append(minim)
-    value.append(temp_list)
+
 #data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
@@ -172,7 +165,7 @@ dataset = '/vol/actrec/Opportunity/dataset/'
 #target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 target_filename = ' '
 X_train,Y_train,X_val, Y_val, X_test, Y_test = get_Opportunity_data(dataset, target_filename)
-value = max_min_values(X_train, value)
+value = max_min_values(X_train)
 with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Opportunity/norm_values.csv", 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
     fc.writerow(["max","min"])
