@@ -176,7 +176,7 @@ lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = X_train.astype(object)
 k = 0
-#example_creating_windows_file(k, X, lab, data_dir)
+example_creating_windows_file(k, X, lab, data_dir)
 
 X_test = normalize(X_test, value,"test")  
 data_dir =  "/data/sawasthi/data/opportunity/testData/"
@@ -185,7 +185,7 @@ lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = X_test.astype(object)
 k = 0
-#example_creating_windows_file(k, X, lab,data_dir)
+example_creating_windows_file(k, X, lab,data_dir)
 
 X_val = normalize(X_val, value,"validation")  
 data_dir =  "/data/sawasthi/data/opportunity/validationData/"
@@ -195,7 +195,7 @@ lab[:,0] = label
 #Y_train = np.reshape(Y_train,(len(label),1))
 X = X_val.astype(object)
 k = 0
-#example_creating_windows_file(k, X, lab,data_dir)
+example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
