@@ -451,4 +451,10 @@ if __name__ == '__main__':
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
-             
+import pickle
+with open('S:/MS A&R/4th Sem/Thesis/Berkley MHAD/pkl files/seq__1_383.pkl', 'rb') as f:
+    data = pickle.load(f)
+d = data['data']
+d = d.reshape(100,102)
+plt.plot(d[:,1],d[:,2],'x')
+plt.plot(d[:,4],d[:,5],'o')

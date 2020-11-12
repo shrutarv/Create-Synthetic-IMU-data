@@ -110,10 +110,10 @@ class DifferenceProportions(SignificanceBase):
         # signif_diff = z > 1.96 # Z_0.975 = 1.96 (two sided test: 0.025 + 0.025 = 0.05)
         p = scipy.stats.norm.sf(z) * 2
         if verbose:
-            print 'abs-diff: %.4f' % math.fabs(z_numerator)
-            print 'std-err: %.4f' % z_denominator
-            print 'z-value: %.4f' % z
-            print 'p-value: %.4f' % p
+            print ('abs-diff: %.4f' % math.fabs(z_numerator))
+            print ('std-err: %.4f' % z_denominator)
+            print ('z-value: %.4f' % z)
+            print ('p-value: %.4f' % p)
         return p
 
     @staticmethod
@@ -139,13 +139,13 @@ class DifferenceProportions(SignificanceBase):
         p = self.significance_niveau(error_rate_a, error_rate_b)
 
         if p < 0.01:
-            print 'Error rate difference is highly significant!'
+            print ('Error rate difference is highly significant!')
         elif p < 0.05:
-            print 'Error rate  difference is significant!'
+            print ('Error rate  difference is significant!')
         else:
-            print 'Error rate difference is *not* significant!'
+            print ('Error rate difference is *not* significant!')
 
-        print DifferenceProportions.string_for_p(p)
+        print (DifferenceProportions.string_for_p(p))
         return p < 0.05
 
 
