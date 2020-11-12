@@ -228,7 +228,7 @@ def validation(dataLoader_validation):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
-    return (100. * correct / total, loss.item()/(b+1))
+    return (100. * correct / total, total_loss/(b+1))
         
 if __name__ == '__main__':
     
@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 150
+    epochs = 10
     batch_size = 40
     l = []
     tot_loss = 0
@@ -377,9 +377,10 @@ if __name__ == '__main__':
           if (val_acc >= best_acc):
               torch.save(model, model_path)
               print("model saved on epoch", e)
+              best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          torch.save(model, model_path)
+          #torch.save(model, model_path)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
