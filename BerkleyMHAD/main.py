@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 1
     batch_size = 20
     lr_factor = 0.98
     l = []
@@ -288,6 +288,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     path = '/data/sawasthi/data/BerkleyMHAD/trainData/'
+    #path = 'S:/MS A&R/4th Sem/ThesisBerkley MHAD\pkl files
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
