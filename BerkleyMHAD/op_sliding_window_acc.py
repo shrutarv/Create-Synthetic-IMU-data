@@ -246,9 +246,9 @@ if __name__ == '__main__':
         data_sampled = y_sampled[:,1:]
         #plot_graphs(x_sampled,data,data_sampled,sampled_data[:,1:])
         print("normalizing sampled data")
-        val = max_min_values(data_sampled,v)
-        data_sampled = normalize(data_sampled,val, "train")
-        print("sampled data normalized")
+        #val = max_min_values(data_sampled,v)
+        #data_sampled = normalize(data_sampled,val, "train")
+        #print("sampled data normalized")
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/trainData/'
@@ -301,9 +301,9 @@ if __name__ == '__main__':
             # plt.plot(data[1:500,0],data[1:500,70],'g')
              
         data_sampled = y_sampled[:,1:]
-        print("normalizing sampled data")
-        data_sampled = normalize(data_sampled,val, "test")
-        print("sampled data normalized")
+        #print("normalizing sampled data")
+        #data_sampled = normalize(data_sampled,val, "test")
+        #print("sampled data normalized")
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
        
@@ -338,28 +338,16 @@ if __name__ == '__main__':
         y_sampled = np.zeros((int(np.ceil(data.shape[0]/float(down))),1))
                 
         for i in range(data_norm.shape[1]):
-            #for index in range(12,len(data[0])*up-12):
-                    
-                #data_new = data[index-12:index+12,:]   
-             
-             #f = sp.interp1d(data[:,0],data[:,i], kind='linear')
-             #acc = np.diff(data[:,i],2)
-             #sampled_data = f(x_sampled)
              resample = sp.splrep(data[:,0],data_norm[:,i])
              acc = sp.splev(data[:,0],resample, der=2)
              acc_sampled = acc[::down].copy()
              
              y_sampled = np.concatenate((y_sampled,np.reshape(acc_sampled,(len(acc_sampled),1))),axis=1)
-             
-             #y_sampled.append(f(x_sampled))
-            # time_sampled =data[:,0][::down] 
-            # plt.plot(data[1:400,0],acc[1:400],'g',time_sampled[1:80],acc_sampled[1:80],'b')
-            # plt.plot(data[1:500,0],data[1:500,70],'g')
-             
+               
         data_sampled = y_sampled[:,1:]
-        print("normalizing sampled data")
-        data_sampled = normalize(data_sampled,val, "validation")
-        print("sampled data normalized")
+        #print("normalizing sampled data")
+        #data_sampled = normalize(data_sampled,val, "validation")
+       # print("sampled data normalized")
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
        
