@@ -245,7 +245,7 @@ if __name__ == '__main__':
              
         data_sampled = y_sampled[:,1:]
         #plot_graphs(x_sampled,data,data_sampled,sampled_data[:,1:])
-        print("normalizing sampled data")
+        #print("normalizing sampled data")
         #val = max_min_values(data_sampled,v)
         #data_sampled = normalize(data_sampled,val, "train")
         #print("sampled data normalized")
