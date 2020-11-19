@@ -318,7 +318,7 @@ if __name__ == '__main__':
         print("test data pickled")
     
     k = 0
-    for df in pd.read_csv("//home/sawasthi/BerkleyMHAD/validation_data.csv", chunksize=10000):
+    for df in pd.read_csv("/home/sawasthi/BerkleyMHAD/validation_data.csv", chunksize=10000):
     #for df in pd.read_csv("S:/MS A&R/4th Sem/Thesis/Berkley MHAD/SkeletalData-20200922T160342Z-001/train/validation_data.csv", chunksize=10000):
             
         data_dir =  '/data/sawasthi/data/BerkleyMHAD/validationData/'
