@@ -4,11 +4,16 @@ import numpy as np
 import os
 import pickle
 from sliding_window import sliding_window
-from opportunity import *
+from pre_processing import *
 import glob
 import csv
+import pickle
 
-NUM_CLASSES = 8
+'''
+with open('S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/seq__0_0.pkl', 'rb') as f:
+    data = pickle.load(f)
+'''
+NUM_CLASSES = 18
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -105,68 +110,76 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         print("dumping")
         f.close()
  
-def max_min_values(data, values):
-    temp_values = []
-    for i in range(data_x.shape[1]):
+
+def normalize(data, max_min, string):
+    #print(len(min_max), len(min_max[0]))
+    
+    for j in range(1,len(data[0])-1):
+        data[:,j] = (data[:,j] - max_min[j-1][1])/(max_min[j-1][0] - max_min[j-1][1]) 
+    test = np.array(data[:,1:len(data[0])-1])
+        
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    else:
+        test[test > 1] = 1
+        test[test < 0] = 0
+    #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
+    #data = torch.tensor(data)
+    return data
+    
+ 
+def max_min_values(data):
+    values = []
+    
+    #print(data.shape)
+    
+    for attr in range(data.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,i])
-        temp_min = np.min(data[:,i])
-        if (values[i][0] > temp_max):
-            attribute.append(values[i][0])
-        else:
-            attribute.append(temp_max)
-        if(values[i][1] < temp_min):
-            attribute.append(values[i][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
+        temp_max = np.max(data[:,attr])
+        temp_min = np.min(data[:,attr])
+        attribute.append(temp_min)
+        attribute.append(temp_max)
+        values.append(attribute)  
+    
     return values
-   
-config = {
-    "NB_sensor_channels":113,
-    "sliding_window_length":100,
-    "proportions":1,
-    "sliding_window_step":24,
-    "filter_size":5,
-    "num_filters":64,
-    "network":"cnn",
-    "output":"softmax",
-    "num_classes":18,
-    "reshape_input":False,
-    "dataset_root":'/vol/actrec/Opportunity/',
-    "dataset":'gesture',
-    "label_pos":'end'
-    }
 
 #ws = (100,31)
-ws = (100,40)  #for MoCAP
-ss = (22,40)     #for MoCAP
+ws = (24,112)  #for MoCAP
+ss = (12,112)     #for MoCAP
 #ss = (25,31)
-sliding_window_length = 100   # for MoCAP
+sliding_window_length = 24   # for MoCAP
 #sliding_window_length = 100    
-sliding_window_step = 22
-opp = Opportunity(config)
-x_train, y_train = opp.load_data()
-opp_test = Opportunity(config,'val')
-x_val, y_val = opp.load_data()
-opp_test = Opportunity(config,'test')
-x_test, y_test = opp.load_data()
+sliding_window_step = 12
 
+#data_dir =  "/data/sawasthi/data/PAMAP2/trainData/"
+#data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+#data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 data_dir = "/data/sawasthi/data/opportunity/trainData/"
-#data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train/"
-#data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
-#dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-label = y_train.astype(int)
+#dataset = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
+dataset = '/vol/actrec/Opportunity/dataset/'
+#target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
+target_filename = ' '
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_Opportunity_data(dataset, target_filename)
+value = max_min_values(X_train)
+with open("/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Opportunity/norm_values.csv", 'w') as f:
+    fc = csv.writer(f, lineterminator='\n')
+    fc.writerow(["max","min"])
+    fc.writerows(value)
+X_train = normalize(X_train, value,"train")    
+label = Y_train.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-X = x_train.astype(object)
+X = X_train.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
-data_dir = "/data/sawasthi/data/opportunity/testData/"
+X_test = normalize(X_test, value,"test")  
+data_dir =  "/data/sawasthi/data/opportunity/testData/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -174,6 +187,7 @@ X = X_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
+X_val = normalize(X_val, value,"validation")  
 data_dir =  "/data/sawasthi/data/opportunity/validationData/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)

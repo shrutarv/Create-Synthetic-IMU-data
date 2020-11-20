@@ -14,7 +14,7 @@ http://archive.ics.uci.edu/ml/datasets/pamap2+physical+activity+monitoring
 import os
 import numpy as np
 import pickle
-
+import logging
 
 
 # Number of sensor channels employed in the Pamap2
@@ -31,20 +31,30 @@ Opportunity_validation_files = ['S1-ADL2.dat','S2-ADL3.dat']
 Opportunity_test_files = ['S2-ADL4.dat', 'S3-ADL3.dat', 'S3-ADL4.dat']
 
 
-def divide_x_y(data):
-    """Segments each sample into time, labels and sensor channels
-    :param data: numpy integer matrix
+def divide_x_y(self, raw_data):
+    """Segments each sample into features and label
+
+    :param raw_data: numpy integer matrix
         Sensor data
+    :param task: string, ['gestures' (default), 'locomotion']
+        Type of activities to be recognized
     :return: numpy integer matrix, numpy integer array
-        Time and labels as arrays, sensor channels as matrix
+        Recording time, Features encapsulated into a matrix and labels as an array
     """
-    data_y = data[:, 249]
-    data = data[:,:133]
-    data_t = data[:, 0]
-    del_list = [46,47,48,49,59,60,61,62,72,73,74,75,85,86,87,88,98,99,100,101,]
-    data = np.delete(data,del_list,axis=1)
-    data_x = data[:, 1:]
-    
+
+    try:
+        data_t = raw_data[:, 0]
+        data_x = raw_data[:, 1:114]
+        if self.config['dataset'] not in ['locomotion', 'gesture']:
+            raise RuntimeError("Invalid label: '%s'" % self.config['dataset'])
+        if self.config['dataset'] == 'locomotion':
+            logging.info("        Dataloader: Locomotion")
+            data_y = raw_data[:, 114]  # Locomotion label
+        elif self.config['dataset'] == 'gesture':
+            logging.info("        Dataloader: Gestures")
+            data_y = raw_data[:, 115]  # Gestures label
+    except KeyError:
+        logging.error(KeyError)
 
     return data_t, data_x, data_y
 
@@ -81,6 +91,26 @@ def adjust_idx_labels(data_y):
     data_y[data_y == 405506] = 17
     return data_y
 
+def normalize(self, raw_data, max_list, min_list):
+    """Normalizes all sensor channels
+
+    :param data: numpy integer matrix
+        Sensor data
+    :param max_list: numpy integer array
+        Array containing maximums values for every one of the 113 sensor channels
+    :param min_list: numpy integer array
+        Array containing minimum values for every one of the 113 sensor channels
+    :return:
+        Normalized sensor data
+    """
+    max_list, min_list = np.array(max_list), np.array(min_list)
+    diffs = max_list - min_list
+    for i in np.arange(raw_data.shape[1]):
+        raw_data[:, i] = (raw_data[:, i] - min_list[i]) / diffs[i]
+    #     Checking the boundaries
+    raw_data[raw_data > 1] = 0.99
+    raw_data[raw_data < 0] = 0.00
+    return raw_data
 
 def process_dataset_file(data):
     """Function defined as a pipeline to process individual Pamap2 files
