@@ -267,7 +267,7 @@ if __name__ == '__main__':
     #print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
-    model = model.to(device)
+    #model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
@@ -279,8 +279,8 @@ if __name__ == '__main__':
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/opportunity/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/opportunity/trainData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+    #path = '/data/sawasthi/data/opportunity/trainData/'
+    path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
     dataLoader_train = DataLoader(train_dataset, shuffle=True,
@@ -291,7 +291,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/opportunity/validationData/'
+   # path = '/data/sawasthi/data/opportunity/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -302,7 +302,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/opportunity/testData/'
+    #path = '/data/sawasthi/data/opportunity/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -334,13 +334,13 @@ if __name__ == '__main__':
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
-              train_batch_l = train_batch_l.to(device)
+              #train_batch_l = train_batch_l.to(device)
               
               train_batch_v = train_batch_v.float()
-              train_batch_v = train_batch_v.to(device)
+             # train_batch_v = train_batch_v.to(device)
               noise = normal.sample((train_batch_v.size()))
               noise = noise.reshape(train_batch_v.size())
-              noise = noise.to(device, dtype=torch.float)
+             # noise = noise.to(device, dtype=torch.float)
 
               train_batch_v = train_batch_v + noise
               
