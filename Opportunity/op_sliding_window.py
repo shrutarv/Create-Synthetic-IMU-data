@@ -139,13 +139,13 @@ config = {
     "label_pos":'end'
     }
 
-#ws = (100,31)
-ws = (100,40)  #for MoCAP
-ss = (22,40)     #for MoCAP
+
+ws = (100,113)
+ss = (24,113)    
 #ss = (25,31)
-sliding_window_length = 100   # for MoCAP
+sliding_window_length = 100  
 #sliding_window_length = 100    
-sliding_window_step = 22
+sliding_window_step = 24
 opp = Opportunity(config)
 x_train, y_train = opp.load_data()
 opp_test = Opportunity(config,'val')
