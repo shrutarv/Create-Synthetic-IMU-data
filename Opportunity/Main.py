@@ -239,7 +239,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":112,
+        "NB_sensor_channels":113,
         "sliding_window_length":24,
         "filter_size":5,
         "num_filters":64,
