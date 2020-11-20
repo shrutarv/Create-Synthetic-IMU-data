@@ -167,19 +167,19 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
 data_dir = "/data/sawasthi/data/opportunity/testData/"
-label = Y_test.astype(int)
+label = y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
-X = X_test.astype(object)
+x = x_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
 data_dir =  "/data/sawasthi/data/opportunity/validationData/"
-label = Y_val.astype(int)
+label = y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 #Y_train = np.reshape(Y_train,(len(label),1))
-X = X_val.astype(object)
+x = x_val.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
