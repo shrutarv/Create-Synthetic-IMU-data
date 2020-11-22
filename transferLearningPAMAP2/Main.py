@@ -176,7 +176,7 @@ def F1_score(targets, preds, precision, recall):
 
         # F1 weighted
         weighted_f1 = proportions * (multi_pre_rec / sum_pre_rec)
-        weighted_f1[np.isnan(weighted_f1)] = 0
+        weighted_f1[torch.isnan(weighted_f1)] = 0
         F1_weighted = torch.sum(weighted_f1) * 2
 
         # F1 mean
@@ -322,7 +322,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 1
+    epochs = 100
     batch_size = 40
     l = []
     tot_loss = 0
