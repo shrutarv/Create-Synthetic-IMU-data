@@ -322,7 +322,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 1
     batch_size = 40
     l = []
     tot_loss = 0
@@ -473,7 +473,7 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
+          break
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
