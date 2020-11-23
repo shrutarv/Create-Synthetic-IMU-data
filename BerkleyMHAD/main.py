@@ -256,12 +256,12 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 100
-    batch_size = 20
+    batch_size = 40
     lr_factor = 1
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.00001
+    learning_rate = 0.0001
     print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -407,8 +407,8 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/BerkleyMHAD/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
