@@ -125,9 +125,9 @@ def max_min_values(data, values):
    
 config = {
     "NB_sensor_channels":113,
-    "sliding_window_length":100,
+    "sliding_window_length":24,
     "proportions":1,
-    "sliding_window_step":24,
+    "sliding_window_step":12,
     "filter_size":5,
     "num_filters":64,
     "network":"cnn",
@@ -140,12 +140,12 @@ config = {
     }
 
 
-ws = (100,113)
-ss = (24,113)    
+ws = (24,113)
+ss = (12,113)    
 #ss = (25,31)
-sliding_window_length = 100  
+sliding_window_length = 24  
 #sliding_window_length = 100    
-sliding_window_step = 24
+sliding_window_step = 12
 opp = Opportunity(config)
 x_train, y_train = opp.load_data()
 opp_test = Opportunity(config,'val')
