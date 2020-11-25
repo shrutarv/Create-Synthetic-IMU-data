@@ -335,8 +335,8 @@ if __name__ == '__main__':
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
      
-    PAMAP_net = Network(config)
-    PAMAP_net.init_weights()
+    Opp_net = Network(config)
+    Opp_net.init_weights()
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -346,7 +346,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
     # transformed_net 
-    model = load_weights(PAMAP_net)
+    model = load_weights(Opp_net)
     model = model.to(device)
     print("model loaded")  
     '''
