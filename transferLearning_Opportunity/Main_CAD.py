@@ -176,7 +176,7 @@ def F1_score(targets, preds, precision, recall):
 
         # F1 weighted
         weighted_f1 = proportions * (multi_pre_rec / sum_pre_rec)
-        weighted_f1[np.isnan(weighted_f1)] = 0
+        weighted_f1[torch.isnan(weighted_f1)] = 0
         F1_weighted = torch.sum(weighted_f1) * 2
 
         # F1 mean
@@ -236,8 +236,8 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias'
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -270,8 +270,8 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias'
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -306,39 +306,39 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":40,
-        "sliding_window_length":100,
+        "NB_sensor_channels":113,
+        "sliding_window_length":24,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":16,
+        "num_classes":18,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_acc_test.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/CAD60/model/model_acc_test.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
-    ws=100
+    ws=24
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 40
+    epochs = 300
     batch_size = 40
     l = []
     tot_loss = 0
     accuracy = []
     learning_rate = 0.00001
-    print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+    print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
      
-    PAMAP_net = Network(config)
-    PAMAP_net.init_weights()
+    Opp_net = Network(config)
+    Opp_net.init_weights()
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -348,7 +348,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
     # transformed_net 
-    model = load_weights(PAMAP_net)
+    model = load_weights(Opp_net)
     model = model.to(device)
     print("model loaded")  
     '''
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/PAMAP2/trainData/'
+    path = '/data/sawasthi/data/opportunity/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -384,7 +384,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/PAMAP2/validationData/'
+    path = '/data/sawasthi/data/opportunity/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -396,7 +396,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/PAMAP2/testData/'
+    path = '/data/sawasthi/data/opportunity/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -411,7 +411,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl_CAD.pth'
+    model_path_tl = '/data/sawasthi/data/opportunity/model/model_tl_CAD60.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -475,7 +475,7 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
+          
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -485,10 +485,10 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
+    plt.savefig('/data/sawasthi/data/opportunity/results/result_tl_CAD60.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -538,7 +538,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/CAD60/results/result_tl.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/opportunity/results/result_tl_CAD60.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
