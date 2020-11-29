@@ -149,10 +149,10 @@ sliding_window_length = 24
 sliding_window_step = 12
 opp = Opportunity(config, 'train')
 x_train, y_train = opp.load_data()
-opp_test = Opportunity(config,'val')
-x_val, y_val = opp.load_data()
+opp_val = Opportunity(config,'val')
+x_val, y_val = opp_val.load_data()
 opp_test = Opportunity(config,'test')
-x_test, y_test = opp.load_data()
+x_test, y_test = opp_test.load_data()
 
 data_dir = "/data/sawasthi/data/opportunity/trainData/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train/"
