@@ -76,10 +76,10 @@ class Opportunity(data.Dataset):
         self.config = config
         self.partition_modus = partition_modus
 
-        self.X, self.Y = self.load_data()
-        self.X, self.y, self.Y = self.opp_sliding_window(self.X, self.Y)
+        #self.X, self.Y = self.load_data()
+        #self.X, self.y, self.Y = self.opp_sliding_window(self.X, self.Y)
 
-        self.X = np.reshape(self.X, [self.X.shape[0], 1, self.X.shape[1], self.X.shape[2]])
+        #self.X = np.reshape(self.X, [self.X.shape[0], 1, self.X.shape[1], self.X.shape[2]])
 
         return
 
@@ -128,6 +128,7 @@ class Opportunity(data.Dataset):
 
         for idx_f in idx_files:
             try:
+                print(idx_f)
                 logging.info('        Dataloader: Loading file...{0}'.format(OPPORTUNITY_DATA_FILES[idx_f]))
                 raw_data = np.loadtxt(self.config['dataset_root'] + OPPORTUNITY_DATA_FILES[idx_f])
                 x, y = self.process_dataset_file(raw_data)
@@ -312,7 +313,7 @@ class Opportunity(data.Dataset):
     ##################################################
     #############  opp_sliding_window  ###############
     ##################################################
-'''
+
     def opp_sliding_window(self, data_x, data_y):
         ws = self.config['sliding_window_length']
         ss = self.config['sliding_window_step']
@@ -342,4 +343,3 @@ class Opportunity(data.Dataset):
         return data_x.astype(np.float32), \
                data_y_labels.reshape(len(data_y_labels)).astype(np.uint8), \
                data_y_all.astype(np.uint8)
-'''
