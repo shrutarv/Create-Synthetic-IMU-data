@@ -313,7 +313,7 @@ class Opportunity(data.Dataset):
     ##################################################
     #############  opp_sliding_window  ###############
     ##################################################
-
+'''
     def opp_sliding_window(self, data_x, data_y):
         ws = self.config['sliding_window_length']
         ss = self.config['sliding_window_step']
@@ -343,3 +343,4 @@ class Opportunity(data.Dataset):
         return data_x.astype(np.float32), \
                data_y_labels.reshape(len(data_y_labels)).astype(np.uint8), \
                data_y_all.astype(np.uint8)
+'''
