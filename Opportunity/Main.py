@@ -275,7 +275,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.0001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/opportunity/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
