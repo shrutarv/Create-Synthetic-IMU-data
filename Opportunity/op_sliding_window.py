@@ -9,8 +9,39 @@ import glob
 import csv
 
 NUM_CLASSES = 8
+
+def opp_sliding_window(data_x, data_y):
+        ws = config['sliding_window_length']
+        ss = config['sliding_window_step']
+
+        logging.info('        Dataloader: Sliding window with ws {} and ss {}'.format(ws, ss))
+
+        # Segmenting the data with labels taken from the end of the window
+        data_x = sliding_window(data_x, (ws, data_x.shape[1]), (ss, 1))
+        if config['label_pos'] == 'end':
+            data_y_labels = np.asarray([[i[-1]] for i in sliding_window(data_y, ws, ss)])
+        elif config['label_pos'] == 'middle':
+            # Segmenting the data with labels from the middle of the window
+            data_y_labels = np.asarray([[i[i.shape[0] // 2]] for i in sliding_window(data_y, ws, ss)])
+        elif config['label_pos'] == 'mode':
+            data_y_labels = []
+            for sw in sliding_window(data_y, ws, ss):
+                count_l = np.bincount(sw.astype(int), minlength=config['num_classes'])
+                idy = np.argmax(count_l)
+                data_y_labels.append(idy)
+            data_y_labels = np.asarray(data_y_labels)
+
+        # Labels of each sample per window
+        data_y_all = np.asarray([i[:] for i in sliding_window(data_y, ws, ss)])
+
+        logging.info('        Dataloader: Sequences are segmented')
+
+        return data_x.astype(np.float32), \
+               data_y_labels.reshape(len(data_y_labels)).astype(np.uint8), \
+               data_y_all.astype(np.uint8)
+'''               
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
-    '''
+    
     Performs the sliding window approach on the data and the labels
     
     return three arrays.
@@ -23,7 +54,7 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     @param ws: ids for train
     @param ss: ids for train
     @param label_pos_end: ids for train
-    '''    
+      
 
 
     print("Sliding window: Creating windows {} with step {}".format(ws, ss))
@@ -67,16 +98,14 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
             data_y_all = np.asarray([i[:] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
     
     return data_x.astype(np.float32), data_y_labels.astype(np.uint8), data_y_all.astype(np.uint8)
-
+'''
 def example_creating_windows_file(k, data_x, labels, data_dir):
         # Sliding window approach
 
     print("Starting sliding window")
     print(data_x.shape)
     print(labels.shape)
-    X, y, y_all = opp_sliding_window(data_x, labels.astype(int),
-                                     sliding_window_length,
-                                     sliding_window_step, label_pos_end = False)
+    X, y, y_all = opp_sliding_window(data_x, labels.astype(int))
     print(X.shape)
     print(y.shape)
     print(y_all.shape)
@@ -104,24 +133,6 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         counter_seq += 1
         print("dumping")
         f.close()
- 
-def max_min_values(data, values):
-    temp_values = []
-    for i in range(data_x.shape[1]):
-        attribute = []
-        temp_max = np.max(data[:,i])
-        temp_min = np.min(data[:,i])
-        if (values[i][0] > temp_max):
-            attribute.append(values[i][0])
-        else:
-            attribute.append(temp_max)
-        if(values[i][1] < temp_min):
-            attribute.append(values[i][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
-    return values
    
 config = {
     "NB_sensor_channels":113,
@@ -134,10 +145,10 @@ config = {
     "output":"softmax",
     "num_classes":18,
     "reshape_input":False,
-    "dataset_root":'/vol/actrec/Opportunity/',
-    #"dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
+    #"dataset_root":'/vol/actrec/Opportunity/',
+    "dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
     "dataset":'gesture',
-    "label_pos":'end'
+    "label_pos":'mode'
     }
 
 
@@ -160,29 +171,20 @@ data_dir = "/data/sawasthi/data/opportunity/trainData/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-label = y_train.astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
 X = x_train.astype(object)
 k = 0
-example_creating_windows_file(k, X, lab, data_dir)
+example_creating_windows_file(k, X , y_train, data_dir)
 
 data_dir = "/data/sawasthi/data/opportunity/testData/"
-label = y_test.astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
 x = x_test.astype(object)
 k = 0
-example_creating_windows_file(k, X, lab,data_dir)
+example_creating_windows_file(k, X, y_test,data_dir)
 
 data_dir =  "/data/sawasthi/data/opportunity/validationData/"
-label = y_val.astype(int)
-lab = np.zeros((len(label),20), dtype=int)
-lab[:,0] = label
 #Y_train = np.reshape(Y_train,(len(label),1))
 x = x_val.astype(object)
 k = 0
-example_creating_windows_file(k, X, lab,data_dir)
+example_creating_windows_file(k, X, y_val,data_dir)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")

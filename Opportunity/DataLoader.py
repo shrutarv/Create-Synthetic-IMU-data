@@ -22,7 +22,7 @@ class CustomDataSet(Dataset):
 
     def __getitem__(self, idx):
         file = os.path.join(self.main_dir, self.all_files[idx])
-        #print(idx)
+        print(idx)
         f = open(file,'rb')
         #image = Image.open(img_loc).convert("RGB")
         #tensor_image = self.transform(image)
