@@ -145,8 +145,8 @@ config = {
     "output":"softmax",
     "num_classes":18,
     "reshape_input":False,
-    #"dataset_root":'/vol/actrec/Opportunity/',
-    "dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
+    "dataset_root":'/vol/actrec/Opportunity/',
+    #"dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
     "dataset":'gesture',
     "label_pos":'mode'
     }
