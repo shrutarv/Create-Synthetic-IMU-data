@@ -267,7 +267,7 @@ if __name__ == '__main__':
     #print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
-    #model = model.to(device)
+    model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
