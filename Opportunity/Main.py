@@ -207,7 +207,7 @@ def validation(dataLoader_validation):
             
         for b, harwindow_batched in enumerate(dataLoader_validation):
             test_batch_v = harwindow_batched["data"]
-            test_batch_l = harwindow_batched["label"][:, 0]
+            test_batch_l = harwindow_batched["label"]
             #test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
