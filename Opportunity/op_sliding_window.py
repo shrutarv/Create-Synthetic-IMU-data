@@ -137,7 +137,7 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
 config = {
     "NB_sensor_channels":113,
     "sliding_window_length":24,
-    "proportions":1,
+    "proportions":0.2,
     "sliding_window_step":12,
     "filter_size":5,
     "num_filters":64,
@@ -165,7 +165,7 @@ x_val, y_val = opp_val.load_data()
 opp_test = Opportunity(config,'test')
 x_test, y_test = opp_test.load_data()
 
-data_dir = "/data/sawasthi/data/opportunity/trainData/"
+data_dir = "/data/sawasthi/data/opportunity/trainData_20/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
