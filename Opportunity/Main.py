@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 500
     batch_size = 40
     l = []
     tot_loss = 0
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/opportunity/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
-    path = '/data/sawasthi/data/opportunity/trainData_20/'
+    path = '/data/sawasthi/data/opportunity/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
