@@ -173,8 +173,8 @@ if __name__ == '__main__':
     # up sampling rate
     up = 3
     #ws = (100,31)
-    ws = (100,45) 
-    ss = (20,45)     
+    ws = (30,45) 
+    ss = (10,45)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
