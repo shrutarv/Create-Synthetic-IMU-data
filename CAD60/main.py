@@ -240,7 +240,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":45,
-        "sliding_window_length":100,
+        "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -250,12 +250,12 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=30
     accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 1
     batch_size = 20
     lr_factor = 0.98
     l = []
@@ -282,7 +282,7 @@ if __name__ == '__main__':
     model_path = '/home/sawasthi/CAD60/model/model_adap.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/CAD60/trainData_orig/'
+    path = '/data/sawasthi/data/CAD60/trainData_ws_30_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -295,7 +295,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/data/CAD60/testData_orig/'
+    path = '/data/sawasthi/data/CAD60/testData_ws_30_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
