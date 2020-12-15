@@ -255,7 +255,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 400
+    epochs = 200
     batch_size = 50
     l = []
     tot_loss = 0
@@ -275,7 +275,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.0006, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.0006, alpha=0.9,weight_decay=0.0005, momentum=0.9,)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/opportunity/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
