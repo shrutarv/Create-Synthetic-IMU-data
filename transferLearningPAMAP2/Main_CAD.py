@@ -176,7 +176,7 @@ def F1_score(targets, preds, precision, recall):
 
         # F1 weighted
         weighted_f1 = proportions * (multi_pre_rec / sum_pre_rec)
-        weighted_f1[np.isnan(weighted_f1)] = 0
+        weighted_f1[torch.isnan(weighted_f1)] = 0
         F1_weighted = torch.sum(weighted_f1) * 2
 
         # F1 mean
@@ -485,8 +485,8 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
