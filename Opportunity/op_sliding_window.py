@@ -137,7 +137,7 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
 config = {
     "NB_sensor_channels":113,
     "sliding_window_length":24,
-    "proportions":0.2,
+    "proportions":1,
     "sliding_window_step":12,
     "filter_size":5,
     "num_filters":64,
@@ -145,9 +145,9 @@ config = {
     "output":"softmax",
     "num_classes":18,
     "reshape_input":False,
-    "dataset_root":'/vol/actrec/Opportunity/',
-    #"dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
-    "dataset":'gesture',
+    #"dataset_root":'/vol/actrec/Opportunity/',
+    "dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',
+    "dataset":'locomotion',
     "label_pos":'mode'
     }
 
@@ -165,7 +165,7 @@ x_val, y_val = opp_val.load_data()
 opp_test = Opportunity(config,'test')
 x_test, y_test = opp_test.load_data()
 
-data_dir = "/data/sawasthi/data/opportunity/trainData_20/"
+data_dir = "/data/sawasthi/data/opportunity/trainData_loc/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
 #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
@@ -175,12 +175,12 @@ X = x_train.astype(object)
 k = 0
 example_creating_windows_file(k, X , y_train, data_dir)
 
-data_dir = "/data/sawasthi/data/opportunity/testData/"
+data_dir = "/data/sawasthi/data/opportunity/testData_loc/"
 x = x_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, y_test,data_dir)
 
-data_dir =  "/data/sawasthi/data/opportunity/validationData/"
+data_dir =  "/data/sawasthi/data/opportunity/validationData_loc/"
 #Y_train = np.reshape(Y_train,(len(label),1))
 x = x_val.astype(object)
 k = 0
