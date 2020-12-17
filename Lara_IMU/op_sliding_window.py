@@ -196,7 +196,7 @@ if __name__ == '__main__':
     for i,j in zip(FileList_x, FileList_y):
         
         k += 1
-        data_y = pd.read_csv("'/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + "/" + j) 
+        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + "/" + j) 
         #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
