@@ -252,12 +252,12 @@ if __name__ == '__main__':
 
     ws=200
     
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
     epochs = 60
-    batch_size = 40
+    batch_size = 20
     l = []
     tot_loss = 0
     accuracy = []
