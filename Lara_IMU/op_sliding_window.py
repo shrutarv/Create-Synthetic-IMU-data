@@ -106,6 +106,24 @@ def example_creating_windows_file(k, folder_name, data_x, labels):
         print("dumping")
         f.close()
  
+def normalize(data, min_max, string):
+    #print(len(min_max), len(min_max[0]))
+    #data = data.numpy()
+    #print(data.shape)
+    for j in range(data.shape[1]):
+        data[:,j] = (data[:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1]) 
+    test = np.array(data[:,:])
+        
+    if (string=="train"):
+        if(np.max(test)>1.001):
+            print("Error",np.max(test))
+        if(np.min(test)<-0.001):
+            print("Error",np.min(test))
+    else:
+        test[test > 1] = 1
+        test[test < 0] = 0
+    return data
+    
 def max_min_values(data, values):
     temp_values = []
     for i in range(data_x.shape[1]):
@@ -123,6 +141,7 @@ def max_min_values(data, values):
         temp_values.append(attribute)  
     values = temp_values
     return values
+
 if __name__ == '__main__':
        
     #ws = (100,31)
@@ -135,18 +154,21 @@ if __name__ == '__main__':
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
-    data_dir =  "/data/sawasthi/data/MoCAP_data/validationData/"
+    df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
+    value = df.values.tolist()
+   
+    data_dir =  "/data/sawasthi/data/Lara_IMU/trainData/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
-    folder_name = "S07"
+    folder_name = "P07"
     FileList_y = []
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
-    os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
-    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+    os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+    #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
+    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
     FileList_y = glob.glob('*labels.csv')
@@ -155,7 +177,7 @@ if __name__ == '__main__':
     #FileList_y = FileList_y + List
             
     FileList_x = []
-    #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13')
+    #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'+ folder_name)
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
     FileList_x = glob.glob('*.csv')
@@ -171,22 +193,22 @@ if __name__ == '__main__':
     k = 0 
     
     for i,j in zip(FileList_x, FileList_y):
+        
         k += 1
-        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name + "/" + j) 
-        #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+j)
+        data_y = pd.read_csv("'/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + "/" + j) 
+        #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
         data_y = data_y.values
         labels = data_y[:,0]
-        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/"+ folder_name + "/" + i) 
+        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/" + folder_name + "/" + i) 
         #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
-        data_x = np.delete(data_x,np.s_[68:74], axis=1)
-        data_x = data_x[:,2:128]
-        
-        example_creating_windows_file(k, folder_name, data_x, labels)
+        data_x = data_x[:,1:]
+        x = normalize(data_x,value,'train')
+        example_creating_windows_file(k, folder_name, x, labels)
         #if(k == 2):
           #  break
     
