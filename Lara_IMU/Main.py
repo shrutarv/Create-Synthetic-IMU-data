@@ -239,7 +239,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":126,
+        "NB_sensor_channels":30,
         "sliding_window_length":200,
         "filter_size":5,
         "num_filters":64,
@@ -251,36 +251,36 @@ if __name__ == '__main__':
 
 
     ws=200
-    features = 126
+    
     accumulation_steps = 10
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 60
+    epochs = 1
     batch_size = 40
     l = []
     tot_loss = 0
     accuracy = []
         
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    value = df.values.tolist()
+    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
+    #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
     model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.01]))
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/MoCAP_data/model/model.pth'
+    model_path = '/data/sawasthi/data/Lara_IMU/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    path = '/data/sawasthi/data/MoCAP_data/trainData/'
+    path = '/data/sawasthi/data/Lara_IMU/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -292,7 +292,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/MoCAP_data/validationData/'
+    path = '/data/sawasthi/data/Lara_IMU/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -303,7 +303,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/MoCAP_data/testData/'
+    path = '/data/sawasthi/data/Lara_IMU/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -396,7 +396,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,label='training accuracy')
     plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/MoCAP_data/results/result.png') 
+    plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -447,7 +447,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/MoCAP_data/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/Lara_IMU/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
