@@ -145,8 +145,8 @@ def max_min_values(data, values):
 if __name__ == '__main__':
        
     #ws = (100,31)
-    ws = (200,134)  #for MoCAP
-    ss = (25,134)     #for MoCAP
+    ws = (200,30)  #for MoCAP
+    ss = (25,30)     #for MoCAP
     #ss = (25,31)
     sliding_window_length = 200   # for MoCAP
     #sliding_window_length = 100    
