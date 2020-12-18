@@ -243,7 +243,7 @@ if __name__ == '__main__':
         "sliding_window_length":200,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False
@@ -257,7 +257,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 100
-    batch_size = 20
+    batch_size = 200
     l = []
     tot_loss = 0
     accuracy = []
