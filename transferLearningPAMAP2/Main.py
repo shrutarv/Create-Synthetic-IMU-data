@@ -325,7 +325,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 100
-    batch_size = 40
+    batch_size = 100
     l = []
     tot_loss = 0
     accuracy = []
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     model.softmax = PAMAP_net.softmax
     '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
@@ -458,7 +458,7 @@ if __name__ == '__main__':
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
