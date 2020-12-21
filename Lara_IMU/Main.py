@@ -256,11 +256,14 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 400
+    epochs = 200
     batch_size = 200
+    lr_factor = 0.97
     l = []
     tot_loss = 0
     accuracy = []
+    learning_rate = 0.001
+    print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
@@ -276,7 +279,11 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.0001, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    #lmbda = lambda epoch: 0.95
+    #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
+    #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
+    
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/Lara_IMU/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
@@ -329,7 +336,7 @@ if __name__ == '__main__':
     x= 0
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("epoch ", e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
               
@@ -366,8 +373,7 @@ if __name__ == '__main__':
               #b = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, b.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
-                      
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
@@ -383,7 +389,12 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
+          
+          for param_group in optimizer.param_groups:
+              print(param_group['lr'])        
+              param_group['lr'] = lr_factor*param_group['lr']
+          #scheduler.step(val_loss)
+          
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -393,8 +404,8 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
     plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
