@@ -145,12 +145,12 @@ def max_min_values(data, values):
 if __name__ == '__main__':
        
     #ws = (100,31)
-    ws = (200,30)  #for MoCAP
-    ss = (25,30)     #for MoCAP
+    ws = (100,30)  #for MoCAP
+    ss = (12,30)     #for MoCAP
     #ss = (25,31)
-    sliding_window_length = 200   # for MoCAP
+    sliding_window_length = 100   # for MoCAP
     #sliding_window_length = 100    
-    sliding_window_step = 25
+    sliding_window_step = 12
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
@@ -158,7 +158,7 @@ if __name__ == '__main__':
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/data/Lara_IMU/testData/"
+    data_dir =  "/data/sawasthi/data/Lara_IMU/testData_100/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -210,7 +210,7 @@ if __name__ == '__main__':
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,1:]
-        x = normalize(data_x,value,'train')
+        x = normalize(data_x,value,'test')
         example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
           #  break
