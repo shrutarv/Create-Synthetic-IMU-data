@@ -165,7 +165,7 @@ if __name__ == '__main__':
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
-    folder_name = "P11"
+    folder_name = "P12"
     FileList_y = []
     os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
