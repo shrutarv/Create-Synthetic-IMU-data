@@ -279,7 +279,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #lmbda = lambda epoch: 0.95
     #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
@@ -389,12 +389,12 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          
+          '''
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
-          
+          '''
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
