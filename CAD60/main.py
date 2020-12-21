@@ -332,7 +332,7 @@ if __name__ == '__main__':
     validation_acc = []
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("epoch ", e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
@@ -369,8 +369,7 @@ if __name__ == '__main__':
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
-                      
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
