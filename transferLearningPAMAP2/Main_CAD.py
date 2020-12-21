@@ -236,7 +236,8 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -269,7 +270,8 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -312,18 +314,18 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_adap.pth'
+        "folder_exp_base_fine_tuning": '/home/sawasthi/CAD60/model/model_100.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
     ws=100
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
-    batch_size = 40
+    epochs = 60
+    batch_size = 100
     l = []
     tot_loss = 0
     accuracy = []
@@ -367,7 +369,7 @@ if __name__ == '__main__':
     model.softmax = PAMAP_net.softmax
     '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     path = '/data/sawasthi/data/PAMAP2/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
