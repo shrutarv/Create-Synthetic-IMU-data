@@ -275,7 +275,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.0001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
@@ -364,7 +364,7 @@ if __name__ == '__main__':
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
