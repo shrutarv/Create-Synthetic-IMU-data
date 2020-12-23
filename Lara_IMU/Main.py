@@ -256,13 +256,13 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 200
+    epochs = 160
     batch_size = 200
     lr_factor = 0.97
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.001
+    learning_rate = 0.0001
     print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
