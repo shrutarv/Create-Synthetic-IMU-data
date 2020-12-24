@@ -325,7 +325,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    
+    '''
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -389,12 +389,12 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          '''
+          
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
-          '''
+          
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -410,7 +410,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''
     print('Start Testing')
     
     total = 0.0
