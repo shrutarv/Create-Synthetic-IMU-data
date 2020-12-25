@@ -264,7 +264,7 @@ if __name__ == '__main__':
     accuracy = []
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    '''  
+        
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
     #value = df.values.tolist()
@@ -285,9 +285,9 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/Lara_IMU/model/model.pth'
+    model_path = '/data/sawasthi/data/Lara_IMU/model/model2.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    path = '/data/sawasthi/data/Lara_IMU/trainData/'
+    path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -299,7 +299,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/Lara_IMU/validationData/'
+    path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -310,7 +310,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/Lara_IMU/testData/'
+    path = '/data/sawasthi/data/Lara_IMU/testData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -319,12 +319,12 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    
+    '''
     for b, harwindow_batched in enumerate(dataLoader_test):
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    
+    '''
     
     print('Start Training')
     correct = 0
@@ -410,7 +410,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    '''
+    
     print('Start Testing')
     
     total = 0.0
