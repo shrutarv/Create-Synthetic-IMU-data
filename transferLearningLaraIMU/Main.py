@@ -318,7 +318,7 @@ if __name__ == '__main__':
 
 
     ws=100
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
@@ -335,8 +335,8 @@ if __name__ == '__main__':
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
      
-    PAMAP_net = Network(config)
-    PAMAP_net.init_weights()
+    Lara_net = Network(config)
+    Lara_net.init_weights()
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -346,7 +346,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
     # transformed_net 
-    model = load_weights(PAMAP_net)
+    model = load_weights(Lara_net)
     model = model.to(device)
     print("model loaded")  
     '''
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/Lara_IMU/trainData/'
+    path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -382,7 +382,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/Lara_IMU/validationData/'
+    path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -394,7 +394,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/Lara_IMU/testData/'
+    path = '/data/sawasthi/data/Lara_IMU/testData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -409,7 +409,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB.pth'
+    model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_L.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
