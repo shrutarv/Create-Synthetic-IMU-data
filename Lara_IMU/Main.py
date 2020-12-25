@@ -264,7 +264,7 @@ if __name__ == '__main__':
     accuracy = []
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-        
+    '''  
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
     #value = df.values.tolist()
@@ -319,12 +319,12 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
+    
     for b, harwindow_batched in enumerate(dataLoader_test):
         data_x = harwindow_batched["data"]
         data_x.to(device)
         value = max_min_values(data_x,value)
-    '''
+    
     
     print('Start Training')
     correct = 0
@@ -410,7 +410,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''
     print('Start Testing')
     
     total = 0.0
