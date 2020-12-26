@@ -257,11 +257,10 @@ if __name__ == '__main__':
     total_correct = 0
     epochs = 160
     batch_size = 150
-    lr_factor = 0.98
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.001
+    learning_rate = 0.00001
     print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -279,10 +278,10 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/CAD60/model/model_100.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_pose.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/CAD60/trainData_ws_100_ss_15/'
+    path = '/data/sawasthi/data/CAD60/trainData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -295,7 +294,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/data/CAD60/testData_ws_100_ss_15/'
+    path = '/data/sawasthi/data/CAD60/testData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -307,7 +306,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/CAD60/testData_ws_100_ss_15/'
+    path = '/data/sawasthi/data/CAD60/testData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -446,7 +445,7 @@ if __name__ == '__main__':
     print("recall", recall)
     print("F1 weighted", F1_weighted)
     print("F1 mean",F1_mean)
-    
+    '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
@@ -454,4 +453,4 @@ if __name__ == '__main__':
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
-        
+     '''   
