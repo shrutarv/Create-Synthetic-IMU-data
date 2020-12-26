@@ -323,11 +323,11 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 160
-    batch_size = 500
+    batch_size = 100
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.001
+    learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/PAMAP2/trainData/'
+    path = '/data/sawasthi/data/PAMAP2/trainData_30/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
