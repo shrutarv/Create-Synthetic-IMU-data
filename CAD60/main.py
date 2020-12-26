@@ -240,7 +240,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":45,
-        "sliding_window_length":30,
+        "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -250,13 +250,14 @@ if __name__ == '__main__':
         }
 
 
-    ws=30
+    ws=100
     accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 60
+    epochs = 80
     batch_size = 150
+    lr_factor = 0.98
     l = []
     tot_loss = 0
     accuracy = []
@@ -278,10 +279,10 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/CAD60/model/model_pose.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_acc.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/CAD60/trainData_pose/'
+    path = '/data/sawasthi/data/CAD60/trainData_ws_100_ss_15/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -294,7 +295,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/data/CAD60/testData_pose/'
+    path = '/data/sawasthi/data/CAD60/testData_ws_100_ss_15/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -306,7 +307,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/CAD60/testData_pose/'
+    path = '/data/sawasthi/data/CAD60/testData_ws_100_ss_15/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -453,4 +454,5 @@ if __name__ == '__main__':
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
-     '''   
+        
+    '''
