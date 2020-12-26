@@ -240,7 +240,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":26,
-        "sliding_window_length":100,
+        "sliding_window_length":50,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -250,19 +250,19 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=50
     accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
     epochs = 100
-    batch_size = 20
-    lr_factor = 0.98
+    batch_size = 100
+    
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.001
-    print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+    learning_rate = 0.0001
+    print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -278,16 +278,16 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #lmbda = lambda epoch: 0.95
     #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/Penn/model/model.pth'
+    model_path = '/data/sawasthi/data/Penn/model/model_pose.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/Penn/trainData_a/'
+    path = '/data/sawasthi/data/Penn/trainData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -300,7 +300,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/Penn/validationData_a/'
+    path = '/data/sawasthi/data/Penn/validationData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -312,7 +312,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/Penn/testData_a/'
+    path = '/data/sawasthi/data/Penn/testData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -392,12 +392,7 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          
-          for param_group in optimizer.param_groups:
-              print(param_group['lr'])        
-              param_group['lr'] = lr_factor*param_group['lr']
-          #scheduler.step(val_loss)
-          
+       
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -410,7 +405,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,label='training accuracy')
     plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/Penn/results/result_a.png') 
+    plt.savefig('/data/sawasthi/data/Penn/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -460,7 +455,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/Penn/results/result_a.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/Penn/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
