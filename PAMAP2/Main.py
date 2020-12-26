@@ -279,7 +279,7 @@ if __name__ == '__main__':
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/PAMAP2/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/PAMAP2/trainData_50/'
+    path = '/data/sawasthi/data/PAMAP2/trainData_75/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -327,7 +327,7 @@ if __name__ == '__main__':
     validation_acc = []
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
