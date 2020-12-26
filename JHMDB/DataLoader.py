@@ -27,7 +27,7 @@ class CustomDataSet(Dataset):
         f = open(file,'rb')
         #image = Image.open(img_loc).convert("RGB")
         #tensor_image = self.transform(image)
-        data = pickle.load(f)
+        data = pickle.load(f, encoding='latin1')
         f.close()
         X = data['data']
        
