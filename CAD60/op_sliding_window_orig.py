@@ -198,67 +198,15 @@ if __name__ == '__main__':
             print("error")
     if np.any(data[:,1:])<0:
             print("error")
-        
-    # time sampled
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-    y_sampled = np.zeros((len(x_sampled),1))
-    sampled_data = np.zeros((len(x_sampled),1))
-    '''
-    u = IUS(data[:,0],data[:,2])
-    out = u(x_sampled)
-    u_der = u.derivative(2)
-    '''
-    #y_sampled2 = np.zeros((len(x_sampled),1))
-    for i in range(1,(data.shape[1]-1)):
-        #for index in range(12,len(data[0])*up-12):
-                
-            #data_new = data[index-12:index+12,:]   
-         
-         #f = sp.interp1d(data[:,0],data[:,i], kind='linear', fill_value="extrapolate")
-        
-         #sampled_data = f(x_sampled)
-         #acc = derivative(f, x_sampled)
-         #acc = np.diff(sampled_data,2)
-         resample = sp.splrep(data[:,0],data[:,i])
-         sampled = sp.splev(x_sampled,resample)
-         #acc = sp.splev(x_sampled,resample, der=2)
-         y_sampled = np.concatenate((y_sampled,np.reshape(sampled,(len(sampled),1))),axis=1)
-         sampled_data = np.concatenate((sampled_data,np.reshape(sampled,(len(sampled),1))),axis=1)
-         #y_sampled.append(f(x_sampled))
-         #plt.plot(x_sampled[1:400],acc[1:400],'b',x_sampled[1:400],sampled_data[1:400],'g')
-    '''
-    for i in range(1,(data.shape[1]-1)):
-         print(i)
-         acc = np.array([0], float)
-         for index in range(50,len(data)-49):
-             print(index)
-             data_new = data[index-50:index+50,:]   
-             x_samp = np.linspace(np.min(data_new[:,0]), np.max(data_new[:,0]), len(data_new)*up)
-             #sampled_data = f(x_sampled[index-50:index+50,:])
-             #resample = sp.splrep(data_new[:,0],data_new[:,i])
-             resample = sp.splrep(data[:,0],data[:,i])
-             temp_acc = sp.splev(x_samp,resample, der=2)
-             data[index-50:index+50,i] = temp_acc[0::4]
-             if(index==50):
-                 acc = np.concatenate((acc,temp_acc[0:198]))
-             acc = np.concatenate((acc,temp_acc[198:202]),axis=0)
-             if(index==len(data)-50):
-                 acc = np.concatenate((acc,temp_acc[202:400]),axis=0)
-             
-        
-         y_sampled = np.concatenate((y_sampled,np.reshape(acc[1:],(len(acc[1:]),1))),axis=1)
-    '''         
-     #y_sampled.append(f(x_sampled))
-     # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-
-    data_new = y_sampled[:,1:]
-    #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
+    
+    #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
+    data_new = data[:,1:46]
     # creating labels
     
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/data/CAD60/trainData_orig/'
+    data_dir =  '/data/sawasthi/data/CAD60/trainData_pose/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -269,31 +217,11 @@ if __name__ == '__main__':
     print("train data pickled")
     
     data_dir =  '/data/sawasthi/data/CAD60/testData_orig/'
-    df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/CAD60/test_pose.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
-    y_sampled = np.zeros((len(x_sampled),1))
-    sampled_data = []
-        
-    for i in range(1,(data.shape[1]-1)):
-        #for index in range(12,len(data[0])*up-12):
-                
-            #data_new = data[index-12:index+12,:]   
-         
-        #f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
-        
-         #sampled_data = f(x_sampled)
-         #acc = derivative(f, x_sampled)
-         resample = sp.splrep(data[:,0],data[:,i])
-         sampled = sp.splev(x_sampled,resample)
-         #acc = sp.splev(x_sampled,resample, der=2)
-         y_sampled = np.concatenate((y_sampled,np.reshape(sampled,(len(sampled),1))),axis=1)
-         
-         #y_sampled.append(f(x_sampled))
-         # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
-    data_new = y_sampled[:,1:]
+    data_new = data[:,1:46]
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
