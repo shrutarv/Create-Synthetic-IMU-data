@@ -419,7 +419,7 @@ if __name__ == '__main__':
     validation_acc = []
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
