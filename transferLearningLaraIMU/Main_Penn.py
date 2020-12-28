@@ -176,7 +176,7 @@ def F1_score(targets, preds, precision, recall):
 
         # F1 weighted
         weighted_f1 = proportions * (multi_pre_rec / sum_pre_rec)
-        weighted_f1[np.isnan(weighted_f1)] = 0
+        weighted_f1[torch.isnan(weighted_f1)] = 0
         F1_weighted = torch.sum(weighted_f1) * 2
 
         # F1 mean
@@ -304,13 +304,13 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":40,
+        "NB_sensor_channels":30,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":16,
+        "num_classes":8,
         "reshape_input":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
@@ -318,12 +318,12 @@ if __name__ == '__main__':
 
 
     ws=100
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 75
-    batch_size = 40
+    epochs = 80
+    batch_size = 100
     l = []
     tot_loss = 0
     accuracy = []
@@ -335,8 +335,8 @@ if __name__ == '__main__':
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
      
-    PAMAP_net = Network(config)
-    PAMAP_net.init_weights()
+    Lara_net = Network(config)
+    Lara_net.init_weights()
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
@@ -346,7 +346,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     #model = torch.load(model_path)
     # transformed_net 
-    model = load_weights(PAMAP_net)
+    model = load_weights(Lara_net)
     model = model.to(device)
     print("model loaded")  
     '''
@@ -367,9 +367,9 @@ if __name__ == '__main__':
     model.softmax = PAMAP_net.softmax
     '''
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/PAMAP2/trainData/'
+    path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -382,7 +382,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/PAMAP2/validationData/'
+    path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -394,7 +394,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/PAMAP2/testData/'
+    path = '/data/sawasthi/data/Lara_IMU/testData_100/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -409,7 +409,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/data/Penn/model/model_tl_PAMAP2.pth'
+    model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_Penn.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -419,7 +419,7 @@ if __name__ == '__main__':
     validation_acc = []
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
@@ -456,7 +456,7 @@ if __name__ == '__main__':
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
-              print(' loss: ', loss.item(), 'accuracy in percent',acc)
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
@@ -483,10 +483,10 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/Penn/results/result_tl.png') 
+    plt.savefig('/data/sawasthi/data/Lara_IMU/results/result_tl.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -536,7 +536,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/Penn/results/result_tl.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/Lara_IMU/results/result_tl.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
