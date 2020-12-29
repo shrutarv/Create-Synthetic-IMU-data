@@ -183,11 +183,11 @@ if __name__ == '__main__':
     down = 5
     #ws = (100,31)
     ws = (100,30) 
-    ss = (25,30)     
+    ss = (15,30)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 25
+    sliding_window_step = 15
     m2 = np.repeat(-999999,102)
     m1 = np.repeat(999999,102)
     m1 = np.reshape(m1,(len(m1),1))
