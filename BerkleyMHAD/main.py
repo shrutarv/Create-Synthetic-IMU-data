@@ -256,13 +256,12 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 100
-    batch_size = 60
-    lr_factor = 1
+    batch_size = 200
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.0080
-    print("epoch: ",epochs,"batch_size: ","lr_factor: ", lr_factor, batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+    learning_rate = 0.00001
+    print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -278,7 +277,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #lmbda = lambda epoch: 0.95
     #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
