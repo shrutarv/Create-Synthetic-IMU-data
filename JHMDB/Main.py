@@ -284,10 +284,10 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/JHMDB/model/model_acc_up4.pth'
+    model_path = '/data/sawasthi/data/JHMDB/model/model_acc_all.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/data/JHMDB/trainData/'
+    path = '/data/sawasthi/data/JHMDB/trainData_all/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -382,6 +382,7 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
+          '''
           val_acc, val_loss =  validation(dataLoader_validation)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
@@ -389,6 +390,8 @@ if __name__ == '__main__':
               torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
+          '''
+          torch.save(model, model_path)
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
@@ -399,6 +402,7 @@ if __name__ == '__main__':
           #scheduler.step(val_loss)
           '''
     print('Finished Training')
+    '''
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
     plt.title('epoch vs loss')
@@ -465,3 +469,4 @@ if __name__ == '__main__':
          wr.writerow(accuracy)
          wr.writerow(l)
              
+    '''
