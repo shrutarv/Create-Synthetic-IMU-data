@@ -274,6 +274,7 @@ class Opportunity(data.Dataset):
         try:
             if self.config['dataset'] == 'locomotion':
                 print('adjust_idx_labels locomotion')# Labels for locomotion are adjusted
+                print('all data_y values',np.unique(data_y))
                 data_y[data_y == 4] = 3
                 data_y[data_y == 5] = 4
                 print('data_y max l{}'.format(np.max(data_y)))
