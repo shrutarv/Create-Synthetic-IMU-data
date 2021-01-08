@@ -313,7 +313,8 @@ def test():
             #trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             #prediction = np.concatenate((prediction,predicted_classes))
         total = trueValue.size()[0]
-        
+        print(trueValue.shape())
+        print(prediction.shape())
         #test_batch_l = test_batch_l.long()
         #predicted_classes = predicted_classes.to(device)
         #correct += (predicted_classes == test_batch_l).sum().item()
