@@ -211,6 +211,8 @@ class Opportunity(data.Dataset):
         # All sensor channels are normalized
         data_x = self.normalize(data_x, NORM_MAX_THRESHOLDS, NORM_MIN_THRESHOLDS)
         print('normalize')
+        print('arg max',np.argmax(data_y))
+        print('data y value',data_y[np.argmax(data_y)])
         print('all data_y values',np.unique(data_y))
         return data_x, data_y
 
