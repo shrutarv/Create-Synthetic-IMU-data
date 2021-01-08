@@ -300,7 +300,7 @@ if __name__ == '__main__':
               
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"]
-              
+              print(train_batch_l.shape)
               #train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
               
