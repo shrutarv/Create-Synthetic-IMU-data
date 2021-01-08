@@ -276,6 +276,7 @@ class Opportunity(data.Dataset):
                 print('adjust_idx_labels locomotion')# Labels for locomotion are adjusted
                 data_y[data_y == 4] = 3
                 data_y[data_y == 5] = 4
+                print('data_y max l{}'.format(np.max(data_y)))
             elif self.config['dataset'] == 'gesture':  # Labels for gestures are adjusted
                 print('adjust_idx_labels gesture')
                 data_y[data_y == 406516] = 1
