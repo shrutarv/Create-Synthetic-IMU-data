@@ -144,7 +144,7 @@ class Opportunity(data.Dataset):
                 logging.error('        Dataloader: ERROR: Did not find {0} in zip file'.format(OPPORTUNITY_DATA_FILES[idx_f]))
 
         logging.info("        Dataloader: Final dataset with size: | train {0}".format(X.shape))
-        logging.info(" data_y max l{}".format(np.max(Y))
+        logging.info(" data_y max l{}".format(np.max(Y)))
         
         return X, Y
 
