@@ -119,7 +119,7 @@ class Opportunity(data.Dataset):
             elif self.config["proportions"] == 1.0:
                 idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         elif self.partition_modus == 'val':
-            print(sel.partition_modus)
+            print(self.partition_modus)
             idx_files = [ids for ids in range(12,14)] #12,14
         elif self.partition_modus == 'test':
             print(self.partition_modus)
@@ -132,19 +132,21 @@ class Opportunity(data.Dataset):
         for idx_f in idx_files:
             try:
                 print(idx_f)
-                logging.info('        Dataloader: Loading file...{0}'.format(OPPORTUNITY_DATA_FILES[idx_f]))
+                print('        Dataloader: Loading file...{0}'.format(OPPORTUNITY_DATA_FILES[idx_f]))
                 raw_data = np.loadtxt(self.config['dataset_root'] + OPPORTUNITY_DATA_FILES[idx_f])
+                print('before process data')
                 x, y = self.process_dataset_file(raw_data)
+                print('after process data')
                 logging.info(x.shape)
                 logging.info(y.shape)
 
                 X = np.vstack((X, x))
                 Y = np.concatenate([Y, y])
             except KeyError:
-                logging.error('        Dataloader: ERROR: Did not find {0} in zip file'.format(OPPORTUNITY_DATA_FILES[idx_f]))
+                print('        Dataloader: ERROR: Did not find {0} in zip file'.format(OPPORTUNITY_DATA_FILES[idx_f]))
 
-        logging.info("        Dataloader: Final dataset with size: | train {0}".format(X.shape))
-        logging.info(" data_y max l{}".format(np.max(Y)))
+        print("        Dataloader: Final dataset with size: | train {0}".format(X.shape))
+        print(" data_y max l{}".format(np.max(Y)))
         
         return X, Y
 
@@ -191,23 +193,24 @@ class Opportunity(data.Dataset):
         #resamp = Resampling()
         # Select correct columns
         raw_data = self.select_columns_opp(raw_data)
-
+        print('select_columns_opp')
         # Columns are segmented into features and labels
         data_t, data_x, data_y = self.divide_x_y(raw_data)
         #_, data_x, data_y = resamp.interpolate(data_t, data_x, data_y, 50)
-
+        print('divide_x_y')
         data_y = self.adjust_idx_labels(data_y)
+        print('adjust_idx_labels')
         data_y = data_y.astype(int)
 
         # Perform linear interpolation
         data_x = np.array([Series(i).interpolate() for i in data_x.T]).T
-
+        print('interpolate')
         # Remaining missing data are converted to zero
         data_x[np.isnan(data_x)] = 0
 
         # All sensor channels are normalized
         data_x = self.normalize(data_x, NORM_MAX_THRESHOLDS, NORM_MIN_THRESHOLDS)
-
+        print('normalize')
         return data_x, data_y
 
     def select_columns_opp(self, raw_data):
@@ -246,10 +249,10 @@ class Opportunity(data.Dataset):
             if self.config['dataset'] not in ['locomotion', 'gesture']:
                 raise RuntimeError("Invalid label: '%s'" % self.config['dataset'])
             if self.config['dataset'] == 'locomotion':
-                logging.info("        Dataloader: Locomotion")
+                print('        Dataloader: Locomotion')
                 data_y = raw_data[:, 114]  # Locomotion label
             elif self.config['dataset'] == 'gesture':
-                logging.info("        Dataloader: Gestures")
+                print('        Dataloader: Gestures')
                 data_y = raw_data[:, 115]  # Gestures label
         except KeyError:
             logging.error(KeyError)
@@ -268,10 +271,12 @@ class Opportunity(data.Dataset):
         """
 
         try:
-            if self.config['dataset'] == 'locomotion':  # Labels for locomotion are adjusted
+            if self.config['dataset'] == 'locomotion':
+                print('adjust_idx_labels locomotion')# Labels for locomotion are adjusted
                 data_y[data_y == 4] = 3
                 data_y[data_y == 5] = 4
             elif self.config['dataset'] == 'gesture':  # Labels for gestures are adjusted
+                print('adjust_idx_labels gesture')
                 data_y[data_y == 406516] = 1
                 data_y[data_y == 406517] = 2
                 data_y[data_y == 404516] = 3
