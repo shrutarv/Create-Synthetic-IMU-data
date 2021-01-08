@@ -304,7 +304,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*(1/accumulation_steps).float()
+              loss = criterion(out,train_batch_l)*float((1/accumulation_steps))
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
