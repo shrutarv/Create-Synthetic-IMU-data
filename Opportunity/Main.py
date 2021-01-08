@@ -147,7 +147,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/float(counter)
     return accuracy, correct
     
-def validation(dataLoader_validation):
+def validation(dataLoader_validation, model):
     total = 0.0
     correct = 0.0
     #trueValue = torch.array([], dtype=np.int64)
@@ -293,7 +293,7 @@ if __name__ == '__main__':
     optimizer.zero_grad()
     for e in range(epochs):
           model.train()
-          print("next epoch")
+          print("next epoch",e)
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
@@ -342,7 +342,7 @@ if __name__ == '__main__':
               if(b%50)==0:
                   
                   model.eval()
-                  val_acc, val_loss =  validation(dataLoader_validation)
+                  val_acc, val_loss =  validation(dataLoader_validation, model)
                   validation_loss.append(val_loss)
                   validation_acc.append(val_acc)
                   if (val_acc >= best_acc):
