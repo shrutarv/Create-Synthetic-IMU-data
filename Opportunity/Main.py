@@ -316,19 +316,20 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)*float((1/accumulation_steps))
+              loss = criterion(out,train_batch_l)
+              #loss = criterion(out,train_batch_l)*float((1/accumulation_steps))
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
-             # a = list(model.parameters())[0].clone() 
+              # a = list(model.parameters())[0].clone() 
               loss.backward()
               
-              if (b + 1) % accumulation_steps == 0:   
-                optimizer.step()
-                # zero the parameter gradients
-                optimizer.zero_grad()
+              #if (b + 1) % accumulation_steps == 0:   
+              optimizer.step()
+              # zero the parameter gradients
+              optimizer.zero_grad()
               #c = list(model.parameters())[0].clone()
               #print(torch.equal(a.data, c.data))
               acc, correct = metrics(out, train_batch_l)
