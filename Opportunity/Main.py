@@ -150,8 +150,8 @@ def metrics(predictions, true):
 def validation(dataLoader_validation):
     total = 0.0
     correct = 0.0
-    trueValue = np.array([], dtype=np.int64)
-    prediction = np.array([], dtype=np.int64)
+    #trueValue = torch.array([], dtype=np.int64)
+    #prediction = torch.array([], dtype=np.int64)
     total_loss = 0.0
     with torch.no_grad():
             
@@ -168,8 +168,15 @@ def validation(dataLoader_validation):
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
+            if(b==0):
+                trueValue = harwindow_batched["label"]
+                prediction = predicted_classes
+            else:
+                trueValue = torch.cat((trueValue,harwindow_batched["label"]),dim = 0)
+                prediction = torch.cat((prediction,predicted_classes),dim = 0)
+                
+            #trueValue = torch.tenate((trueValue, test_batch_l.cpu()))
+            #prediction = torch.concatenate((prediction,predicted_classes))
             total_loss += loss.item()
         #total += test_batch_l.size(0) 
         total = trueValue.size()
@@ -358,8 +365,6 @@ if __name__ == '__main__':
     
     total = 0.0
     correct = 0.0
-    trueValue = np.array([], dtype=np.int64)
-    prediction = np.array([], dtype=np.int64)
     total_loss = 0.0
     model = torch.load(model_path)
     model.eval()
@@ -377,15 +382,21 @@ if __name__ == '__main__':
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
+            if(b==0):
+                trueValue = harwindow_batched["label"]
+                prediction = predicted_classes
+            else:
+                trueValue = torch.cat((trueValue,harwindow_batched["label"]),dim = 0)
+                prediction = torch.cat((prediction,predicted_classes),dim = 0)
+            
+            #trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+            #prediction = np.concatenate((prediction,predicted_classes))
         total = trueValue.size()
         #test_batch_l = test_batch_l.long()
         #predicted_classes = predicted_classes.to(device)
         #correct += (predicted_classes == test_batch_l).sum().item()
         correct = (trueValue == prediction).sum().item()
     
-        
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / float(total)))
         
     cm = confusion_matrix(trueValue, prediction)
