@@ -110,7 +110,7 @@ class Opportunity(data.Dataset):
         #zf = zipfile.ZipFile(self.config['dataset_directory'])
 
         if self.partition_modus == 'train':
-            print(partition_modus)
+            print(self.partition_modus)
             #idx_files = [ids for ids in range(0,12)]
             if self.config["proportions"] == 0.2:
                 idx_files = [0, 4, 8, 10]
@@ -119,10 +119,10 @@ class Opportunity(data.Dataset):
             elif self.config["proportions"] == 1.0:
                 idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
         elif self.partition_modus == 'val':
-            print(partition_modus)
+            print(sel.partition_modus)
             idx_files = [ids for ids in range(12,14)] #12,14
         elif self.partition_modus == 'test':
-            print(partition_modus)
+            print(self.partition_modus)
             idx_files = [ids for ids in range(14,18)] #14,18
         else:
             raise("Wrong Dataset partition settup")
