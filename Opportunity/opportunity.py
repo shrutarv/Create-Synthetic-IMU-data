@@ -254,7 +254,9 @@ class Opportunity(data.Dataset):
             if self.config['dataset'] == 'locomotion':
                 print('  Dataloader: Locomotion')
                 data_y = raw_data[:, 114] 
+                data_y = data_y.astype(int)
                 print('data y shape',np.shape(data_y))
+                
                 print('max dat y', np.max(data_y))# Locomotion label
             elif self.config['dataset'] == 'gesture':
                 print('        Dataloader: Gestures')
