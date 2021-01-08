@@ -179,7 +179,7 @@ def validation(dataLoader_validation):
             #prediction = torch.concatenate((prediction,predicted_classes))
             total_loss += loss.item()
         #total += test_batch_l.size(0) 
-        total = trueValue.size()
+        total = trueValue.size().item()
         #test_batch_l = test_batch_l.long()
         #predicted_classes = predicted_classes.to(device)
         #correct += (predicted_classes == test_batch_l).sum().item()
@@ -391,7 +391,7 @@ if __name__ == '__main__':
             
             #trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             #prediction = np.concatenate((prediction,predicted_classes))
-        total = trueValue.size()
+        total = trueValue.size().item()
         #test_batch_l = test_batch_l.long()
         #predicted_classes = predicted_classes.to(device)
         #correct += (predicted_classes == test_batch_l).sum().item()
