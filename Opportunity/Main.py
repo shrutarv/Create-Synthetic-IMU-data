@@ -240,7 +240,7 @@ if __name__ == '__main__':
     
     criterion = nn.CrossEntropyLoss()
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=0.0001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+    optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
     model_path = '/data/sawasthi/data/opportunity/model/model_loc.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
@@ -300,7 +300,7 @@ if __name__ == '__main__':
               
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"]
-              print(train_batch_l.shape)
+              #print(train_batch_l.shape)
               #train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
               
