@@ -249,8 +249,9 @@ class Opportunity(data.Dataset):
             if self.config['dataset'] not in ['locomotion', 'gesture']:
                 raise RuntimeError("Invalid label: '%s'" % self.config['dataset'])
             if self.config['dataset'] == 'locomotion':
-                print('        Dataloader: Locomotion')
-                data_y = raw_data[:, 114]  # Locomotion label
+                print('  Dataloader: Locomotion')
+                data_y = raw_data[:, 114] 
+                print('max dat y', np.max(data_y))# Locomotion label
             elif self.config['dataset'] == 'gesture':
                 print('        Dataloader: Gestures')
                 data_y = raw_data[:, 115]  # Gestures label
