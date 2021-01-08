@@ -189,8 +189,8 @@ def validation(dataLoader_validation):
         #counter = out.view(-1, n_classes).size(0)
     print('validation set: test batch l{}'.format(test_batch_l[0]))  
     print('validation set: label l{}'.format(harwindow_batched["label"][0]))  
-    print('output out: l{}'.format(out)[0])
-    print('output predicted classes: l{}'.format(predicted_classes)[0])
+    print('output out: l{}'.format(out[0]))
+    print('output predicted classes: l{}'.format(predicted_classes[0]))
     
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / float(total)))
     return (100. * correct / float(total), total_loss/float((b+1)))
