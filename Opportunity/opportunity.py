@@ -277,6 +277,7 @@ class Opportunity(data.Dataset):
                 print('all data_y values',np.unique(data_y))
                 data_y[data_y == 4] = 3
                 data_y[data_y == 5] = 4
+                print('all data_y values',np.unique(data_y))
                 print('data_y max l{}'.format(np.max(data_y)))
             elif self.config['dataset'] == 'gesture':  # Labels for gestures are adjusted
                 print('adjust_idx_labels gesture')
