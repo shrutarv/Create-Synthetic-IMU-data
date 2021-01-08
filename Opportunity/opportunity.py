@@ -264,7 +264,7 @@ class Opportunity(data.Dataset):
                 data_y = raw_data[:, 115]  # Gestures label
         except KeyError:
             logging.error(KeyError)
-        print('max dat y', np.max(data_y))    
+        print('max dat y after divide', np.max(data_y))    
         return data_t, data_x, data_y
 
     def adjust_idx_labels(self, data_y):
@@ -277,7 +277,7 @@ class Opportunity(data.Dataset):
         :return: numpy integer array
             Modified sensor labels
         """
-        print('max dat y', np.max(data_y))
+        print('max dat y in adjust labels', np.max(data_y))
         try:
             if self.config['dataset'] == 'locomotion':
                 print('adjust_idx_labels locomotion')# Labels for locomotion are adjusted
@@ -285,7 +285,7 @@ class Opportunity(data.Dataset):
                 data_y[np.where(data_y == 4)[0]] = 3
                 data_y[np.where(data_y == 5)[0]] = 4
                 print('all data_y values',np.unique(data_y))
-                print('data_y max l{}'.format(np.max(data_y)))
+                print('data_y max after adjustingl{}'.format(np.max(data_y)))
             elif self.config['dataset'] == 'gesture':  # Labels for gestures are adjusted
                 print('adjust_idx_labels gesture')
                 data_y[data_y == 406516] = 1
