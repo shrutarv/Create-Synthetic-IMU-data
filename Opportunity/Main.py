@@ -334,17 +334,19 @@ if __name__ == '__main__':
               total_loss = loss.item()
               total_correct = correct
           
-          model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path)
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          l.append(total_loss/float(batch_size))
-          accuracy.append(100*total_correct.item()/float(batch_size))
-          #torch.save(model, model_path)
+              if(b%50)==0:
+                  
+                  model.eval()
+                  val_acc, val_loss =  validation(dataLoader_validation)
+                  validation_loss.append(val_loss)
+                  validation_acc.append(val_acc)
+                  if (val_acc >= best_acc):
+                      torch.save(model, model_path)
+                      print("model saved on epoch", e)
+                      best_acc = val_acc
+                  l.append(total_loss/float(batch_size))
+                  accuracy.append(100*total_correct.item()/float(batch_size))
+                  #torch.save(model, model_path)
     
     print('Finished Training')
     ep = list(range(1,e+2))   
