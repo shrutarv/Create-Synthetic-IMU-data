@@ -196,7 +196,7 @@ def validation(dataLoader_validation, model):
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / float(total)))
     return (100. * correct / float(total), total_loss/float((b+1)))
 
-def train():
+def train(model):
     print('Start Training')
     correct = 0
     total_loss = 0
