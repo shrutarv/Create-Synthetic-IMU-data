@@ -211,6 +211,7 @@ class Opportunity(data.Dataset):
         # All sensor channels are normalized
         data_x = self.normalize(data_x, NORM_MAX_THRESHOLDS, NORM_MIN_THRESHOLDS)
         print('normalize')
+        print('all data_y values',np.unique(data_y))
         return data_x, data_y
 
     def select_columns_opp(self, raw_data):
