@@ -193,12 +193,14 @@ class Opportunity(data.Dataset):
         #resamp = Resampling()
         # Select correct columns
         raw_data = self.select_columns_opp(raw_data)
+        
         print('select_columns_opp')
         # Columns are segmented into features and labels
         data_t, data_x, data_y = self.divide_x_y(raw_data)
         #_, data_x, data_y = resamp.interpolate(data_t, data_x, data_y, 50)
         print('divide_x_y')
         data_y = self.adjust_idx_labels(data_y)
+        print('max dat y', np.max(data_y))
         print('adjust_idx_labels')
         data_y = data_y.astype(int)
 
@@ -256,14 +258,13 @@ class Opportunity(data.Dataset):
                 data_y = raw_data[:, 114] 
                 data_y = data_y.astype(int)
                 print('data y shape',np.shape(data_y))
-                
                 print('max dat y', np.max(data_y))# Locomotion label
             elif self.config['dataset'] == 'gesture':
                 print('        Dataloader: Gestures')
                 data_y = raw_data[:, 115]  # Gestures label
         except KeyError:
             logging.error(KeyError)
-
+        print('max dat y', np.max(data_y))    
         return data_t, data_x, data_y
 
     def adjust_idx_labels(self, data_y):
@@ -276,7 +277,7 @@ class Opportunity(data.Dataset):
         :return: numpy integer array
             Modified sensor labels
         """
-
+        print('max dat y', np.max(data_y))
         try:
             if self.config['dataset'] == 'locomotion':
                 print('adjust_idx_labels locomotion')# Labels for locomotion are adjusted
