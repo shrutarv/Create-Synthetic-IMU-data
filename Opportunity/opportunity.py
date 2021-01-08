@@ -288,7 +288,7 @@ class Opportunity(data.Dataset):
                     if(data_y[i] == 5):
                         data_y[i] = 4
                 print('all data_y values',np.unique(data_y))
-                print('data_y max after adjustingl{}'.format(np.max(data_y)))
+                print('data_y max after adjusting',np.max(data_y))
             elif self.config['dataset'] == 'gesture':  # Labels for gestures are adjusted
                 print('adjust_idx_labels gesture')
                 data_y[data_y == 406516] = 1
