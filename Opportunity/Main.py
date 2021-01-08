@@ -148,6 +148,7 @@ def metrics(predictions, true):
     return accuracy, correct
     
 def validation(dataLoader_validation, model):
+    model.eval()
     total = 0.0
     correct = 0.0
     #trueValue = torch.array([], dtype=np.int64)
@@ -297,7 +298,7 @@ if __name__ == '__main__':
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
-              
+              model.train()
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"]
               #print(train_batch_l.shape)
@@ -341,7 +342,6 @@ if __name__ == '__main__':
           
               if(b%50)==0:
                   
-                  model.eval()
                   val_acc, val_loss =  validation(dataLoader_validation, model)
                   validation_loss.append(val_loss)
                   validation_acc.append(val_acc)
