@@ -370,12 +370,12 @@ class ParameterAnalyzer(object):
 def significance_test():
     diff_prop_test = DifferenceProportions(num_test_samples=6033)
     diff_prop_test.significance_test(error_rate_a=0.081, error_rate_b=0.071)
-    print '-----'
+    
     diff_prop_test.significance_test(error_rate_a=0.081, error_rate_b=0.073)
 
 if __name__ == '__main__':
     c = ConfidenceIntervals(0.05)
-    d = DifferenceProportions(11364)
-    p = d.significance_test(0.1395,0.1107)
+    d = DifferenceProportions(34180)
+    p = d.significance_test(0.333,0.322)
     significance_test()
 

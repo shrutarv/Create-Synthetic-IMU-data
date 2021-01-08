@@ -143,7 +143,7 @@ config = {
     "num_filters":64,
     "network":"cnn",
     "output":"softmax",
-    "num_classes":18,
+    "num_classes":5,
     "reshape_input":False,
     "dataset_root":'/vol/actrec/Opportunity/',
     #"dataset_root":'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/',

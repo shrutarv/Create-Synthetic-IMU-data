@@ -104,57 +104,7 @@ values - input argument having the max and min values of all channels from the p
 output - returns a list with max and min values for all channels
 
 '''  # Calculate max min and save it to save time.
-def max_min_values(data, values):
-    temp_values = []
-    data = data.numpy()
-    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    
-    temp_values = []
-    for attr in range(data.shape[2]):
-        attribute = []
-        temp_max = np.max(data[:,:,attr])
-        temp_min = np.min(data[:,:,attr])
-        if (values[attr][0] > temp_max):
-            attribute.append(values[attr][0])
-        else:
-            attribute.append(temp_max)
-        if(values[attr][1] < temp_min):
-            attribute.append(values[attr][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
-    return values
-   
-'''
-Input
-data - input matrix to normalize
-min_max - list of max and min values for all channels across the entire training and test data
 
-output
-returns normalized data between [0,1]
-
-'''
-def normalize(data, min_max, string):
-    #print(len(min_max), len(min_max[0]))
-    data = data.numpy()
-    #print(data.shape)
-    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    for i in range(data.shape[0]):
-        for j in range(data.shape[2]):
-            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
-    test = np.array(data[:,:,:])
-    if (string=="train"):
-        if(np.max(test)>1.001):
-            print("Error",np.max(test))
-        if(np.min(test)<-0.001):
-            print("Error",np.min(test))
-    if (string=="test"):
-        test[test > 1] = 1
-        test[test < 0] = 0
-    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
-    data = torch.tensor(data)
-    return data
 
 '''
 returns a list of F1 score for all classes
@@ -194,7 +144,7 @@ def metrics(predictions, true):
     
     correct = torch.sum(true == predicted_classes)
     counter = true.size(0)
-    accuracy = 100.*correct.item()/counter
+    accuracy = 100.*correct.item()/float(counter)
     return accuracy, correct
     
 def validation(dataLoader_validation):
@@ -220,15 +170,18 @@ def validation(dataLoader_validation):
             #predicted = Testing(test_batch_v, test_batch_l)
             trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
-            test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
             total_loss += loss.item()
-            #counter = out.view(-1, n_classes).size(0)
+        #total += test_batch_l.size(0) 
+        total = trueValue.size()
+        #test_batch_l = test_batch_l.long()
+        #predicted_classes = predicted_classes.to(device)
+        #correct += (predicted_classes == test_batch_l).sum().item()
+        correct = (trueValue == prediction).sum().item()
         
-    print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
-    return (100. * correct / total, total_loss/(b+1))
+        #counter = out.view(-1, n_classes).size(0)
+        
+    print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / float(total)))
+    return (100. * correct / float(total), total_loss/float((b+1)))
         
 if __name__ == '__main__':
     
@@ -270,7 +223,7 @@ if __name__ == '__main__':
     model = model.to(device)
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.01]))
+    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
     #noise = noise.float()
     
     criterion = nn.CrossEntropyLoss()
@@ -325,10 +278,12 @@ if __name__ == '__main__':
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
+    optimizer.zero_grad()
     for e in range(epochs):
           model.train()
           print("next epoch")
           #loop per batch:
+          
           for b, harwindow_batched in enumerate(dataLoader_train):
               
               train_batch_v = harwindow_batched["data"]
@@ -349,7 +304,7 @@ if __name__ == '__main__':
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)/accumulation_steps
+              loss = criterion(out,train_batch_l)*(1/accumulation_steps).float()
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
               
@@ -368,8 +323,8 @@ if __name__ == '__main__':
               print(' loss: ', loss.item(), 'accuracy in percent',acc)
                       
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
-              total_loss += loss.item()
-              total_correct += correct
+              total_loss = loss.item()
+              total_correct = correct
           
           model.eval()
           val_acc, val_loss =  validation(dataLoader_validation)
@@ -379,8 +334,8 @@ if __name__ == '__main__':
               torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
+          l.append(total_loss/float(batch_size))
+          accuracy.append(100*total_correct.item()/float(batch_size))
           #torch.save(model, model_path)
     
     print('Finished Training')
@@ -424,13 +379,14 @@ if __name__ == '__main__':
             #predicted = Testing(test_batch_v, test_batch_l)
             trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
-            test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
+        total = trueValue.size()
+        #test_batch_l = test_batch_l.long()
+        #predicted_classes = predicted_classes.to(device)
+        #correct += (predicted_classes == test_batch_l).sum().item()
+        correct = (trueValue == prediction).sum().item()
+    
         
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / float(total)))
         
     cm = confusion_matrix(trueValue, prediction)
     print(cm)
