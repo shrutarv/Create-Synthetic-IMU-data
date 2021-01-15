@@ -356,7 +356,7 @@ if __name__ == '__main__':
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":5,
+        "num_classes":18,
         "reshape_input":False
         }
 
@@ -366,7 +366,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 5
+    epochs = 10
     batch_size = 200
     l = []
     tot_loss = 0
@@ -388,9 +388,9 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/opportunity/model/model_loc.pth'
+    model_path = '/data/sawasthi/data/opportunity/model/model_ges.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/dataset/'
-    path = '/data/sawasthi/data/opportunity/trainData_loc/'
+    path = '/data/sawasthi/data/opportunity/trainData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/OpportunityUCIDataset/pklfile/train'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -402,7 +402,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/opportunity/validationData_loc/'
+    path = '/data/sawasthi/data/opportunity/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -413,7 +413,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/opportunity/testData_loc/'
+    path = '/data/sawasthi/data/opportunity/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
