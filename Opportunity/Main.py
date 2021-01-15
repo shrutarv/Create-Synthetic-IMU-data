@@ -428,7 +428,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    #train(model)
+    train(model)
     test()
     
     
