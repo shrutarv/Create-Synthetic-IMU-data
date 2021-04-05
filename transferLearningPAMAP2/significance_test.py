@@ -103,13 +103,16 @@ class DifferenceProportions(SignificanceBase):
             print ('Error rate difference is *not* significant!')
 
         print (DifferenceProportions.string_for_p(p))
-        return p < 0.05
+        return p < 0.05,p
 
 
 
 if __name__ == '__main__':
-   
+    d = DifferenceProportions(11364)
+    bool,p = d.significance_test(0.1333,0.1435)
+    print(p)
+    
     d = DifferenceProportions(34180)
-    p = d.significance_test(0.333,0.322)
+    #bool,p = d.significance_test(0.333,0.322)
     
 
