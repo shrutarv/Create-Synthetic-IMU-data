@@ -401,7 +401,7 @@ if __name__ == '__main__':
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
-          '''
+          
     print('Finished Training')
     
     ep = list(range(1,e+2))   
@@ -418,7 +418,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/JHMDB/results/result_a.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''
     print('Start Testing')
     
     total = 0.0
