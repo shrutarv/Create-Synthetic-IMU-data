@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 75
     
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
     data = df.values
     data_new = data[:,1:31]
