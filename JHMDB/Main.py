@@ -335,6 +335,7 @@ if __name__ == '__main__':
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
+    '''
     for e in range(epochs):
           
           model.train()
@@ -382,7 +383,7 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
-          '''
+          
           val_acc, val_loss =  validation(dataLoader_validation)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
@@ -390,19 +391,19 @@ if __name__ == '__main__':
               torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
-          '''
+          
           torch.save(model, model_path)
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          '''
+          
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
           '''
     print('Finished Training')
-    '''
+    
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
     plt.title('epoch vs loss')
@@ -414,7 +415,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/JHMDB/results/result_a.png') 
+    plt.savefig('/data/sawasthi/JHMDB/results/result_a.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -469,4 +470,4 @@ if __name__ == '__main__':
          wr.writerow(accuracy)
          wr.writerow(l)
              
-    '''
+    
