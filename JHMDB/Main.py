@@ -287,7 +287,7 @@ if __name__ == '__main__':
     model_path = '/data/sawasthi/JHMDB/model/model_acc_test.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/JHMDB/trainData_50a/'
+    path = '/data/sawasthi/JHMDB/trainData_75a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -300,7 +300,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_50a/'
+    path = '/data/sawasthi/JHMDB/validationData_75a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -312,7 +312,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/JHMDB/testData_50a/'
+    path = '/data/sawasthi/JHMDB/testData_75a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -335,7 +335,7 @@ if __name__ == '__main__':
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
-    '''
+    
     for e in range(epochs):
           
           model.train()
@@ -396,12 +396,12 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          
+          '''
           for param_group in optimizer.param_groups:
               print(param_group['lr'])        
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
-          
+          '''
     print('Finished Training')
     
     ep = list(range(1,e+2))   
@@ -418,7 +418,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/JHMDB/results/result_a.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    '''
+    
     print('Start Testing')
     
     total = 0.0
@@ -465,7 +465,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/JHMDB/results/result_a.csv', 'w') as myfile:
+    with open('/data/sawasthi/JHMDB/results/result_a.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
