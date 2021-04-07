@@ -269,7 +269,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     data_dir =  '/data/sawasthi/CAD60/testData_ss_25/'
-    df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
+    df = pd.read_csv('/data/sawasthi/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
