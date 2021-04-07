@@ -178,7 +178,7 @@ if __name__ == '__main__':
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 15
+    sliding_window_step = 25
     df = pd.read_csv('/data/sawasthi/CAD60/train_data.csv')
    # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
     data = df.values
