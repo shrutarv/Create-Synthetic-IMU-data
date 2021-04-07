@@ -300,9 +300,9 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
-    '''
-    df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
-    data_dir =  '/data/sawasthi/data/CAD60/validationData/'
+    
+    df = pd.read_csv('/data/sawasthi/CAD60/validation_data.csv')
+    data_dir =  '/data/sawasthi/CAD60/validationData_ss_25/'
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
@@ -337,7 +337,7 @@ if __name__ == '__main__':
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
-    '''
+    
     
           
     
