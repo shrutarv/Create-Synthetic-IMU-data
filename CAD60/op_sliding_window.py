@@ -309,19 +309,20 @@ if __name__ == '__main__':
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
+        
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
                 
             #data_new = data[index-12:index+12,:]   
          
-         #f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
+        #f = sp.interp1d(data[:,0],data[:,i], kind='linear',fill_value="extrapolate")
         
          #sampled_data = f(x_sampled)
          #acc = derivative(f, x_sampled)
          resample = sp.splrep(data[:,0],data[:,i])
          acc = sp.splev(x_sampled,resample, der=2)
          y_sampled = np.concatenate((y_sampled,np.reshape(acc,(len(acc),1))),axis=1)
-             
+         
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
