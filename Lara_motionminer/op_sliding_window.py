@@ -159,14 +159,14 @@ if __name__ == '__main__':
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/Lara_motionminer/testData_1/"
+    data_dir =  "/data/sawasthi/Lara_motionminer/trainData_1/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
-    folder_name = "S11"
+    folder_name = "S10"
     FileList_y = []
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
