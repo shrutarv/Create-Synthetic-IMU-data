@@ -10,7 +10,7 @@ import numpy as np
 import itertools
 import tqdm
 
-from patrec.evaluation._mt_permutation_test import permutation_test as mt_perm_test
+#from patrec.evaluation._mt_permutation_test import permutation_test as mt_perm_test
 
 class ConfidenceIntervals(object):
     '''
@@ -110,10 +110,10 @@ class DifferenceProportions(SignificanceBase):
         # signif_diff = z > 1.96 # Z_0.975 = 1.96 (two sided test: 0.025 + 0.025 = 0.05)
         p = scipy.stats.norm.sf(z) * 2
         if verbose:
-            print 'abs-diff: %.4f' % math.fabs(z_numerator)
-            print 'std-err: %.4f' % z_denominator
-            print 'z-value: %.4f' % z
-            print 'p-value: %.4f' % p
+            print ('abs-diff: %.4f') % math.fabs(z_numerator)
+            print ('std-err: %.4f') % z_denominator
+            print ('z-value: %.4f') % z
+            print ('p-value: %.4f') % p
         return p
 
     @staticmethod
@@ -139,13 +139,13 @@ class DifferenceProportions(SignificanceBase):
         p = self.significance_niveau(error_rate_a, error_rate_b)
 
         if p < 0.01:
-            print 'Error rate difference is highly significant!'
+            print ('Error rate difference is highly significant!')
         elif p < 0.05:
-            print 'Error rate  difference is significant!'
+            print ('Error rate  difference is significant!')
         else:
-            print 'Error rate difference is *not* significant!'
+            print ('Error rate difference is *not* significant!')
 
-        print DifferenceProportions.string_for_p(p)
+        print (DifferenceProportions.string_for_p(p))
         return p < 0.05
 
 
@@ -253,7 +253,7 @@ class PermutationTest(SignificanceBase):
         if not math.isinf(ntotal):
             ntotal = int(ntotal)
         limit = self.__limit
-        if limit is 'auto':
+        if limit == 'auto':
             limit = PermutationTest.iteration_bound(p_std_err)
 
         # run permutation test
@@ -263,8 +263,9 @@ class PermutationTest(SignificanceBase):
             return p_val, n_permutations, n_permutations
         elif engine == 'cpp':
             # ... else run permutation test with C++ engine ...
-            test_res = mt_perm_test(samples_a, samples_b, p_std_err, True)
-            return test_res + ()
+            #test_res = mt_perm_test(samples_a, samples_b, p_std_err, True)
+            #return test_res + ()
+            return
         elif engine == 'python':
             # ... or with the standard python engine
             samples_all = np.concatenate((samples_a, samples_b))
@@ -274,7 +275,7 @@ class PermutationTest(SignificanceBase):
             sum_all = np.sum(samples_all)
             over = 0
             runs = 0
-            for _ in tqdm.tqdm(xrange(int(limit))):
+            for _ in tqdm.tqdm(range(int(limit))):
                 # note: this is slightly incorrect
                 # since the same permutation
                 # may be chosen twice
@@ -370,7 +371,7 @@ class ParameterAnalyzer(object):
 def significance_test():
     diff_prop_test = DifferenceProportions(num_test_samples=6033)
     diff_prop_test.significance_test(error_rate_a=0.081, error_rate_b=0.071)
-    print '-----'
+    print ('-----')
     diff_prop_test.significance_test(error_rate_a=0.081, error_rate_b=0.073)
 
 if __name__ == '__main__':
