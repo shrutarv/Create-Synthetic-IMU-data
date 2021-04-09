@@ -211,8 +211,8 @@ if __name__ == '__main__':
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,2:]
-        #x = normalize(data_x,value,'validation')
-        #example_creating_windows_file(k, folder_name, x, lab)
+        x = normalize(data_x,value,'validation')
+        example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
         #  break
     '''
