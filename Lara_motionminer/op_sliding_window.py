@@ -211,7 +211,7 @@ if __name__ == '__main__':
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,2:]
-        x = normalize(data_x,value,'validation')
+        x = normalize(data_x,value,'train')
         example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
         #  break
@@ -230,7 +230,7 @@ if __name__ == '__main__':
     with open("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/norm_value.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["max","min"])
-        fc.writerows(value)
+        fc.writerows(norm_values)
     '''
           
     
