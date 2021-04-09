@@ -20,25 +20,6 @@ import pandas as pd
 
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
-'''
-def normalize(data,ws):
-    for k in range(len(data)):
-        list1 = []
-        temp = torch.tensor(list1)
-        data_new = data[k]    
-        data_new = torch.reshape(data_new,(200,30))
-        data_new = data_new.cpu().detach().numpy()
-        for i in range(data_new.shape[1]):
-            max = np.max(data_new[:,i])
-            min = np.min(data_new[:,i])
-            for j in range(ws-1):
-                data_new[j,i] = (data_new[j,i] - min)/(max - min)
-        data_new = np.reshape(data_new,(1,200,30))
-        data_new = torch.tensor(data_new).float()
-        temp = torch.cat((temp, data_new), 0)
-        #data_new = torch.tensor(data_new)        
-        return data_new
-'''
 
 '''
 Calculates precision and recall for all class using confusion matrix (cm)
@@ -96,69 +77,8 @@ def performance_metrics(cm):
     rec_avg = sum(recall)/len(recall)
     return precision, recall
 
-'''
-Create a list with max and min values for each channel for the input data
-data - input in form [batch size, 1, window size, channels]
-values - input argument having the max and min values of all channels from the previous iteration.
-         Compares these previous values to current min and max values and updates
-output - returns a list with max and min values for all channels
 
-'''  # Calculate max min and save it to save time.
-def max_min_values(data, values):
-    temp_values = []
-    data = data.numpy()
-    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    
-    temp_values = []
-    for attr in range(data.shape[2]):
-        attribute = []
-        temp_max = np.max(data[:,:,attr])
-        temp_min = np.min(data[:,:,attr])
-        if (values[attr][0] > temp_max):
-            attribute.append(values[attr][0])
-        else:
-            attribute.append(temp_max)
-        if(values[attr][1] < temp_min):
-            attribute.append(values[attr][1])
-        else:
-            attribute.append(temp_min)
-        temp_values.append(attribute)  
-    values = temp_values
-    return values
-   
-'''
-Input
-data - input matrix to normalize
-min_max - list of max and min values for all channels across the entire training and test data
 
-output
-returns normalized data between [0,1]
-
-'''
-def normalize(data, min_max, string):
-    #print(len(min_max), len(min_max[0]))
-    data = data.numpy()
-    #print(data.shape)
-    data = data.reshape(data.shape[0],data.shape[2], data.shape[3])
-    for i in range(data.shape[0]):
-        for j in range(data.shape[2]):
-            data[i,:,j] = (data[i,:,j] - min_max[j][1])/(min_max[j][0] - min_max[j][1])
-    test = np.array(data[:,:,:])
-    if (string=="train"):
-        if(np.max(test)>1.001):
-            print("Error",np.max(test))
-        if(np.min(test)<-0.001):
-            print("Error",np.min(test))
-    if (string=="test"):
-        test[test > 1] = 1
-        test[test < 0] = 0
-    data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
-    data = torch.tensor(data)
-    return data
-
-'''
-returns a list of F1 score for all classes
-'''
 def F1_score(targets, preds, precision, recall):
         # Accuracy
         targets = torch.tensor(targets)
@@ -229,7 +149,59 @@ def validation(dataLoader_validation):
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
     return (100. * correct / total, total_loss/(b+1))
+     
+def Testing():
+    total = 0.0
+    correct = 0.0
+    trueValue = np.array([], dtype=np.int64)
+    prediction = np.array([], dtype=np.int64)
+    model = torch.load(model_path)
+    print("best model loaded")
+    model.eval()
+    with torch.no_grad():
+            
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            test_batch_v = harwindow_batched["data"]
+            test_batch_l = harwindow_batched["label"][:, 0]
+           # test_batch_v = normalize(test_batch_v, value,"test")
+            test_batch_v = test_batch_v.float()
+            test_batch_v = test_batch_v.to(device)
+            test_batch_l = test_batch_l.to(device)
+            
+            out = model(test_batch_v)
+            #print("Next Batch result")
+            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+            #predicted = Testing(test_batch_v, test_batch_l)
+            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+            prediction = np.concatenate((prediction,predicted_classes))
+            total += test_batch_l.size(0) 
+            test_batch_l = test_batch_l.long()
+            predicted_classes = predicted_classes.to(device)
+            correct += (predicted_classes == test_batch_l).sum().item()
+            #counter = out.view(-1, n_classes).size(0)
         
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+        
+    cm = confusion_matrix(trueValue, prediction)
+    print(cm)
+    #precision, recall = performance_metrics(cm)
+    precision, recall = get_precision_recall(trueValue, prediction)
+    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
+    print("precision", precision)
+    print("recall", recall)
+    print("F1 weighted", F1_weighted)
+    print("F1 mean",F1_mean)
+    
+    print('Finished Testing')
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+    with open('/data/sawasthi/Lara_motionminer/results/result.csv', 'w') as myfile:
+         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+         wr.writerow(accuracy)
+         wr.writerow(l)
+
+
+
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
@@ -239,7 +211,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":27,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -250,7 +222,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=200
+    ws=100
     
     accumulation_steps = 5
     correct = 0
@@ -285,9 +257,9 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/data/Lara_IMU/model/model.pth'
+    model_path = '/data/sawasthi/Lara_motionminer/model/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    path = '/data/sawasthi/data/Lara_IMU/trainData_75per/'
+    path = '/data/sawasthi/Lara_motionminer/trainData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -299,7 +271,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
+    path = '/data/sawasthi/Lara_motionminer/validationData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -310,7 +282,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/Lara_IMU/testData_100/'
+    path = '/data/sawasthi/Lara_motionminer/testData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -319,12 +291,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
+    
     
     print('Start Training')
     correct = 0
@@ -388,13 +355,8 @@ if __name__ == '__main__':
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          #torch.save(model, model_path)
-          '''
-          for param_group in optimizer.param_groups:
-              print(param_group['lr'])        
-              param_group['lr'] = lr_factor*param_group['lr']
-          #scheduler.step(val_loss)
-          '''
+           
+          
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -407,59 +369,11 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
+    plt.savefig('/data/sawasthi/Lara_motionminer/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
     print('Start Testing')
+    Testing()
     
-    total = 0.0
-    correct = 0.0
-    trueValue = np.array([], dtype=np.int64)
-    prediction = np.array([], dtype=np.int64)
-    total_loss = 0.0
-    model = torch.load(model_path)
-    print("best model loaded")
-    model.eval()
-    with torch.no_grad():
-            
-        for b, harwindow_batched in enumerate(dataLoader_test):
-            test_batch_v = harwindow_batched["data"]
-            test_batch_l = harwindow_batched["label"][:, 0]
-           # test_batch_v = normalize(test_batch_v, value,"test")
-            test_batch_v = test_batch_v.float()
-            test_batch_v = test_batch_v.to(device)
-            test_batch_l = test_batch_l.to(device)
-            
-            out = model(test_batch_v)
-            #print("Next Batch result")
-            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-            #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
-            test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
-        
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
-        
-    cm = confusion_matrix(trueValue, prediction)
-    print(cm)
-    #precision, recall = performance_metrics(cm)
-    precision, recall = get_precision_recall(trueValue, prediction)
-    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
-    print("precision", precision)
-    print("recall", recall)
-    print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
-    
-    print('Finished Validation')
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/Lara_IMU/results/result.csv', 'w') as myfile:
-         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-         wr.writerow(accuracy)
-         wr.writerow(l)
              
