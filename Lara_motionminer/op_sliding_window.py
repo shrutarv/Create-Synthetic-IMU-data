@@ -159,14 +159,14 @@ if __name__ == '__main__':
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/Lara_motionminer/trainData_10/"
+    data_dir =  "/data/sawasthi/Lara_motionminer/trestData_10/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
-    folder_name = "S10"
+    folder_name = "S11"
     FileList_y = []
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,2:]
-        x = normalize(data_x,value,'train')
+        x = normalize(data_x,value,'test')
         example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
         #  break
