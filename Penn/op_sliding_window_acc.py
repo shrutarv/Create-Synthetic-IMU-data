@@ -272,7 +272,7 @@ if __name__ == '__main__':
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
     data_dir =  '/data/sawasthi/Penn/testData_10/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -306,7 +306,7 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/Penn/validationData_10/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/validation_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
