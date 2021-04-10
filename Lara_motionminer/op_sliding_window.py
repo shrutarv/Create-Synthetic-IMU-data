@@ -146,11 +146,11 @@ if __name__ == '__main__':
        
     #ws = (100,31)
     ws = (100,30)  
-    ss = (5,30)    
+    ss = (10,30)    
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 5
+    sliding_window_step = 10
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/Lara_motionminer/validationData_5/"
+    data_dir =  "/data/sawasthi/Lara_motionminer/validationData_10/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
