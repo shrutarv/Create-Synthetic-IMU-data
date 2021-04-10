@@ -211,7 +211,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 5
     
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
     data = df.values
     data_new = data[:,1:31]
@@ -252,7 +252,7 @@ if __name__ == '__main__':
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
     data_dir =  '/data/sawasthi/JHMDB/testData_pose/'
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -267,7 +267,7 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/JHMDB/validationData_pose/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
