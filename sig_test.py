@@ -249,7 +249,7 @@ class PermutationTest(SignificanceBase):
             return 1, 0, 0
         if samples_a.shape[0] > samples_b.shape[0]:
             samples_a, samples_b = samples_b, samples_a
-        ntotal = scipy.misc.comb(samples_a.shape[0] + samples_b.shape[0], samples_a.shape[0])
+        ntotal = scipy.special.comb(samples_a.shape[0] + samples_b.shape[0], samples_a.shape[0])
         if not math.isinf(ntotal):
             ntotal = int(ntotal)
         limit = self.__limit
