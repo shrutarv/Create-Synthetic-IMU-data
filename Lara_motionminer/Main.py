@@ -257,9 +257,9 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/Lara_motionminer/model/model_5.pth'
+    model_path = '/data/sawasthi/Lara_motionminer/model/model_10.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    path = '/data/sawasthi/Lara_motionminer/trainData_5/'
+    path = '/data/sawasthi/Lara_motionminer/trainData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -271,7 +271,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/Lara_motionminer/validationData_5/'
+    path = '/data/sawasthi/Lara_motionminer/validationData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -282,7 +282,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/Lara_motionminer/testData_5/'
+    path = '/data/sawasthi/Lara_motionminer/testData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
