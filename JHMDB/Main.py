@@ -240,7 +240,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":30,
-        "sliding_window_length":100,
+        "sliding_window_length":25,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -250,18 +250,18 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=25
     accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 100
+    epochs = 200
     batch_size = 50
     
     l = []
     tot_loss = 0
     accuracy = []
-    learning_rate = 0.0001
+    learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -284,10 +284,10 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/JHMDB/model/model_acc_test.pth'
+    model_path = '/data/sawasthi/JHMDB/model/model_pose.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/JHMDB/trainData_1/'
+    path = '/data/sawasthi/JHMDB/trainData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -300,7 +300,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_1/'
+    path = '/data/sawasthi/JHMDB/validationData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -312,7 +312,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/JHMDB/testData_1/'
+    path = '/data/sawasthi/JHMDB/testData_pose/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -415,7 +415,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/JHMDB/results/result_a.png') 
+    plt.savefig('/data/sawasthi/JHMDB/results/result_p.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -465,7 +465,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/JHMDB/results/result_a.csv', 'w') as myfile:
+    with open('/data/sawasthi/JHMDB/results/result_p.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
