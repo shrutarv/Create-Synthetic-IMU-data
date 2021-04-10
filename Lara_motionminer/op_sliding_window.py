@@ -146,11 +146,11 @@ if __name__ == '__main__':
        
     #ws = (100,31)
     ws = (100,30)  
-    ss = (1,30)    
+    ss = (5,30)    
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 1
+    sliding_window_step = 5
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
@@ -159,7 +159,7 @@ if __name__ == '__main__':
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/Lara_motionminer/trainData_1/"
+    data_dir =  "/data/sawasthi/Lara_motionminer/trainData_5/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -211,7 +211,7 @@ if __name__ == '__main__':
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,2:]
-        x = normalize(data_x,value,'test')
+        x = normalize(data_x,value,'train')
         example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
         #  break
