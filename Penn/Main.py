@@ -284,10 +284,10 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/Penn/model/model_25.pth'
+    model_path = '/data/sawasthi/Penn/model/model_75.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/Penn/trainData_25/'
+    path = '/data/sawasthi/Penn/trainData_75/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -300,7 +300,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/Penn/validationData_25/'
+    path = '/data/sawasthi/Penn/validationData_75/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -312,7 +312,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/Penn/testData_25/'
+    path = '/data/sawasthi/Penn/testData_75/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
