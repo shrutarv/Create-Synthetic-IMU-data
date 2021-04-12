@@ -312,7 +312,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model_1.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_1.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
