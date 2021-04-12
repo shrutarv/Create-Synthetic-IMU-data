@@ -304,7 +304,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":27,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -312,7 +312,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_1.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
@@ -322,7 +322,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 150
+    epochs = 70
     batch_size = 100
     l = []
     tot_loss = 0
@@ -369,7 +369,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/data/Lara_IMU/trainData_75per/'
+    path = '/data/sawasthi/Lara_motionminer/trainData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -382,7 +382,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
+    path = '/data/sawasthi/data/Lara_IMU/validationData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -394,7 +394,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/data/Lara_IMU/testData_100/'
+    path = '/data/sawasthi/data/Lara_IMU/testData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -486,7 +486,7 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g', label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/Lara_IMU/results/result_tl.png') 
+    plt.savefig('/data/sawasthi/Lara_motionminer/results/result_tl_Penn.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
