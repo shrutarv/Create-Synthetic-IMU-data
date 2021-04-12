@@ -536,7 +536,7 @@ if __name__ == '__main__':
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/data/Lara_IMU/results/result_tl.csv', 'w') as myfile:
+    with open('/data/sawasthi/Lara_motionminer/results/result_tl.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
