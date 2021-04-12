@@ -409,7 +409,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_Penn.pth'
+    model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_Penn.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
