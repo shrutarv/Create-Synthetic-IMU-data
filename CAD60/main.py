@@ -282,6 +282,7 @@ if __name__ == '__main__':
     model_path = '/home/sawasthi/CAD60/model/model_1.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+   
     path = '/data/sawasthi/CAD60/trainData_ss_1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -322,7 +323,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    
+    '''
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -402,7 +403,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/CAD60/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''
     print('Start Testing')
     
     total = 0.0
