@@ -236,7 +236,7 @@ class Metrics(object):
         acc = acc.item() / float(targets.size()[0])
 
         # returning accuracy and predicted classes
-        return acc, predicted_classes
+        return acc, predictions
 
     ##################################################
     ################  Acc attr  #####################
