@@ -484,7 +484,7 @@ def testing(config):
             index += config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
         Final_pred = Final_pred.unsqueeze(1)
-        df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+        df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
         true_labels = torch.tensor(data[:,31])
