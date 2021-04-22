@@ -480,7 +480,7 @@ def testing(config):
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
             #targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
             #temp = np.ones(1,config['sliding_window_length'])
-            index+=25
+            index+=config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
         Final_pred = Final_pred.unsqueeze(1)
         df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
