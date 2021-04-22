@@ -215,8 +215,8 @@ class Metrics(object):
         # Accuracy
         if self.mode == "classification":
             if self.config['output'] == 'softmax':
-                predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.FloatTensor)
-                acc = torch.sum(targets == predicted_classes)
+                #predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.FloatTensor)
+                acc = torch.sum(targets == predictions)
             elif self.config['output'] == 'attribute':
                 # Classes from the distances to the attribute representation
                 # with this torch.argmin(predictions, dim=1), one computes the argument where distance is min
