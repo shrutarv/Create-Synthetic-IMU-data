@@ -473,6 +473,8 @@ def testing(config):
         prediction_unsegmented = []
         #labels_per_window = harwindow_batched["label"][:,0]
         for i in range(predicted_classes.size(0)):
+            if(index +config['sliding_window_length'])>size_samples:
+                break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
             #targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
             #temp = np.ones(1,config['sliding_window_length'])
