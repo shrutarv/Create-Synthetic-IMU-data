@@ -484,7 +484,7 @@ def testing(config):
         df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
-        true_labels = data[:,1:31]
+        true_labels = torch.tensor(data[:,1:31])
         metrics_obj = Metrics(config, dev)
         # unsegmented accuracy
         true_labels = true_labels.to(device, dtype=torch.float)
