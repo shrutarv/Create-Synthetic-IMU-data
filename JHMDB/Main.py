@@ -462,6 +462,7 @@ def testing(config):
 
         
         size_samples = (test_labels.size(0)-1)*config["step_size"] + 100
+        print("total rows in test data",size_samples)
         accumulated_predictions = torch.zeros((config["num_classes"],
                                           size_samples)).to(device, dtype=torch.long)
         predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
