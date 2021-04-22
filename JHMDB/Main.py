@@ -460,7 +460,7 @@ def testing(config):
                 #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
                 test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
 
-        print("number of windows"+test_labels.size(0))        
+        print("number of windows",test_labels.size(0))        
         size_samples = (test_labels.size(0)-1)*config["step_size"] + config['sliding_window_length']
         print("total rows in test data",size_samples)
         accumulated_predictions = torch.zeros((config["num_classes"],
