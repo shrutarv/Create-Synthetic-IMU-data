@@ -476,11 +476,12 @@ def testing(config):
         for i in range(predicted_classes.size(0)):
             # ignore the windows which are less than of size=100
             if(index +config['sliding_window_length'])>size_samples:
+                print("exit on"+i)
                 break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
             #targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
             #temp = np.ones(1,config['sliding_window_length'])
-            index+=config["step_size"]
+            index += config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
         Final_pred = Final_pred.unsqueeze(1)
         df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
