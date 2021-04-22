@@ -489,6 +489,7 @@ def testing(config):
         metrics_obj = Metrics(config, dev)
         # unsegmented accuracy
         true_labels = true_labels.to(device, dtype=torch.float)
+        print(true_labels.size(),Final_pred.size())
         results_test = metrics_obj.metric(true_labels, Final_pred, mode="classification")
         predictions_labels = results_test["classification"]['predicted_classes'].to("cpu", torch.double).numpy()
         print('Network_User:        Testing:  acc {}, f1_weighted {}, f1_mean {}'.format(
