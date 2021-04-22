@@ -322,7 +322,7 @@ def training(dataLoader_train, dataLoader_validation, device):
               train_batch_l = train_batch_l.to(device)
               
               train_batch_v = train_batch_v.float()
-              #train_batch_v = train_batch_v.to(device)
+              train_batch_v = train_batch_v.to(device)
               noise = normal.sample((train_batch_v.size()))
               noise = noise.reshape(train_batch_v.size())
               noise = noise.to(device, dtype=torch.float)
