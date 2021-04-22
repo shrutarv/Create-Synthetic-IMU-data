@@ -473,6 +473,7 @@ def testing(config):
         prediction_unsegmented = []
         #labels_per_window = harwindow_batched["label"][:,0]
         for i in range(predicted_classes.size(0)):
+            # ignore the windows which are less than of size=100
             if(index +config['sliding_window_length'])>size_samples:
                 break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
@@ -486,6 +487,7 @@ def testing(config):
         true_labels = data[:,1:31]
         metrics_obj = Metrics(config, dev)
         # unsegmented accuracy
+        true_labels = true_labels.to(device, dtype=torch.float)
         results_test = metrics_obj.metric(true_labels, Final_pred, mode="classification")
         predictions_labels = results_test["classification"]['predicted_classes'].to("cpu", torch.double).numpy()
         print('Network_User:        Testing:  acc {}, f1_weighted {}, f1_mean {}'.format(
