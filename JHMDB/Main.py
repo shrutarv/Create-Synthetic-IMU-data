@@ -465,8 +465,8 @@ def testing(config):
         accumulated_predictions = torch.zeros((config["num_classes"],
                                           size_samples)).to(device, dtype=torch.long)
         predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
-        targets = torch.zeros((config["num_classes"],
-                                          size_samples)).to(device, dtype=torch.long)
+        #targets = torch.zeros((config["num_classes"],
+        #                                  size_samples)).to(device, dtype=torch.long)
         test_labels_window = test_labels_window.to(device)
         expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
         index = 0
@@ -474,7 +474,7 @@ def testing(config):
         #labels_per_window = harwindow_batched["label"][:,0]
         for i in range(predicted_classes.size(0)):
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
-            targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
+            #targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
             #temp = np.ones(1,config['sliding_window_length'])
             index+=25
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
