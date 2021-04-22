@@ -225,7 +225,7 @@ def validation(dataLoader_validation,device):
             total += test_batch_l.size(0) 
             test_batch_l = test_batch_l.long()
            # predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
+            correct += (predicted_classes == test_batch_l.cpu())).sum().item()
             total_loss += loss.item()
             #counter = out.view(-1, n_classes).size(0)
         
