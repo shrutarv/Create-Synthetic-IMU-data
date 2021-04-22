@@ -458,7 +458,7 @@ def testing(config):
 
                 test_labels = torch.cat((test_labels, test_labels_batch), dim=0)
                 #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
-                test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0).to(device)
+                test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
 
         
         size_samples = (test_labels.size(0)-1)*config["step_size"] + 100
@@ -467,7 +467,7 @@ def testing(config):
         predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
         targets = torch.zeros((config["num_classes"],
                                           size_samples)).to(device, dtype=torch.long)
-        
+        test_labels_window = test_labels_window.to(device)
         expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
         index = 0
         prediction_unsegmented = []
