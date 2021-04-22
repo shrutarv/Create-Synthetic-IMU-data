@@ -25,8 +25,8 @@ def read_txt(path):
 
 def significance_acc():
 
-    number_samples = 9800   #Number of samples in test dataset
-    test_tuples = [(0.9107, 0.906499)]    # Two classification rates percentage of correct samples to compare
+    number_samples = 11364   #Number of samples in test dataset
+    test_tuples = [(0.8947, 0.8780)]    # Two classification rates percentage of correct samples to compare
     result_tuples = []
     
     tester = PermutationTest()
