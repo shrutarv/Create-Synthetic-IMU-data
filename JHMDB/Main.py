@@ -481,10 +481,11 @@ def testing(config):
             #temp = np.ones(1,config['sliding_window_length'])
             index+=25
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
+        Final_pred = Final_pred.unsqueeze(1)
         df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
         data = df.values
-        true_labels = torch.tensor(data[:,1:31])
+        true_labels = torch.tensor(data[:,31])
         metrics_obj = Metrics(config, dev)
         # unsegmented accuracy
         true_labels = true_labels.to(device, dtype=torch.float)
