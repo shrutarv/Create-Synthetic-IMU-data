@@ -217,7 +217,7 @@ def validation(dataLoader_validation,device):
             out = model(test_batch_v)
             loss = criterion(out,test_batch_l)
             #print("Next Batch result")
-            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+            predicted_classes = torch.argmax(out, dim=1).to(device,dtype=torch.LongTensor)
             #predicted = Testing(test_batch_v, test_batch_l)
             trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
             prediction = np.concatenate((prediction,predicted_classes))
