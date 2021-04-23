@@ -576,7 +576,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-        "step_size":1
+        "step_size":5
         }
 
 
