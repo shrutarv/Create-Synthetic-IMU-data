@@ -568,8 +568,11 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
+   
+    training(dataLoader_train, dataLoader_validation,device)
     # Test data    
-    path = '/data/sawasthi/CAD60/testData_ss_10/'
+    print("Calculating accuracy for the trained model on validation set ")
+    path = '/data/sawasthi/CAD60/validationData_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -578,10 +581,19 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    training(dataLoader_train, dataLoader_validation,device)
-    
     testing(config)
-
+    # Test data    
+    path = '/data/sawasthi/CAD60/testData_ss_10/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    print("Calculating accuracy for the trained model on test set ")
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    testing(config)
     '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
