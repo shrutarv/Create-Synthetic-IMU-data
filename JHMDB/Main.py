@@ -466,8 +466,8 @@ def testing(config):
         accumulated_predictions = torch.zeros((config["num_classes"],
                                           size_samples)).to(device, dtype=torch.long)
         predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
-        #targets = torch.zeros((config["num_classes"],
-        #                                  size_samples)).to(device, dtype=torch.long)
+        targets = torch.zeros((config["num_classes"],
+                                          size_samples)).to(device, dtype=torch.long)
         test_labels_window = test_labels_window.to(device)
         expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
         index = 0
@@ -479,16 +479,18 @@ def testing(config):
                 print("exit on"+i)
                 break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
-            #targets[i,index:(index +config['sliding_window_length'])] += test_labels_window[i]
+            targets[test_labels_window[i],index:(index +config['sliding_window_length'])] += expand_pred
             #temp = np.ones(1,config['sliding_window_length'])
             index += config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
         Final_pred = Final_pred.unsqueeze(1)
-        df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+        #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
-        data = df.values
-        true_labels = torch.tensor(data[:,31])
-        metrics_obj = Metrics(config, dev)
+        #data = df.values
+        #true_labels = torch.tensor(data[:,31])
+        true_labels = torch.argmax(targets, dim=0).to(device,dtype=torch.long)
+        true_labels = true_labels.unsqueeze(1)
+        metrics_obj = Metrics(config, device)
         # unsegmented accuracy
         true_labels = true_labels.to(device, dtype=torch.float)
         print(true_labels.size(),Final_pred.size())
