@@ -502,7 +502,7 @@ def testing(config):
         #test_file_labels = test_file_labels.to("cpu", dtype=torch.long)
         #test_labels_window = test_labels_window.to(self.device, dtype=torch.long)
         #segmented accuracy
-        results_test_segment = metrics_obj.metric(test_labels, predictions_test, mode="classification")
+        results_test_segment = metrics_obj.metric(test_labels, predicted_classes, mode="classification")
         #print statistics
         print('Network_User:        Testing Segmentation:    acc {}, '
             'f1_weighted {}, f1_mean {}'.format(results_test_segment["segmentation"]['acc'],
