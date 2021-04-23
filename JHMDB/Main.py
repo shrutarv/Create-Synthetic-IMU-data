@@ -496,7 +496,7 @@ def testing(config):
         print(true_labels.size(),Final_pred.size())
         results_test = metrics_obj.metric(true_labels, Final_pred, mode="classification")
         predictions_labels = results_test["classification"]['predicted_classes'].to("cpu", torch.double).numpy()
-        print('Network_User:        Testing:  acc {}, f1_weighted {}, f1_mean {}'.format(
+        print('Network_User: Testing:  after de- segmented acc {}, f1_weighted {}, f1_mean {}'.format(
                 results_test["classification"]['acc'], results_test["classification"]['f1_weighted'],
                 results_test["classification"]['f1_mean']))
         #test_file_labels = test_file_labels.to("cpu", dtype=torch.long)
@@ -504,10 +504,10 @@ def testing(config):
         #segmented accuracy
         results_test_segment = metrics_obj.metric(test_labels, predicted_classes, mode="classification")
         #print statistics
-        print('Network_User:        Testing Segmentation:    acc {}, '
-            'f1_weighted {}, f1_mean {}'.format(results_test_segment["segmentation"]['acc'],
-                                                results_test_segment["segmentation"]['f1_weighted'],
-                                                results_test_segment["segmentation"]['f1_mean']))
+        print('Network_User: Testing Segmentation:  acc {}, '
+            'f1_weighted {}, f1_mean {}'.format(results_test_segment["classification"]['acc'],
+                                                results_test_segment["classification"]['f1_weighted'],
+                                                results_test_segment["classification"]['f1_mean']))
 
         
         #print("Next Batch result")
