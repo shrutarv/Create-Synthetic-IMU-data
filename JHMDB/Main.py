@@ -18,7 +18,9 @@ import csv
 from torch.optim import lr_scheduler 
 import pandas as pd
 from metrics import Metrics
-
+import os
+import random
+import platform
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
 '''
@@ -387,7 +389,7 @@ def training(dataLoader_train, dataLoader_validation, device):
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/JHMDB/results/result_12.png') 
+    plt.savefig('/data/sawasthi/JHMDB/results/result_1.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
@@ -547,6 +549,18 @@ def testing(config):
         
 if __name__ == '__main__':
     
+    seed = 42
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    # Torch RNG
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # Python RNG
+    np.random.seed(seed)
+    random.seed(seed)
+
+    print(":Python Platform {}".format(platform.python_version()))
+    
     if torch.cuda.is_available():  
           dev = "cuda:0" 
     else:  
@@ -562,13 +576,13 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-        "step_size":12
+        "step_size":1
         }
 
 
     ws=100
     accumulation_steps = 5
-    epochs = 200
+    epochs = 100
     batch_size = 50
     learning_rate = 0.0001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -593,10 +607,10 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/JHMDB/model/model_12.pth'
+    model_path = '/data/sawasthi/JHMDB/model/model_1.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/JHMDB/trainData_12/'
+    path = '/data/sawasthi/JHMDB/trainData_1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -609,7 +623,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_12/'
+    path = '/data/sawasthi/JHMDB/validationData_1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -621,7 +635,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/JHMDB/testData_12/'
+    path = '/data/sawasthi/JHMDB/testData_1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
