@@ -141,7 +141,7 @@ class Metrics(object):
         if self.mode == "classification":
             # Predictions
             if self.config['output'] == 'softmax':
-                predictions = torch.argmax(preds, dim=1)
+                predictions = preds
             elif self.config['output'] == 'attribute':
                 # predictions = torch.argmin(preds, dim=1)
                 predictions = self.atts[torch.argmin(preds, dim=1), 0]
