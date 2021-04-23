@@ -454,7 +454,27 @@ def testing(config):
             'f1_weighted {}, f1_mean {}'.format(results_test_segment["classification"]['acc'],
                                                 results_test_segment["classification"]['f1_weighted'],
                                                 results_test_segment["classification"]['f1_mean']))
-
+         
+        print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+            
+        cm = confusion_matrix(trueValue, prediction)
+        print(cm)
+        #precision, recall = performance_metrics(cm)
+        precision, recall = get_precision_recall(trueValue, prediction)
+        F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
+        print("precision", precision)
+        print("recall", recall)
+        print("F1 weighted", F1_weighted)
+        print("F1 mean",F1_mean)
+        
+        print('Finished Testing')
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+        #with open('/data/sawasthi/JHMDB/results/result_12.csv', 'w') as myfile:
+         #    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+             #wr.writerow(accuracy)
+             #wr.writerow(l)
+                 
         
         
 if __name__ == '__main__':
@@ -487,7 +507,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":12,
         "reshape_input":False,
-        "step_size":1
+        "step_size":10
         }
 
 
@@ -497,8 +517,8 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 1
-    batch_size = 150
-    lr_factor = 0.98
+    batch_size = 1
+    lr_factor = 1
     l = []
     tot_loss = 0
     accuracy = []
@@ -520,11 +540,11 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/home/sawasthi/CAD60/model/model_1.pth'
+    model_path = '/home/sawasthi/CAD60/model/model_10.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
    
-    path = '/data/sawasthi/CAD60/trainData_ss_1/'
+    path = '/data/sawasthi/CAD60/trainData_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -537,7 +557,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/CAD60/validationData_ss_1/'
+    path = '/data/sawasthi/CAD60/validationData_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -549,7 +569,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/CAD60/testData_ss_1/'
+    path = '/data/sawasthi/CAD60/testData_ss_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -558,7 +578,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    #training(dataLoader_train, dataLoader_validation,device)
+    training(dataLoader_train, dataLoader_validation,device)
     
     testing(config)
 
