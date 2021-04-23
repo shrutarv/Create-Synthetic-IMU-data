@@ -468,7 +468,7 @@ def testing(config):
         predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
         targets = torch.zeros((config["num_classes"],
                                           size_samples)).to(device, dtype=torch.long)
-        test_labels_window = test_labels_window.to(device)
+        test_labels = test_labels.to(device)
         expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
         index = 0
         prediction_unsegmented = []
@@ -479,7 +479,7 @@ def testing(config):
                 print("exit on"+i)
                 break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
-            targets[test_labels_window[i],index:(index +config['sliding_window_length'])] += expand_pred
+            targets[test_labels[i],index:(index +config['sliding_window_length'])] += expand_pred
             #temp = np.ones(1,config['sliding_window_length'])
             index += config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
