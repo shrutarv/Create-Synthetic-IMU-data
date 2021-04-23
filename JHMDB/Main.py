@@ -460,6 +460,17 @@ def testing(config):
                 #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
                 test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
 
+                #print("Next Batch result")
+                predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+                #predicted = Testing(test_batch_v, test_batch_l)
+                trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+                prediction = np.concatenate((prediction,predicted_classes))
+                total += test_batch_l.size(0) 
+                test_batch_l = test_batch_l.long()
+                predicted_classes = predicted_classes.to(device)
+                correct += (predicted_classes == test_batch_l).sum().item()
+                #counter = out.view(-1, n_classes).size(0)
+                
         print("number of windows",test_labels.size(0))        
         size_samples = (test_labels.size(0)-1)*config["step_size"] + config['sliding_window_length']
         print("total rows in test data",size_samples)
@@ -510,16 +521,7 @@ def testing(config):
                                                 results_test_segment["classification"]['f1_mean']))
 
         
-        #print("Next Batch result")
-        predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
-        #predicted = Testing(test_batch_v, test_batch_l)
-        trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-        prediction = np.concatenate((prediction,predicted_classes))
-        total += test_batch_l.size(0) 
-        test_batch_l = test_batch_l.long()
-        predicted_classes = predicted_classes.to(device)
-        correct += (predicted_classes == test_batch_l).sum().item()
-        #counter = out.view(-1, n_classes).size(0)
+        
         
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
         
