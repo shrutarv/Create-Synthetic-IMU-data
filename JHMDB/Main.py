@@ -459,7 +459,7 @@ def testing(config):
                 test_labels = torch.cat((test_labels, test_labels_batch), dim=0)
                 #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
                 test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
-
+                # Shrutarv original code
                 #print("Next Batch result")
                 predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
                 #predicted = Testing(test_batch_v, test_batch_l)
@@ -568,7 +568,7 @@ if __name__ == '__main__':
 
     ws=100
     accumulation_steps = 5
-    epochs = 1
+    epochs = 100
     batch_size = 50
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
