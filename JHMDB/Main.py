@@ -479,7 +479,7 @@ def testing(config):
                 print("exit on"+i)
                 break
             accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
-            targets[test_labels[i],index:(index +config['sliding_window_length'])] += expand_pred
+            targets[test_labels[i].item(),index:(index +config['sliding_window_length'])] += expand_pred
             #temp = np.ones(1,config['sliding_window_length'])
             index += config["step_size"]
         Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
