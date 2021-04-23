@@ -634,7 +634,27 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
-    # Test data    
+   
+    '''
+    for b, harwindow_batched in enumerate(dataLoader_test):
+        data_x = harwindow_batched["data"]
+        data_x.to(device)
+        value = max_min_values(data_x,value)
+    '''
+    training(dataLoader_train, dataLoader_validation,device)
+    print("Calculating accuracy for the trained model on validation set ")
+    path = '/data/sawasthi/JHMDB/validationData_1/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(validation_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    
+    testing(config)
     path = '/data/sawasthi/JHMDB/testData_1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -644,14 +664,8 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
-    training(dataLoader_train, dataLoader_validation,device)
    
-    testing(config)
     
+    print("Calculating accuracy for the trained model on test set ")
+    testing(config)
     
