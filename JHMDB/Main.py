@@ -641,7 +641,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    training(dataLoader_train, dataLoader_validation,device)
+    #training(dataLoader_train, dataLoader_validation,device)
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/JHMDB/validationData_10/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
