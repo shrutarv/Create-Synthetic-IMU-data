@@ -17,6 +17,10 @@ import matplotlib.pyplot as plt
 import csv
 from torch.optim import lr_scheduler 
 import pandas as pd
+import os
+import random
+import platform
+from metrics import Metrics
 
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
@@ -196,8 +200,7 @@ def metrics(predictions, true):
     counter = true.size(0)
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
-    
-def validation(dataLoader_validation):
+def validation(dataLoader_validation, device):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -229,112 +232,17 @@ def validation(dataLoader_validation):
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
     return (100. * correct / total, total_loss/(b+1))
-        
-if __name__ == '__main__':
-    
-    if torch.cuda.is_available():  
-          dev = "cuda:1" 
-    else:  
-          dev = "cpu"  
-          
-    device = torch.device(dev)
-    config = {
-        "NB_sensor_channels":26,
-        "sliding_window_length":100,
-        "filter_size":5,
-        "num_filters":64,
-        "network":"cnn",
-        "output":"softmax",
-        "num_classes":15,
-        "reshape_input":False
-        }
 
-
-    ws=100
-    accumulation_steps = 5
-    correct = 0
-    total_loss = 0.0
-    total_correct = 0
-    epochs = 150
-    batch_size = 100
-    
-    l = []
-    tot_loss = 0
-    accuracy = []
-    learning_rate = 0.00001
-    print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-        
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    #value = df.values.tolist()
-    #print(len(df),len(value), len(value[0]))
-    model = Network(config)
-    model = model.float()
-    model = model.to(device)
-    #model.load_state_dict(torch.load())
-    #print("model loaded")   # 
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
-    #noise = noise.float()
-    
-    criterion = nn.CrossEntropyLoss()
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
-    #lmbda = lambda epoch: 0.95
-    #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
-    #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
-    
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/Penn/model/model_25.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/Penn/trainData_25/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    train_dataset = CustomDataSet(path)
-    dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-  
-   
-    # Validation data    
-    path = '/data/sawasthi/Penn/validationData_25/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    validation_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    
-    # Test data    
-    path = '/data/sawasthi/Penn/testData_25/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
-    
+def training(dataLoader_train, dataLoader_validation, device):
     print('Start Training')
     correct = 0
     total_loss = 0
-    
+    total_correct = 0
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
+    accuracy = []
+    l = []
     for e in range(epochs):
           
           model.train()
@@ -345,7 +253,9 @@ if __name__ == '__main__':
              
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
-              #train_batch_v.to(device)
+              train_batch_all = harwindow_batched["labels"][:,:,:]
+              
+              train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
               
               train_batch_v = train_batch_v.float()
@@ -382,17 +292,25 @@ if __name__ == '__main__':
               total_correct += correct
           
           model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
+          
+          val_acc, val_loss =  validation(dataLoader_validation,device)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
+          
+          
           l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          #torch.save(model, model_path)
-       
+          accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+         
+          '''
+          for param_group in optimizer.param_groups:
+              print(param_group['lr'])        
+              param_group['lr'] = lr_factor*param_group['lr']
+          #scheduler.step(val_loss)
+          '''
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -402,61 +320,287 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.plot(ep,accuracy,'r',label='training accuracy')
+    plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/Penn/results/result.png') 
+    plt.savefig('/data/sawasthi/Penn/results/result_1.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
+
+def testing(config):
     print('Start Testing')
     
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    total_loss = 0.0
     model = torch.load(model_path)
     model.eval()
+    model.to(device)
+    loss_test = 0.0
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
+            
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-           # test_batch_v = normalize(test_batch_v, value,"test")
+            #test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            out = model(test_batch_v)
-            #print("Next Batch result")
-            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-            #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
+            predictions = model(test_batch_v)
             test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
+            loss = criterion(predictions, test_batch_l)
+            loss_test = loss_test + loss.item()
+            if b == 0:
+                    predictions_test = predictions
+                    if config['output'] == 'softmax':
+                        test_labels = harwindow_batched["label"][:, 0]
+                        test_labels = test_labels.reshape(-1)
+
+                        test_labels_window = harwindow_batched["labels"][:, :, 0]
+                    elif config['output'] == 'attribute':
+                        #test_labels = harwindow_batched_test["label"][:, 1:]
+                        test_labels = harwindow_batched["label"]
+
+                        test_labels_window = harwindow_batched["labels"][:, :, 0]
+                    elif config['output'] == 'identity':
+                        test_labels = harwindow_batched["identity"]
+                        test_labels = test_labels.reshape(-1)
+
+                    #test_file_labels = harwindow_batched["label_file"]
+                    #test_file_labels = test_file_labels.reshape(-1)
+            else:
+                predictions_test = torch.cat((predictions_test, predictions), dim=0)
+                
+                if config['output'] == 'softmax':
+                    test_labels_batch = harwindow_batched["label"][:, 0]
+                    test_labels_batch = test_labels_batch.reshape(-1)
+
+                    test_labels_window_batch = harwindow_batched["labels"][:, :, 0]
+                elif config['output'] == 'attribute':
+                    #test_labels_batch = harwindow_batched_test["label"][:, 1:]
+                    test_labels_batch = harwindow_batched["label"]
+
+                    test_labels_window_batch = harwindow_batched["labels"][:, :, 0]
+                elif config['output'] == 'identity':
+                    test_labels_batch = harwindow_batched["identity"]
+                    test_labels_batch = test_labels_batch.reshape(-1)
+
+                #test_file_labels_batch = harwindow_batched["label_file"]
+                #test_file_labels_batch = test_file_labels_batch.reshape(-1)
+
+                test_labels = torch.cat((test_labels, test_labels_batch), dim=0)
+                #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
+                test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
+                # Shrutarv original code
+                #print("Next Batch result")
+                predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+                #predicted = Testing(test_batch_v, test_batch_l)
+                trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+                prediction = np.concatenate((prediction,predicted_classes))
+                total += test_batch_l.size(0) 
+                test_batch_l = test_batch_l.long()
+                predicted_classes = predicted_classes.to(device)
+                correct += (predicted_classes == test_batch_l).sum().item()
+                #counter = out.view(-1, n_classes).size(0)
+                
+        print("number of windows",test_labels.size(0))        
+        size_samples = (test_labels.size(0)-1)*config["step_size"] + config['sliding_window_length']
+        print("total rows in test data",size_samples)
+        accumulated_predictions = torch.zeros((config["num_classes"],
+                                          size_samples)).to(device, dtype=torch.long)
+        predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
+        targets = torch.zeros((config["num_classes"],
+                                          size_samples)).to(device, dtype=torch.long)
+        test_labels = test_labels.to(device)
+        expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
+        index = 0
+        prediction_unsegmented = []
+        #labels_per_window = harwindow_batched["label"][:,0]
+        for i in range(predicted_classes.size(0)):
+            # ignore the windows which are less than of size=100
+            if(index +config['sliding_window_length'])>size_samples:
+                print("exit on"+i)
+                break
+            accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
+            targets[test_labels[i].item(),index:(index +config['sliding_window_length'])] += expand_pred
+            #temp = np.ones(1,config['sliding_window_length'])
+            index += config["step_size"]
+        Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
+        Final_pred = Final_pred.unsqueeze(1)
+        #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+        #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
+        #data = df.values
+        #true_labels = torch.tensor(data[:,31])
+        true_labels = torch.argmax(targets, dim=0).to(device,dtype=torch.long)
+        true_labels = true_labels.unsqueeze(1)
+        metrics_obj = Metrics(config, device)
+        # unsegmented accuracy
+        true_labels = true_labels.to(device, dtype=torch.float)
+        print(true_labels.size(),Final_pred.size())
+        results_test = metrics_obj.metric(true_labels, Final_pred, mode="classification")
+        predictions_labels = results_test["classification"]['predicted_classes'].to("cpu", torch.double).numpy()
+        print('Network_User: Testing:  after de- segmented acc {}, f1_weighted {}, f1_mean {}'.format(
+                results_test["classification"]['acc'], results_test["classification"]['f1_weighted'],
+                results_test["classification"]['f1_mean']))
+        #test_file_labels = test_file_labels.to("cpu", dtype=torch.long)
+        #test_labels_window = test_labels_window.to(self.device, dtype=torch.long)
+        #segmented accuracy
+        results_test_segment = metrics_obj.metric(test_labels, predicted_classes, mode="classification")
+        #print statistics
+        print('Network_User: Testing Segmentation:  acc {}, '
+            'f1_weighted {}, f1_mean {}'.format(results_test_segment["classification"]['acc'],
+                                                results_test_segment["classification"]['f1_weighted'],
+                                                results_test_segment["classification"]['f1_mean']))
+         
+        print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+            
+        cm = confusion_matrix(trueValue, prediction)
+        print(cm)
+        #precision, recall = performance_metrics(cm)
+        precision, recall = get_precision_recall(trueValue, prediction)
+        F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
+        print("precision", precision)
+        print("recall", recall)
+        print("F1 weighted", F1_weighted)
+        print("F1 mean",F1_mean)
         
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+        print('Finished Testing')
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+        #with open('/data/sawasthi/JHMDB/results/result_12.csv', 'w') as myfile:
+         #    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+             #wr.writerow(accuracy)
+             #wr.writerow(l)
+                 
         
-    cm = confusion_matrix(trueValue, prediction)
-    print(cm)
-    #precision, recall = performance_metrics(cm)
-    precision, recall = get_precision_recall(trueValue, prediction)
-    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
-    print("precision", precision)
-    print("recall", recall)
-    print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
+        
+if __name__ == '__main__':
     
+    seed = 42
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    # Torch RNG
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # Python RNG
+    np.random.seed(seed)
+    random.seed(seed)
+
+    print(":Python Platform {}".format(platform.python_version()))
+    
+   
+    if torch.cuda.is_available():  
+          dev = "cuda:0" 
+    else:  
+          dev = "cpu"  
+          
+    device = torch.device(dev)
+    config = {
+        "NB_sensor_channels":45,
+        "sliding_window_length":100,
+        "filter_size":5,
+        "num_filters":64,
+        "network":"cnn",
+        "output":"softmax",
+        "num_classes":12,
+        "reshape_input":False,
+        "step_size":1
+        }
+
+
+    ws=100
+    accumulation_steps = 5
+    correct = 0
+    total_loss = 0.0
+    total_correct = 0
+    epochs = 1
+    batch_size = 100
+    lr_factor = 1
+    l = []
+    tot_loss = 0
+    accuracy = []
+    learning_rate = 0.00001
+    print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
+    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
+    #value = df.values.tolist()
+    #print(len(df),len(value), len(value[0]))
+    model = Network(config)
+    model = model.float()
+    model = model.to(device)
+    #model.load_state_dict(torch.load())
+    #print("model loaded")   # 
+    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+    #noise = noise.float()
+    
+    criterion = nn.CrossEntropyLoss()
+    #optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+    model_path = '/data/sawasthi/CAD60/model/model_1.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+   
+    path = '/data/sawasthi/Penn/trainData_1/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+    train_dataset = CustomDataSet(path)
+    dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+  
+    
+    # Validation data    
+    path = '/data/sawasthi/Penn/validationData_1/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    validation_dataset = CustomDataSet(path)
+    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    
+   
+    #training(dataLoader_train, dataLoader_validation,device)
+    # Test data    
+    print("Calculating accuracy for the trained model on validation set ")
+    path = '/data/sawasthi/Penn/validationData_1/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    testing(config)
+    # Test data    
+    path = '/data/sawasthi/Penn/testData_1/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    print("Calculating accuracy for the trained model on test set ")
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    testing(config)
+    '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/Penn/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/data/CAD60/results/result.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
-             
+        
+    '''
