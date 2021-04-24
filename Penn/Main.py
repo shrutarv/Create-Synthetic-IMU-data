@@ -505,7 +505,7 @@ if __name__ == '__main__':
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":12,
+        "num_classes":15,
         "reshape_input":False,
         "step_size":1
         }
