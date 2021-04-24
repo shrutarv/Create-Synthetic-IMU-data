@@ -200,7 +200,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
     
-def validation(dataLoader_validation):
+def validation(dataLoader_validation, device):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
