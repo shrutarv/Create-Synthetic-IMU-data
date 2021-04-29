@@ -21,7 +21,7 @@ class Metrics(object):
 
         logging.info('            Metrics: Constructor')
         self.config = config
-        self.device = "cuda:0"
+        self.device = "cuda:1"
         self.mode = "classification"
         # Here, you need to extract the attributes from the network.pt
         # self,attr= network["att_rep"]
