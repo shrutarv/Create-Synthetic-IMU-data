@@ -507,7 +507,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":12,
         "reshape_input":False,
-        "step_size":15
+        "step_size":12
         }
 
 
@@ -540,11 +540,11 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/CAD60/model/model_15.pth'
+    model_path = '/data/sawasthi/CAD60/model/model_12.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
    
-    path = '/data/sawasthi/CAD60/trainData_ss_15/'
+    path = '/data/sawasthi/CAD60/trainData_ss_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -557,7 +557,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/CAD60/validationData_ss_15/'
+    path = '/data/sawasthi/CAD60/validationData_ss_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -572,7 +572,7 @@ if __name__ == '__main__':
     training(dataLoader_train, dataLoader_validation,device)
     # Test data    
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/CAD60/validationData_ss_15/'
+    path = '/data/sawasthi/CAD60/validationData_ss_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -583,7 +583,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     testing(config)
     # Test data    
-    path = '/data/sawasthi/CAD60/testData_ss_15/'
+    path = '/data/sawasthi/CAD60/testData_ss_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
