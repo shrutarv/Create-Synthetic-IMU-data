@@ -576,13 +576,13 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-        "step_size":75
+        "step_size":12
         }
 
 
     ws=100
     accumulation_steps = 5
-    epochs = 100
+    epochs = 80
     batch_size = 50
     learning_rate = 0.0001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -607,10 +607,10 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/JHMDB/model/model_75.pth'
+    model_path = '/data/sawasthi/JHMDB/model/model_tf.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/JHMDB/trainData_75a/'
+    path = '/data/sawasthi/JHMDB/trainData_tf/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -623,7 +623,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_75a/'
+    path = '/data/sawasthi/JHMDB/validationData_12a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -654,7 +654,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
-    testing(config)
+    #testing(config)
     path = '/data/sawasthi/JHMDB/testData_75a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -667,5 +667,5 @@ if __name__ == '__main__':
    
     
     print("Calculating accuracy for the trained model on test set ")
-    testing(config)
+   # testing(config)
     

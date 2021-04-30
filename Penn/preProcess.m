@@ -91,12 +91,12 @@ for j = 3:2328
     else
         disp(i);
     end
-    %label = [label; labels];
-    %final = [data label];
+    label = [label; labels];
+    final = [data label];
 end
 data = final;
 time = transpose(linspace(0, 0.02*size(final,1),size(final,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
-writematrix(data,[savePath + 'test_data.csv']);
+writematrix(data,[savePath + 'train_data_tf.csv']);
