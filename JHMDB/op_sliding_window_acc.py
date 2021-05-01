@@ -207,11 +207,11 @@ if __name__ == '__main__':
     up = 4
     #ws = (100,31)
     ws = (100,30) 
-    ss = (25,30)     
+    ss = (12,30)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 25
+    sliding_window_step = 12
     
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data_tf.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
