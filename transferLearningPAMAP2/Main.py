@@ -409,7 +409,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/JHMDB/model/model_tl_PAMAP_pose.pth'
+    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl_PAMAP_acc.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
