@@ -507,7 +507,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":12,
         "reshape_input":False,
-        "step_size":12
+        "step_size":50
         }
 
 
@@ -544,7 +544,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
    
-    path = '/data/sawasthi/CAD60/trainData_tf/'
+    path = '/data/sawasthi/CAD60/trainData_50_tf/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -557,7 +557,7 @@ if __name__ == '__main__':
   
     
     # Validation data    
-    path = '/data/sawasthi/CAD60/validationData_tf/'
+    path = '/data/sawasthi/CAD60/validationData_50_tf/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
