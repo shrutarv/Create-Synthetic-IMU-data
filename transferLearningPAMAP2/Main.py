@@ -318,7 +318,7 @@ if __name__ == '__main__':
 
 
     ws=100
-    accumulation_steps = 10
+    accumulation_steps = 5
     correct = 0
     total_loss = 0.0
     total_correct = 0
