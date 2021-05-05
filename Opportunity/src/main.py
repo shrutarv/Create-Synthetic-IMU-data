@@ -33,7 +33,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     output = {0 : 'softmax', 1 : 'attribute'}
     usage_modus = {0: 'train', 1: 'test', 2: 'evolution', 3: 'train_final', 4: 'train_random', 5: 'fine_tuning'}
 
-    assert usage_modus_idx == 2 and output_idx == 1, "Output should be Attributes for starting evolution"
+    #assert usage_modus_idx == 2 and output_idx == 1, "Output should be Attributes for starting evolution"
 
     #Dataset Hyperparameters
     NB_sensor_channels = {'locomotion' : 113, 'gesture' : 113, 'carrots' : 30, 'pamap2' : 40, 'orderpicking' : 27}
@@ -112,38 +112,54 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
+        folder_exp = '/data/sawasthi/Opportunity/model/model_tl_CAD.pth'
+        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/CAD_12.pth'
+        '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
                      + reshape_folder + '/' + 'experiment/'
         folder_exp_base_fine_tuning = '/data/fmoya/HAR/pytorch/' + dataset[dataset_fine_tuning_idx] + '/' + \
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
+        '''
     elif usage_modus[usage_modus_idx] == 'test':
+        folder_exp = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/trainData/'
+        folder_exp_base_fine_tuning = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/'
+        '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                      '/' + reshape_folder + '/' + 'final/'
         folder_exp_base_fine_tuning = '/data/fmoya/HAR/pytorch/' + dataset[dataset_fine_tuning_idx] + '/' + \
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
+        '''
     elif usage_modus[usage_modus_idx] == 'train_final':
+        folder_exp = 'S:/MS A&R/4th Sem/Thesis/OpportunityUCIDataset/trainData/'
+        folder_exp_base_fine_tuning = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/'
+        '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional +\
                      '/' + reshape_folder + '/' + 'final/'
         folder_exp_base_fine_tuning = '/data/fmoya/HAR/pytorch/' + dataset[dataset_fine_tuning_idx] + '/' + \
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
+        '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
+        folder_exp = '/data/sawasthi/Opportunity/model/model_tl_CAD.pth'
+        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/CAD_12.pth'
+        '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                      '/' + reshape_folder + '/' + 'fine_tuning/'
         folder_exp_base_fine_tuning = '/data/fmoya/HAR/pytorch/' + dataset[dataset_fine_tuning_idx] + '/' + \
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
+        '''
     else:
         raise ("Error: Not selected fine tuning option")
 
     #dataset
-    dataset_root = {'locomotion': '/data/fmoya/HAR/datasets/OpportunityUCIDataset/',
+    dataset_root = {'locomotion': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'gesture': '/data/fmoya/HAR/datasets/OpportunityUCIDataset/',
                     'pamap2': '/data/fmoya/HAR/datasets/PAMAP/',
                     'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/'}
@@ -249,7 +265,7 @@ def pamap2_main():
     #dataset = {0 : 'locomotion', 1 : 'gesture', 2 : 'carrots', 3 : 'pamap2', 4 : 'orderpicking',
     # 5 : 'virtual', 6 : 'mocap_half', 7 : 'virtual_quarter', 8 : 'mocap_quarter', 9 : 'mbientlab_quarter'}
     # 10 : 'mbientlab'}
-    datasets_opts = [3]
+    datasets_opts = [0]
     networks_arc = [0]
     fine_tunings = [10]
     frezze_opts = [0]
@@ -313,7 +329,7 @@ def gestures_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=fopt, proportions_id = pp, gpudevice = "4")
                         setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger.txt")
@@ -329,8 +345,8 @@ def gestures_main():
 if __name__ == '__main__':
     
     
-    pamap2_main()
-    #locomotion_main()
+    #pamap2_main()
+    locomotion_main()
     #gestures_main()
     
     print("Done")
