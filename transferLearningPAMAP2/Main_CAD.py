@@ -299,7 +299,137 @@ def load_weights(network):
         logging.info('        Network_User:        Weights loaded')
 
         return network
+  
+       
+def training(dataLoader_train, dataLoader_validation, device):
+    print('Start Training')
+    correct = 0
+    total_loss = 0
+    total_correct = 0
+    best_acc = 0.0
+    validation_loss = []
+    validation_acc = []
+    accuracy = []
+    l = []
+    for e in range(epochs):
+          model.train()
+          print("next epoch",e)
+          #loop per batch:
+          for b, harwindow_batched in enumerate(dataLoader_train):
+             
+              train_batch_v = harwindow_batched["data"]
+              train_batch_l = harwindow_batched["label"][:, 0]
+              #train_batch_v.to(device)
+              train_batch_l = train_batch_l.to(device)
+              
+              train_batch_v = train_batch_v.float()
+              train_batch_v = train_batch_v.to(device)
+              noise = normal.sample((train_batch_v.size()))
+              noise = noise.reshape(train_batch_v.size())
+              noise = noise.to(device, dtype=torch.float)
+
+              train_batch_v = train_batch_v + noise
+              
+              #print(train_batch_v.device)
+              out = model(train_batch_v)
+              train_batch_l = train_batch_l.long()
+              #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
+              loss = criterion(out,train_batch_l)/accumulation_steps
+              #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+              #predicted_classes = predicted_classes.to(device)
+              
+              #correct += torch.sum(train_batch_l == predicted_classes)
+              #counter += out.size(0)
+             # a = list(model.parameters())[0].clone() 
+              loss.backward()
+              
+              if (b + 1) % accumulation_steps == 0:   
+                optimizer.step()
+                # zero the parameter gradients
+                optimizer.zero_grad()
+              #c = list(model.parameters())[0].clone()
+              #print(torch.equal(a.data, c.data))
+              acc, correct = metrics(out, train_batch_l)
+              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
+                      
+              #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
+              total_loss += loss.item()
+              total_correct += correct
+          
+          model.eval()
+          val_acc, val_loss =  validation(dataLoader_validation)
+          validation_loss.append(val_loss)
+          validation_acc.append(val_acc)
+          if (val_acc >= best_acc):
+              torch.save(model, model_path_tl)
+              print("model saved on epoch", e)
+              best_acc = val_acc
+          l.append(total_loss/((e+1)*(b + 1)))
+          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
+          #torch.save(model, model_path)
+    
+    print('Finished Training')
+    ep = list(range(1,e+2))   
+    plt.subplot(1,2,1)
+    plt.title('epoch vs loss')
+    plt.plot(ep,l, 'r', label='training loss')
+    plt.plot(ep,validation_loss, 'g',label='validation loss')
+    plt.legend()
+    plt.subplot(1,2,2)
+    plt.title('epoch vs accuracy')
+    plt.plot(ep,accuracy,label='training accuracy')
+    plt.plot(ep,validation_acc, label='validation accuracy')
+    plt.legend()
+    plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
+    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+    
+def testing(config):
+    print('Start Testing')
+    
+    total = 0.0
+    correct = 0.0
+    trueValue = np.array([], dtype=np.int64)
+    prediction = np.array([], dtype=np.int64)
+    total_loss = 0.0
+    model = torch.load(model_path_tl)
+    model.eval()
+    with torch.no_grad():
+            
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            test_batch_v = harwindow_batched["data"]
+            test_batch_l = harwindow_batched["label"][:, 0]
+           # test_batch_v = normalize(test_batch_v, value,"test")
+            test_batch_v = test_batch_v.float()
+            test_batch_v = test_batch_v.to(device)
+            test_batch_l = test_batch_l.to(device)
+            
+            out = model(test_batch_v)
+            #print("Next Batch result")
+            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
+            #predicted = Testing(test_batch_v, test_batch_l)
+            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+            prediction = np.concatenate((prediction,predicted_classes))
+            total += test_batch_l.size(0) 
+            test_batch_l = test_batch_l.long()
+            predicted_classes = predicted_classes.to(device)
+            correct += (predicted_classes == test_batch_l).sum().item()
+            #counter = out.view(-1, n_classes).size(0)
         
+    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+        
+    cm = confusion_matrix(trueValue, prediction)
+    print(cm)
+    #precision, recall = performance_metrics(cm)
+    precision, recall = get_precision_recall(trueValue, prediction)
+    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
+    print("precision", precision)
+    print("recall", recall)
+    print("F1 weighted", F1_weighted)
+    print("F1 mean",F1_mean)
+    
+    print('Finished Validation')
+      
 if __name__ == '__main__':
     seed = 42
     os.environ['PYTHONHASHSEED'] = str(seed)
@@ -336,14 +466,8 @@ if __name__ == '__main__':
 
     ws=100
     accumulation_steps = 5
-    correct = 0
-    total_loss = 0.0
-    total_correct = 0
     epochs = 20
     batch_size = 100
-    l = []
-    tot_loss = 0
-    accuracy = []
     learning_rate = 0.00001
     print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
@@ -429,134 +553,6 @@ if __name__ == '__main__':
         value = max_min_values(data_x,value)
     '''
     model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD.pth'
-    print('Start Training')
-    correct = 0
-    total_loss = 0
+    training(dataLoader_train, dataLoader_validation,device)
+    testing(config)
     
-    best_acc = 0.0
-    validation_loss = []
-    validation_acc = []
-    for e in range(epochs):
-          model.train()
-          print("next epoch",e)
-          #loop per batch:
-          for b, harwindow_batched in enumerate(dataLoader_train):
-             
-              train_batch_v = harwindow_batched["data"]
-              train_batch_l = harwindow_batched["label"][:, 0]
-              #train_batch_v.to(device)
-              train_batch_l = train_batch_l.to(device)
-              
-              train_batch_v = train_batch_v.float()
-              train_batch_v = train_batch_v.to(device)
-              noise = normal.sample((train_batch_v.size()))
-              noise = noise.reshape(train_batch_v.size())
-              noise = noise.to(device, dtype=torch.float)
-
-              train_batch_v = train_batch_v + noise
-              
-              #print(train_batch_v.device)
-              out = model(train_batch_v)
-              train_batch_l = train_batch_l.long()
-              #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              loss = criterion(out,train_batch_l)/accumulation_steps
-              #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-              #predicted_classes = predicted_classes.to(device)
-              
-              #correct += torch.sum(train_batch_l == predicted_classes)
-              #counter += out.size(0)
-             # a = list(model.parameters())[0].clone() 
-              loss.backward()
-              
-              if (b + 1) % accumulation_steps == 0:   
-                optimizer.step()
-                # zero the parameter gradients
-                optimizer.zero_grad()
-              #c = list(model.parameters())[0].clone()
-              #print(torch.equal(a.data, c.data))
-              acc, correct = metrics(out, train_batch_l)
-              #print(' loss: ', loss.item(), 'accuracy in percent',acc)
-                      
-              #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
-              total_loss += loss.item()
-              total_correct += correct
-          
-          model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path_tl)
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          #torch.save(model, model_path)
-    
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,'r',label='training accuracy')
-    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/CAD60/results/result_tl.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
-    print('Start Testing')
-    
-    total = 0.0
-    correct = 0.0
-    trueValue = np.array([], dtype=np.int64)
-    prediction = np.array([], dtype=np.int64)
-    total_loss = 0.0
-    model = torch.load(model_path_tl)
-    model.eval()
-    with torch.no_grad():
-            
-        for b, harwindow_batched in enumerate(dataLoader_test):
-            test_batch_v = harwindow_batched["data"]
-            test_batch_l = harwindow_batched["label"][:, 0]
-           # test_batch_v = normalize(test_batch_v, value,"test")
-            test_batch_v = test_batch_v.float()
-            test_batch_v = test_batch_v.to(device)
-            test_batch_l = test_batch_l.to(device)
-            
-            out = model(test_batch_v)
-            #print("Next Batch result")
-            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-            #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
-            test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
-        
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
-        
-    cm = confusion_matrix(trueValue, prediction)
-    print(cm)
-    #precision, recall = performance_metrics(cm)
-    precision, recall = get_precision_recall(trueValue, prediction)
-    F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
-    print("precision", precision)
-    print("recall", recall)
-    print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
-    
-    print('Finished Validation')
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/CAD60/results/result_tl.csv', 'w') as myfile:
-         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-         wr.writerow(accuracy)
-         wr.writerow(l)
-             
