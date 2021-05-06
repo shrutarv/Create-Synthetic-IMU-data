@@ -195,7 +195,7 @@ def Testing():
     print('Finished Testing')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/Lara_motionminer/results/result.csv', 'w') as myfile:
+    with open('/data/sawasthi/Lara_motionminer/results/result_12.csv', 'w') as myfile:
          wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
          wr.writerow(accuracy)
          wr.writerow(l)
@@ -257,9 +257,9 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/Lara_motionminer/model/model_5.pth'
+    model_path = '/data/sawasthi/Lara_motionminer/model/model_12.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    path = '/data/sawasthi/Lara_motionminer/trainData_5/'
+    path = '/data/sawasthi/Lara_motionminer/trainData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -271,7 +271,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/Lara_motionminer/validationData_5/'
+    path = '/data/sawasthi/Lara_motionminer/validationData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -282,7 +282,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/Lara_motionminer/testData_5/'
+    path = '/data/sawasthi/Lara_motionminer/testData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -292,7 +292,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
-    '''
+    
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -369,10 +369,10 @@ if __name__ == '__main__':
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/Lara_motionminer/results/result.png') 
+    plt.savefig('/data/sawasthi/Lara_motionminer/results/result_12.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    '''
+    
     print('Start Testing')
     Testing()
     
