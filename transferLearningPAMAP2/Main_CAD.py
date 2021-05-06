@@ -17,6 +17,10 @@ import matplotlib.pyplot as plt
 import csv
 import logging
 import pandas as pd
+import os
+import random
+import platform
+
 #import torchvision.models as model
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
@@ -297,6 +301,18 @@ def load_weights(network):
         return network
         
 if __name__ == '__main__':
+    seed = 42
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    # Torch RNG
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # Python RNG
+    np.random.seed(seed)
+    random.seed(seed)
+
+    print(":Python Platform {}".format(platform.python_version()))
+    
     
     if torch.cuda.is_available():  
           dev = "cuda:1" 

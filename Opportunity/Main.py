@@ -15,6 +15,9 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
+import os
+import random
+import platform
 
 import pandas as pd
 
@@ -342,7 +345,16 @@ def test():
                  
     
 if __name__ == '__main__':
-    
+    seed = 42
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    # Torch RNG
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # Python RNG
+    np.random.seed(seed)
+    random.seed(seed)
+
     if torch.cuda.is_available():  
           dev = "cuda:1" 
     else:  
