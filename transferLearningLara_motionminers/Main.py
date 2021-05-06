@@ -442,7 +442,7 @@ if __name__ == '__main__':
     random.seed(seed)
 
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:0" 
     else:  
           dev = "cpu"  
           
@@ -456,7 +456,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_12.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
