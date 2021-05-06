@@ -146,74 +146,190 @@ if __name__ == '__main__':
        
     #ws = (100,31)
     ws = (100,30)  
-    ss = (10,30)    
+    ss = (12,30)    
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 10
-    # training set : S01, S02,S03,S04,S07,S08,S09,S10
-    # validation set : S05,S11,S12
-    # test set : S06,13,14
+    sliding_window_step = 12
+    training_set = ["S07", "S08","S09","S10"]
+    validation_set = ["S11","S12"]
+    test_set = ["13","14"]
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
-   
-    data_dir =  "/data/sawasthi/Lara_motionminer/validationData_10/"
-    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
-    #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-    
-    #    print (np.shape(i[:,0]))
-    folder_name = "S14"
-    FileList_y = []
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
-    #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
-    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
-    os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
-    #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
-    FileList_y = glob.glob('*labels.csv')
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
-    #List = glob.glob('*labels.csv')
-    #FileList_y = FileList_y + List
+    for m in training_set:
             
-    FileList_x = []
-    #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'+ folder_name)
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
-    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
-    FileList_x = glob.glob('*.csv')
-    #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
-    #List = glob.glob('*.csv')
-    #FileList_x = FileList_x + List
-    set_x = set(FileList_x)
-    set_y = set(FileList_y)
-    FileList_x = list(set_x - set_y)
-    FileList_x.sort()
-    FileList_y.sort()
-    k = 0 
-    
-    for i,j in zip(FileList_x, FileList_y):
+        data_dir =  "/data/sawasthi/Lara_motionminer/trainData_12/"
+        #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
         
-        k += 1
-        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + j) 
-        #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
-        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
-        #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
-        data_y = data_y.values
-        label = data_y[:,0].astype(int)
-        lab = np.zeros((len(label),20), dtype=int)
-        lab[:,0] = label
-        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + i) 
-        #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
-        #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
-        #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
-        data_x = data_x.values
-        data_x = data_x[:,2:]
-        x = normalize(data_x,value,'validation')
-        example_creating_windows_file(k, folder_name, x, lab)
-        #if(k == 2):
+        #    print (np.shape(i[:,0]))
+        folder_name = training_set[m]
+        FileList_y = []
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+        #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
+        os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+        FileList_y = glob.glob('*labels.csv')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+        #List = glob.glob('*labels.csv')
+        #FileList_y = FileList_y + List
+                
+        FileList_x = []
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'+ folder_name)
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+        FileList_x = glob.glob('*.csv')
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #List = glob.glob('*.csv')
+        #FileList_x = FileList_x + List
+        set_x = set(FileList_x)
+        set_y = set(FileList_y)
+        FileList_x = list(set_x - set_y)
+        FileList_x.sort()
+        FileList_y.sort()
+        k = 0 
+        
+        for i,j in zip(FileList_x, FileList_y):
+            
+            k += 1
+            data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + j) 
+            #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+            data_y = data_y.values
+            label = data_y[:,0].astype(int)
+            lab = np.zeros((len(label),20), dtype=int)
+            lab[:,0] = label
+            data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + i) 
+            #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+            data_x = data_x.values
+            data_x = data_x[:,2:]
+            x = normalize(data_x,value,'train')
+            example_creating_windows_file(k, folder_name, x, lab)
+            
+    for n in test_set:
+            
+        data_dir =  "/data/sawasthi/Lara_motionminer/testData_12/"
+        #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+        
+        #    print (np.shape(i[:,0]))
+        folder_name = test_set[n]
+        FileList_y = []
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+        #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
+        os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+        FileList_y = glob.glob('*labels.csv')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+        #List = glob.glob('*labels.csv')
+        #FileList_y = FileList_y + List
+                
+        FileList_x = []
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'+ folder_name)
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+        FileList_x = glob.glob('*.csv')
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #List = glob.glob('*.csv')
+        #FileList_x = FileList_x + List
+        set_x = set(FileList_x)
+        set_y = set(FileList_y)
+        FileList_x = list(set_x - set_y)
+        FileList_x.sort()
+        FileList_y.sort()
+        k = 0 
+        
+        for i,j in zip(FileList_x, FileList_y):
+            
+            k += 1
+            data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + j) 
+            #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+            data_y = data_y.values
+            label = data_y[:,0].astype(int)
+            lab = np.zeros((len(label),20), dtype=int)
+            lab[:,0] = label
+            data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + i) 
+            #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+            data_x = data_x.values
+            data_x = data_x[:,2:]
+            x = normalize(data_x,value,'test')
+            example_creating_windows_file(k, folder_name, x, lab)
+             
+    for p in validation_set:
+            
+        data_dir =  "/data/sawasthi/Lara_motionminer/validationData_12/"
+        #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
+        #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+        
+        #    print (np.shape(i[:,0]))
+        folder_name = validation_set[p]
+        FileList_y = []
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+        #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
+        os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
+        #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
+        FileList_y = glob.glob('*labels.csv')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P13')
+        #List = glob.glob('*labels.csv')
+        #FileList_y = FileList_y + List
+                
+        FileList_x = []
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/'+ folder_name)
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
+        FileList_x = glob.glob('*.csv')
+        #os.chdir('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S14')
+        #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/P14')
+        #List = glob.glob('*.csv')
+        #FileList_x = FileList_x + List
+        set_x = set(FileList_x)
+        set_y = set(FileList_y)
+        FileList_x = list(set_x - set_y)
+        FileList_x.sort()
+        FileList_y.sort()
+        k = 0 
+        
+        for i,j in zip(FileList_x, FileList_y):
+            
+            k += 1
+            data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + j) 
+            #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
+            data_y = data_y.values
+            label = data_y[:,0].astype(int)
+            lab = np.zeros((len(label),20), dtype=int)
+            lab[:,0] = label
+            data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + i) 
+            #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
+            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
+            data_x = data_x.values
+            data_x = data_x[:,2:]
+            x = normalize(data_x,value,'validation')
+            example_creating_windows_file(k, folder_name, x, lab)
+     
+            #if(k == 2):
         #  break
     '''
     train_x = np.concatenate((train_x,data_x),axis=0)
