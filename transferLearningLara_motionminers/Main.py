@@ -17,6 +17,10 @@ import matplotlib.pyplot as plt
 import csv
 import logging
 import pandas as pd
+
+import os
+import random
+import platform
 #import torchvision.models as model
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
@@ -295,131 +299,20 @@ def load_weights(network):
 
         return network
         
-if __name__ == '__main__':
-    
-    if torch.cuda.is_available():  
-          dev = "cuda:1" 
-    else:  
-          dev = "cpu"  
-          
-    device = torch.device(dev)
-    config = {
-        "NB_sensor_channels":27,
-        "sliding_window_length":100,
-        "filter_size":5,
-        "num_filters":64,
-        "network":"cnn",
-        "output":"softmax",
-        "num_classes":8,
-        "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_12.pth'
-        #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
-        }
-
-
-    ws=100
-    accumulation_steps = 5
-    correct = 0
-    total_loss = 0.0
-    total_correct = 0
-    epochs = 40
-    batch_size = 100
-    l = []
-    tot_loss = 0
-    accuracy = []
-    learning_rate = 0.00001
-    print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    #value = df.values.tolist()
-    #print(len(df),len(value), len(value[0]))
-     
-    Lara_net = Network(config)
-    Lara_net.init_weights()
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
-    #noise = noise.float()
-    
-    criterion = nn.CrossEntropyLoss()
-    #model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    #model = torch.load(model_path)
-    # transformed_net 
-    model = load_weights(Lara_net)
-    model = model.to(device)
-    print("model loaded")  
-    '''
-    PAMAP_net.conv1_1.weight = model.conv1_1.weight
-    PAMAP_net.conv1_2.weight = model.conv1_2.weight
-    PAMAP_net.conv1_1.bias = model.conv1_1.bias
-    PAMAP_net.conv1_2.bias = model.conv1_2.bias
-    
-    PAMAP_net.conv2_1.weight = model.conv2_1.weight
-    PAMAP_net.conv2_2.weight = model.conv2_2.weight
-    PAMAP_net.conv2_1.bias = model.conv2_1.bias
-    PAMAP_net.conv2_2.bias = model.conv2_2.bias
-    
-    model = set_required_grad(model)
-    model.fc4 = PAMAP_net.fc3
-    model.fc4 = PAMAP_net.fc4
-    model.fc5 = PAMAP_net.fc5
-    model.softmax = PAMAP_net.softmax
-    '''
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/Lara_motionminer/trainData_10/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    train_dataset = CustomDataSet(path)
-    dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-  
-   
-    # Validation data    
-    path = '/data/sawasthi/Lara_motionminer/validationData_10/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    validation_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    
-    # Test data    
-    path = '/data/sawasthi/Lara_motionminer/testData_10/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
-    model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB.pth'
+def training(dataLoader_train, dataLoader_validation, device):
     print('Start Training')
     correct = 0
     total_loss = 0
-    
+    total_correct = 0
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
+    accuracy = []
+    l = []
     for e in range(epochs):
           model.train()
-          print("epoch",e)
+          print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
@@ -473,7 +366,7 @@ if __name__ == '__main__':
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-          
+    
     print('Finished Training')
     ep = list(range(1,e+2))   
     plt.subplot(1,2,1)
@@ -483,13 +376,14 @@ if __name__ == '__main__':
     plt.legend()
     plt.subplot(1,2,2)
     plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,'r',label='training accuracy')
-    plt.plot(ep,validation_acc, 'g', label='validation accuracy')
+    plt.plot(ep,accuracy,label='training accuracy')
+    plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/Lara_motionminer/results/result_tl.png') 
+    plt.savefig('/data/sawasthi/JHMDB/results/result_tl.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
+def testing(config):
     print('Start Testing')
     
     total = 0.0
@@ -534,10 +428,130 @@ if __name__ == '__main__':
     print("F1 mean",F1_mean)
     
     print('Finished Validation')
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
-    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
-    with open('/data/sawasthi/Lara_motionminer/results/result_tl.csv', 'w') as myfile:
-         wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
-         wr.writerow(accuracy)
-         wr.writerow(l)
-             
+
+
+if __name__ == '__main__':
+    seed = 42
+    os.environ['PYTHONHASHSEED'] = str(seed)
+    # Torch RNG
+    torch.manual_seed(seed)
+    torch.cuda.manual_seed(seed)
+    torch.cuda.manual_seed_all(seed)
+    # Python RNG
+    np.random.seed(seed)
+    random.seed(seed)
+
+    if torch.cuda.is_available():  
+          dev = "cuda:1" 
+    else:  
+          dev = "cpu"  
+          
+    device = torch.device(dev)
+    config = {
+        "NB_sensor_channels":27,
+        "sliding_window_length":100,
+        "filter_size":5,
+        "num_filters":64,
+        "network":"cnn",
+        "output":"softmax",
+        "num_classes":8,
+        "reshape_input":False,
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_12.pth'
+        #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
+        }
+
+
+    ws=100
+    accumulation_steps = 5
+    epochs = 40
+    batch_size = 100
+    learning_rate = 0.00001
+    print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+        
+    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
+    #value = df.values.tolist()
+    #print(len(df),len(value), len(value[0]))
+     
+    Lara_net = Network(config)
+    Lara_net.init_weights()
+    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+    #noise = noise.float()
+    
+    criterion = nn.CrossEntropyLoss()
+    #model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
+    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+    #model = torch.load(model_path)
+    # transformed_net 
+    model = load_weights(Lara_net)
+    model = model.to(device)
+    print("model loaded")  
+    '''
+    PAMAP_net.conv1_1.weight = model.conv1_1.weight
+    PAMAP_net.conv1_2.weight = model.conv1_2.weight
+    PAMAP_net.conv1_1.bias = model.conv1_1.bias
+    PAMAP_net.conv1_2.bias = model.conv1_2.bias
+    
+    PAMAP_net.conv2_1.weight = model.conv2_1.weight
+    PAMAP_net.conv2_2.weight = model.conv2_2.weight
+    PAMAP_net.conv2_1.bias = model.conv2_1.bias
+    PAMAP_net.conv2_2.bias = model.conv2_2.bias
+    
+    model = set_required_grad(model)
+    model.fc4 = PAMAP_net.fc3
+    model.fc4 = PAMAP_net.fc4
+    model.fc5 = PAMAP_net.fc5
+    model.softmax = PAMAP_net.softmax
+    '''
+    model = set_required_grad(model)
+    
+    #optimizer = optim.Adam(model.parameters(), lr=0.001)
+    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+    optimizer.zero_grad()
+    
+    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+    path = '/data/sawasthi/Lara_motionminer/trainData_10/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+    train_dataset = CustomDataSet(path)
+    dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+  
+   
+    # Validation data    
+    path = '/data/sawasthi/Lara_motionminer/validationData_10/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    validation_dataset = CustomDataSet(path)
+    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    
+    # Test data    
+    path = '/data/sawasthi/Lara_motionminer/testData_10/'
+    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+    test_dataset = CustomDataSet(path)
+    dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                  batch_size=batch_size,
+                                   num_workers=0,
+                                   pin_memory=True,
+                                   drop_last=True)
+    '''
+    for b, harwindow_batched in enumerate(dataLoader_test):
+        data_x = harwindow_batched["data"]
+        data_x.to(device)
+        value = max_min_values(data_x,value)
+    '''
+    model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB.pth'
+    training(dataLoader_train, dataLoader_validation,device)
+    testing(config)
+    
