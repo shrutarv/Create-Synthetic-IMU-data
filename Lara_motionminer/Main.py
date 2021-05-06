@@ -292,7 +292,7 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
-    
+    '''
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -372,7 +372,7 @@ if __name__ == '__main__':
     plt.savefig('/data/sawasthi/Lara_motionminer/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''
     print('Start Testing')
     Testing()
     
