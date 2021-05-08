@@ -465,11 +465,11 @@ if __name__ == '__main__':
 
     ws=100
     accumulation_steps = 5
-    epochs = 30
+    epochs = 70
     batch_size = 100
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    iterations = 5
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
