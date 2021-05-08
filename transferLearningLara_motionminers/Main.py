@@ -381,7 +381,7 @@ def training(dataLoader_train, dataLoader_validation, device):
     plt.plot(ep,accuracy,label='training accuracy')
     plt.plot(ep,validation_acc, label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/JHMDB/results/result_tl.png') 
+    plt.savefig('/data/sawasthi/CAD60/results/result_tl.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -459,7 +459,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_tf_12.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
