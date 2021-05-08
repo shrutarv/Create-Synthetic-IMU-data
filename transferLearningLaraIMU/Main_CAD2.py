@@ -471,7 +471,7 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 1
+        epochs = 70
         batch_size = 100
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
