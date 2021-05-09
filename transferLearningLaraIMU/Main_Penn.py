@@ -15,6 +15,9 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
+import os
+import random
+import platform
 import logging
 import pandas as pd
 #import torchvision.models as model
@@ -296,7 +299,7 @@ def load_weights(network):
         return network
  
        
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,flag):
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -362,23 +365,24 @@ def training(dataLoader_train, dataLoader_validation, device):
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
+   
     print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    if(flag):
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,label='training accuracy')
+        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+        
 def testing(config):
     print('Start Testing')
     
@@ -457,10 +461,10 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
-
+    flag = True
     iterations = 5
     weighted_F1_array = []
     test_acc_array = []
@@ -468,7 +472,7 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 50
+        epochs = 30
         batch_size = 100
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -555,8 +559,9 @@ if __name__ == '__main__':
         '''
         model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl.pth'
         
-        training(dataLoader_train, dataLoader_validation,device)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
+        flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         weighted_F1_array.append(WF)
