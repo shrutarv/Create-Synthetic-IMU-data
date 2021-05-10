@@ -298,7 +298,7 @@ def load_weights(network):
 
         return network
         
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,flag):
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -364,23 +364,24 @@ def training(dataLoader_train, dataLoader_validation, device):
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    if(flag):
+            
+        print('Finished Training')
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,label='training accuracy')
+        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+        
 def testing(config):
     print('Start Testing')
     test_acc = 0
@@ -461,6 +462,7 @@ if __name__ == '__main__':
     iterations = 5
     weighted_F1_array = []
     test_acc_array = []
+    flag = True
     for iter in range(iterations):
             
         ws=100
@@ -511,7 +513,7 @@ if __name__ == '__main__':
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/PAMAP2/trainData/'
+        path = '/data/sawasthi/PAMAP2/trainData_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -552,7 +554,7 @@ if __name__ == '__main__':
             value = max_min_values(data_x,value)
         '''
         model_path_tl = '/data/sawasthi/Penn/model/model_tl_PAMAP2.pth'
-        training(dataLoader_train, dataLoader_validation,device)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
