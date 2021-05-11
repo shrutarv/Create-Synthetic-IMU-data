@@ -145,8 +145,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       '/' + reshape_folder + '/' + 'final/'
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-        folder_exp = '/data/sawasthi/Opportunity/model/model_tl_CAD.pth'
-        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_12.pth'
+        folder_exp = '/data/sawasthi/Opportunity/model/model_tl_CAD.pt'
+        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model__tf_12.pt'
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
