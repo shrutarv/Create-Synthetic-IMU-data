@@ -409,7 +409,7 @@ class Network_User(object):
         if self.config['network'] == 'cnn' or self.config['network'] == 'cnn_imu':
             self.network_obj = Network(self.config)
             self.network_obj.init_weights()
-
+            
             # IF finetuning, load the weights
             if self.config["usage_modus"] == "fine_tuning":
                 self.network_obj = self.load_weights(self.network_obj)
