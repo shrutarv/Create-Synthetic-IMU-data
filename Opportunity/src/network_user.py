@@ -326,7 +326,7 @@ class Network_User(object):
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
 
-        pretrained_dict = torch.load(self.config['folder_exp_base_fine_tuning'],map_location='cuda:0').state_dict()
+        pretrained_dict = torch.load(self.config['folder_exp_base_fine_tuning'],map_location='cuda:1').state_dict()
         logging.info('        Network_User:        Pretrained model loaded')
 
         #for k, v in pretrained_dict.items():
