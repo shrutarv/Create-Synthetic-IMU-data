@@ -30,12 +30,14 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from matplotlib.collections import PolyCollection
+import sys
+sys.path
+sys.path.append('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Opportunity/src/')
 
 from network import Network
 from opportunity import Opportunity
 from pamap2 import Pamap2
 #from orderpicking import OderPicking
-
 
 
 
