@@ -297,7 +297,9 @@ def training(dataLoader_train, dataLoader_validation, device):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
+              #torch.save(model, model_path)
+              torch.save({'state_dict': model.state_dict()}, model_path)
+
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -540,7 +542,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/CAD60/model/model_tf_12.pth'
+    model_path = '/data/sawasthi/CAD60/model/model_test.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
    
