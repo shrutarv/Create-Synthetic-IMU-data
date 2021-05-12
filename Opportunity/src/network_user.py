@@ -630,7 +630,7 @@ class Network_User(object):
                         logging.info('        Network_User:            Saving the network')
 
                         torch.save({'state_dict': self.network_obj.state_dict()},
-                                   self.config['folder_exp'] + 'network.pt')
+                                   self.config['folder_exp'] + 'network_CAD_Opp.pt')
                         best_acc_val = acc_val
 
                 # Plotting
