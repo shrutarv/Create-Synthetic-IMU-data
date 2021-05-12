@@ -433,6 +433,7 @@ def testing(config):
     test_acc = 100. * correct / total        
     
     print(cm)
+    logging.info('confusion matrix {}'.format(cm))
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
@@ -482,14 +483,14 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
-    iterations = 1
+    iterations = 5
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
         
         ws=100
         accumulation_steps = 5
-        epochs = 1
+        epochs = 200
         batch_size = 100
         learning_rate = 0.00001
         logging.info('sliding_window_length {} epoch: {} batch_size: {} accumulation steps: {} ws: {} learning_rate: {}'.format(config["sliding_window_length"],epochs,batch_size,accumulation_steps,ws,learning_rate))
