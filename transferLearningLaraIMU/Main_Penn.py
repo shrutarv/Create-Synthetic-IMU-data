@@ -22,31 +22,40 @@ import logging
 import pandas as pd
 #import torchvision.models as model
 
+from logging import handlers
+
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
-'''
-def normalize(data,ws):
-    for k in range(len(data)):
-        list1 = []
-        temp = torch.tensor(list1)
-        data_new = data[k]    
-        data_new = torch.reshape(data_new,(200,30))
-        data_new = data_new.cpu().detach().numpy()
-        for i in range(data_new.shape[1]):
-            max = np.max(data_new[:,i])
-            min = np.min(data_new[:,i])
-            for j in range(ws-1):
-                data_new[j,i] = (data_new[j,i] - min)/(max - min)
-        data_new = np.reshape(data_new,(1,200,30))
-        data_new = torch.tensor(data_new).float()
-        temp = torch.cat((temp, data_new), 0)
-        #data_new = torch.tensor(data_new)        
-        return data_new
-'''
 
 '''
 Calculates precision and recall for all class using confusion matrix (cm)
 returns list of precision and recall values
 '''  
+
+
+def setup_experiment_logger(logging_level=logging.DEBUG, filename=None):
+    # set up the logging
+    logging_format = '[%(asctime)-19s, %(name)s, %(levelname)s] %(message)s'
+    if filename != None:
+        logging.basicConfig(filename=filename,level=logging.DEBUG,
+                            format=logging_format,
+                            filemode='w')
+    else:
+        logging.basicConfig(level=logging_level,
+                            format=logging_format,
+                            filemode='w')
+        
+    console = logging.StreamHandler()
+    console.setLevel(logging.INFO)
+    # set a format which is simpler for console use
+    formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
+    # tell the handler to use this format
+    console.setFormatter(formatter)
+    # add the handler to the root logger
+    logging.getLogger('').addHandler(console)   
+
+
+    return
+
 def get_precision_recall(targets, predictions):
         precision = torch.zeros((config['num_classes']))
         recall = torch.zeros((config['num_classes']))
@@ -300,6 +309,7 @@ def load_weights(network):
  
        
 def training(dataLoader_train, dataLoader_validation, device,flag):
+    logging.info('Start Training')
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -311,6 +321,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     l = []
     for e in range(epochs):
           model.train()
+          logging.info("next epoch {}".format(e))
           print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
@@ -360,12 +371,13 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save(model, model_path_tl)
+              logging.info("model saved on epoch", e)
               print("model saved on epoch", e)
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-   
+    logging.info('Finished Training')
     print('Finished Training')
     if(flag):
         ep = list(range(1,e+2))   
@@ -385,7 +397,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         
 def testing(config):
     print('Start Testing')
-    
+    logging.info('Start Testing')
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -416,7 +428,7 @@ def testing(config):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
-        
+    logging.info('Test set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
     cm = confusion_matrix(trueValue, prediction)
     test_acc = 100. * correct / total        
     
@@ -425,11 +437,15 @@ def testing(config):
     precision, recall = get_precision_recall(trueValue, prediction)
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
     print("precision", precision)
+    logging.info("precision {}".format(precision))
     print("recall", recall)
+    logging.info("recall {}".format(recall))
     print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
-    
+    logging.info("F1 weighted {}".format(F1_weighted))
+    print("F1 mean {}".format(F1_mean))
+    logging.info("F1 mean {}".format(F1_mean))
     print('Finished Validation')
+    logging.info('Finished Validation')
     return F1_weighted, test_acc
      
     
@@ -443,8 +459,9 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-
-    print(":Python Platform {}".format(platform.python_version()))
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger.txt")
+    logging.info('Finished')
+    logging.info(':Python Platform {}'.format(platform.python_version()))
      
     if torch.cuda.is_available():  
           dev = "cuda:1" 
@@ -472,11 +489,11 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 120
+        epochs = 1
         batch_size = 100
         learning_rate = 0.00001
-        print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-            
+        logging.info('sliding_window_length {} epoch: {} batch_size: {} accumulation steps: {} ws: {} learning_rate: {}'.format(config["sliding_window_length"],epochs,batch_size,accumulation_steps,ws,learning_rate))
+        sys.stdout.write('sliding_window_length {} epoch: {} batch_size: {} accumulation steps: {} ws: {} learning_rate: {}'.format(config["sliding_window_length"],epochs,batch_size,accumulation_steps,ws,learning_rate))   
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
         #value = df.values.tolist()
@@ -567,9 +584,10 @@ if __name__ == '__main__':
         weighted_F1_array.append(WF)
         test_acc_array.append(TA)
         
-    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
-    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
-    
-    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
-    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+    logging.info("Mean Weighted F1 score after 5 runs is {}".format(np.mean(weighted_F1_array)))
+    sys.stdout.write("Mean Weighted F1 score after 5 runs is {}".format(np.mean(weighted_F1_array)))
+    logging.info("Standard deviation of Weighted F1 score after 5 runs is {}".format(np.std(weighted_F1_array)))
+    sys.stdout.write("Standard deviation of Weighted F1 score after 5 runs is {}".format(np.std(weighted_F1_array)))
+    logging.info("Mean Test accuracy score after 5 runs is {}".format(np.mean(test_acc_array)))
+    sys.stdout.write("Standard deviation of Test accuracy score after 5 runs is {}".format(np.std(test_acc_array)))
     
