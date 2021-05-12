@@ -321,7 +321,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     l = []
     for e in range(epochs):
           model.train()
-          logging.info("next epoch {}".format(e))
+          logging.info('next epoch {}'.format(e))
           print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
@@ -371,7 +371,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save(model, model_path_tl)
-              logging.info("model saved on epoch", e)
+              logging.info('model saved on epoch', e)
               print("model saved on epoch", e)
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
@@ -438,13 +438,13 @@ def testing(config):
     precision, recall = get_precision_recall(trueValue, prediction)
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
     print("precision", precision)
-    logging.info("precision {}".format(precision))
+    logging.info('precision {}'.format(precision))
     print("recall", recall)
-    logging.info("recall {}".format(recall))
+    logging.info('recall {}'.format(recall))
     print("F1 weighted", F1_weighted)
-    logging.info("F1 weighted {}".format(F1_weighted))
+    logging.info('F1 weighted {}'.format(F1_weighted))
     print("F1 mean {}".format(F1_mean))
-    logging.info("F1 mean {}".format(F1_mean))
+    logging.info('F1 mean {}'.format(F1_mean))
     print('Finished Validation')
     logging.info('Finished Validation')
     return F1_weighted, test_acc
