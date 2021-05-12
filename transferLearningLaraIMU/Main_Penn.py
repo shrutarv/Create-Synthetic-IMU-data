@@ -32,7 +32,7 @@ returns list of precision and recall values
 '''  
 
 
-def setup_experiment_logger(logging_level=logging.DEBUG, filename=None):
+def setup_experiment_logger(logging_level=logging.ERROR, filename=None):
     # set up the logging
     logging_format = '[%(asctime)-19s, %(name)s, %(levelname)s] %(message)s'
     if filename != None:
