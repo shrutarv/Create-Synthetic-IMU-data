@@ -60,7 +60,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     #Epochs
 
-    epochs = {'locomotion' : {'cnn' : {'softmax' : 40, 'attribute': 5},
+    epochs = {'locomotion' : {'cnn' : {'softmax' : 1, 'attribute': 5},
                               'lstm' : {'softmax' : 10, 'attribute': 5},
                               'cnn_imu' : {'softmax' : 40, 'attribute': 5}},
               'gesture' : {'cnn' : {'softmax' : 10, 'attribute': 5},
@@ -145,7 +145,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       '/' + reshape_folder + '/' + 'final/'
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-        folder_exp = '/data/sawasthi/Opportunity/model/model_tl_CAD.pt'
+        folder_exp = '/data/sawasthi/Opportunity/model/'
         folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model__tf_12.pt'
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
