@@ -394,6 +394,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.savefig('/data/sawasthi/LaraIMU/results/result_tl.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+        flag = False
         
 def testing(config):
     print('Start Testing')

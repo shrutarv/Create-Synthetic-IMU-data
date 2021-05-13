@@ -301,7 +301,7 @@ def load_weights(network):
         return network
   
        
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,flag):
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -367,23 +367,24 @@ def training(dataLoader_train, dataLoader_validation, device):
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    if(flag):
+        print('Finished Training')
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,label='training accuracy')
+        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+        
+        
 def testing(config):
     print('Start Testing')
     
@@ -417,7 +418,7 @@ def testing(config):
             #counter = out.view(-1, n_classes).size(0)
         
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
-        
+    test_acc = 100. * correct / total    
     cm = confusion_matrix(trueValue, prediction)
     print(cm)
     #precision, recall = performance_metrics(cm)
@@ -429,6 +430,7 @@ def testing(config):
     print("F1 mean",F1_mean)
     
     print('Finished Validation')
+    return F1_weighted, test_acc
       
 if __name__ == '__main__':
     seed = 42
@@ -475,84 +477,100 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
     #value = df.values.tolist()
     #print(len(df),len(value), len(value[0]))
-     
-    PAMAP_net = Network(config)
-    PAMAP_net.init_weights()
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
-    #noise = noise.float()
+    iterations = 5
+    weighted_F1_array = []
+    test_acc_array = []
+    flag = True
+    for iter in range(iterations):
+        
+        PAMAP_net = Network(config)
+        PAMAP_net.init_weights()
+        normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+        #noise = noise.float()
+        
+        criterion = nn.CrossEntropyLoss()
+        #model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+        #model = torch.load(model_path)
+        # transformed_net 
+        model = load_weights(PAMAP_net)
+        model = model.to(device)
+        print("model loaded")  
+        '''
+        PAMAP_net.conv1_1.weight = model.conv1_1.weight
+        PAMAP_net.conv1_2.weight = model.conv1_2.weight
+        PAMAP_net.conv1_1.bias = model.conv1_1.bias
+        PAMAP_net.conv1_2.bias = model.conv1_2.bias
+        
+        PAMAP_net.conv2_1.weight = model.conv2_1.weight
+        PAMAP_net.conv2_2.weight = model.conv2_2.weight
+        PAMAP_net.conv2_1.bias = model.conv2_1.bias
+        PAMAP_net.conv2_2.bias = model.conv2_2.bias
+        
+        model = set_required_grad(model)
+        model.fc4 = PAMAP_net.fc3
+        model.fc4 = PAMAP_net.fc4
+        model.fc5 = PAMAP_net.fc5
+        model.softmax = PAMAP_net.softmax
+        '''
+        model = set_required_grad(model)
+        #optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+        optimizer.zero_grad()
+        #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+        path = '/data/sawasthi/PAMAP2/trainData/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        train_dataset = CustomDataSet(path)
+        dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+      
+       
+        # Validation data    
+        path = '/data/sawasthi/PAMAP2/validationData/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        validation_dataset = CustomDataSet(path)
+        dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+        # Test data    
+        path = '/data/sawasthi/PAMAP2/testData/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        '''
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            data_x = harwindow_batched["data"]
+            data_x.to(device)
+            value = max_min_values(data_x,value)
+        '''
+        model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD.pth'
+        training(dataLoader_train, dataLoader_validation,device,flag)
+        flag = False
+        WF, TA = testing(config)
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+        weighted_F1_array.append(WF)
+        test_acc_array.append(TA)
+        
+    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
+    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
     
-    criterion = nn.CrossEntropyLoss()
-    #model_path = '/data/sawasthi/data/JHMDB/model/model_tl.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    #model = torch.load(model_path)
-    # transformed_net 
-    model = load_weights(PAMAP_net)
-    model = model.to(device)
-    print("model loaded")  
-    '''
-    PAMAP_net.conv1_1.weight = model.conv1_1.weight
-    PAMAP_net.conv1_2.weight = model.conv1_2.weight
-    PAMAP_net.conv1_1.bias = model.conv1_1.bias
-    PAMAP_net.conv1_2.bias = model.conv1_2.bias
-    
-    PAMAP_net.conv2_1.weight = model.conv2_1.weight
-    PAMAP_net.conv2_2.weight = model.conv2_2.weight
-    PAMAP_net.conv2_1.bias = model.conv2_1.bias
-    PAMAP_net.conv2_2.bias = model.conv2_2.bias
-    
-    model = set_required_grad(model)
-    model.fc4 = PAMAP_net.fc3
-    model.fc4 = PAMAP_net.fc4
-    model.fc5 = PAMAP_net.fc5
-    model.softmax = PAMAP_net.softmax
-    '''
-    model = set_required_grad(model)
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
-    optimizer.zero_grad()
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/PAMAP2/trainData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    train_dataset = CustomDataSet(path)
-    dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-  
-   
-    # Validation data    
-    path = '/data/sawasthi/PAMAP2/validationData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    validation_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    
-    # Test data    
-    path = '/data/sawasthi/PAMAP2/testData/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
-    model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD.pth'
-    training(dataLoader_train, dataLoader_validation,device)
-    testing(config)
-    
+    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
+    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+        

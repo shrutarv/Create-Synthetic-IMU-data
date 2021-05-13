@@ -382,6 +382,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
+        
 def testing(config):
     print('Start Testing')
     test_acc = 0
@@ -555,6 +556,7 @@ if __name__ == '__main__':
         '''
         model_path_tl = '/data/sawasthi/Penn/model/model_tl_PAMAP2.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
+        flag = False
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
