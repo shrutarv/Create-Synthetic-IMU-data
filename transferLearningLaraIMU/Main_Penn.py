@@ -491,7 +491,7 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 200
+        epochs = 70
         batch_size = 100
         learning_rate = 0.00001
         logging.info('sliding_window_length {} epoch: {} batch_size: {} accumulation steps: {} ws: {} learning_rate: {}'.format(config["sliding_window_length"],epochs,batch_size,accumulation_steps,ws,learning_rate))
@@ -536,7 +536,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/LaraIMU/trainData_75per/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
