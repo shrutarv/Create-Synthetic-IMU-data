@@ -397,7 +397,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         flag = False
         
 def testing(config):
-    print('Start Testing')
+    
     logging.info('Start Testing')
     total = 0.0
     correct = 0.0
@@ -428,25 +428,25 @@ def testing(config):
             correct += (predicted_classes == test_batch_l).sum().item()
             #counter = out.view(-1, n_classes).size(0)
         
-    print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
+    
     logging.info('Test set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
     cm = confusion_matrix(trueValue, prediction)
     test_acc = 100. * correct / total        
     
-    print(cm)
+    
     logging.info('confusion matrix {}'.format(cm))
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
-    print("precision", precision)
+   
     logging.info('precision {}'.format(precision))
-    print("recall", recall)
+    
     logging.info('recall {}'.format(recall))
-    print("F1 weighted", F1_weighted)
+    
     logging.info('F1 weighted {}'.format(F1_weighted))
-    print("F1 mean {}".format(F1_mean))
+    
     logging.info('F1 mean {}'.format(F1_mean))
-    print('Finished Validation')
+    
     logging.info('Finished Validation')
     return F1_weighted, test_acc
      
