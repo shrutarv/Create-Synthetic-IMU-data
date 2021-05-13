@@ -305,7 +305,7 @@ def locomotion_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                           freeze=fopt, proportions_id = pp, gpudevice = "0")
+                                           freeze=1, proportions_id = pp, gpudevice = "0")
                         setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_c1.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
