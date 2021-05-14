@@ -303,9 +303,9 @@ def locomotion_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                           freeze=1, proportions_id = pp, gpudevice = "0")
+                                           freeze=0, proportions_id = pp, gpudevice = "0")
                         setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_c1_c2.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
