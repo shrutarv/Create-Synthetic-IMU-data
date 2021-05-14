@@ -371,8 +371,8 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save(model, model_path_tl)
-              logging.info('model saved on epoch', e)
-              print("model saved on epoch", e)
+              logging.info('model saved on epoch {}'.format(e))
+              
               best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
@@ -578,7 +578,7 @@ if __name__ == '__main__':
         '''
         model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl.pth'
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
@@ -592,4 +592,4 @@ if __name__ == '__main__':
     sys.stdout.write("Standard deviation of Weighted F1 score after 5 runs is {}".format(np.std(weighted_F1_array)))
     logging.info("Mean Test accuracy score after 5 runs is {}".format(np.mean(test_acc_array)))
     sys.stdout.write("Standard deviation of Test accuracy score after 5 runs is {}".format(np.std(test_acc_array)))
-    
+    logging.info('Standard deviation of Test accuracy score after 5 runs is {}'.format(np.std(test_acc_array)))
