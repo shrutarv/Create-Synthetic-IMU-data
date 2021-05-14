@@ -348,5 +348,6 @@ if __name__ == '__main__':
     #pamap2_main()
     locomotion_main()
     #gestures_main()
-    
+    np.mean([84.657,])
+    np.mean([84.241,])
     print("Done")
