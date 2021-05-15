@@ -247,8 +247,8 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              #torch.save(model, model_path)
               torch.save(model, model_path)
+              
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -286,7 +286,6 @@ def Testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     model = torch.load(model_path)
-    
     print("best model loaded")
     model.eval()
     with torch.no_grad():
@@ -372,11 +371,11 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 1
+    epochs = 30
     batch_size = 100
    
     flag = True
-    iterations = 1
+    iterations = 5
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -443,7 +442,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         print('Start Testing')
         WF, TA = Testing(config)
         flag = False
