@@ -248,8 +248,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               #torch.save(model, model_path)
-              torch.save({'state_dict': model.state_dict()}, model_path)
-
+              torch.save(model, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -287,6 +286,7 @@ def Testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     model = torch.load(model_path)
+    
     print("best model loaded")
     model.eval()
     with torch.no_grad():
@@ -407,7 +407,7 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Lara_motionminer/model/model_test.pth'
+        model_path = '/data/sawasthi/Lara_motionminer/model/model_10_75.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
         path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
