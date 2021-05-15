@@ -281,7 +281,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
-def Testing():
+def Testing(config):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -443,7 +443,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         print('Start Testing')
         WF, TA = Testing(config)
         flag = False
