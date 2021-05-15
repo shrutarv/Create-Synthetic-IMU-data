@@ -628,7 +628,7 @@ class Network_User(object):
                         logging.info('        Network_User:            Saving the network')
 
                         torch.save({'state_dict': self.network_obj.state_dict()},
-                                   self.config['folder_exp'] + 'network__c1_c2_c3.pt')
+                                   self.config['model_path'])
                         best_acc_val = acc_val
 
                 # Plotting
@@ -690,7 +690,7 @@ class Network_User(object):
             logging.info('        Network_User:            Saving the network')
 
             torch.save({'state_dict': self.network_obj.state_dict()},
-                       self.config['folder_exp'] + 'network_c1_c2_c3.pt')
+                       self.config['model_path'])
 
         elapsed_time_train = time.time() - start_time_train
 
@@ -804,7 +804,7 @@ class Network_User(object):
             network_obj = Network(self.config)
 
             # Loading the model
-            network_obj.load_state_dict(torch.load(self.config['folder_exp'] + 'network.pt')['state_dict'])
+            network_obj.load_state_dict(torch.load(self.config['model_path'])['state_dict'])
             network_obj.eval()
 
             logging.info('        Network_User:    Test:    setting device')
