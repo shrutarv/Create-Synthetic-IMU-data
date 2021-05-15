@@ -288,7 +288,7 @@ def Testing(config):
     prediction = np.array([], dtype=np.int64)
     model = torch.load(model_path)
     print("best model loaded")
-    #model.eval()
+    model.eval()
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
@@ -372,11 +372,11 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 30
+    epochs = 1
     batch_size = 100
    
     flag = True
-    iterations = 5
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -407,7 +407,7 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Lara_motionminer/model/model_10_75.pth'
+        model_path = '/data/sawasthi/Lara_motionminer/model/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
         path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
