@@ -288,7 +288,7 @@ def Testing(config):
     prediction = np.array([], dtype=np.int64)
     model = torch.load(model_path)
     print("best model loaded")
-    model.eval()
+    #model.eval()
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
