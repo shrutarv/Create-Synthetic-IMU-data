@@ -363,7 +363,8 @@ def training(dataLoader_train, dataLoader_validation, device):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
+              #torch.save(model, model_path)
+              torch.save({'state_dict': model.state_dict()}, config['model_path'])
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -401,7 +402,7 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    model = torch.load(model_path)
+    model = torch.load(config['model_path'])
     model.eval()
     model.to(device)
     loss_test = 0.0
@@ -576,7 +577,8 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-        "step_size":12
+        "step_size":12,
+        "model_path": '/data/sawasthi/JHMDB/model/model__tf.pt'
         }
 
 
@@ -584,7 +586,7 @@ if __name__ == '__main__':
     accumulation_steps = 5
     epochs = 80
     batch_size = 50
-    learning_rate = 0.0001
+    learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -607,7 +609,7 @@ if __name__ == '__main__':
     #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
     
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/JHMDB/model/model_tf.pth'
+    
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     path = '/data/sawasthi/JHMDB/trainData_tf/'
@@ -641,7 +643,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    training(dataLoader_train, dataLoader_validation,device)
+    training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/JHMDB/validationData_75a/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
