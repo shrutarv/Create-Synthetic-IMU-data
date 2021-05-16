@@ -299,7 +299,7 @@ def setting_samples_from_windows(self, targets, predictions_test, targets_files)
 
 
 
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,config):
     print('Start Training')
     correct = 0
     total_loss = 0
