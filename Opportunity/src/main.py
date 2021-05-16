@@ -146,7 +146,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
         folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model__tf.pt'
+        folder_exp_base_fine_tuning = '/data/sawasthi/Penn/model/model__tf.pt'
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_c1.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_c1.pt'}
     
     return configuration
 
@@ -307,7 +307,7 @@ def locomotion_main():
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = pp, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_JHMDB_c1.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_Penn_c1.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
