@@ -444,7 +444,7 @@ if __name__ == '__main__':
     random.seed(seed)
 
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
