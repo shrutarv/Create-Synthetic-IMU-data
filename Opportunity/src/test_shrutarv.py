@@ -4,7 +4,7 @@ Created on Tue May 11 14:44:34 2021
 
 @author: STUDENT
 """
-from Network import Network
+from network import Network
 import torch
 
 config = {
