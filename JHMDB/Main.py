@@ -625,7 +625,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_tf/'
+    path = '/data/sawasthi/JHMDB/validationData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
