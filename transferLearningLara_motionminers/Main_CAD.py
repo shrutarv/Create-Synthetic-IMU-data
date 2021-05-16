@@ -301,7 +301,7 @@ def load_weights(network):
         return network
         
         
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,flag):
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -367,23 +367,23 @@ def training(dataLoader_train, dataLoader_validation, device):
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
-    
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,label='training accuracy')
-    plt.plot(ep,validation_acc, label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/CAD60/results/result_tl.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    if(flag):
+        print('Finished Training')
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,label='training accuracy')
+        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/CAD60/results/result_tl.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+        
 def testing(config):
     print('Start Testing')
     test_acc = 0
@@ -458,20 +458,21 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_tf_12.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/CAD60/model/model_tf_12.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
     ws=100
     accumulation_steps = 5
-    epochs = 30
+    epochs = 1
     batch_size = 100
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    iterations = 5
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
+    flag = True
     for iter in range(iterations):
             
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -500,7 +501,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/Lara_motionminer/trainData_10/'
+        path = '/data/sawasthi/data/Lara_motionminer/trainData_10_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -513,7 +514,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/Lara_motionminer/validationData_10/'
+        path = '/data/sawasthi/data/Lara_motionminer/validationData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -525,7 +526,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/Lara_motionminer/testData_10/'
+        path = '/data/sawasthi/data/Lara_motionminer/testData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -540,9 +541,10 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_tl_CAD.pth'
         training(dataLoader_train, dataLoader_validation,device)
         WF, TA = testing(config)
+        flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         weighted_F1_array.append(WF)
