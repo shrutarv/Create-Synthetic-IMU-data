@@ -442,7 +442,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         print('Start Testing')
         WF, TA = Testing(config)
         flag = False
