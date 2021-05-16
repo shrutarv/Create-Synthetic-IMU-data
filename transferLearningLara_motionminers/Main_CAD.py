@@ -380,7 +380,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/CAD60/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -465,11 +465,11 @@ if __name__ == '__main__':
 
     ws=100
     accumulation_steps = 5
-    epochs = 30
+    epochs = 1
     batch_size = 100
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    iterations = 5
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     flag = True
