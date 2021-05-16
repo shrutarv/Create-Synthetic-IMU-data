@@ -380,7 +380,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/CAD60/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/data/CAD60/results/result_tl_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -501,7 +501,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/data/LaraMM/trainData_10_75/'
+        path = '/data/sawasthi/data/LaraMM/trainData_10_50/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -541,7 +541,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/LaraMM/model/model_tl_CAD.pth'
+        model_path_tl = '/data/sawasthi/data/LaraMM/model/model_tl_CAD_50.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
