@@ -199,7 +199,7 @@ class PermutationTest(SignificanceBase):
         @param a: ndarray of the first sample set
         @param b: ndarray of the second sample set
         @return: [p, num]
-                 p - the approximate probability that the two sequences are not different
+                 p - the approximate probability that the two sequences are same
                  num - the number of permutations tested
         '''
         samples_a = samples_a.flatten()
@@ -237,7 +237,7 @@ class PermutationTest(SignificanceBase):
         @param engine: The implementation to be used. Can be 'cpp' or 'python'
 
         @return: [p, num, total]
-                 p - the approximate probability that the two sequences are not different
+                 p - the approximate probability that the two sequences are not different or same
                  num - the number of permutations tested
                  total - the number of permutations possible
         '''
