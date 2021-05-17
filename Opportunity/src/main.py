@@ -160,7 +160,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
 
     #dataset
     dataset_root = {'locomotion': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
-                    'gesture': '/data/fmoya/HAR/datasets/OpportunityUCIDataset/',
+                    'gesture': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'pamap2': '/data/fmoya/HAR/datasets/PAMAP/',
                     'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/'}
     
