@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_c1_c2_c3_c4.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_opp_50.pt'}
     
     return configuration
 
@@ -298,16 +298,16 @@ def locomotion_main():
     networks_arc = [0]
     fine_tunings = [8]
     frezze_opts = [0]
-    proportions_opts = [2]
+    proportions_opts = [1]
     for dset in datasets_opts:
         for ft in fine_tunings:
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = pp, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_Penn_c1_c2_c3_c4.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_50.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
