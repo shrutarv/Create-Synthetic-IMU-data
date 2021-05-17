@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_opp_50.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_ges_100.pt'}
     
     return configuration
 
@@ -322,7 +322,7 @@ def gestures_main():
     
     datasets_opts = [1]
     networks_arc = [0]
-    fine_tunings = [7]
+    fine_tunings = [0]
     frezze_opts = [0]
     proportions_opts = [2]
     for dset in datasets_opts:
@@ -330,10 +330,10 @@ def gestures_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
+                        config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                               freeze=fopt, proportions_id = pp, gpudevice = "4")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger.txt")
+                                               freeze=fopt, proportions_id = 2, gpudevice = "0")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_ges.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -347,7 +347,7 @@ if __name__ == '__main__':
     
     
     #pamap2_main()
-    locomotion_main()
-    #gestures_main()
+    #locomotion_main()
+    gestures_main()
     
     print("Done")
