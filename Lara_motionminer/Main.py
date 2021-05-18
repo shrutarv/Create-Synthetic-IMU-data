@@ -342,7 +342,7 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/Lara_motionminer/logger_10_75.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/LaraMM/logger_10_75.txt")
     
     print(":Python Platform {}".format(platform.python_version()))
     
@@ -406,9 +406,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/Lara_motionminer/model/model_10_50.pth'
+        model_path = '/data/sawasthi/data/LaraMM/model/model_10_50.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-        path = '/data/sawasthi/data/Lara_motionminer/trainData_10_50/'
+        path = '/data/sawasthi/data/LaraMM/trainData_10_50/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -420,7 +420,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/data/Lara_motionminer/validationData_10/'
+        path = '/data/sawasthi/data/LaraMM/validationData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -431,7 +431,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/data/Lara_motionminer/testData_10/'
+        path = '/data/sawasthi/data/LaraMM/testData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
