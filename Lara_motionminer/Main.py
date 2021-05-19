@@ -276,7 +276,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,'r',label='training accuracy')
         plt.plot(ep,validation_acc, 'g',label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/Lara_motionminer/results/result_10.png') 
+        plt.savefig('/data/sawasthi/data/LaraMM/results/result_10.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
@@ -371,11 +371,11 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 30
+    epochs = 1
     batch_size = 100
    
     flag = True
-    iterations = 5
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
