@@ -342,7 +342,7 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/LaraMM/logger_10_30.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/LaraMM/logger_10_50.txt")
     
     print(":Python Platform {}".format(platform.python_version()))
     
@@ -406,9 +406,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/LaraMM/model/model_10_30.pth'
+        model_path = '/data/sawasthi/data/LaraMM/model/model_10_50.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-        path = '/data/sawasthi/data/LaraMM/trainData_10_30/'
+        path = '/data/sawasthi/data/LaraMM/trainData_10_50/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
