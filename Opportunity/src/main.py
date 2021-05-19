@@ -63,7 +63,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     epochs = {'locomotion' : {'cnn' : {'softmax' : 40, 'attribute': 5},
                               'lstm' : {'softmax' : 10, 'attribute': 5},
                               'cnn_imu' : {'softmax' : 40, 'attribute': 5}},
-              'gesture' : {'cnn' : {'softmax' : 40, 'attribute': 5},
+              'gesture' : {'cnn' : {'softmax' : 64, 'attribute': 5},
                            'lstm' : {'softmax' : 6, 'attribute': 5},
                            'cnn_imu' : {'softmax' : 10, 'attribute': 32}},
               'carrots' : {'cnn' : {'softmax' : 32, 'attribute': 32},
