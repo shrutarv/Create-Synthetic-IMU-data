@@ -181,7 +181,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         train_show = {'cnn' : 50, 'lstm' : 100, 'cnn_imu' :50}
         valid_show = {'cnn' : 400, 'lstm' : 500, 'cnn_imu' :400}
 
-    proportions = [0.2, 0.5, 1.0]
+    proportions = [0.2, 0.5, 0.75, 1.0]
 
     reshape_input = False
 
@@ -298,7 +298,7 @@ def locomotion_main():
     networks_arc = [0]
     fine_tunings = [8]
     frezze_opts = [0]
-    proportions_opts = [1]
+    proportions_opts = [0]
     for dset in datasets_opts:
         for ft in fine_tunings:
             for arch in networks_arc:
