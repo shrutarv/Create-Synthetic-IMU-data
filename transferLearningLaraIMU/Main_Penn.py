@@ -462,12 +462,12 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger_c1_50.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger_c1_100.txt")
     logging.info('Finished')
     logging.info(':Python Platform {}'.format(platform.python_version()))
      
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:0" 
     else:  
           dev = "cpu"  
           
