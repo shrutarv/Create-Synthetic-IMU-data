@@ -378,7 +378,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/Penn/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/ssh sawasPenn/results/result_tl.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -442,7 +442,7 @@ if __name__ == '__main__':
 
     
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
