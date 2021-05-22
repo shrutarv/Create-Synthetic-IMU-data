@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_ges_20.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_ges_30.pt'}
     
     return configuration
 
@@ -307,7 +307,7 @@ def locomotion_main():
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = pp, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_50.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_30.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -332,8 +332,8 @@ def gestures_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                               freeze=fopt, proportions_id = 1, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_ges_20.txt")
+                                               freeze=fopt, proportions_id = 0, gpudevice = "0")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_ges_30.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
