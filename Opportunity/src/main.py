@@ -44,7 +44,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Learning rate
     learning_rates = [0.0001, 0.00001, 0.000001]
-    lr = {'locomotion': {'cnn': 0.0001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
+    lr = {'locomotion': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'gesture': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'carrots': {'cnn': 0.00001, 'lstm' : 0.000001, 'cnn_imu': 0.0001},
           'pamap2': {'cnn': 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.00001},
