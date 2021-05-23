@@ -22,7 +22,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, proportions_id=0,
                   gpudevice="0", fully_convolutional=False):
     #Flags
-    plotting = False
+    plotting = True
     fine_tunning = False
 
     #Options
@@ -44,7 +44,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Learning rate
     learning_rates = [0.0001, 0.00001, 0.000001]
-    lr = {'locomotion': {'cnn': 0.0001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
+    lr = {'locomotion': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'gesture': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'carrots': {'cnn': 0.00001, 'lstm' : 0.000001, 'cnn_imu': 0.0001},
           'pamap2': {'cnn': 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.00001},
@@ -60,7 +60,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     #Epochs
 
-    epochs = {'locomotion' : {'cnn' : {'softmax' : 80, 'attribute': 5},
+    epochs = {'locomotion' : {'cnn' : {'softmax' : 64, 'attribute': 5},
                               'lstm' : {'softmax' : 10, 'attribute': 5},
                               'cnn_imu' : {'softmax' : 40, 'attribute': 5}},
               'gesture' : {'cnn' : {'softmax' : 64, 'attribute': 5},
