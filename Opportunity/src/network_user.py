@@ -261,7 +261,7 @@ class Network_User(object):
     ###################  Plot  ######################
     ##################################################
 
-    def plot(self, fig, axis_list, plot_list, metrics_list, activaciones, tgt, pred):
+    def plot(self, fig, axis_list, plot_list, metrics_list, activaciones):
 
         logging.info('        Network_User:    Plotting')
         if self.config['plotting']:
@@ -274,8 +274,8 @@ class Network_User(object):
 
                 axis_list[an * 2].plot_surface(X, Y, act, cmap=cm.coolwarm, linewidth=1, antialiased=False)
 
-                axis_list[an * 2].set_title('Target {} and Pred {}'.format(tgt, pred))
-                axis_list[an * 2].set_xlim3d(X.min(), X.max())
+                #axis_list[an * 2].set_title('Target {} and Pred {}'.format(tgt, pred))
+                #axis_list[an * 2].set_xlim3d(X.min(), X.max())
                 axis_list[an * 2].set_xlabel('Sensor')
                 axis_list[an * 2].set_ylim3d(Y.min(), Y.max())
                 axis_list[an * 2].set_ylabel('Time')
@@ -664,9 +664,9 @@ class Network_User(object):
                         #activaciones.append(feature_maps[1].to("cpu", torch.double).detach().numpy()[0,0,:,:])
                         #activaciones.append(feature_maps[2].to("cpu", torch.double).detach().numpy()[0,0,:,:])
                         #activaciones.append(feature_maps[3].to("cpu", torch.double).detach().numpy()[0,0,:,:])
-                        self.plot(fig, axis_list, plot_list, metrics_list, activaciones,
-                                 harwindow_batched["label"][:, 0].item(),
-                                 torch.argmax(feature_maps[0], dim=0).item())
+                        self.plot(fig, axis_list, plot_list, metrics_list, activaciones)
+                                # harwindow_batched["label"][:, 0].item(),
+                                # torch.argmax(feature_maps[0], dim=0).item())
 
                     # print statistics
                     logging.info('\n')
