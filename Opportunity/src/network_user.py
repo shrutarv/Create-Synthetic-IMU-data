@@ -51,7 +51,8 @@ class Network_User(object):
         logging.info('        Network_User: Constructor')
 
         self.config = config
-        self.device = torch.device("cuda:{}".format(self.config["GPU"]) if torch.cuda.is_available() else "cpu")
+        #self.device = torch.device("cuda:{}".format(self.config["GPU"]) if torch.cuda.is_available() else "cpu")
+        self.device = torch.device("cuda:1")
         self.attrs = None
         self.network_obj = Network(self.config)
 
