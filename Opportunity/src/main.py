@@ -44,7 +44,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Learning rate
     learning_rates = [0.0001, 0.00001, 0.000001]
-    lr = {'locomotion': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
+    lr = {'locomotion': {'cnn': 0.0001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'gesture': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'carrots': {'cnn': 0.00001, 'lstm' : 0.000001, 'cnn_imu': 0.0001},
           'pamap2': {'cnn': 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.00001},
@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_ges_75.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_50.pt'}
     
     return configuration
 
@@ -296,7 +296,7 @@ def locomotion_main():
     
     datasets_opts = [0]
     networks_arc = [0]
-    fine_tunings = [8]
+    fine_tunings = [0]
     frezze_opts = [0]
     proportions_opts = [0]
     for dset in datasets_opts:
@@ -307,7 +307,7 @@ def locomotion_main():
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = pp, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_30.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_loc_50.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -347,7 +347,7 @@ if __name__ == '__main__':
     
     
     #pamap2_main()
-    #locomotion_main()
-    gestures_main()
+    locomotion_main()
+    #gestures_main()
     
     print("Done")
