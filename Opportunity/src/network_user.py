@@ -51,8 +51,7 @@ class Network_User(object):
         logging.info('        Network_User: Constructor')
 
         self.config = config
-        #self.device = torch.device("cuda:{}".format(self.config["GPU"]) if torch.cuda.is_available() else "cpu")
-        self.device = torch.device("cuda:1")
+        self.device = torch.device("cuda:{}".format(self.config["GPU"]) if torch.cuda.is_available() else "cpu")
         self.attrs = None
         self.network_obj = Network(self.config)
 
@@ -327,14 +326,14 @@ class Network_User(object):
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
 
-        pretrained_dict = torch.load(self.config['folder_exp_base_fine_tuning'], map_location=torch.device('cpu'))['state_dict']
+        pretrained_dict = torch.load(self.config['folder_exp_base_fine_tuning'], map_location=torch.device("cuda:1"))['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
         #for k, v in pretrained_dict.items():
         #    print(k)
 
         if self.config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif self.config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
