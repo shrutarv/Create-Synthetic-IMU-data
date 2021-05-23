@@ -22,7 +22,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, proportions_id=0,
                   gpudevice="0", fully_convolutional=False):
     #Flags
-    plotting = True
+    plotting = False
     fine_tunning = False
 
     #Options
@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_50.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_ges_c1.pt'}
     
     return configuration
 
@@ -330,10 +330,10 @@ def gestures_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=0,
+                        config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                               freeze=fopt, proportions_id = 1, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_ges_75.txt")
+                                               freeze=fopt, proportions_id = 3, gpudevice = "0")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_Penn_ges_c1.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -347,7 +347,7 @@ if __name__ == '__main__':
     
     
     #pamap2_main()
-    locomotion_main()
-    #gestures_main()
+    #locomotion_main()
+    gestures_main()
     
     print("Done")
