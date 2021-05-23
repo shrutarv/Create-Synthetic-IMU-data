@@ -664,9 +664,9 @@ class Network_User(object):
                         #activaciones.append(feature_maps[1].to("cpu", torch.double).detach().numpy()[0,0,:,:])
                         #activaciones.append(feature_maps[2].to("cpu", torch.double).detach().numpy()[0,0,:,:])
                         #activaciones.append(feature_maps[3].to("cpu", torch.double).detach().numpy()[0,0,:,:])
-                        self.plot(fig, axis_list, plot_list, metrics_list, activaciones,
-                                  harwindow_batched["label"][:, 0][0].item(),
-                                  torch.argmax(feature_maps[0], dim=0).item())
+                        self.plot(fig, axis_list, plot_list, metrics_list, activaciones)
+                           #       harwindow_batched["label"][:, 0][0].item(),
+                            #      torch.argmax(feature_maps[0], dim=0).item())
 
                     # print statistics
                     logging.info('\n')
