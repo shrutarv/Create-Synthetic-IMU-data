@@ -22,7 +22,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, proportions_id=0,
                   gpudevice="0", fully_convolutional=False):
     #Flags
-    plotting = False
+    plotting = True
     fine_tunning = False
 
     #Options
