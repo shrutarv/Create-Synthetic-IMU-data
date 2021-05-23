@@ -22,7 +22,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, proportions_id=0,
                   gpudevice="0", fully_convolutional=False):
     #Flags
-    plotting = True
+    plotting = False
     fine_tunning = False
 
     #Options
@@ -44,7 +44,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Learning rate
     learning_rates = [0.0001, 0.00001, 0.000001]
-    lr = {'locomotion': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
+    lr = {'locomotion': {'cnn': 0.0001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'gesture': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'carrots': {'cnn': 0.00001, 'lstm' : 0.000001, 'cnn_imu': 0.0001},
           'pamap2': {'cnn': 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.00001},
@@ -60,7 +60,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     #Epochs
 
-    epochs = {'locomotion' : {'cnn' : {'softmax' : 64, 'attribute': 5},
+    epochs = {'locomotion' : {'cnn' : {'softmax' : 80, 'attribute': 5},
                               'lstm' : {'softmax' : 10, 'attribute': 5},
                               'cnn_imu' : {'softmax' : 40, 'attribute': 5}},
               'gesture' : {'cnn' : {'softmax' : 64, 'attribute': 5},
@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_30.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_50.pt'}
     
     return configuration
 
@@ -307,7 +307,7 @@ def locomotion_main():
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = 1, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_loc_30.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_loc_50.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -332,7 +332,7 @@ def gestures_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                               freeze=fopt, proportions_id = 2, gpudevice = "0")
+                                               freeze=fopt, proportions_id = 1, gpudevice = "0")
                         setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_opp_ges_75.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
