@@ -337,7 +337,7 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     model = torch.load(model_path)
-    #model.eval()
+    model.eval()
     model.to(device)
     loss_test = 0.0
     with torch.no_grad():
@@ -518,7 +518,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 1
+    epochs = 60
     batch_size = 100
     lr_factor = 1
     l = []
@@ -595,7 +595,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    testing(config)
+    #testing(config)
     '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
