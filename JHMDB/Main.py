@@ -578,7 +578,7 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model__tf.pt'
+        "model_path": '/data/sawasthi/JHMDB/model/model_opp_tf.pt'
         }
 
 
@@ -612,7 +612,7 @@ if __name__ == '__main__':
     
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/JHMDB/trainData_tf/'
+    path = '/data/sawasthi/JHMDB/trainData_opp_tf/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -656,8 +656,8 @@ if __name__ == '__main__':
                                    pin_memory=True,
                                    drop_last=True)
     
-    #testing(config)
-    path = '/data/sawasthi/JHMDB/testData_75a/'
+    testing(config)
+    path = '/data/sawasthi/JHMDB/testData_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
