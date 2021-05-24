@@ -203,17 +203,17 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 2
+    up = 0.5
     #ws = (100,31)
     ws = (100,26) 
-    ss = (12,26)     
+    ss = (1,26)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 12
+    sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
+    #df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
     data = df.values
     data_new = data[:,1:27]
     attr = np.zeros((100,1))
@@ -228,10 +228,14 @@ if __name__ == '__main__':
     
     data = normalize(data,value, "train")
     print("train data normalized")
-    # time sampled
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    # up sampled
+    #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    # down sampled
+    x_sampled=data[0::2]
+    
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
+    
     #y_sampled2 = np.zeros((len(x_sampled),1))
     for i in range(1,(data.shape[1]-1)):
         #for index in range(12,len(data[0])*up-12):
@@ -259,7 +263,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_12/'
+    data_dir =  '/data/sawasthi/Penn/trainData_opp_1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -271,12 +275,14 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/Penn/testData_12/'
+    data_dir =  '/data/sawasthi/Penn/testData_opp_1/'
     df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+   # x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+   # down sampled
+    x_sampled=data[0::2] 
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
@@ -304,13 +310,15 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/Penn/validationData_12/'
+    data_dir =  '/data/sawasthi/Penn/validationData_opp_12/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Penn/validation_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    # down sampled
+    x_sampled=data[0::2] 
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
