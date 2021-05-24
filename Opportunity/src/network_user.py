@@ -877,7 +877,7 @@ class Network_User(object):
 
         # Computing metrics
         acc_test, f1_weighted_test, f1_mean_test = metrics_obj.metric(test_labels, predictions_test)
-
+        print("For p- value. The size of test dataset", test_labels.shape())
         # print statistics
         logging.info(
             '        Network_User:        Testing:    elapsed time {} acc {}, f1_weighted {}, f1_mean {}'.format(
