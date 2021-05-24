@@ -305,7 +305,10 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    label = data[:,len(data[0])-1].astype(int)
+    label = label[0::2]
+    
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -342,7 +345,10 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    label = data[:,len(data[0])-1].astype(int)
+    label = label[0::2]
+    
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
