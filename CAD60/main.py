@@ -571,7 +571,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
    
-    training(dataLoader_train, dataLoader_validation,device)
+    #training(dataLoader_train, dataLoader_validation,device)
     # Test data    
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/CAD60/validationData_opp_ss_12/'
@@ -595,7 +595,7 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-    #testing(config)
+    testing(config)
     '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
