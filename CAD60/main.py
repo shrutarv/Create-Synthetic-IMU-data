@@ -518,7 +518,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 60
+    epochs = 1
     batch_size = 100
     lr_factor = 1
     l = []
