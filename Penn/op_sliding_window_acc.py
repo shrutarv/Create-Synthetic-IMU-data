@@ -317,7 +317,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/Penn/validationData_opp_12/'
+    data_dir =  '/data/sawasthi/Penn/validationData_opp_1/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Penn/validation_data.csv')
     data = df.values
