@@ -232,6 +232,7 @@ if __name__ == '__main__':
     #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     # down sampled
     x_sampled=data[0::2]
+    x_sampled = x_sampled[:,0]
     
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
@@ -283,6 +284,7 @@ if __name__ == '__main__':
    # x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
    # down sampled
     x_sampled=data[0::2] 
+    x_sampled = x_sampled[:,0]
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
@@ -319,6 +321,7 @@ if __name__ == '__main__':
     #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     # down sampled
     x_sampled=data[0::2] 
+    x_sampled = x_sampled[:,0]
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
