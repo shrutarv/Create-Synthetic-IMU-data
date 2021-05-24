@@ -204,7 +204,7 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 4
+    up = 2
     #ws = (100,31)
     ws = (100,30) 
     ss = (12,30)     
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/JHMDB/trainData_tf/'
+    data_dir =  '/data/sawasthi/JHMDB/trainData_opp_tf/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     label = np.repeat(data[:,31],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
