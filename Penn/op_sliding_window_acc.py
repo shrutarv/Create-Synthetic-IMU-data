@@ -203,7 +203,7 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 0.5
+   # up = 0.5
     #ws = (100,31)
     ws = (100,26) 
     ss = (1,26)     
@@ -266,7 +266,9 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/Penn/trainData_opp_1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
-    label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
+    label = data[:,len(data[0])-1].astype(int)
+    label = label[0::2]
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
