@@ -377,7 +377,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/LaraIMU/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/LaraIMU/results/result_tl.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -505,7 +505,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/data/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/LaraIMU/trainData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -530,7 +530,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/data/LaraIMU/testData_100/'
+        path = '/data/sawasthi/LaraIMU/testData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -545,7 +545,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/LaraIMU/model/model_tl_JHMDB_LIMU_p.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_p.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
