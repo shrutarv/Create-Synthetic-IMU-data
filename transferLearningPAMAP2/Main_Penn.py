@@ -378,7 +378,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/Penn/results/result_tl_75.png') 
+        plt.savefig('/data/sawasthi/data/Penn/results/result_tl_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -456,11 +456,11 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model_pose_1.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
-    iterations = 5
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -554,7 +554,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Penn/model/model_tl_PAMAP2_50.pth'
+        model_path_tl = '/data/sawasthi/data/Penn/model/model_tl_Penn_PAMAP_c1_pose_50.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
