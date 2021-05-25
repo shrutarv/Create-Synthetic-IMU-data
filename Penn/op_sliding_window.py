@@ -206,11 +206,11 @@ if __name__ == '__main__':
     up = 1
     #ws = (100,31)
     ws = (50,26) 
-    ss = (10,26)     
+    ss = (1,26)     
     #ss = (25,31)
     sliding_window_length = 50   
     #sliding_window_length = 100    
-    sliding_window_step = 10
+    sliding_window_step = 1
     
     df = pd.read_csv('/data/sawasthi/data/Penn/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
@@ -236,7 +236,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/trainData_pose/'
+    data_dir =  '/data/sawasthi/data/Penn/trainData_pose_1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -247,8 +247,6 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/data/Penn/testData_a/'
     df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -259,7 +257,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/testData_pose/'
+    data_dir =  '/data/sawasthi/data/Penn/testData_pose_1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -270,7 +268,6 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/data/Penn/validationData_a/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
     data = df.values
@@ -282,7 +279,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/validationData_pose/'
+    data_dir =  '/data/sawasthi/data/Penn/validationData_pose_1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
