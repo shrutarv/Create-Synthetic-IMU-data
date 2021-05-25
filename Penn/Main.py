@@ -501,7 +501,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":26,
-        "sliding_window_length":100,
+        "sliding_window_length":50,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -512,7 +512,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=50
     accumulation_steps = 5
     correct = 0
     total_loss = 0.0
