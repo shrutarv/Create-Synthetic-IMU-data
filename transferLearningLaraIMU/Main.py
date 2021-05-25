@@ -548,7 +548,7 @@ if __name__ == '__main__':
         model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_p_c1_30.pth'
         print('Start Training')
                  
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
