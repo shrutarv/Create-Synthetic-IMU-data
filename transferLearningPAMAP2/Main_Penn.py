@@ -554,7 +554,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_c1_30_pose.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_c1_75_pose.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
