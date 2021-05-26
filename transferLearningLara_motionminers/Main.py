@@ -457,13 +457,13 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_pose.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
     ws=100
-    accumulation_steps = 5
+    accumulation_steps = 2
     epochs = 40
     batch_size = 100
     learning_rate = 0.00001
@@ -499,7 +499,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
+        path = '/data/sawasthi/Lara_motionminer/trainData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -539,7 +539,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_30.pth'
+        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_pose_c1_100.pth'
         training(dataLoader_train, dataLoader_validation,device)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
