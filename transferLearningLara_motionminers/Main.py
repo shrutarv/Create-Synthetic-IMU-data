@@ -499,7 +499,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/Lara_motionminer/trainData_10/'
+        path = '/data/sawasthi/Lara_motionminer/trainData_10_50/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -539,7 +539,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_pose_c1_100.pth'
+        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_pose_c1_50.pth'
         training(dataLoader_train, dataLoader_validation,device)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
