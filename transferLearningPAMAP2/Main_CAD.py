@@ -447,7 +447,7 @@ if __name__ == '__main__':
     
     
     if torch.cuda.is_available():  
-          dev = "cuda:2" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
@@ -559,7 +559,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/CAD60/model/model_tl_CAD_pose_c1.pth'
+        model_path_tl = '/data/sawasthi/data/CAD60/model/model_tl_CAD_pose_c1_100.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
