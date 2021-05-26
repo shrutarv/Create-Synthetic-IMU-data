@@ -461,7 +461,7 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger_c1_100.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger_c1_75.txt")
     logging.info('Finished')
     logging.info(':Python Platform {}'.format(platform.python_version()))
      
@@ -536,7 +536,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/LaraIMU/trainData_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -576,7 +576,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_pose_c1.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_pose_c1_75.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
