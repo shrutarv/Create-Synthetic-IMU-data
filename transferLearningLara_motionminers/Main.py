@@ -313,7 +313,7 @@ def training(dataLoader_train, dataLoader_validation, device):
     for e in range(epochs):
           model.train()
           print("next epoch",e)
-          print("checkpoint")
+          #print("checkpoint")
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
