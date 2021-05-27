@@ -264,7 +264,7 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning']).state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:2').state_dict()
         #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
@@ -447,7 +447,7 @@ if __name__ == '__main__':
     print(":Python Platform {}".format(platform.python_version()))
      
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
