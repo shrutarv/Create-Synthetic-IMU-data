@@ -324,7 +324,7 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 50
+    epochs = 40
     batch_size = 100
     l = []
     tot_loss = 0
@@ -371,7 +371,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/PAMAP2/trainData_30/'
+    path = '/data/sawasthi/PAMAP2/trainData_50/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -411,7 +411,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/JHMDB/model/model_tl_PAMAP_c1_c2_c3_c4_30_pose.pth'
+    model_path_tl = '/data/sawasthi/JHMDB/model/model_tl_PAMAP_c1_c2_c3_c4_50_pose.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
