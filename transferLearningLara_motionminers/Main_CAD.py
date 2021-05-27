@@ -544,7 +544,7 @@ if __name__ == '__main__':
             value = max_min_values(data_x,value)
         '''
         model_path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_tl_CAD_pose_c1_30.pth'
-        #training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
