@@ -249,7 +249,7 @@ def set_required_grad(network):
 
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias''conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
+                           'conv2_1.weight', 'conv2_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -283,7 +283,7 @@ def load_weights(network):
 
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
+                           'conv2_1.weight', 'conv2_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -468,7 +468,7 @@ if __name__ == '__main__':
     logging.info(':Python Platform {}'.format(platform.python_version()))
      
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
@@ -578,7 +578,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_pose_c1_c2_c3_c4.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_pose_c1_c2_c3.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
