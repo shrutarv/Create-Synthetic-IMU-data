@@ -446,7 +446,7 @@ if __name__ == '__main__':
     random.seed(seed)
 
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
@@ -503,7 +503,7 @@ if __name__ == '__main__':
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/data/Lara_motionminer/trainData_10_50/'
+        path = '/data/sawasthi/data/Lara_motionminer/trainData_10_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -543,7 +543,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_tl_CAD_pose_c1_50.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_tl_CAD_pose_c1_75.pth'
         #training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
