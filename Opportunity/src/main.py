@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_ges_c1_c2.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_ges_c1_c2_c3_c4.pt'}
     
     return configuration
 
@@ -333,7 +333,7 @@ def gestures_main():
                         config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=1, proportions_id = 3, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_JHMDB_ges_c1_c2.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_JHMDB_ges_c1_c2_c3_c4.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
