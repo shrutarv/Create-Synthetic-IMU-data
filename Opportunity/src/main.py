@@ -146,7 +146,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
         folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model__tf_12_pose.pt'
+        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_opp_tf_12_pose.pt'
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
@@ -227,7 +227,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_CAD60_ges_c1_c2_pose.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_CAD60_ges_c1_c2_c3_c4_pose.pt'}
     
     return configuration
 
@@ -333,7 +333,7 @@ def gestures_main():
                         config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=1, proportions_id = 3, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_CAD60_ges_c1_c2_pose.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_CAD60_ges_c1_c2_c3_c4_pose.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
