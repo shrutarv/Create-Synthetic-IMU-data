@@ -878,6 +878,7 @@ class Network_User(object):
         elapsed_time_test = time.time() - start_time_test
 
         # Computing metrics
+        #print("checkpoint Number of samples in gestures is",test_labels.shape())
         acc_test, f1_weighted_test, f1_mean_test = metrics_obj.metric(test_labels, predictions_test)
         logging.info('For p- value. The size of test dataset {}' .format(test_labels.shape))
         # print statistics
