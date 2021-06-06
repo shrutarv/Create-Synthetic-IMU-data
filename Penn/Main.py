@@ -570,7 +570,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
    
-    training(dataLoader_train, dataLoader_validation,device)
+    #training(dataLoader_train, dataLoader_validation,device)
     # Test data    
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/data/Penn/testData_pose_1/'
