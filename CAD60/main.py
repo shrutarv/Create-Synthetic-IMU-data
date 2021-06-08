@@ -495,7 +495,7 @@ if __name__ == '__main__':
     
    
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
@@ -571,7 +571,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
    
-    training(dataLoader_train, dataLoader_validation,device)
+    #training(dataLoader_train, dataLoader_validation,device)
     # Test data    
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/CAD60/validationData_opp_ss_12/'
