@@ -268,7 +268,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir =  '/data/sawasthi/data/CAD60/testData_opp_acc_up1/'
+    data_dir =  '/data/sawasthi/data/CAD60/testData_acc_up1/'
     df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -302,7 +302,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
-    data_dir =  '/data/sawasthi/data/CAD60/validationData_opp_acc_up1/'
+    data_dir =  '/data/sawasthi/data/CAD60/validationData_acc_up1/'
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
