@@ -204,7 +204,7 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 2
+    up = 1
     #ws = (100,31)
     ws = (100,30) 
     ss = (12,30)     
@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 12
     
-    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data_tf.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
     data = df.values
     data_new = data[:,1:31]
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/JHMDB/trainData_opp_tf/'
+    data_dir =  '/data/sawasthi/JHMDB/trainData_acc_up1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     label = np.repeat(data[:,31],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -293,9 +293,9 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
-    '''
+    
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/JHMDB/testData_25a/'
+    data_dir =  '/data/sawasthi/JHMDB/testData_acc_up1/'
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -327,7 +327,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/JHMDB/validationData_25a/'
+    data_dir =  '/data/sawasthi/JHMDB/validationData_acc_up1/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
     data = df.values
@@ -365,6 +365,6 @@ if __name__ == '__main__':
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
     
-    '''
+    
           
     
