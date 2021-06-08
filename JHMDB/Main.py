@@ -582,7 +582,7 @@ if __name__ == '__main__':
         }
 
 
-    ws=100
+    ws=25
     accumulation_steps = 5
     epochs = 80
     batch_size = 50
