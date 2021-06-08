@@ -267,7 +267,7 @@ if __name__ == '__main__':
     data_dir =  '/data/sawasthi/data/Penn/trainData_acc_up1/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = np.repeat(data[:,46],up).astype(int)
+    label = np.repeat(data[:,27],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -305,7 +305,7 @@ if __name__ == '__main__':
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = np.repeat(data[:,46],up).astype(int)
+    label = np.repeat(data[:,28],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
@@ -342,7 +342,7 @@ if __name__ == '__main__':
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = np.repeat(data[:,46],up).astype(int)
+    label = np.repeat(data[:,28],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
