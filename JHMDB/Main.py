@@ -578,7 +578,7 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_up1.pth'
+        "model_path": '/data/sawasthi/JHMDB/model/model_pose.pth'
         }
 
 
@@ -645,7 +645,7 @@ if __name__ == '__main__':
     '''
     training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/JHMDB/validationData_acc_up1/'
+    path = '/data/sawasthi/JHMDB/testData_acc_up1/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
