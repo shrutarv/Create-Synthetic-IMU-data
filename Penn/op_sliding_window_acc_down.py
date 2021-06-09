@@ -264,7 +264,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_opp_1/'
+    data_dir =  '/data/sawasthi/Penn/trainData_acc_down_2/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = data[:,len(data[0])-1].astype(int)
@@ -278,7 +278,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/Penn/testData_opp_1/'
+    data_dir =  '/data/sawasthi/Penn/testData_acc_down_2/'
     df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -317,7 +317,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/Penn/validationData_opp_1/'
+    data_dir =  '/data/sawasthi/Penn/validationData_acc_down_2/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
     data = df.values
