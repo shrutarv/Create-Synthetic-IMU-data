@@ -208,7 +208,7 @@ if __name__ == '__main__':
     ws = (25,26) 
     ss = (1,26)     
     #ss = (25,31)
-    sliding_window_length = 100   
+    sliding_window_length = ws[0]   
     #sliding_window_length = 100    
     sliding_window_step = 1
     
