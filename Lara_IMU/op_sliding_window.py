@@ -158,7 +158,7 @@ if __name__ == '__main__':
     df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     value = df.values.tolist()
    
-    data_dir =  "/data/sawasthi/data/Lara_IMU/trainData_30_new/"
+    data_dir =  "/data/sawasthi/data/Lara_IMU/trainData_50_new/"
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
