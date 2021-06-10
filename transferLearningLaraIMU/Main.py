@@ -236,8 +236,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -270,8 +269,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -379,7 +377,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/LaraIMU/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/data/Lara_IMU/results/result_tl.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -436,13 +434,13 @@ def testing(config):
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":29,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -450,12 +448,12 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_pose.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model_acc_up4.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
     flag = True
-    iterations = 2
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -463,7 +461,7 @@ if __name__ == '__main__':
         ws=100
         accumulation_steps = 5
         epochs = 40
-        batch_size = 100
+        batch_size = 200
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
                
@@ -507,7 +505,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_75_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -520,7 +518,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/LaraIMU/validationData_100/'
+        path = '/data/sawasthi/data/Lara_IMU/validationData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -532,7 +530,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/LaraIMU/testData_100/'
+        path = '/data/sawasthi/data/Lara_IMU/testData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -547,7 +545,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_p_c1_c2_c3.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_new_c1_75.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
