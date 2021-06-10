@@ -131,8 +131,8 @@ sliding_window_length = 100   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 22
 
-prop = 0.3
-data_dir =  "/data/sawasthi/data/PAMAP2/trainData_30_new/"
+prop = 0.75
+data_dir =  "/data/sawasthi/data/PAMAP2/trainData_75_new/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
