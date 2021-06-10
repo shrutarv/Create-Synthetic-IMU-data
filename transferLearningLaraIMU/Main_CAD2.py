@@ -465,14 +465,14 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
-    iterations = 2
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
         
         ws=100
         accumulation_steps = 5
-        epochs = 40
+        epochs = 64
         batch_size = 100
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
