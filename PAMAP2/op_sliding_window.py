@@ -131,7 +131,7 @@ sliding_window_length = 100   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 22
 
-data_dir =  "/data/sawasthi/data/PAMAP2/trainData_33Hz/"
+data_dir =  "/data/sawasthi/data/PAMAP2/trainData_50_new/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
@@ -148,7 +148,7 @@ X = X_train.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
-data_dir =  "/data/sawasthi/data/PAMAP2/testData_33Hz/"
+data_dir =  "/data/sawasthi/data/PAMAP2/testData_50_new/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -156,7 +156,7 @@ X = X_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
-data_dir =  "/data/sawasthi/data/PAMAP2/validationData_33Hz/"
+data_dir =  "/data/sawasthi/data/PAMAP2/validationData_50_new/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
