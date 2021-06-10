@@ -273,15 +273,15 @@ def generate_data(dataset, partition_modus, prop ):
     """
 
 
-    X_train = np.empty((0, NB_SENSOR_CHANNELS))
-    y_train = np.empty((0))
-    
+    X = np.empty((0, NB_SENSOR_CHANNELS))
+    Y = np.empty((0))
+    '''
     X_val = np.empty((0, NB_SENSOR_CHANNELS))
     y_val = np.empty((0))
     
     X_test = np.empty((0, NB_SENSOR_CHANNELS))
     y_test = np.empty((0))
-    
+    '''
     counter_files = 0
     if partition_modus == 'train':
             # dx_files = [ids for ids in range(0,10)]
@@ -306,13 +306,13 @@ def generate_data(dataset, partition_modus, prop ):
             try:
                # logging.info('Loading file...{0}'.format(PAMAP2_DATA_FILES[idx_f]))
                 data = np.loadtxt(dataset + PAMAP2_DATA_FILES[idx_f])
-                print ('Train... data size {}'.format(data.shape))
+                print (partition_modus,'... data size {}'.format(data.shape))
                 x, y = process_dataset_file(data)
                # logging.info(x.shape)
                # logging.info(y.shape)
 
-                X_train = np.vstack((X_train, x))
-                y_train = np.concatenate([y_train, y])
+                X = np.vstack((X, x))
+                Y = np.concatenate([Y, y])
             except KeyError:
                 print('ERROR: Did not find {0} in zip file'.format(PAMAP2_DATA_FILES[idx_f]))
     '''
@@ -361,21 +361,21 @@ def generate_data(dataset, partition_modus, prop ):
             
         counter_files += 1 
     '''
-    print ("Final datasets with size: | train {0} | test {1} | ".format(X_train.shape,X_test.shape))
+    print ("Final datasets with size: | train {0} | test {1} | ".format(X.shape,Y.shape))
 
-    obj = [(X_train, y_train), (X_val, y_val), (X_test, y_test)]
+    obj = [(X, Y)]
     #f = open(os.path.join(target_filename), 'wb')
    # pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
     #f.close()
 
-    return X_train,y_train,X_val, y_val, X_test, y_test
+    return X,Y
 
 
 
 
 def get_PAMAP2_data(pamap2_dataset, partition_modus, prop):
     
-    X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, partition_modus, prop)
-        
+   # X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, partition_modus, prop)
+    X,Y = generate_data(pamap2_dataset, partition_modus, prop)
     print ('Done')
-    return X_train,y_train,X_val, y_val, X_test, y_test
+    return X,Y
