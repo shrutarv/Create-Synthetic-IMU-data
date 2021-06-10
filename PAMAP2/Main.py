@@ -380,7 +380,7 @@ if __name__ == '__main__':
         "reshape_input":False
         }
 
-    iterations = 1
+    iterations = 5
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -388,7 +388,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 1
+        epochs = 64
         batch_size = 200
         learning_rate = 0.00001
               
