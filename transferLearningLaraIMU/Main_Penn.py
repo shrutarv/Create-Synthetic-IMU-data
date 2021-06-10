@@ -273,7 +273,7 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:0').state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:2').state_dict()
         #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
@@ -466,7 +466,7 @@ if __name__ == '__main__':
     logging.info(':Python Platform {}'.format(platform.python_version()))
      
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
@@ -480,7 +480,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_pose_1.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
@@ -536,7 +536,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_75_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -549,7 +549,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/LaraIMU/validationData_100/'
+        path = '/data/sawasthi/LaraIMU/validationData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -561,7 +561,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/LaraIMU/testData_100'
+        path = '/data/sawasthi/LaraIMU/testData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -576,7 +576,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_pose_c1_c2_c3.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_penn_limu_new_c1_75.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
