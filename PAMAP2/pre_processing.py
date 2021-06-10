@@ -23,19 +23,19 @@ NB_SENSOR_CHANNELS = 40
 
 # File names of the files defining the PAMAP2 data.
 PAMAP2_DATA_FILES = ['PAMAP2_Dataset/Protocol/subject101.dat', #0
-                          #'PAMAP2_Dataset/Optional/subject101.dat', #1
+                          'PAMAP2_Dataset/Optional/subject101.dat', #1
                           'PAMAP2_Dataset/Protocol/subject102.dat', #2
-                          #'PAMAP2_Dataset/Protocol/subject103.dat', #3
+                          'PAMAP2_Dataset/Protocol/subject103.dat', #3
                           'PAMAP2_Dataset/Protocol/subject104.dat', #4
-                          #'PAMAP2_Dataset/Protocol/subject107.dat', #5
+                          'PAMAP2_Dataset/Protocol/subject107.dat', #5
                           'PAMAP2_Dataset/Protocol/subject108.dat', #6
-                          #'PAMAP2_Dataset/Optional/subject108.dat', #7
+                          'PAMAP2_Dataset/Optional/subject108.dat', #7
                           'PAMAP2_Dataset/Protocol/subject109.dat', #8
-                          #'PAMAP2_Dataset/Optional/subject109.dat', #9
-                          #'PAMAP2_Dataset/Protocol/subject105.dat', #10
-                         # 'PAMAP2_Dataset/Optional/subject105.dat', #11
-                         # 'PAMAP2_Dataset/Protocol/subject106.dat', #12
-                         # 'PAMAP2_Dataset/Optional/subject106.dat', #13
+                          'PAMAP2_Dataset/Optional/subject109.dat', #9
+                          'PAMAP2_Dataset/Protocol/subject105.dat', #10
+                          'PAMAP2_Dataset/Optional/subject105.dat', #11
+                          'PAMAP2_Dataset/Protocol/subject106.dat', #12
+                          'PAMAP2_Dataset/Optional/subject106.dat', #13
                           ]
 
 
