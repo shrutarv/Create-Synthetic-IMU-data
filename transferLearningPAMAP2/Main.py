@@ -236,8 +236,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -270,8 +269,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -314,7 +312,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_pose.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/JHMDB/model/model_tl_up4.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
@@ -371,7 +369,7 @@ if __name__ == '__main__':
     #optimizer = optim.Adam(model.parameters(), lr=0.001)
     optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
     #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    path = '/data/sawasthi/PAMAP2/trainData_75/'
+    path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -384,7 +382,7 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = '/data/sawasthi/PAMAP2/validationData/'
+    path = '/data/sawasthi/data/PAMAP2/validationData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -396,7 +394,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     # Test data    
-    path = '/data/sawasthi/PAMAP2/testData/'
+    path = '/data/sawasthi/data/PAMAP2/testData/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -411,7 +409,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    model_path_tl = '/data/sawasthi/JHMDB/model/model_tl_PAMAP_c1_c2_c3_c4_75_pose.pth'
+    model_path_tl = '/data/sawasthi/data/JHMDB/model/model_tl_PAMAP_new_c1_50.pth'
     print('Start Training')
     correct = 0
     total_loss = 0
