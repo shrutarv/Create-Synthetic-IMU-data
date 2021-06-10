@@ -140,7 +140,7 @@ data_dir =  "/data/sawasthi/data/PAMAP2/trainData_50_new/"
 #    print (np.shape(i[:,0]))
 #dataset = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 dataset = '/vol/actrec/PAMAP/'
-target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
+
 partition_modus = "train"
 X_t,Y_t = get_PAMAP2_data(dataset,  partition_modus, prop)
 
@@ -158,7 +158,7 @@ label = Y_t.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 X = X_t.astype(object)
-k = 0
+k = 1
 example_creating_windows_file(k, X, lab,data_dir)
 
 partition_modus = "val"
@@ -169,7 +169,7 @@ lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
 #Y_train = np.reshape(Y_train,(len(label),1))
 X = X_t.astype(object)
-k = 0
+k = 2
 example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
 #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
