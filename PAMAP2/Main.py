@@ -364,7 +364,7 @@ def testing(config):
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:2" 
     else:  
           dev = "cpu"  
           
@@ -380,7 +380,7 @@ if __name__ == '__main__':
         "reshape_input":False
         }
 
-    iterations = 1
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -388,7 +388,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 64
+        epochs = 100
         batch_size = 200
         learning_rate = 0.00001
               
@@ -408,9 +408,9 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_50_new.pth'
+        model_path = '/data/sawasthi/data/PAMAP2/model/model_30_new.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
+        path = '/data/sawasthi/data/PAMAP2/trainData_30_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
