@@ -167,9 +167,9 @@ if __name__ == '__main__':
     #    print (np.shape(i[:,0]))
     folder_name = "S07"
     FileList_y = []
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+    os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
-    os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
+    #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name)
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
     FileList_y = glob.glob('*labels.csv')
