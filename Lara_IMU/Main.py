@@ -246,7 +246,7 @@ def training(dataLoader_train, dataLoader_validation,device,flag):
           print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-             
+              
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
@@ -372,7 +372,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":29,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -383,7 +383,7 @@ if __name__ == '__main__':
         }
 
 
-    iterations = 3
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -392,7 +392,7 @@ if __name__ == '__main__':
         ws=100
         accumulation_steps = 10
         epochs = 1
-        batch_size = 200
+        batch_size = 2
         learning_rate = 0.00001
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
@@ -417,9 +417,9 @@ if __name__ == '__main__':
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         model_path = '/data/sawasthi/Lara_IMU/model/model_75.pth'
-        #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
         path = '/data/sawasthi/data/Lara_IMU/trainData_75_new/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
+       # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
         dataLoader_train = DataLoader(train_dataset, shuffle=True,
@@ -431,7 +431,7 @@ if __name__ == '__main__':
        
         # Validation data    
         path = '/data/sawasthi/data/Lara_IMU/validationData_new/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
         dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
@@ -442,7 +442,7 @@ if __name__ == '__main__':
         
         # Test data    
         path = '/data/sawasthi/data/Lara_IMU/testData_new/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
