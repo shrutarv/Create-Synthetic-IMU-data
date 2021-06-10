@@ -142,7 +142,7 @@ data_dir =  "/data/sawasthi/data/PAMAP2/trainData_50_new/"
 dataset = '/vol/actrec/PAMAP/'
 target_filename = '/data/sawasthi/data/PAMAP2/pklFile/pamap2.pkl'
 partition_modus = "train"
-X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset,  partition_modus, prop)
 
 label = Y_train.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
@@ -152,7 +152,7 @@ k = 0
 example_creating_windows_file(k, X, lab, data_dir)
 
 partition_modus = "test"
-X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset,  partition_modus, prop)
 data_dir =  "/data/sawasthi/data/PAMAP2/testData_50_nw/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
@@ -162,7 +162,7 @@ k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
 partition_modus = "val"
-X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset, target_filename)
+X_train,Y_train,X_val, Y_val, X_test, Y_test = get_PAMAP2_data(dataset,  partition_modus, prop)
 data_dir =  "/data/sawasthi/data/PAMAP2/validationData/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
