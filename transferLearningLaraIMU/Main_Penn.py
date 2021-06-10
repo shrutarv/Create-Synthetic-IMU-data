@@ -248,8 +248,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias''conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -282,8 +281,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -474,7 +472,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":30,
+        "NB_sensor_channels":29,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -486,7 +484,7 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
-    iterations = 2
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
