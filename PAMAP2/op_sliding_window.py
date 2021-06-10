@@ -147,8 +147,8 @@ lab[:,0] = label
 X = X_train.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
-
-data_dir =  "/data/sawasthi/data/PAMAP2/testData_50_new/"
+'''
+data_dir =  "/data/sawasthi/data/PAMAP2/testData_50_nw/"
 label = Y_test.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -156,7 +156,7 @@ X = X_test.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab,data_dir)
 
-data_dir =  "/data/sawasthi/data/PAMAP2/validationData_50_new/"
+data_dir =  "/data/sawasthi/data/PAMAP2/validationData/"
 label = Y_val.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -169,7 +169,7 @@ example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
 #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
 #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
-
+'''
 
       
 
