@@ -449,7 +449,7 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     
-    iterations = 5
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -458,7 +458,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 64
+        epochs = 100
         batch_size = 200
         learning_rate = 0.00001
         print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -542,7 +542,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_c1_c2_c3_pose.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_J_PAMAP_30_new.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
