@@ -311,7 +311,7 @@ def training(dataLoader_train, dataLoader_validation,device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/PAMAP2/results/result.png') 
+        plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -383,7 +383,7 @@ if __name__ == '__main__':
         }
 
 
-    iterations = 1
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -391,7 +391,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 1
+        epochs = 64
         batch_size = 200
         learning_rate = 0.00001
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -416,7 +416,7 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Lara_IMU/model/model_75.pth'
+        model_path = '/data/sawasthi/data/Lara_IMU/model/model_75.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
         path = '/data/sawasthi/data/Lara_IMU/trainData_75_new/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
