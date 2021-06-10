@@ -481,7 +481,7 @@ if __name__ == '__main__':
         # transformed_net 
         model = load_weights(PAMAP_net)
         model = model.to(device)
-        print("model loaded")  
+        print("model loaded for iteration",iterations)  
         '''
         PAMAP_net.conv1_1.weight = model.conv1_1.weight
         PAMAP_net.conv1_2.weight = model.conv1_2.weight
@@ -502,7 +502,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/data/PAMAP2/trainData_30_new/'
+        path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
