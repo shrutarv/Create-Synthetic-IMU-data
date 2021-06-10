@@ -165,7 +165,7 @@ if __name__ == '__main__':
     #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
     
     #    print (np.shape(i[:,0]))
-    folder_name = "S11"
+    folder_name = "S12"
     FileList_y = []
     os.chdir('/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
@@ -197,7 +197,7 @@ if __name__ == '__main__':
         
         k += 1
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name + "/" + j) 
-        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S11/"+j)
+        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S12/"+j)
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
         data_y = data_y.values
@@ -205,7 +205,7 @@ if __name__ == '__main__':
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name + "/" + i) 
-        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S11/"+i)
+        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S12/"+i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
