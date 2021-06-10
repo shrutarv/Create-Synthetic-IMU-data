@@ -263,7 +263,7 @@ def process_dataset_file(data):
 
 
 
-def generate_data(dataset, target_filename):
+def generate_data(dataset, partition_modus, prop ):
     """Function to read the Pamap2 raw data and process the sensor channels
     of the protocol settings
     :param dataset: string
@@ -283,8 +283,39 @@ def generate_data(dataset, target_filename):
     y_test = np.empty((0))
     
     counter_files = 0
-    
+    if partition_modus == 'train':
+            # dx_files = [ids for ids in range(0,10)]
+            if prop == 0.2:
+                idx_files = [0, 9]
+            elif prop == 0.5:
+                idx_files = [0, 2, 4, 6, 8]
+            elif prop == 1.0:
+                idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+    elif partition_modus == 'val':
+            # idx_files = [ids for ids in range(10,12)]
+            idx_files = [10, 11]
+    elif partition_modus == 'test':
+            # idx_files = [ids for ids in range(12,14)]
+            idx_files = [12, 13]
+    else:
+            raise("Wrong Dataset partition settup")
+        #logging.info('Processing dataset files ...')
     print ('Processing dataset files ...')
+    
+    for idx_f in idx_files:
+            try:
+               # logging.info('Loading file...{0}'.format(PAMAP2_DATA_FILES[idx_f]))
+                data = np.loadtxt(dataset + PAMAP2_DATA_FILES[idx_f])
+                print ('Train... data size {}'.format(data.shape))
+                x, y = process_dataset_file(data)
+               # logging.info(x.shape)
+               # logging.info(y.shape)
+
+                X_train = np.vstack((X_train, x))
+                y_train = np.concatenate([y_train, y])
+            except KeyError:
+                print('ERROR: Did not find {0} in zip file'.format(PAMAP2_DATA_FILES[idx_f]))
+    '''
     for filename in PAMAP2_DATA_FILES:
         if counter_files <= 6:
             # Train partition
@@ -329,7 +360,7 @@ def generate_data(dataset, target_filename):
                 print( 'ERROR: Did not find {0} in zip file'.format(filename))
             
         counter_files += 1 
-
+    '''
     print ("Final datasets with size: | train {0} | test {1} | ".format(X_train.shape,X_test.shape))
 
     obj = [(X_train, y_train), (X_val, y_val), (X_test, y_test)]
@@ -342,9 +373,9 @@ def generate_data(dataset, target_filename):
 
 
 
-def get_PAMAP2_data(pamap2_dataset, output):
+def get_PAMAP2_data(pamap2_dataset, partition_modus, prop):
     
-    X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, output)
+    X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, partition_modus, prop)
         
     print ('Done')
     return X_train,y_train,X_val, y_val, X_test, y_test
