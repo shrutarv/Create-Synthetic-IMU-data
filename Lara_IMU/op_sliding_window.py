@@ -167,7 +167,7 @@ if __name__ == '__main__':
     #    print (np.shape(i[:,0]))
     folder_name = "S07"
     FileList_y = []
-    os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+    os.chdir('/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name)
@@ -197,7 +197,7 @@ if __name__ == '__main__':
         
         k += 1
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name + "/" + j) 
-        data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
+        data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S07/"+j)
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
         #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
         data_y = data_y.values
@@ -205,12 +205,12 @@ if __name__ == '__main__':
         lab = np.zeros((len(label),20), dtype=int)
         lab[:,0] = label
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/" + folder_name + "/" + i) 
-        data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+i)
+        data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/S07/"+i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
         #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
         data_x = data_x.values
         data_x = data_x[:,2:]
-        x = normalize(data_x,value,'validation')
+        x = normalize(data_x,value,'train')
         example_creating_windows_file(k, folder_name, x, lab)
         #if(k == 2):
         #  break
