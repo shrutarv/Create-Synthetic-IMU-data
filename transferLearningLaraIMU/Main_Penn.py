@@ -491,7 +491,7 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 64
+        epochs = 30
         batch_size = 100
         learning_rate = 0.00001
         logging.info('sliding_window_length {} epoch: {} batch_size: {} accumulation steps: {} ws: {} learning_rate: {}'.format(config["sliding_window_length"],epochs,batch_size,accumulation_steps,ws,learning_rate))
