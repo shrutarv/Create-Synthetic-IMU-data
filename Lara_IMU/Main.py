@@ -391,7 +391,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 60
+        epochs = 50
         batch_size = 100
         learning_rate = 0.00001
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -416,9 +416,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/Lara_IMU/model/model_30.pth'
+        model_path = '/data/sawasthi/data/Lara_IMU/model/model_50.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
-        path = '/data/sawasthi/data/Lara_IMU/trainData_30_new/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_50_new/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
