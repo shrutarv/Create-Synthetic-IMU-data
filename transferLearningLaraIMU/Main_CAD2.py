@@ -465,7 +465,7 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
-    iterations = 3
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -559,7 +559,7 @@ if __name__ == '__main__':
         '''
         model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_c1_75_new.pth'
         
-        #training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
@@ -571,4 +571,5 @@ if __name__ == '__main__':
     
     print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
-    
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array)
