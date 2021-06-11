@@ -366,7 +366,7 @@ def testing(config):
 if __name__ == '__main__':
     
     if torch.cuda.is_available():  
-          dev = "cuda:0" 
+          dev = "cuda:1" 
     else:  
           dev = "cpu"  
           
