@@ -456,11 +456,11 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_pose_1.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
-    iterations = 3
+    iterations = 5
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -554,7 +554,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_c1_75_new.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_pose_c1_75_new.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
