@@ -505,7 +505,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/data/Lara_IMU/trainData_50_new/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_30_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -545,7 +545,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_pose_new_c1_50.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_pose_new_c1_30.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
