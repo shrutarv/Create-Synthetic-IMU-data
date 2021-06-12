@@ -264,7 +264,7 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:1').state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:0').state_dict()
         #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
@@ -442,7 +442,7 @@ if __name__ == '__main__':
 
     
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:0" 
     else:  
           dev = "cpu"  
           
@@ -514,7 +514,7 @@ if __name__ == '__main__':
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/PAMAP2/trainData_50_new/'
+        path = '/data/sawasthi/PAMAP2/trainData_30_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -554,7 +554,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_pose_c1_50_new.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_pose_c1_30_new.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
