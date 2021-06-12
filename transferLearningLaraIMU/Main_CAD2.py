@@ -471,7 +471,7 @@ if __name__ == '__main__':
     for iter in range(iterations):
         
         ws=100
-        accumulation_steps = 5
+        accumulation_steps = 3
         epochs = 30
         batch_size = 100
         learning_rate = 0.00001
