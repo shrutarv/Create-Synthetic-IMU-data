@@ -308,7 +308,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     l = []
     for e in range(epochs):
           model.train()
-          print("iterations",iterations,"next epoch",e)
+          print("next epoch is",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
              
@@ -445,7 +445,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_pose.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     
@@ -542,7 +542,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_J_PAMAP_new.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_J_PAMAP_new_pose.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
