@@ -292,7 +292,7 @@ def generate_data(dataset, partition_modus, prop ):
             elif prop == 0.75:
                 idx_files = [0, 1, 2, 4, 6, 8, 9]    
             elif prop == 1.0:
-                idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
     elif partition_modus == 'val':
             # idx_files = [ids for ids in range(10,12)]
             idx_files = [10, 11]
