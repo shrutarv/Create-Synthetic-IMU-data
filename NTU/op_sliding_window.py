@@ -240,7 +240,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/JHMDB/trainData_pose_3/'
+    data_dir =  '/data/sawasthi/NTU/trainData_pose_3/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/pkl/'
     label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -252,7 +252,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/JHMDB/testData_pose_3/'
+    data_dir =  '/data/sawasthi/NTU/testData_pose_3/'
     df = pd.read_csv('/data/sawasthi/NTU/test_data_tf.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -266,7 +266,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/JHMDB/validationData_pose_3/'
+    data_dir =  '/data/sawasthi/NTU/validationData_pose_3/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
     data = df.values
