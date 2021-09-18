@@ -390,7 +390,7 @@ def training(dataLoader_train, dataLoader_validation, device,config):
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/JHMDB/results/result_10.png') 
+    plt.savefig('/data/sawasthi/NTU/results/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
@@ -578,7 +578,7 @@ if __name__ == '__main__':
         "num_classes":60,
         "reshape_input":False,
         "step_size":3,
-        "model_path": 'S:/Datasets/nturgbd_skeletons_s001_to_s017/model/model.pt'
+        "model_path": '/data/sawasthi/NTU/model/model.pt'
         }
 
 
