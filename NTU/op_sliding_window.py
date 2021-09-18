@@ -132,7 +132,7 @@ def normalize(data, min_max, string):
     
     for j in range(1,len(data[0])-1):
         data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,1:31])
+    test = np.array(data[:,1:76])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -212,9 +212,8 @@ if __name__ == '__main__':
     sliding_window_step = 3
     
     df = pd.read_csv('/data/sawasthi/NTU/train_data_tf.csv')
-    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/test_data_tf.csv')
-    data = df.values
-    data_new = data[:,1:77]
+    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf.csv')
+    data_x = df.values
     attr = np.zeros((30,1))
     value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
@@ -226,7 +225,7 @@ if __name__ == '__main__':
     plt.plot(data[:,0],data[:,1])
     '''
     
-    data = normalize(data,value, "train")
+    data = normalize(data_x,value, "train")
     print("train data normalized")
     # time sampled
      
@@ -257,7 +256,7 @@ if __name__ == '__main__':
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
-    data_new = data[:,1:31]
+    data_new = data[:,1:76]
     label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -272,7 +271,7 @@ if __name__ == '__main__':
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
-    data_new = data[:,1:31]
+    data_new = data[:,1:76]
     label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
