@@ -584,8 +584,8 @@ if __name__ == '__main__':
 
     ws=30
     accumulation_steps = 5
-    epochs = 3
-    batch_size = 5
+    epochs = 30
+    batch_size = 100
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
@@ -612,8 +612,8 @@ if __name__ == '__main__':
     
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    #path = '/data/sawasthi/JHMDB/trainData_opp_tf/'
-    path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
+    path = '/data/sawasthi/NTU/trainData_pose_3/'
+    #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
     train_dataset = CustomDataSet(path)
@@ -625,8 +625,8 @@ if __name__ == '__main__':
   
    
     # Validation data    
-    path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/val/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/val/'
+    path = '/data/sawasthi/NTU/validationData_pose_3/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -645,7 +645,7 @@ if __name__ == '__main__':
     '''
     training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/JHMDB/validationData_75a/'
+    path = '/data/sawasthi/NTU/validationData_pose_3/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -657,7 +657,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     testing(config)
-    path = '/data/sawasthi/JHMDB/testData_12/'
+    path = '/data/sawasthi/NTU/testData_pose_3/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
@@ -669,9 +669,10 @@ if __name__ == '__main__':
    
     
     print("Calculating accuracy for the trained model on test set ")
-   # testing(config)
+    testing(config)
     
 
-
+'''
 with open('S:/Datasets/nturgbd_skeletons_s001_to_s017/train/seq__0_2.pkl', 'rb') as f:
     data = pickle.load(f)
+'''

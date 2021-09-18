@@ -237,7 +237,7 @@ if __name__ == '__main__':
     #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
     # creating labels
-    '''
+    ''
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/NTU/trainData_pose_3/'
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     k = 0
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
-    '''
+    
     data_dir =  '/data/sawasthi/NTU/validationData_pose_3/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
