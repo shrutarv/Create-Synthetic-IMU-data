@@ -13,7 +13,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-NUM_CLASSES = 8
+NUM_CLASSES = 60
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -204,19 +204,20 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
    
     #ws = (100,31)
-    ws = (25,30) 
-    ss = (12,30)     
+    ws = (30,75) 
+    ss = (3,75)     
     #ss = (25,31)
-    sliding_window_length = 25   
+    sliding_window_length = 30   
     #sliding_window_length = 100    
-    sliding_window_step = 12
+    sliding_window_step = 3
     
-    #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
-    df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf.csv')
+    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/test_data_tf.csv')
     data = df.values
-    data_new = data[:,1:31]
-    attr = np.zeros((100,1))
-    value = max_min_values(data_new)
+    data_new = data[:,1:77]
+    attr = np.zeros((30,1))
+    value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
+    value = value.values
     '''
     with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
@@ -232,20 +233,16 @@ if __name__ == '__main__':
      #y_sampled.append(f(x_sampled))
      # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
 
-    data_new = data[:,1:31]
+    data_new = data[:,1:76]
     #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
     # creating labels
     
-    data_dir = "S:/Datasets/JHMDB/pkl/"
+    #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-<<<<<<< Updated upstream
-    data_dir =  '/data/sawasthi/JHMDB/trainData_pose_12/'
-=======
-    # data_dir =  '/data/sawasthi/JHMDB/trainData_pose_3/'
->>>>>>> Stashed changes
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    label = data[:,31].astype(int)
+    data_dir =  '/data/sawasthi/JHMDB/trainData_pose_3/'
+    #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/pkl/'
+    label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -255,8 +252,8 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/JHMDB/testData_pose_12/'
-    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+    data_dir =  '/data/sawasthi/JHMDB/testData_pose_3/'
+    df = pd.read_csv('/data/sawasthi/NTU/test_data_tf.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -269,9 +266,9 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/JHMDB/validationData_pose_12/'
+    data_dir =  '/data/sawasthi/JHMDB/validationData_pose_3/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")

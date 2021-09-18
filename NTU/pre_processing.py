@@ -1,191 +1,350 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Thu Oct 29 16:37:20 2020
-
-@author: STUDENT
-"""
-
 '''
-transform the skeleton data in NTU RGB+D dataset into the numpy arrays for a more efficient data loading
+@author: Fernando Moya Rueda, Shrutarv Awasthi
+Pattern Recognition Group
+Technische Universitaet Dortmund
+Process the Pamap2 dataset. It selects the files, sensor channels. In addition, it normalizes
+and downsamples the signal measurements.
+It creates a cPickle file the three matrices (train, validation and test),
+containing the sensor measurements (row for samples and columns for sensor channels) and the annotated label
+The dataset can be downloaded in  
+http://archive.ics.uci.edu/ml/datasets/pamap2+physical+activity+monitoring
 '''
 
-import numpy as np
+
 import os
-import sys 
-import csv
-
-user_name = 'user'
-save_npy_path = 'S:/MS A&R/4th Sem/Thesis/NTU/npy files/'
-load_txt_path = 'S:/MS A&R/4th Sem/Thesis/nturgb+d_skeletons/'
-missing_file_path = 'S:/MS A&R/4th Sem/Thesis/NTU/missing_files.txt'
-step_ranges = list(range(0,100)) # just parse range, for the purpose of paralle running. 
+import numpy as np
+import pickle
 
 
-toolbar_width = 50
-def _print_toolbar(rate, annotation=''):
-    sys.stdout.write("{}[".format(annotation))
-    for i in range(toolbar_width):
-        if i * 1.0 / toolbar_width > rate:
-            sys.stdout.write(' ')
-        else:
-            sys.stdout.write('-')
-        sys.stdout.flush()
-    sys.stdout.write(']\r')
 
-def _end_toolbar():
-    sys.stdout.write('\n')
+# Number of sensor channels employed in the Pamap2
+NB_SENSOR_CHANNELS = 40
 
-def _load_missing_file(path):
-    missing_files = dict()
-    with open(path, 'r') as f:
-        lines = f.readlines()
-        for line in lines:
-            line = line[:-1]
-            if line not in missing_files:
-                missing_files[line] = True 
-    return missing_files 
 
-def _read_skeleton(file_path, save_skelxyz=True, save_rgbxy=True, save_depthxy=True):
-    f = open(file_path, 'r')
-    datas = f.readlines()
-    f.close()
-    max_body = 4
-    njoints = 25
+# File names of the files defining the PAMAP2 data.
+PAMAP2_DATA_FILES = ['PAMAP2_Dataset/Protocol/subject101.dat', #0
+                          'PAMAP2_Dataset/Optional/subject101.dat', #1
+                          'PAMAP2_Dataset/Protocol/subject102.dat', #2
+                          'PAMAP2_Dataset/Protocol/subject103.dat', #3
+                          'PAMAP2_Dataset/Protocol/subject104.dat', #4
+                          'PAMAP2_Dataset/Protocol/subject107.dat', #5
+                          'PAMAP2_Dataset/Protocol/subject108.dat', #6
+                          'PAMAP2_Dataset/Optional/subject108.dat', #7
+                          'PAMAP2_Dataset/Protocol/subject109.dat', #8
+                          'PAMAP2_Dataset/Optional/subject109.dat', #9
+                          'PAMAP2_Dataset/Protocol/subject105.dat', #10
+                          'PAMAP2_Dataset/Optional/subject105.dat', #11
+                          'PAMAP2_Dataset/Protocol/subject106.dat', #12
+                          'PAMAP2_Dataset/Optional/subject106.dat', #13
+                          ]
 
-    # specify the maximum number of the body shown in the sequence, according to the certain sequence, need to pune the 
-    # abundant bodys. 
-    # read all lines into the pool to speed up, less io operation. 
-    nframe = int(datas[0][:-1])
-    bodymat = dict()
-    bodymat['file_name'] = file_path[-29:-9]
-    nbody = int(datas[1][:-1])
-    bodymat['nbodys'] = [] 
-    bodymat['njoints'] = njoints 
-    for body in range(max_body):
-        if save_skelxyz:
-            bodymat['skel_body{}'.format(body)] = np.zeros(shape=(nframe, njoints, 3))
-        if save_rgbxy:
-            bodymat['rgb_body{}'.format(body)] = np.zeros(shape=(nframe, njoints, 2))
-        if save_depthxy:
-            bodymat['depth_body{}'.format(body)] = np.zeros(shape=(nframe, njoints, 2))
-    # above prepare the data holder
-    cursor = 0
-    for frame in range(nframe):
-        cursor += 1
-        bodycount = int(datas[cursor][:-1])    
-        if bodycount == 0:
-            continue 
-        # skip the empty frame 
-        bodymat['nbodys'].append(bodycount)
-        for body in range(bodycount):
-            cursor += 1
-            skel_body = 'skel_body{}'.format(body)
-            rgb_body = 'rgb_body{}'.format(body)
-            depth_body = 'depth_body{}'.format(body)
-            
-            bodyinfo = datas[cursor][:-1].split(' ')
-            cursor += 1
-            
-            njoints = int(datas[cursor][:-1])
-            for joint in range(njoints):
-                cursor += 1
-                jointinfo = datas[cursor][:-1].split(' ')
-                jointinfo = np.array(list(map(float, jointinfo)))
-                if save_skelxyz:
-                    bodymat[skel_body][frame,joint] = jointinfo[:3]
-                if save_depthxy:
-                    bodymat[depth_body][frame,joint] = jointinfo[3:5]
-                if save_rgbxy:
-                    bodymat[rgb_body][frame,joint] = jointinfo[5:7]
-    # prune the abundant bodys 
-    for each in range(max_body):
-        if each >= max(bodymat['nbodys']):
-            if save_skelxyz:
-                del bodymat['skel_body{}'.format(each)]
-            if save_rgbxy:
-                del bodymat['rgb_body{}'.format(each)]
-            if save_depthxy:
-                del bodymat['depth_body{}'.format(each)]
-    return bodymat 
 
-def choose_skel(d):
-    x0 = 0
-    y0 = 0
-    z0 = 0
-    x1 = 0
-    y1 = 0
-    z1 = 0   
-    body0 = d['skel_body0']
-    body1 = d['skel_body1']
-    for i in range(pose.shape[1]):
-        x0 = x0 + np.var(body0[:,i,0])
-        y0 = y0 + np.var(body0[:,i,1])
-        z0 = z0 + np.var(body0[:,i,2])
-        x1 = x1 + np.var(body1[:,i,0])
-        y1 = y1 + np.var(body1[:,i,1])
-        z1 = z1 + np.var(body1[:,i,2])
+NORM_MAX_THRESHOLDS = [202.0, 35.5, 47.6314, 155.532, 157.76, 45.5484, 62.2598, 61.728, 21.8452,
+                       13.1222, 14.2184, 137.544, 109.181, 100.543, 38.5625, 26.386, 153.582,
+                       37.2936, 23.9101, 61.9328, 36.9676, 15.5171, 5.97964, 2.94183, 80.4739,
+                       39.7391, 95.8415, 35.4375, 157.232, 157.293, 150.99, 61.9509, 62.0461, 
+                       60.9357, 17.4204, 13.5882, 13.9617, 91.4247, 92.867, 146.651]
+
+NORM_MIN_THRESHOLDS = [0., 0., -114.755, -104.301, -73.0384, -61.1938, -61.8086, -61.4193, -27.8044,
+                       -17.8495, -14.2647, -103.941, -200.043, -163.608, 0., -29.0888, -38.1657, -57.2366,
+                       -32.9627, -39.7561, -56.0108, -10.1563, -5.06858, -3.99487, -70.0627, -122.48,
+                       -66.6847, 0., -155.068, -155.617, -156.179, -60.3067, -61.9064, -62.2629, -14.162,
+                       -13.0401, -14.0196, -172.865, -137.908, -102.232]
+
+
+
+def select_columns_opp(data):
+    """Selection of the 40 columns employed in the Pamap2
+    :param data: numpy integer matrix
+        Sensor data (all features)
+    :return: numpy integer matrix
+        Selection of features
+    """
+
+    #included-excluded
+    features_delete = np.arange(14, 18)
+    features_delete = np.concatenate([features_delete, np.arange(31, 35)])
+    features_delete = np.concatenate([features_delete, np.arange(48, 52)])
+    
+    return np.delete(data, features_delete, 1)
+
+
+def normalize(data, max_list, min_list):
+    """Normalizes sensor channels to a range [0,1]
+    :param data: numpy integer matrix
+        Sensor data
+    :param max_list: numpy integer array
+        Array containing maximums values for every one of the 40 sensor channels
+    :param min_list: numpy integer array
+        Array containing minimum values for every one of the 40 sensor channels
+    :return:
+        Normalized sensor data
+    """
+    max_list, min_list = np.array(max_list), np.array(min_list)
+    diffs = max_list - min_list
+    for i in np.arange(data.shape[1]):
+        data[:, i] = (data[:, i]-min_list[i])/diffs[i]
+
+
+    data[data > 1] = 0.99
+    data[data < 0] = 0.00
+    return data
+
+
+def complete_HR(data):
+    """Sampling rate for the heart rate is different from the other sensors. Missing
+    measurements are filled
+    :param data: numpy integer matrix
+        Sensor data
+    :return: numpy integer matrix, numpy integer array
+        HR channel data
+    """
+    
+    pos_NaN = np.isnan(data)
+    idx_NaN = np.where(pos_NaN == False)[0]
+    data_no_NaN = data * 0
+    for idx in range(idx_NaN.shape[0] - 1):
+        data_no_NaN[idx_NaN[idx] : idx_NaN[idx + 1]] = data[idx_NaN[idx]]
+    
+    data_no_NaN[idx_NaN[-1] :] = data[idx_NaN[-1]]
+    
+    return data_no_NaN
+
+
+def divide_x_y(data):
+    """Segments each sample into time, labels and sensor channels
+    :param data: numpy integer matrix
+        Sensor data
+    :return: numpy integer matrix, numpy integer array
+        Time and labels as arrays, sensor channels as matrix
+    """
+    data_t = data[:, 0]
+    data_y = data[:, 1]
+    data_x = data[:, 2:]
+    
+
+    return data_t, data_x, data_y
+
+
+
+
+def adjust_idx_labels(data_y):
+    """The pamap2 dataset contains in total 24 action classes. However, for the protocol,
+    one uses only 16 action classes. This function adjust the labels picking the labels
+    for the protocol settings
+    :param data_y: numpy integer array
+        Sensor labels
+    :return: numpy integer array
+        Modified sensor labels
+    """
+
+
+    data_y[data_y == 24] = 0
+    data_y[data_y == 12] = 8
+    data_y[data_y == 13] = 9
+    data_y[data_y == 16] = 10
+    data_y[data_y == 17] = 11
+
         
-    var0 = x0 + y0 + z0
-    var1 = x1 + y1 + z1  
-    if var0>var1:
-        return "skel_body0"
+    return data_y
+
+
+def del_labels(data_t, data_x, data_y):
+    """The pamap2 dataset contains in total 24 action classes. However, for the protocol,
+    one uses only 16 action classes. This function deletes the nonrelevant labels
+    :param data_y: numpy integer array
+        Sensor labels
+    :return: numpy integer array
+        Modified sensor labels
+    """
+    
+    idy = np.where(data_y == 0)[0]
+    labels_delete = idy
+
+    idy = np.where(data_y == 8)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 9)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 10)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 11)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 18)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 19)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    idy = np.where(data_y == 20)[0]    
+    labels_delete = np.concatenate([labels_delete, idy])
+    
+    return np.delete(data_t, labels_delete, 0), np.delete(data_x, labels_delete, 0), np.delete(data_y, labels_delete, 0)
+
+
+def downsampling(data_t, data_x, data_y):
+    """Recordings are downsamplied to 30Hz, as in the Opportunity dataset
+    :param data_t: numpy integer array
+        time array
+    :param data_x: numpy integer array
+        sensor recordings
+    :param data_y: numpy integer array
+        labels
+    :return: numpy integer array
+        Downsampled input
+    """
+    
+    idx = np.arange(0, data_t.shape[0], 3)
+    
+    return data_t[idx], data_x[idx], data_y[idx]
+
+
+
+def process_dataset_file(data):
+    """Function defined as a pipeline to process individual Pamap2 files
+    :param data: numpy integer matrix
+        channel data: samples in rows and sensor channels in columns
+    :return: numpy integer matrix, numy integer array
+        Processed sensor data, segmented into samples-channel measurements (x) and labels (y)
+    """
+
+    # Data is divided in time, sensor data and labels
+    data_t, data_x, data_y =  divide_x_y(data)
+
+    print ("data_x shape {}".format(data_x.shape))
+    print ("data_y shape {}".format(data_y.shape))
+    print ("data_t shape {}".format(data_t.shape))
+    
+    # nonrelevant labels are deleted
+    data_t, data_x, data_y = del_labels(data_t, data_x, data_y)
+
+    print ("data_x shape {}".format(data_x.shape))
+    print ("data_y shape {}".format(data_y.shape))
+    print ("data_t shape {}".format(data_t.shape))
+    
+    # Labels are adjusted
+    data_y = adjust_idx_labels(data_y)
+    data_y = data_y.astype(int)
+    
+    # Select correct columns
+    data_x = select_columns_opp(data_x)
+    
+    if data_x.shape[0] != 0:
+        HR_no_NaN = complete_HR(data_x[:,0])
+        data_x[:,0] = HR_no_NaN
+        
+        data_x[np.isnan(data_x)] = 0
+        
+        #Normalizing signals per chanel to a range of [0,1]
+        data_x = normalize(data_x, NORM_MAX_THRESHOLDS, NORM_MIN_THRESHOLDS)
     else:
-        return "skel_body1"       
+        data_x = data_x
+        data_y = data_y
+        data_t = data_t
+        
+        print ("SIZE OF THE SEQUENCE IS CERO")
+    
+    print ("data_x shape {}".format(data_x.shape))
+    print ("data_y shape {}".format(data_y.shape))
+    print ("data_t shape {}".format(data_t.shape))
+    
+    data_t, data_x, data_y = downsampling(data_t, data_x, data_y)
+    
+
+    print ("data_x shape {}".format(data_x.shape))
+    print ("data_y shape {}".format(data_y.shape))
+    print ("data_t shape {}".format(data_t.shape))
+
+    return data_x, data_y
 
 
-if __name__ == '__main__':
-    missing_files = _load_missing_file(missing_file_path)
-    datalist = os.listdir(load_txt_path)
-    alread_exist = os.listdir(save_npy_path)
-    alread_exist_dict = dict(zip(alread_exist, len(alread_exist) * [True]))
-    pose3D = np.zeros((1,25,3)) 
-    labels = np.zeros((1,1))
-    for ind, each in enumerate(datalist):
-        
-        _print_toolbar(ind * 1.0 / len(datalist),
-                       '({:>5}/{:<5})'.format(
-                           ind + 1, len(datalist)
-                       ))
-        S = int(each[1:4])
-        if each+'.skeleton.npy' in alread_exist_dict:
-            print('file already existed !')
-            continue
-        if each[:20] in missing_files:
-            print('file missing')
-            continue 
-        loadname = load_txt_path+each
-        print(each)
-        mat = _read_skeleton(loadname)
-        
-        name = mat['file_name']
-        activity = int(name[-2:])
-        subject = int(name[2:4])
-        if (activity>49 and subject>12):
-            continue
+
+
+def generate_data(dataset, target_filename):
+    """Function to read the Pamap2 raw data and process the sensor channels
+    of the protocol settings
+    :param dataset: string
+        Path with original pamap2 folder
+    :param target_filename: string
+        Path of the expected file.
+    """
+
+
+    X_train = np.empty((0, NB_SENSOR_CHANNELS))
+    y_train = np.empty((0))
+    
+    X_val = np.empty((0, NB_SENSOR_CHANNELS))
+    y_val = np.empty((0))
+    
+    X_test = np.empty((0, NB_SENSOR_CHANNELS))
+    y_test = np.empty((0))
+    
+    counter_files = 0
+    
+    print ('Processing dataset files ...')
+    for filename in PAMAP2_DATA_FILES:
+        if counter_files <= 9:
+            # Train partition
+            try:
+                print ('Train... file {0}'.format(filename))
+                data = np.loadtxt(dataset + filename)
+                print ('Train... data size {}'.format(data.shape))
+                x, y = process_dataset_file(data)
+                print (x.shape)
+                print(y.shape)
+                X_train = np.vstack((X_train, x))
+                y_train = np.concatenate([y_train, y])
+            except KeyError:
+                print ('ERROR: Did not find {0} in zip file'.format(filename))
+              
+        elif counter_files > 9 and  counter_files < 12:
+            # Validation partition
+            try:
+                print ('Val... file {0}'.format(filename))
+                data = np.loadtxt(dataset + filename)
+                print ('Val... data size {}'.format(data.shape))
+                x, y = process_dataset_file(data)
+                print (x.shape)
+                print (y.shape)
+                X_val = np.vstack((X_val, x))
+                y_val = np.concatenate([y_val, y])
+            except KeyError:
+                print ('ERROR: Did not find {0} in zip file'.format(filename))
+                
         else:
-            if len(mat)>6:
-                str = choose_skel(mat)
-            else:
-                str = 'skel_body0'
-            pose = mat[str]
-            if len(mat)>6:
-                print("name",name)
-            pose3D = np.concatenate((pose3D,pose), axis=0)
-            label = np.full((pose.shape[0],1),activity - 1)
-            labels = np.concatenate((labels,label))
-            mat = np.array(mat)
-            save_path = save_npy_path+'{}.npy'.format(each)
-            #np.save(save_path, mat)
-            # raise ValueError()
-    _end_toolbar()
-    p = pose3D.reshape(pose3D.shape[0],75)
-    l = np.asarray(labels, dtype='float64')
-    data = np.hstack((p,l))
-    np.savetxt('S:/MS A&R/4th Sem/Thesis/NTU/data.csv', data, delimiter=',')
-    
+            # Testing partition
+            try:
+                print ('Test... file {0}'.format(filename))
+                data = np.loadtxt(dataset + filename)
+                print ('Test... data size {}'.format(data.shape))
+                x, y = process_dataset_file(data)
+                print (x.shape)
+                print (y.shape)
+                X_test = np.vstack((X_test, x))
+                y_test = np.concatenate([y_test, y])
+            except KeyError:
+                print( 'ERROR: Did not find {0} in zip file'.format(filename))
+            
+        counter_files += 1 
 
+    print ("Final datasets with size: | train {0} | test {1} | ".format(X_train.shape,X_test.shape))
+
+    obj = [(X_train, y_train), (X_val, y_val), (X_test, y_test)]
+    #f = open(os.path.join(target_filename), 'wb')
+   # pickle.dump(obj, f, protocol=pickle.HIGHEST_PROTOCOL)
+    #f.close()
+
+    return X_train,y_train,X_val, y_val, X_test, y_test
+
+
+
+
+def get_PAMAP2_data(pamap2_dataset, output):
     
-'''   
-d = np.load('S:/MS A&R/4th Sem/Thesis/NTU/npy files/S001C001P001R001A024.skeleton.npy', allow_pickle=True)
-d = d.tolist()
-'''
+    X_train,y_train,X_val, y_val, X_test, y_test = generate_data(pamap2_dataset, output)
+        
+    print ('Done')
+    return X_train,y_train,X_val, y_val, X_test, y_test
