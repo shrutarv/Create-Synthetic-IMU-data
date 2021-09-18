@@ -215,6 +215,7 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf.csv')
     data_x = df.values
     attr = np.zeros((30,1))
+    #value = pd.read_csv(('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv'))
     value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
@@ -257,7 +258,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "test")
     print("test data normalized")
     data_new = data[:,1:76]
-    label = data[:,31].astype(int)
+    label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
@@ -272,7 +273,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "validation")
     print("validation data normalized")
     data_new = data[:,1:76]
-    label = data[:,31].astype(int)
+    label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
