@@ -248,7 +248,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
@@ -263,7 +263,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     data_dir =  '/data/sawasthi/NTU/validationData_pose_3/'
