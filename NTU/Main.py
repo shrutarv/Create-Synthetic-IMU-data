@@ -322,7 +322,6 @@ def training(dataLoader_train, dataLoader_validation, device,config):
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
-              break
               train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
               
@@ -588,7 +587,7 @@ if __name__ == '__main__':
     accumulation_steps = 5
     epochs = 30
     batch_size = 75
-    learning_rate = 0.001
+    learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
