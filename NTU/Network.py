@@ -1,9 +1,8 @@
 '''
-Created on Mar 28, 2019
-
-@author: fmoya
+Created on May 17, 2019
+@author: Fernando Moya-Rueda
+@email: fernando.moya@tu-dortmund.de
 '''
-
 
 from __future__ import print_function
 import logging
@@ -15,6 +14,7 @@ import torch.nn.functional as F
 import torch.optim as optim
 
 import numpy as np
+
 
 
 class Network(nn.Module):
@@ -33,14 +33,10 @@ class Network(nn.Module):
         logging.info('            Network: Constructor')
         
         self.config = config
-        
 
-        if self.config["reshape_input"]:
-            in_channels = 3
-            Hx = int(self.config['NB_sensor_channels'] / 3)
-        else:
-            in_channels = 1
-            Hx = self.config['NB_sensor_channels']
+
+        in_channels = 1
+        Hx = self.config['NB_sensor_channels']
         Wx = self.config['sliding_window_length']
 
 
@@ -84,12 +80,6 @@ class Network(nn.Module):
                                      out_channels=self.config['num_filters'],
                                      kernel_size=(self.config['filter_size'], 1),
                                      stride=1, padding=0)
-
-            if self.config["reshape_input"]:
-                self.fc3 = nn.Linear(self.config['num_filters'] * int(Wx) * int(self.config['NB_sensor_channels'] / 3),
-                                     256)
-            else:
-                self.fc3 = nn.Linear(self.config['num_filters'] * int(Wx) * self.config['NB_sensor_channels'], 256)
 
         # set the Conv layers
         if self.config["network"] == "cnn_imu":
@@ -265,30 +255,37 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'pamap2':
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 13, 256)
 
+        # set the Conv layers
+        if self.config["network"] == "cnn_imu":
+            # later
+            pass
+        
         if self.config["network"] == "cnn":
             self.fc4 = nn.Linear(256, 256)
         elif self.config["network"] == "cnn_imu":
             self.fc4 = nn.Linear(256 * 5, 256)
-        
+
         if self.config['output'] == 'softmax': 
             self.fc5 = nn.Linear(256, self.config['num_classes'])
         elif self.config['output'] == 'attribute':  
             self.fc5 = nn.Linear(256, self.config['num_attributes'])
+
+        self.softmax = nn.Softmax(dim=1)
         
-        self.softmax = nn.Softmax()
-        
-        self.sigmoid = nn.Sigmoid()
-        
-        
+        #self.sigmoid = nn.Sigmoid()
+
         return
     
     
-    
-    
-    
+
     def forward(self, x):
+        if self.config["reshape_input"]:
+            x = x.permute(0, 2, 1, 3)
+            x = x.view(x.size()[0], x.size()[1], int(x.size()[3] / 3), 3)
+            x = x.permute(0, 3, 1, 2)
 
         if self.config["network"] == "cnn":
+            #print(x.shape)
             x = F.relu(self.conv1_1(x))
             x = F.relu(self.conv1_2(x))
             #x12 = F.max_pool2d(x12, (2, 1))
@@ -296,141 +293,14 @@ class Network(nn.Module):
             x = F.relu(self.conv2_1(x))
             x = F.relu(self.conv2_2(x))
             # x = F.max_pool2d(x, (2, 1))
-
+            #print(x.shape)
             # view is reshape
             x = x.view(-1, x.size()[1] * x.size()[2] * x.size()[3])
             x = F.relu(self.fc3(x))
-        elif self.config["network"] == "cnn_imu":
-            # LA
-            if self.config["reshape_input"]:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_LA = np.arange(0, 36)
-                    idx_LA = np.concatenate([idx_LA, np.arange(63, 72)])
-                    idx_LA = np.concatenate([idx_LA, np.arange(72, 81)])
-                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_LA = np.arange(1, 14)
-                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))
-            else:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_LA = np.arange(0, 36)
-                    idx_LA = np.concatenate([idx_LA, np.arange(63, 72)])
-                    idx_LA = np.concatenate([idx_LA, np.arange(72, 81)])
-                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_LA = np.arange(1, 14)
-                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))
 
-            x_LA = F.relu(self.conv_LA_1_2(x_LA))
-            x_LA = F.relu(self.conv_LA_2_1(x_LA))
-            x_LA = F.relu(self.conv_LA_2_2(x_LA))
-            # view is reshape
-            x_LA = x_LA.view(-1, x_LA.size()[1] * x_LA.size()[2] * x_LA.size()[3])
-            x_LA = F.relu(self.fc3_LA(x_LA))
-
-            # LL
-            if self.config["reshape_input"]:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_LL = np.arange(0, 36)
-                    idx_LL = np.concatenate([idx_LL, np.arange(81, 97)])
-                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_LL = np.arange(27, 40)
-            else:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_LL = np.arange(0, 36)
-                    idx_LL = np.concatenate([idx_LL, np.arange(81, 97)])
-                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_LL = np.arange(27, 40)
-                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
-
-            x_LL = F.relu(self.conv_LL_1_2(x_LL))
-            x_LL = F.relu(self.conv_LL_2_1(x_LL))
-            x_LL = F.relu(self.conv_LL_2_2(x_LL))
-            # view is reshape
-            x_LL = x_LL.view(-1, x_LL.size()[1] * x_LL.size()[2] * x_LL.size()[3])
-            x_LL = F.relu(self.fc3_LL(x_LL))
-
-            # N
-            if self.config["reshape_input"]:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_N = np.arange(0, 36)
-                    idx_N = np.concatenate([idx_N, np.arange(36, 45)])
-                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_N = np.arange(0, 1)
-                    idx_N = np.concatenate([idx_N, np.arange(14, 27)])
-                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-            else:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_N = np.arange(0, 36)
-                    idx_N = np.concatenate([idx_N, np.arange(36, 45)])
-                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_N = np.arange(0, 1)
-                    idx_N = np.concatenate([idx_N, np.arange(14, 27)])
-                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-            x_N = F.relu(self.conv_N_1_2(x_N))
-            x_N = F.relu(self.conv_N_2_1(x_N))
-            x_N = F.relu(self.conv_N_2_2(x_N))
-            # view is reshape
-            x_N = x_N.view(-1, x_N.size()[1] * x_N.size()[2] * x_N.size()[3])
-            x_N = F.relu(self.fc3_N(x_N))
-
-            # RA
-            if self.config["reshape_input"]:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_RA = np.arange(0, 36)
-                    idx_RA = np.concatenate([idx_RA, np.arange(54, 63)])
-                    idx_RA = np.concatenate([idx_RA, np.arange(63, 72)])
-                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_RA = np.arange(1, 14)
-                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-            else:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_RA = np.arange(0, 36)
-                    idx_RA = np.concatenate([idx_RA, np.arange(54, 63)])
-                    idx_RA = np.concatenate([idx_RA, np.arange(63, 72)])
-                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_RA = np.arange(1, 14)
-                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-
-            x_RA = F.relu(self.conv_RA_1_2(x_RA))
-            x_RA = F.relu(self.conv_RA_2_1(x_RA))
-            x_RA = F.relu(self.conv_RA_2_2(x_RA))
-            # view is reshape
-            x_RA = x_RA.view(-1, x_RA.size()[1] * x_RA.size()[2] * x_RA.size()[3])
-            x_RA = F.relu(self.fc3_RA(x_RA))
-
-            # RL
-            if self.config["reshape_input"]:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_RL = np.arange(0, 36)
-                    idx_RL = np.concatenate([idx_RL, np.arange(81, 97)])
-                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_RL = np.arange(27, 40)
-                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
-            else:
-                if self.config["dataset"] == 'locomotion' or self.config["dataset"] == 'gesture':
-                    idx_RL = np.arange(0, 36)
-                    idx_RL = np.concatenate([idx_RL, np.arange(81, 97)])
-                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
-                elif self.config["dataset"] == 'pamap2':
-                    idx_RL = np.arange(27, 40)
-                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
-
-            x_RL = F.relu(self.conv_RL_1_2(x_RL))
-            x_RL = F.relu(self.conv_RL_2_1(x_RL))
-            x_RL = F.relu(self.conv_RL_2_2(x_RL))
-            # view is reshape
-            x_RL = x_RL.view(-1, x_RL.size()[1] * x_RL.size()[2] * x_RL.size()[3])
-            x_RL = F.relu(self.fc3_RL(x_RL))
-
-            x = torch.cat((x_LA, x_LL, x_N, x_RA, x_RL), 1)
+        if self.config["network"] == "cnn_imu":
+            # later
+            pass
         
         x = F.dropout(x, training=self.training)
         x = F.relu(self.fc4(x))
@@ -445,6 +315,7 @@ class Network(nn.Module):
                 x = self.softmax(x)
 
         return x
+        #return x11.clone(), x12.clone(), x21.clone(), x22.clone(), x
     
     
     
@@ -467,8 +338,7 @@ class Network(nn.Module):
             nn.init.constant_(m.bias.data, 0)
         
         return
-    
-    
+
     
     
     def size_feature_map(self, Wx, Hx, F, P, S, type_layer = 'conv'):
@@ -483,8 +353,28 @@ class Network(nn.Module):
                     
         return Wy, Hy
     
-    
-    
-    
-    
-    
+    def set_required_grad(self, network):
+        model_dict = network.state_dict()
+        # 1. filter out unnecessary keys
+        logging.info('        Network_User:        Setting Required_grad to Weights')
+
+        if self.config["network"] == 'cnn':
+            list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias']
+        elif self.config["network"] == 'cnn_imu':
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight', 'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight', 'conv_RL_2_2.bias']
+
+        for pn, pv in network.named_parameters():
+            if pn in list_layers:
+                pv.requires_grad = False
+
+        return network
