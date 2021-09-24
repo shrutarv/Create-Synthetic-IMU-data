@@ -230,6 +230,8 @@ def validation(dataLoader_validation,device):
             correct += (predicted_classes == test_batch_l.cpu()).sum().item()
             total_loss += loss.item()
             #counter = out.view(-1, n_classes).size(0)
+            if((b % 10) == 0):
+                print('\n After'+ str(10) +' batches the Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
     return (100. * correct / total, total_loss/(b+1))
@@ -320,7 +322,7 @@ def training(dataLoader_train, dataLoader_validation, device,config):
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
-              
+              break
               train_batch_v.to(device)
               train_batch_l = train_batch_l.to(device)
               
