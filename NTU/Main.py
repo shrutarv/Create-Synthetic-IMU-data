@@ -365,8 +365,8 @@ def training(dataLoader_train, dataLoader_validation, device,config):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              #torch.save(model, model_path)
-              torch.save({'state_dict': model.state_dict()}, config['model_path'])
+              torch.save(model, config['model_path'])
+              #torch.save({'state_dict': model.state_dict()}, config['model_path'])
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -405,8 +405,8 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     model = torch.load(config['model_path'])
-    # model.eval()
-    #model.to(device)
+    model.eval()
+    model.to(device)
     loss_test = 0.0
     with torch.no_grad():
             
