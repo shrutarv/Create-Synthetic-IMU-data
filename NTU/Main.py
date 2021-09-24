@@ -200,7 +200,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
     
-def validation(dataLoader_validation,device):
+def validation(dataLoader_validation,device,ep):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -230,7 +230,7 @@ def validation(dataLoader_validation,device):
             correct += (predicted_classes == test_batch_l.cpu()).sum().item()
             total_loss += loss.item()
             #counter = out.view(-1, n_classes).size(0)
-            if((b % 10) == 0):
+            if((b % 100) == 0 & ep==0):
                 print('\n After'+ str(10) +' batches the Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
@@ -361,7 +361,7 @@ def training(dataLoader_train, dataLoader_validation, device,config):
           
           model.eval()
           
-          val_acc, val_loss =  validation(dataLoader_validation,device)
+          val_acc, val_loss =  validation(dataLoader_validation,device,e)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
