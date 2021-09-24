@@ -574,7 +574,7 @@ if __name__ == '__main__':
         "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
