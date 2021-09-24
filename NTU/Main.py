@@ -230,8 +230,8 @@ def validation(dataLoader_validation,device,ep):
             correct += (predicted_classes == test_batch_l.cpu()).sum().item()
             total_loss += loss.item()
             #counter = out.view(-1, n_classes).size(0)
-            if((b % 100) == 0 & ep==0):
-                print('\n After'+ str(10) +' batches the Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
+            if((b % 200) == 0 & ep==0):
+                print('\n After'+ str(b) +' batches the Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
         
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
     return (100. * correct / total, total_loss/(b+1))
