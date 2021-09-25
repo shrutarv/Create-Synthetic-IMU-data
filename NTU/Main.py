@@ -587,7 +587,7 @@ if __name__ == '__main__':
     accumulation_steps = 5
     epochs = 70
     batch_size = 75
-    learning_rate = 0.00001
+    learning_rate = 0.0001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -644,7 +644,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    #training(dataLoader_train, dataLoader_validation,device, config)
+    training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/NTU/validationData_pose_3/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
