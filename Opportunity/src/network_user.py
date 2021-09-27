@@ -30,11 +30,11 @@ from matplotlib import cm
 from mpl_toolkits.mplot3d import Axes3D
 from matplotlib.ticker import LinearLocator, FormatStrFormatter
 from matplotlib.collections import PolyCollection
-
+from NTU import NTU
 from network import Network
 from opportunity import Opportunity
 from pamap2 import Pamap2
-#from orderpicking import OderPicking
+from orderpicking import OderPicking
 
 
 
@@ -69,6 +69,11 @@ class Network_User(object):
             self.harwindows_train = OderPicking(self.config, partition_modus='train')
             self.harwindows_val = OderPicking(self.config, partition_modus='test')
             self.harwindows_test = OderPicking(self.config, partition_modus='test')
+        elif self.config['dataset'] == 'pamap2':
+            self.harwindows_train = NTU(self.config, partition_modus='train')
+            self.harwindows_val = NTU(self.config, partition_modus='test')
+            self.harwindows_test = NTU(self.config, partition_modus='test')
+            
 
         self.dataLoader_train = DataLoader(self.harwindows_train, batch_size=self.config['batch_size'], shuffle=True)
         self.dataLoader_val = DataLoader(self.harwindows_val, batch_size=self.config['batch_size'])
