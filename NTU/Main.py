@@ -579,7 +579,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
-        "step_size":3,
+        "step_size":1,
         "model_path": '/data/sawasthi/NTU/model/model_1.pt'
         }
 
