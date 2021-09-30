@@ -564,7 +564,7 @@ if __name__ == '__main__':
     print(":Python Platform {}".format(platform.python_version()))
     
     if torch.cuda.is_available():  
-          dev = "cuda:1" 
+          dev = "cuda:0" 
           print("cuda is available")
     else:  
           dev = "cpu"  
