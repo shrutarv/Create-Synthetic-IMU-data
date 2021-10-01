@@ -573,9 +573,9 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
-        "step_size":12,
+        "step_size":5,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_12.pt'
+        "model_path": '/data/sawasthi/NTU/model/model_5.pt'
         }
 
     if torch.cuda.is_available():  
@@ -616,7 +616,7 @@ if __name__ == '__main__':
     
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-    path = '/data/sawasthi/NTU/trainData_pose_12/'
+    path = '/data/sawasthi/NTU/trainData_pose_5/'
     #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -630,7 +630,7 @@ if __name__ == '__main__':
    
     # Validation data    
     #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/val/'
-    path = '/data/sawasthi/NTU/validationData_pose_12/'
+    path = '/data/sawasthi/NTU/validationData_pose_5/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     validation_dataset = CustomDataSet(path)
@@ -649,7 +649,7 @@ if __name__ == '__main__':
     '''
     #training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/NTU/validationData_pose_12/'
+    path = '/data/sawasthi/NTU/validationData_pose_5/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -661,7 +661,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     testing(config)
-    path = '/data/sawasthi/NTU/testData_pose_12/'
+    path = '/data/sawasthi/NTU/testData_pose_5/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
