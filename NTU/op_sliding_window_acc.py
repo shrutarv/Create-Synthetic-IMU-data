@@ -206,8 +206,8 @@ if __name__ == '__main__':
     # up sampling rate
     up = 1
     #ws = (100,31)
-    ws = (100,30) 
-    ss = (3,30)     
+    ws = (30,75) 
+    ss = (3,75)     
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
@@ -291,7 +291,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
