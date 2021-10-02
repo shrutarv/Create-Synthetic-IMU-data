@@ -285,7 +285,7 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/NTU/trainData_up_1a/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    label = np.repeat(data[:,31],up).astype(int)
+    label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -319,7 +319,7 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,31],up).astype(int)
+    label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
@@ -352,7 +352,7 @@ if __name__ == '__main__':
          #y_sampled.append(f(x_sampled))
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
-    label = np.repeat(data[:,31],up).astype(int)
+    label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     X = data_new
