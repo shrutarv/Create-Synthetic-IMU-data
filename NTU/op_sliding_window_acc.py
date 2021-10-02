@@ -209,14 +209,14 @@ if __name__ == '__main__':
     ws = (30,75) 
     ss = (3,75)     
     #ss = (25,31)
-    sliding_window_length = 100   
+    sliding_window_length = 30   
     #sliding_window_length = 100    
     sliding_window_step = 3
     
     df = pd.read_csv('/data/sawasthi/NTU/train_data_tf.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
     data = df.values
-    attr = np.zeros((100,1))
+    attr = np.zeros((30,1))
     value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
