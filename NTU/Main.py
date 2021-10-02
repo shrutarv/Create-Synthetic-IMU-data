@@ -575,7 +575,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_3a.pt'
+        "model_path": '/data/sawasthi/NTU/model/model_up1_3a.pt'
         }
 
     if torch.cuda.is_available():  
