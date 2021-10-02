@@ -329,7 +329,7 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/NTU/validationData_up_1a/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/NTU/validation_data_tf.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
