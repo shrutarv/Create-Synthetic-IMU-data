@@ -28,7 +28,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     #Options
     dataset = {0 : 'locomotion', 1 : 'gesture', 2 : 'carrots', 3 : 'pamap2', 4 : 'orderpicking', 5 : 'virtual',
                6 : 'mocap_half', 7 : 'virtual_quarter', 8 : 'mocap_quarter', 9 : 'mbientlab_quarter',
-               10 : 'mbientlab'}
+               10 : 'mbientlab', 11: 'NTU' }
     network = {0 : 'cnn', 1 : 'lstm', 2 : 'cnn_imu'}
     output = {0 : 'softmax', 1 : 'attribute'}
     usage_modus = {0: 'train', 1: 'test', 2: 'evolution', 3: 'train_final', 4: 'train_random', 5: 'fine_tuning'}
@@ -36,11 +36,11 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     #assert usage_modus_idx == 2 and output_idx == 1, "Output should be Attributes for starting evolution"
 
     #Dataset Hyperparameters
-    NB_sensor_channels = {'locomotion' : 113, 'gesture' : 113, 'carrots' : 30, 'pamap2' : 40, 'orderpicking' : 27}
-    sliding_window_length = {'locomotion' : 24, 'gesture' : 24, 'carrots' : 64, 'pamap2' : 100, 'orderpicking' : 100}
+    NB_sensor_channels = {'locomotion' : 113, 'gesture' : 113, 'carrots' : 30, 'pamap2' : 40, 'orderpicking' : 27, 'NTU' : 75}
+    sliding_window_length = {'locomotion' : 24, 'gesture' : 24, 'carrots' : 64, 'pamap2' : 100, 'orderpicking' : 100, 'NTU':30}
     sliding_window_step = {'locomotion' : 12, 'gesture' : 2, 'carrots' : 5, 'pamap2' : 22, 'orderpicking' : 1}
     num_attributes = {'locomotion' : 10, 'gesture' : 32, 'carrots' : 32, 'pamap2' : 24, 'orderpicking' : 16}
-    num_classes = {'locomotion' : 5, 'gesture' : 18, 'carrots' : 16, 'pamap2' : 12, 'orderpicking' : 8}
+    num_classes = {'locomotion' : 5, 'gesture' : 18, 'carrots' : 16, 'pamap2' : 12, 'orderpicking' : 8, 'NTU':60}
     
     # Learning rate
     learning_rates = [0.0001, 0.00001, 0.000001]
@@ -48,7 +48,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
           'gesture': {'cnn': 0.00001, 'lstm' : 0.001, 'cnn_imu': 0.0001},
           'carrots': {'cnn': 0.00001, 'lstm' : 0.000001, 'cnn_imu': 0.0001},
           'pamap2': {'cnn': 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.00001},
-          'orderpicking': {'cnn' : 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.001}}
+          'orderpicking': {'cnn' : 0.0001, 'lstm' : 0.0001, 'cnn_imu': 0.001},
+          'NTU' : {'cnn':0.00001, 'cnn_imu': 0.0001}}
     lr_mult = 1.0
         
     #Maxout
@@ -56,7 +57,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     
     #Balacing
-    balancing =  {'locomotion' : False, 'gesture' : False, 'carrots': False, 'pamap2': False, 'orderpicking' : False}
+    balancing =  {'locomotion' : False, 'gesture' : False, 'carrots': False, 'pamap2': False, 'orderpicking' : False, 'NTU' : False}
     
     #Epochs
 
@@ -74,23 +75,27 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                           'cnn_imu' : {'softmax' : 50, 'attribute': 32}},
               'orderpicking' : {'cnn' : {'softmax' : 10, 'attribute': 10},
                                 'lstm' : {'softmax' : 25, 'attribute': 1},
-                                'cnn_imu' : {'softmax' : 24, 'attribute': 32}}}
-    division_epochs =  {'locomotion' : 1, 'gesture' : 3, 'carrots': 2, 'pamap2': 3, 'orderpicking' : 1}
+                                'cnn_imu' : {'softmax' : 24, 'attribute': 32}},
+              'NTU' : {'cnn' : {'softmax' : 64, 'attribute': 5},
+                              'lstm' : {'softmax' : 10, 'attribute': 5},
+                              'cnn_imu' : {'softmax' : 40, 'attribute': 5}}}
+    division_epochs =  {'locomotion' : 1, 'gesture' : 3, 'carrots': 2, 'pamap2': 3, 'orderpicking' : 1, 'NTU' : 3}
     
 
     #Batch size
-    batch_size = {'cnn' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100},
+    batch_size = {'cnn' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100, 'NTU' : 75},
                   'lstm' : {'locomotion' : 100, 'gesture' : 100, 'carrots' : 128, 'pamap2' : 50, 'orderpicking' : 100},
                   'cnn_imu' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100}}
 
-    accumulation_steps = {'locomotion': 4, 'gesture': 4, 'carrots': 4, 'pamap2': 4, 'orderpicking': 4}
+    accumulation_steps = {'locomotion': 4, 'gesture': 4, 'carrots': 4, 'pamap2': 4, 'orderpicking': 4, 'NTU': 4}
     
     #Filters
-    filter_size =  {'locomotion' : 5, 'gesture' : 5, 'carrots': 5, 'pamap2': 5, 'orderpicking' : 5}
+    filter_size =  {'locomotion' : 5, 'gesture' : 5, 'carrots': 5, 'pamap2': 5, 'orderpicking' : 5, 'NTU' : 5}
     num_filters = {'locomotion' : {'cnn' : 64, 'lstm' : 64, 'cnn_imu': 64},
                    'gesture' : {'cnn' : 64, 'lstm' : 64, 'cnn_imu': 64},
                    'carrots' : {'cnn' : 256, 'lstm' : 64, 'cnn_imu': 64},
                    'pamap2' : {'cnn' : 64, 'lstm' : 64, 'cnn_imu': 64},
+                   'NTU' : {'cnn' : 64, 'lstm' : 64, 'cnn_imu': 64},
                    'orderpicking' : {'cnn' : 32, 'lstm' : 32, 'cnn_imu': 32}}
 
     freeze_options = [False, True]
@@ -113,7 +118,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
         folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model__tf_12.pt'
+        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_up1_3a.pt'
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
@@ -162,7 +167,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     dataset_root = {'locomotion': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'gesture': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'pamap2': '/data/fmoya/HAR/datasets/PAMAP/',
-                    'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/'}
+                    'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/',
+                    'NTU':'/data/sawasthi/NTU/'}
     
     #GPU
     os.environ["CUDA_VISIBLE_DEVICES"] = gpudevice
@@ -227,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_ges_c1_c2_c3_pose.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_NTU_ges_c1_acc.pt'}
     
     return configuration
 
@@ -340,7 +346,31 @@ def gestures_main():
                         modus.net_modus()
     return
 
+def NTU_nain():
 
+    #dataset = {0 : 'locomotion', 1 : 'gesture', 2 : 'carrots', 3 : 'pamap2', 4 : 'orderpicking',
+    # 5 : 'virtual', 6 : 'mocap_half', 7 : 'virtual_quarter', 8 : 'mocap_quarter', 9 : 'mbientlab_quarter'}
+    # 10 : 'mbientlab'}
+    
+    datasets_opts = [1]
+    networks_arc = [0]
+    fine_tunings = [0]
+    frezze_opts = [0]
+    proportions_opts = [0]
+    for dset in datasets_opts:
+        for ft in fine_tunings:
+            for arch in networks_arc:
+                for fopt in frezze_opts:
+                    for pp in proportions_opts:
+                        config = configuration(dataset_idx=11, network_idx=arch, output_idx=0, usage_modus_idx=5,
+                                               dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
+                                               freeze=1, proportions_id = 3, gpudevice = "0")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_NTU_pose_c1_c2_c3_pose.txt")
+                        logging.info('Finished')
+                        modus = Modus_Selecter(config)
+                        #Starting process
+                        modus.net_modus()
+    return
 
 
 if __name__ == '__main__':
