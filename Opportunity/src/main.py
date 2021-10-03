@@ -167,8 +167,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     dataset_root = {'locomotion': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'gesture': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'pamap2': '/data/fmoya/HAR/datasets/PAMAP/',
-                    'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/',
-                    'NTU':'/data/sawasthi/NTU/'}
+                    'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/'
+                    }
     
     #GPU
     os.environ["CUDA_VISIBLE_DEVICES"] = gpudevice
@@ -339,7 +339,7 @@ def gestures_main():
                         config = configuration(dataset_idx=1, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=1, proportions_id = 3, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_Penn_ges_c1_c2_c3_pose.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_NTU_ges_c1_acc.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
