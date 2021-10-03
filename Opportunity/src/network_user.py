@@ -67,11 +67,11 @@ class Network_User(object):
             self.harwindows_test = Pamap2(self.config, partition_modus='test')
         elif self.config['dataset'] == 'orderpicking':
             self.harwindows_train = OderPicking(self.config, partition_modus='train')
-            self.harwindows_val = OderPicking(self.config, partition_modus='test')
+            self.harwindows_val = OderPicking(self.config, partition_modus='val')
             self.harwindows_test = OderPicking(self.config, partition_modus='test')
-        elif self.config['dataset'] == 'pamap2':
+        elif self.config['dataset'] == 'NTU':
             self.harwindows_train = NTU(self.config, partition_modus='train')
-            self.harwindows_val = NTU(self.config, partition_modus='test')
+            self.harwindows_val = NTU(self.config, partition_modus='val')
             self.harwindows_test = NTU(self.config, partition_modus='test')
             
 
