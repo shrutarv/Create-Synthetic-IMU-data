@@ -34,7 +34,7 @@ from NTU import NTU
 from network import Network
 from opportunity import Opportunity
 from pamap2 import Pamap2
-from orderpicking import OderPicking
+#from orderpicking import OderPicking
 
 
 
