@@ -83,7 +83,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
 
     #Batch size
-    batch_size = {'cnn' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100, 'NTU' : 75},
+    batch_size = {'cnn' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100},
                   'lstm' : {'locomotion' : 100, 'gesture' : 100, 'carrots' : 128, 'pamap2' : 50, 'orderpicking' : 100},
                   'cnn_imu' : {'locomotion' : 200, 'gesture' : 200, 'carrots' : 128, 'pamap2' : 100, 'orderpicking' : 100}}
 
