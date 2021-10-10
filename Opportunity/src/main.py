@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_NTU_ges_acc_c1_c2_f.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_NTU_ges_acc_c1_f.pt'}
     
     return configuration
 
@@ -313,7 +313,7 @@ def locomotion_main():
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                            freeze=1, proportions_id = 3, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_NTU_loc_acc_c1_c2_f.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_NTU_loc_acc_c1_f.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
