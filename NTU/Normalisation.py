@@ -43,7 +43,7 @@ returns normalized data between [0,1]
 '''
 
 #path = '/data/sawasthi/data/MoCAP_data/trainData/'
-path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/val_data_tf.csv'
+path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf.csv'
 batch_size = 50
 if torch.cuda.is_available():  
           dev = "cuda:1" 
@@ -78,7 +78,7 @@ print("size of max min list of list", len(value),len(value[0]))
 
 with open('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv', 'w') as f:
     fc = csv.writer(f, lineterminator='\n')
-    fc.writerow(["max","min"])
+    fc.writerow(["min","max"])
     fc.writerows(value)
     
 

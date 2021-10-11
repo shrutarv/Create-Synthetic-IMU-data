@@ -10,14 +10,14 @@ filePattern_root = fullfile(root_folder, '*');
 Files_root = dir(filePattern_root);
 
 data = [];
-for i = 4:length(Files_root)
+for i = 4%:length(Files_root)
     
     filePattern = fullfile(root_folder + Files_root(i).name + "\");
     Files = dir(filePattern);
     % 4:length(Files)-7     length(Files)-7:length(Files)-4
     % 4:ceil(0.7*(length(Files)))      (ceil(0.7*(length(Files)))+1):floor(0.85*(length(Files)))
     %(floor(0.85*(length(Files)))+1):length(Files)
-    for k = 4:length(Files)
+    for k = 4%:length(Files)
       if(Files(k).name == ".DS_Store")
         continue;
       end
@@ -43,4 +43,4 @@ time = transpose(linspace(0, 0.04*size(data,1),size(data,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
-writematrix(data,[savePath + 'train_data_tf.csv']);
+%writematrix(data,[savePath + 'train_data_tf.csv']);
