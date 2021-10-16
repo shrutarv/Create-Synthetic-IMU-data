@@ -117,8 +117,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-        folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_3.pt' #model_up1_3a.pt
+        folder_exp = '/data/sawasthi/PAMP2/model/'
+        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_up4.pt' #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_NTU_loc_pose_c1_f_50.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_PAMAP2_acc_c1_nf.pt'}
     
     return configuration
 
@@ -282,11 +282,11 @@ def pamap2_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=0,
+                        config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
-                                               freeze=fopt, proportions_id=pp, gpudevice="1")
+                                               freeze=0, proportions_id=1, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_c1_c2_c3.txt")
+                                                filename=config['folder_exp'] + "logger_JHMDB_PAMAP2_c1.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -376,8 +376,8 @@ def NTU_nain():
 if __name__ == '__main__':
     
     
-    #pamap2_main()
-    locomotion_main()
+    pamap2_main()
+    #locomotion_main()
     #gestures_main()
     
     print("Done")
