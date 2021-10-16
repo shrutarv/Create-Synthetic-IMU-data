@@ -117,7 +117,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-        folder_exp = '/vol/actrec/PAMAP/PAMAP2_Dataset/Protocol/'
+        folder_exp = '/data/sawasthi/PAMAP2/model/'
         folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_up4.pt' #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
@@ -166,7 +166,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     #dataset
     dataset_root = {'locomotion': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
                     'gesture': '/data/sawasthi/Opportunity/OpportunityUCIDataset/',
-                    'pamap2': '/data/fmoya/HAR/datasets/PAMAP/',
+                    'pamap2': '/vol/actrec/PAMAP/PAMAP2_Dataset/Protocol/',
                     'orderpicking': '/vol/actrec/icpram-data/numpy_arrays/'
                     }
     
