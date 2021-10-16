@@ -577,13 +577,8 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-<<<<<<< Updated upstream
         "step_size":12,
-        "model_path": '/data/sawasthi/data/JHMDB/model/model_acc_up4.pth'
-=======
-        "step_size":3,
-        "model_path": '/data/sawasthi/JHMDB/model/model_opp_tf.pt'
->>>>>>> Stashed changes
+        "model_path": '/data/sawasthi/data/JHMDB/model/model_pose_12.pth'
         }
 
 
@@ -617,11 +612,9 @@ if __name__ == '__main__':
     
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-<<<<<<< Updated upstream
-    path = '/data/sawasthi/data/JHMDB/trainData_up4/'
-=======
-    path = 'S:/Datasets/JHMDB/train/'
->>>>>>> Stashed changes
+
+    path = '/data/sawasthi/data/JHMDB/trainData_pose_12/'
+
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -634,11 +627,8 @@ if __name__ == '__main__':
   
    
     # Validation data    
-<<<<<<< Updated upstream
-    path = '/data/sawasthi/data/JHMDB/validationData_up4/'
-=======
-    path = 'S:/Datasets/JHMDB/val/'
->>>>>>> Stashed changes
+    path = '/data/sawasthi/data/JHMDB/validationData_pose_12/'
+
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -658,7 +648,7 @@ if __name__ == '__main__':
     '''
     #training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/data/JHMDB/testData_up4/'
+    path = '/data/sawasthi/data/JHMDB/testData_pose_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -670,7 +660,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
     testing(config)
-    path = '/data/sawasthi/JHMDB/testData_up4/'
+    path = '/data/sawasthi/JHMDB/testData_pose_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
     test_dataset = CustomDataSet(path)
