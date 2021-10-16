@@ -117,8 +117,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-        folder_exp = '/data/sawasthi/PAMAP2/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_u' #model_up1_3a.pt
+        #folder_exp = '/data/sawasthi/PAMAP2/model/'
+       # folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_u' #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
@@ -150,9 +150,9 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       '/' + reshape_folder + '/' + 'final/'
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-        folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/Penn/model/model_opp_tf_pose.pt'
-        '''
+        folder_exp = '/data/sawasthi/PAMAP2/model/'
+        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_up4' #model_up1_3a.pt
+           '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                      '/' + reshape_folder + '/' + 'fine_tuning/'
