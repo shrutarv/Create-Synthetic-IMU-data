@@ -584,7 +584,7 @@ if __name__ == '__main__':
 
     ws=25
     accumulation_steps = 5
-    epochs = 200
+    epochs = 300
     batch_size = 50
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -648,7 +648,7 @@ if __name__ == '__main__':
     '''
     training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/JHMDB/testData_pose_12/'
+    path = '/data/sawasthi/JHMDB/validationData_pose_12/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -669,9 +669,9 @@ if __name__ == '__main__':
                                    num_workers=0,
                                    pin_memory=True,
                                    drop_last=True)
-   
+    testing(config)
     
     print("Calculating accuracy for the trained model on test set ")
    # testing(config)
-    with open('S:/Datasets/JHMDB/train/seq__0_2.pkl', 'rb') as f:
-        data2 = pickle.load(f)
+   # with open('S:/Datasets/JHMDB/train/seq__0_2.pkl', 'rb') as f:
+    #    data2 = pickle.load(f)
