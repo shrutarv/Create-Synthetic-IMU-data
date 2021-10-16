@@ -117,7 +117,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-        folder_exp = '/data/sawasthi/PAMAP2/model/'
+        folder_exp = '/vol/actrec/PAMAP/PAMAP2_Dataset/Protocol/'
         folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_up4.pt' #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
