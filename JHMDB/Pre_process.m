@@ -1,5 +1,5 @@
 root_folder = "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\joint_positions\";
-savePath =  "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\train\";
+savePath =  "S:\Datasets\JHMDB\";
 %if ~isdir(myFolder)
  % errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
   %uiwait(warndlg(errorMessage));
@@ -10,7 +10,7 @@ filePattern_root = fullfile(root_folder, '*');
 Files_root = dir(filePattern_root);
 
 data = [];
-for i = 4%:length(Files_root)
+for i = 4:length(Files_root)
     
     filePattern = fullfile(root_folder + Files_root(i).name + "\");
     Files = dir(filePattern);
@@ -44,3 +44,11 @@ data = [time,data];
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
 %writematrix(data,[savePath + 'train_data_tf.csv']);
+
+data = traindatatf{:,:};
+for i=2:length(data)
+    data(i,2:2:31) = data(i,2:2:31) - data(i,4);
+    data(i,3:2:31) = data(i,3:2:31) - data(i,5);
+end
+
+writematrix(data,[savePath + 'train_data_tf_new.csv']);

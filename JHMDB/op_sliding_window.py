@@ -131,6 +131,8 @@ def normalize(data, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
     for j in range(1,len(data[0])-1):
+        if (j==3 or j==4):
+            continue;
         data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
     test = np.array(data[:,1:31])
         
@@ -211,14 +213,14 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 12
     
-    #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
-    df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    #df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     data = df.values
     data_new = data[:,1:31]
     attr = np.zeros((100,1))
     value = max_min_values(data_new)
     '''
-    with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
+    with open("S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/norm_values.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["min","max"])
         fc.writerows(value)
@@ -235,15 +237,12 @@ if __name__ == '__main__':
     data_new = data[:,1:31]
     #plot_graphs(x_sampled,data,data_new,sampled_data[:,1:])
     
-    # creating labels
-    
-    data_dir = "S:/Datasets/JHMDB/pkl/"
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-<<<<<<< Updated upstream
+    # creating labels    
+    # data_dir = "S:/Datasets/JHMDB/pkl/"
+    # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+
     data_dir =  '/data/sawasthi/JHMDB/trainData_pose_12/'
-=======
-    # data_dir =  '/data/sawasthi/JHMDB/trainData_pose_3/'
->>>>>>> Stashed changes
+
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     label = data[:,31].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
