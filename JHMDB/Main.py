@@ -578,7 +578,7 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_up1.pth'
         }
 
 
