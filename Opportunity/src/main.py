@@ -272,7 +272,7 @@ def pamap2_main():
     #dataset = {0 : 'locomotion', 1 : 'gesture', 2 : 'carrots', 3 : 'pamap2', 4 : 'orderpicking',
     # 5 : 'virtual', 6 : 'mocap_half', 7 : 'virtual_quarter', 8 : 'mocap_quarter', 9 : 'mbientlab_quarter'}
     # 10 : 'mbientlab'}
-    datasets_opts = [0]
+    datasets_opts = [3]
     networks_arc = [0]
     fine_tunings = [10]
     frezze_opts = [0]
