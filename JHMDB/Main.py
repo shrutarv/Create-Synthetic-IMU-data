@@ -403,7 +403,7 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     model = torch.load(config['model_path'])
-    model.eval()
+    #model.eval()
     model.to(device)
     loss_test = 0.0
     with torch.no_grad():
@@ -646,7 +646,7 @@ if __name__ == '__main__':
         data_x.to(device)
         value = max_min_values(data_x,value)
     '''
-    training(dataLoader_train, dataLoader_validation,device, config)
+    #training(dataLoader_train, dataLoader_validation,device, config)
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
