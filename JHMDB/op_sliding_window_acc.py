@@ -215,7 +215,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 12
     
-    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data_tf.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
     data = df.values
     data_new = data[:,1:31]
@@ -285,7 +285,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/JHMDB/trainData_acc_up4/'
+    data_dir =  '/data/sawasthi/JHMDB/trainData_acc_up4_tf/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     label = np.repeat(data[:,31],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -326,7 +326,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     data_dir =  '/data/sawasthi/JHMDB/validationData_acc_up4/'
@@ -359,7 +359,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
