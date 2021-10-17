@@ -578,13 +578,13 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_up4.pt'
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_up4.pth'
         }
 
 
     ws=25
     accumulation_steps = 5
-    epochs = 150
+    epochs = 5
     batch_size = 50
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
