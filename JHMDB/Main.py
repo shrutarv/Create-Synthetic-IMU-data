@@ -363,8 +363,8 @@ def training(dataLoader_train, dataLoader_validation, device,config):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              #torch.save(model, config['model_path'])
-              torch.save({'state_dict': model.state_dict()}, config['model_path'])
+              torch.save(model, config['model_path'])
+              #torch.save({'state_dict': model.state_dict()}, config['model_path'])
               print("model saved on epoch", e)
               best_acc = val_acc
           
@@ -595,7 +595,7 @@ if __name__ == '__main__':
     #print(len(df),len(value), len(value[0]))
     model = Network(config)
     model = model.float()
-    model = model.to(device)
+    model = model.to(torch.device('cpu'))
     #model.load_state_dict(torch.load())
     #print("model loaded")   # 
     normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
