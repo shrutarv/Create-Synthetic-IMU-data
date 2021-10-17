@@ -173,7 +173,7 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 1
+    up = 3
     #ws = (100,31)
     ws = (30,45) 
     ss = (12,45)     
