@@ -585,7 +585,7 @@ if __name__ == '__main__':
 
     ws=25
     accumulation_steps = 5
-    epochs = 180
+    epochs = 150
     batch_size = 50
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -614,7 +614,7 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 
-    path = '/data/sawasthi/JHMDB/trainData_acc_up4/'
+    path = '/data/sawasthi/JHMDB/trainData_acc_up4_tf/'
 
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
