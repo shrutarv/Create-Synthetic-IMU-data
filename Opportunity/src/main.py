@@ -283,7 +283,7 @@ def pamap2_main():
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=dset, network_idx=arch, output_idx=0, usage_modus_idx=5,
-                                               dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
+                                               dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=0, proportions_id=3, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
                                                 filename=config['folder_exp'] + "logger_JHMDB_PAMAP2_c1_c2_c3_c4_acc_nf.txt")
