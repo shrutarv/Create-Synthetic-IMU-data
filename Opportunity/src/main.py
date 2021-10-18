@@ -274,7 +274,7 @@ def pamap2_main():
     # 10 : 'mbientlab'}
     datasets_opts = [3]
     networks_arc = [0]
-    fine_tunings = [30]
+    fine_tunings = [3]
     frezze_opts = [0]
     proportions_opts = [0, 1, 2]
     for dset in datasets_opts:
