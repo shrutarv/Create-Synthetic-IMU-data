@@ -411,7 +411,7 @@ class Network_User(object):
     def train(self, ea_itera):
         logging.info('        Network_User: Train---->')
 
-        logging.info('        Network_User:    Train:    creating network')
+        logging.info('        Network_User:    iter {}   Train:    creating network'.format(ea_itera))
         if self.config['network'] == 'cnn' or self.config['network'] == 'cnn_imu':
             self.network_obj = Network(self.config)
             self.network_obj.init_weights()

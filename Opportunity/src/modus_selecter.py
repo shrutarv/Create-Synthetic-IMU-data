@@ -99,7 +99,7 @@ class Modus_Selecter(object):
             f1_mean_test_ac = []
 
         for iter_evl in range(itera):
-            logging.info('    Network_selecter:    Train iter 0')
+            logging.info('    Network_selecter:    Train iter {}'.format(itera))
             acc_train, f1_weighted_train, f1_mean_train = self.network.evolution_evaluation(ea_iter=iter_evl)
 
             acc_train_ac.append(acc_train)
