@@ -341,7 +341,7 @@ class Network_User(object):
 
         if self.config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias' 
+                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias'
                            ]
         elif self.config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
