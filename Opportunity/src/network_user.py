@@ -684,9 +684,9 @@ class Network_User(object):
                                                        self.config["lr"], self.config["reshape_input"]))
                     logging.info(
                         '        Network_User:    Train:    epoch {}/{} '
-                        'batch {}/{} itera {} elapsed time {}'.format(e, self.config['epochs'],
+                        'batch {}/{} itera {} global iteration {} elapsed time {}'.format(e, self.config['epochs'],
                                                                       b, len(self.dataLoader_train),
-                                                                      itera, elapsed_time_batch))
+                                                                      itera, ea_itera, elapsed_time_batch))
                     logging.info(
                         '        Network_User:    Train:    acc {}, '
                         'f1_weighted {}, f1_mean {}'.format(acc, f1_weighted, f1_mean))
