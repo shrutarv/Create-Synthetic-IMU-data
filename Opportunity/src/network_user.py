@@ -529,9 +529,9 @@ class Network_User(object):
             # loop per batch:
             for b, harwindow_batched in enumerate(self.dataLoader_train):
                 start_time_batch = time.time()
-                sys.stdout.write("\rTraining: Epoch {}/{} Batch {}/{} and itera {}".format(e,
+                sys.stdout.write("\rTraining: Epoch {}/{} Batch {}/{} global iteration {} and itera {}".format(e,
                                                                                            self.config['epochs'],
-                                                                                           b,
+                                                                                           b, ea_itera,
                                                                                            len(self.dataLoader_train),
                                                                                            itera))
                 sys.stdout.flush()
