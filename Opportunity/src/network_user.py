@@ -629,7 +629,7 @@ class Network_User(object):
                     logging.info('\n')
                     logging.info(
                         '        Network_User:        Validating:    '
-                        'epoch {} batch {} itera {} elapsed time {}'.format(e, b, itera, elapsed_time_val))
+                        'epoch {} batch {} itera {} global iteration {} elapsed time {}'.format(e, b, itera, ea_itera, elapsed_time_val))
                     logging.info(
                         '        Network_User:        Validating:    '
                         'acc {}, f1_weighted {}, f1_mean {}'.format(acc_val, f1_weighted_val, f1_mean_val))
