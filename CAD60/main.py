@@ -337,7 +337,7 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     #model = torch.load(model_path)
-    torch.load(config['model_path'], map_location=torch.device('cpu'))['state_dict']
+    torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
     model.eval()
     model.to(device)
     loss_test = 0.0
