@@ -297,8 +297,8 @@ def training(dataLoader_train, dataLoader_validation, device):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
-              #torch.save({'state_dict': model.state_dict()}, model_path)
+              #torch.save(model, model_path)
+              torch.save({'state_dict': model.state_dict()}, model_path)
 
               print("model saved on epoch", e)
               best_acc = val_acc
