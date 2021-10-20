@@ -336,7 +336,8 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    model = torch.load(model_path)
+    #model = torch.load(model_path)
+    torch.load(config['model_path'], map_location=torch.device('cpu'))['state_dict']
     model.eval()
     model.to(device)
     loss_test = 0.0
@@ -571,7 +572,7 @@ if __name__ == '__main__':
                                    drop_last=True)
     
    
-    training(dataLoader_train, dataLoader_validation,device)
+    #training(dataLoader_train, dataLoader_validation,device)
     # Test data    
     print("Calculating accuracy for the trained model on validation set ")
     path = '/data/sawasthi/data/CAD60/validationData_acc_up3/'
