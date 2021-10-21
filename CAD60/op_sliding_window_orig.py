@@ -178,7 +178,7 @@ if __name__ == '__main__':
     sliding_window_length = 30   
     #sliding_window_length = 100    
     sliding_window_step = 12
-    df = pd.read_csv('/data/sawasthi/data/CAD60/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/CAD60/train_data.csv')
    # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
@@ -205,7 +205,7 @@ if __name__ == '__main__':
     
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/data/CAD60/trainData_pose/'
+    data_dir =  '/data/sawasthi/CAD60/trainData_pose/'
     label = data[:,46].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -215,8 +215,8 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir =  '/data/sawasthi/data/CAD60/testData_pose/'
-    df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
+    data_dir =  '/data/sawasthi/CAD60/testData_pose/'
+    df = pd.read_csv('/data/sawasthi/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -229,7 +229,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/CAD60/validation_data.csv')
     data_dir =  '/data/sawasthi/data/CAD60/validationData_pose/'
     data = df.values
     data = normalize(data,value, "validation")
