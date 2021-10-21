@@ -126,6 +126,8 @@ def normalize(data, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
     for j in range(1,len(data[0])-1):
+        if (j==7 or j==8 or j==9):
+            continue;
         data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
     test = np.array(data[:,1:31])
         

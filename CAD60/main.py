@@ -325,7 +325,7 @@ def training(dataLoader_train, dataLoader_validation, device):
     plt.plot(ep,accuracy,'r',label='training accuracy')
     plt.plot(ep,validation_acc, 'g',label='validation accuracy')
     plt.legend()
-    plt.savefig('/data/sawasthi/data/CAD60/results/result_1.png') 
+    plt.savefig('/data/sawasthi/CAD60/results/result_1.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
     #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
