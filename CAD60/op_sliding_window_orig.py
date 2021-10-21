@@ -230,7 +230,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/CAD60/validation_data.csv')
-    data_dir =  '/data/sawasthi/data/CAD60/validationData_pose/'
+    data_dir =  '/data/sawasthi/CAD60/validationData_pose/'
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
