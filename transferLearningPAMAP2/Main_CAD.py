@@ -241,7 +241,7 @@ def set_required_grad(network):
 
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
-                           
+                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias'
                            ]
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
@@ -276,7 +276,7 @@ def load_weights(network):
 
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias',
-                           ]
+                           'conv2_1.weight', 'conv2_1.bias', 'conv2_2.weight', 'conv2_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -465,7 +465,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_up3_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
-        "freeze":True
+        "freeze":False
         }
 
 
