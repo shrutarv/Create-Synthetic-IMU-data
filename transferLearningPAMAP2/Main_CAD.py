@@ -521,7 +521,7 @@ if __name__ == '__main__':
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/PAMAP2/trainData_75_new/'
+        path = '/data/sawasthi/PAMAP2/trainData_50_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -561,7 +561,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD_PAM_c1_pose_75_nf.pth'
+        model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD_PAM_c1_pose_50_nf.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
