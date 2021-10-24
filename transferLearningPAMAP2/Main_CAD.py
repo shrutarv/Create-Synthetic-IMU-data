@@ -463,7 +463,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
-        "freeze":False
+        "freeze":True
         }
 
 
@@ -561,7 +561,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD_PAM_c1_pose_30_nf.pth'
+        model_path_tl = '/data/sawasthi/CAD60/model/model_tl_CAD_PAM_c1_pose_30_f.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
