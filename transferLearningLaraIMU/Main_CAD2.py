@@ -465,6 +465,7 @@ if __name__ == '__main__':
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         "freeze":True
         }
+    
     flag = True
     iterations = 3
     weighted_F1_array = []
