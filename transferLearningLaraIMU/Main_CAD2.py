@@ -455,7 +455,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":29,
+        "NB_sensor_channels":30,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -469,7 +469,7 @@ if __name__ == '__main__':
         }
     
     flag = True
-    iterations = 3
+    iterations = 4
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
