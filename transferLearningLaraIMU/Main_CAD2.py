@@ -463,6 +463,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_up3_tf.pth', #'model_pose_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
+        "freeze":True
         }
     flag = True
     iterations = 3
@@ -513,7 +514,8 @@ if __name__ == '__main__':
         model.fc5 = PAMAP_net.fc5
         model.softmax = PAMAP_net.softmax
         '''
-        model = set_required_grad(model)
+        if config["freeze"]:
+            model = set_required_grad(model)
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
