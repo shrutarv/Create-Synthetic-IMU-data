@@ -1,4 +1,5 @@
-root_folder = "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\joint_positions\";
+root_folder = "S:\Datasets\joint_positions\";
+%root_folder = "S:\MS A&R\4th Sem\Thesis\J-HMDB\joint_positions\joint_positions\";
 savePath =  "S:\Datasets\JHMDB\";
 %if ~isdir(myFolder)
  % errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);

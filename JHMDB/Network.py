@@ -320,6 +320,11 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'pamap2':
                     idx_LA = np.arange(1, 14)
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))
+                elif self.config["dataset"] == 'JHMDB':
+                    idx_LA = np.arange(8, 9)
+                    idx_LA = np.concatenate([idx_LA, np.arange(16, 18)])
+                    idx_LA = np.concatenate([idx_LA, np.arange(24, 25)])
+                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))  
 
             x_LA = F.relu(self.conv_LA_1_2(x_LA))
             x_LA = F.relu(self.conv_LA_2_1(x_LA))
@@ -344,6 +349,13 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'pamap2':
                     idx_LL = np.arange(27, 40)
                     x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
+                elif self.config["dataset"] == 'JHMDB':
+                    idx_LL = np.arange(12, 13)
+                    idx_LL = np.concatenate([idx_LL, np.arange(20, 21)])
+                    idx_LL = np.concatenate([idx_LL, np.arange(28, 29)])
+                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
+               
+                
 
             x_LL = F.relu(self.conv_LL_1_2(x_LL))
             x_LL = F.relu(self.conv_LL_2_1(x_LL))
@@ -371,6 +383,10 @@ class Network(nn.Module):
                     idx_N = np.arange(0, 1)
                     idx_N = np.concatenate([idx_N, np.arange(14, 27)])
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
+                elif self.config["dataset"] == 'JHMDB':    
+                    idx_N = np.arange(0, 5)
+                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
+                   
             x_N = F.relu(self.conv_N_1_2(x_N))
             x_N = F.relu(self.conv_N_2_1(x_N))
             x_N = F.relu(self.conv_N_2_2(x_N))
@@ -397,7 +413,12 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'pamap2':
                     idx_RA = np.arange(1, 14)
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-
+                elif self.config["dataset"] == 'JHMDB':
+                    idx_RA = np.arange(6, 7)
+                    idx_RA = np.concatenate([idx_RA, np.arange(14, 15)])
+                    idx_RA = np.concatenate([idx_RA, np.arange(22, 23)])
+                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
+               
             x_RA = F.relu(self.conv_RA_1_2(x_RA))
             x_RA = F.relu(self.conv_RA_2_1(x_RA))
             x_RA = F.relu(self.conv_RA_2_2(x_RA))
@@ -422,6 +443,12 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'pamap2':
                     idx_RL = np.arange(27, 40)
                     x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
+                elif self.config["dataset"] == 'JHMDB':
+                    idx_RL = np.arange(10, 11)
+                    idx_RL = np.concatenate([idx_RL, np.arange(18, 19)])
+                    idx_RL = np.concatenate([idx_RL, np.arange(26, 27)])
+                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
+                
 
             x_RL = F.relu(self.conv_RL_1_2(x_RL))
             x_RL = F.relu(self.conv_RL_2_1(x_RL))

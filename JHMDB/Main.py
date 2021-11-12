@@ -316,7 +316,6 @@ def training(dataLoader_train, dataLoader_validation, device,config):
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
-             
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
@@ -574,12 +573,14 @@ if __name__ == '__main__':
         "sliding_window_length":25,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_pose_tf.pth'
+        "model_path": '/data/sawasthi/JHMDB/model/model_pose_ci_tf.pth',
+        "dataset" : 'JHMDB'
+        
         }
 
 
@@ -614,8 +615,8 @@ if __name__ == '__main__':
     #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
     #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
 
-    path = '/data/sawasthi/JHMDB/trainData_pose_12_tf/'
-
+    path = '/data/sawasthi/JHMDB/trainData_pose_12/'
+    #path = 'S:/Datasets/JHMDB/train/'
     #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
     #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -674,5 +675,5 @@ if __name__ == '__main__':
     
     print("Calculating accuracy for the trained model on test set ")
    # testing(config)
-   # with open('S:/Datasets/JHMDB/train/seq__0_2.pkl', 'rb') as f:
-    #    data2 = pickle.load(f)
+  # with open('S:/Datasets/JHMDB/train/seq__0_2.pkl', 'rb') as f:
+   #   data2 = pickle.load(f)
