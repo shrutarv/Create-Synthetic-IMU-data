@@ -537,8 +537,8 @@ def testing(config):
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
     print("precision", precision)
     print("recall", recall)
-    print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
+    #print("F1 weighted", F1_weighted)
+    #print("F1 mean",F1_mean)
     
     print('Finished Testing')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
