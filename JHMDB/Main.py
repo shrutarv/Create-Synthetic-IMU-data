@@ -529,6 +529,8 @@ def testing(config):
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
         
     cm = confusion_matrix(trueValue, prediction)
+    test_acc = 100. * correct / total        
+    
     print(cm)
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
@@ -546,6 +548,7 @@ def testing(config):
          #wr.writerow(accuracy)
          #wr.writerow(l)
              
+    return F1_weighted, test_acc
     
         
 if __name__ == '__main__':
@@ -584,95 +587,118 @@ if __name__ == '__main__':
         }
 
 
-    ws=25
-    accumulation_steps = 5
-    epochs = 120
-    batch_size = 50
-    learning_rate = 0.00001
-    print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+    flag = True
+    iterations = 4
+    weighted_F1_array = []
+    test_acc_array = []
+    for iter in range(iterations):
         
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    #value = df.values.tolist()
-    #print(len(df),len(value), len(value[0]))
-    model = Network(config)
-    model = model.float()
-    model = model.to(device)
-    #model.load_state_dict(torch.load())
-    #print("model loaded")   # 
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
-    #noise = noise.float()
+        ws=25
+        accumulation_steps = 5
+        epochs = 120
+        batch_size = 50
+        learning_rate = 0.00001
+        print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+        
+            
+        #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+        #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
+        #value = df.values.tolist()
+        #print(len(df),len(value), len(value[0]))
+        model = Network(config)
+        model = model.float()
+        model = model.to(device)
+        #model.load_state_dict(torch.load())
+        #print("model loaded")   # 
+        normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+        #noise = noise.float()
+        
+        criterion = nn.CrossEntropyLoss()
+        #optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+        #lmbda = lambda epoch: 0.95
+        #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
+        #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
+        
+        #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+        
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     
-    criterion = nn.CrossEntropyLoss()
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
-    #lmbda = lambda epoch: 0.95
-    #scheduler = lr_scheduler.StepLR(optimizer, step_size=1,gamma=0.95)
-    #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
+        path = '/data/sawasthi/JHMDB/trainData_acc_up4/' #trainData_pose_12
+        #path = 'S:/Datasets/JHMDB/train/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        train_dataset = CustomDataSet(path)
+        dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+      
+       
+        # Validation data    
+        path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
     
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        validation_dataset = CustomDataSet(path)
+        dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+       
+        '''
+        for b, harwindow_batched in enumerate(dataLoader_test):
+            data_x = harwindow_batched["data"]
+            data_x.to(device)
+            value = max_min_values(data_x,value)
+        '''
+        training(dataLoader_train, dataLoader_validation,device, config)
+        print("Calculating accuracy for the trained model on validation set ")
+        path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+        testing(config)
+        WF1, TA1 = testing(config)
 
-    path = '/data/sawasthi/JHMDB/trainData_acc_up4/' #trainData_pose_12
-    #path = 'S:/Datasets/JHMDB/train/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    train_dataset = CustomDataSet(path)
-    dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-  
-   
-    # Validation data    
-    path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
-
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    validation_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
+        path = '/data/sawasthi/JHMDB/testData_acc_up4/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        training(dataLoader_train, dataLoader_validation,device,flag)
+        print("Calculating accuracy for the trained model on validation set ")
+        
+        WF, TA = testing(config)
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+        #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+        weighted_F1_array.append(WF)
+        test_acc_array.append(TA)
+        
+    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
+    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
     
-   
-    '''
-    for b, harwindow_batched in enumerate(dataLoader_test):
-        data_x = harwindow_batched["data"]
-        data_x.to(device)
-        value = max_min_values(data_x,value)
-    '''
-    training(dataLoader_train, dataLoader_validation,device, config)
-    print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    
-    testing(config)
-    path = '/data/sawasthi/JHMDB/testData_acc_up4/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    testing(config)
-    
+    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
+    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array) 
     print("Calculating accuracy for the trained model on test set ")
    # testing(config)
   # with open('S:/Datasets/JHMDB/train/seq__0_2.pkl', 'rb') as f:
