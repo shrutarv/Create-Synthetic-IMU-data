@@ -128,6 +128,8 @@ class Network(nn.Module):
                     self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 13, 256)
                 elif self.config["dataset"] == 'JHMDB':
                     self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'CAD60':
+                    self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
             # LL
             self.conv_LL_1_1 = nn.Conv2d(in_channels=in_channels,
@@ -164,6 +166,8 @@ class Network(nn.Module):
                     self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 13, 256)
                 elif self.config["dataset"] == 'JHMDB':
                     self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'CAD60':
+                    self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
 
             # N
@@ -202,6 +206,8 @@ class Network(nn.Module):
                     self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 14, 256)
                 elif self.config["dataset"] == 'JHMDB':
                     self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'CAD60':
+                    self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
             # RA
             self.conv_RA_1_1 = nn.Conv2d(in_channels=in_channels,
@@ -238,6 +244,8 @@ class Network(nn.Module):
                     self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 13, 256)
                 elif self.config["dataset"] == 'JHMDB':
                     self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'CAD60':
+                    self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
 
             # RL
@@ -275,6 +283,8 @@ class Network(nn.Module):
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 13, 256)
                 elif self.config["dataset"] == 'JHMDB':
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'CAD60':
+                    self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
 
         if self.config["network"] == "cnn":
@@ -337,6 +347,10 @@ class Network(nn.Module):
                     idx_LA = np.concatenate([idx_LA, np.arange(16, 18)])
                     idx_LA = np.concatenate([idx_LA, np.arange(24, 26)])
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA]))  
+                elif self.config["dataset"] == 'CAD60':
+                    idx_LA = np.arange(9, 15)
+                    idx_LA = np.concatenate([idx_LA, np.arange(33, 36)])
+                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
 
             x_LA = F.relu(self.conv_LA_1_2(x_LA))
             x_LA = F.relu(self.conv_LA_2_1(x_LA))
@@ -366,7 +380,10 @@ class Network(nn.Module):
                     idx_LL = np.concatenate([idx_LL, np.arange(20, 22)])
                     idx_LL = np.concatenate([idx_LL, np.arange(28, 30)])
                     x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
-               
+                elif self.config["dataset"] == 'CAD60':
+                    idx_LL = np.arange(21, 27)
+                    idx_LL = np.concatenate([idx_LL, np.arange(39, 42)])
+                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
                 
 
             x_LL = F.relu(self.conv_LL_1_2(x_LL))
@@ -397,6 +414,9 @@ class Network(nn.Module):
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
                 elif self.config["dataset"] == 'JHMDB':    
                     idx_N = np.arange(0, 6)
+                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
+                elif self.config["dataset"] == 'CAD60':    
+                    idx_N = np.arange(0, 9)
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
                    
             x_N = F.relu(self.conv_N_1_2(x_N))
@@ -430,7 +450,11 @@ class Network(nn.Module):
                     idx_RA = np.concatenate([idx_RA, np.arange(14, 16)])
                     idx_RA = np.concatenate([idx_RA, np.arange(22, 24)])
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-               
+                elif self.config["dataset"] == 'CAD60':
+                    idx_RA = np.arange(15, 21)
+                    idx_RA = np.concatenate([idx_RA, np.arange(36, 39)])
+                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
+                
             x_RA = F.relu(self.conv_RA_1_2(x_RA))
             x_RA = F.relu(self.conv_RA_2_1(x_RA))
             x_RA = F.relu(self.conv_RA_2_2(x_RA))
@@ -459,6 +483,10 @@ class Network(nn.Module):
                     idx_RL = np.arange(10, 12)
                     idx_RL = np.concatenate([idx_RL, np.arange(18, 20)])
                     idx_RL = np.concatenate([idx_RL, np.arange(26, 28)])
+                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
+                elif self.config["dataset"] == 'CAD60':
+                    idx_RL = np.arange(27, 33)
+                    idx_RL = np.concatenate([idx_RL, np.arange(42, 45)])
                     x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
                 
 
