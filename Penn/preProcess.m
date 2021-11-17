@@ -1,5 +1,5 @@
-root_folder = "S:\MS A&R\4th Sem\Thesis\Penn_Action\labels\";
-savePath =  "S:\MS A&R\4th Sem\Thesis\Penn_Action\train\";
+root_folder = "S:\Datasets\Penn_Action\Penn_Action\labels\";
+savePath =  "S:\Datasets\Penn_Action\Penn_Action\train\";
 %if ~isdir(myFolder)
  % errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
   %uiwait(warndlg(errorMessage));
