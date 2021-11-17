@@ -384,7 +384,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
 def testing(config):
-   print('Start Testing')
+    print('Start Testing')
     
     total = 0.0
     correct = 0.0
