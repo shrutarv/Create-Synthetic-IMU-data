@@ -16,11 +16,11 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
 import logging
-from metrics import Metrics
 import pandas as pd
 import os
 import random
 import platform
+from metrics import Metrics
 #import torchvision.models as model
 
 # not called anymore. This method normalizes each attribute of a 2D matrix separately
@@ -240,7 +240,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -273,7 +273,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias', 'conv1_2.weight', 'conv1_2.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
                            'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
@@ -568,8 +568,8 @@ if __name__ == '__main__':
         "num_filters":64,
         "network":"cnn",
         "output":"softmax",
-        "num_classes":8,
         "step_size":12,
+        "num_classes":8,
         "reshape_input":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_tf.pth', #'model_pose_tf.pth',model_acc_up3_tf
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
@@ -577,14 +577,14 @@ if __name__ == '__main__':
         }
     
     flag = True
-    iterations = 1
+    iterations = 4
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
         
         ws=100
         accumulation_steps = 5
-        epochs = 1
+        epochs = 30
         batch_size = 100
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -670,9 +670,9 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_100_pose_f.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_c2_100_pose_f.pth'
         
-        #training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
