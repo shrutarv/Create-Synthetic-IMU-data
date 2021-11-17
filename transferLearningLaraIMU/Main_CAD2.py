@@ -16,6 +16,7 @@ from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
 import logging
+from metrics import Metrics
 import pandas as pd
 import os
 import random
