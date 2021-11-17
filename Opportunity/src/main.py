@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_PAMAP2_cimu_acc_c1_c2_c3_c4_f.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_PAMAP2_cimu_acc_c1_f.pt'}
     
     return configuration
 
@@ -286,7 +286,7 @@ def pamap2_main():
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=0, name_counter=0,
                                                freeze=0, proportions_id=3, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_CAD60_JHMDB_PAMAP2_cimu_c1_c2_c3_c4_acc_f.txt")
+                                                filename=config['folder_exp'] + "logger_CAD60_JHMDB_PAMAP2_cimu_c1_acc_f.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
