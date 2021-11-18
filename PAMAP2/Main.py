@@ -374,13 +374,14 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":16,
-        "reshape_input":False
+        "reshape_input":False,
+        "dataset": "pamap2"
         }
 
-    iterations = 2
+    iterations = 4
     weighted_F1_array = []
     test_acc_array = []
     flag = True
