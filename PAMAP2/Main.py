@@ -523,7 +523,7 @@ if __name__ == '__main__':
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/data/PAMAP2/trainData_30_new/'
+        path = '/data/sawasthi/data/PAMAP2/trainData_75_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
