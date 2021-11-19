@@ -322,7 +322,7 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     #model = torch.load(config['model_path'])
-    torch.load(config['model_path'], map_location=torch.device('cpu'))['state_dict']
+    model = torch.load(config['model_path'])
     model.eval()
     model.to(device)
     loss_test = 0.0
@@ -500,7 +500,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 80
+        epochs = 1
         batch_size = 200
         learning_rate = 0.00001
               
