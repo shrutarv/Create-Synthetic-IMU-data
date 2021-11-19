@@ -508,7 +508,7 @@ if __name__ == '__main__':
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
         #value = df.values.tolist()
         #print(len(df),len(value), len(value[0]))
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_50.pth'
+        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_30.pth'
         model = Network(config)
         model = model.float()
         model = model.to(device)
@@ -523,7 +523,7 @@ if __name__ == '__main__':
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
+        path = '/data/sawasthi/data/PAMAP2/trainData_30_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
