@@ -15,7 +15,7 @@ from Network import Network
 from sklearn.metrics import confusion_matrix
 import matplotlib.pyplot as plt
 import csv
-
+from metrics import Metrics
 import pandas as pd
 
 
@@ -321,44 +321,153 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    total_loss = 0.0
-    model = torch.load(model_path)
+    #model = torch.load(config['model_path'])
+    torch.load(config['model_path'], map_location=torch.device('cpu'))['state_dict']
     model.eval()
+    model.to(device)
+    loss_test = 0.0
     with torch.no_grad():
             
         for b, harwindow_batched in enumerate(dataLoader_test):
+            
             test_batch_v = harwindow_batched["data"]
             test_batch_l = harwindow_batched["label"][:, 0]
-           # test_batch_v = normalize(test_batch_v, value,"test")
+            #test_batch_v = normalize(test_batch_v, value,"test")
             test_batch_v = test_batch_v.float()
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            out = model(test_batch_v)
-            #print("Next Batch result")
-            predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
-            #predicted = Testing(test_batch_v, test_batch_l)
-            trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
-            prediction = np.concatenate((prediction,predicted_classes))
-            total += test_batch_l.size(0) 
+            predictions = model(test_batch_v)
             test_batch_l = test_batch_l.long()
-            predicted_classes = predicted_classes.to(device)
-            correct += (predicted_classes == test_batch_l).sum().item()
-            #counter = out.view(-1, n_classes).size(0)
+            loss = criterion(predictions, test_batch_l)
+            loss_test = loss_test + loss.item()
+            if b == 0:
+                    predictions_test = predictions
+                    if config['output'] == 'softmax':
+                        test_labels = harwindow_batched["label"][:, 0]
+                        test_labels = test_labels.reshape(-1)
+
+                        test_labels_window = harwindow_batched["labels"][:, :, 0]
+                    elif config['output'] == 'attribute':
+                        #test_labels = harwindow_batched_test["label"][:, 1:]
+                        test_labels = harwindow_batched["label"]
+
+                        test_labels_window = harwindow_batched["labels"][:, :, 0]
+                    elif config['output'] == 'identity':
+                        test_labels = harwindow_batched["identity"]
+                        test_labels = test_labels.reshape(-1)
+
+                    #test_file_labels = harwindow_batched["label_file"]
+                    #test_file_labels = test_file_labels.reshape(-1)
+            else:
+                predictions_test = torch.cat((predictions_test, predictions), dim=0)
+                
+                if config['output'] == 'softmax':
+                    test_labels_batch = harwindow_batched["label"][:, 0]
+                    test_labels_batch = test_labels_batch.reshape(-1)
+
+                    test_labels_window_batch = harwindow_batched["labels"][:, :, 0]
+                elif config['output'] == 'attribute':
+                    #test_labels_batch = harwindow_batched_test["label"][:, 1:]
+                    test_labels_batch = harwindow_batched["label"]
+
+                    test_labels_window_batch = harwindow_batched["labels"][:, :, 0]
+                elif config['output'] == 'identity':
+                    test_labels_batch = harwindow_batched["identity"]
+                    test_labels_batch = test_labels_batch.reshape(-1)
+
+                #test_file_labels_batch = harwindow_batched["label_file"]
+                #test_file_labels_batch = test_file_labels_batch.reshape(-1)
+
+                test_labels = torch.cat((test_labels, test_labels_batch), dim=0)
+                #test_file_labels = torch.cat((test_file_labels, test_file_labels_batch), dim=0)
+                test_labels_window = torch.cat((test_labels_window, test_labels_window_batch), dim=0)
+                # Shrutarv original code
+                #print("Next Batch result")
+                predicted_classes = torch.argmax(predictions, dim=1).type(dtype=torch.LongTensor)
+                #predicted = Testing(test_batch_v, test_batch_l)
+                trueValue = np.concatenate((trueValue, test_batch_l.cpu()))
+                prediction = np.concatenate((prediction,predicted_classes))
+                total += test_batch_l.size(0) 
+                test_batch_l = test_batch_l.long()
+                predicted_classes = predicted_classes.to(device)
+                correct += (predicted_classes == test_batch_l).sum().item()
+                #counter = out.view(-1, n_classes).size(0)
+                
+        print("number of windows",test_labels.size(0))        
+        size_samples = (test_labels.size(0)-1)*config["step_size"] + config['sliding_window_length']
+        print("total rows in test data",size_samples)
+        accumulated_predictions = torch.zeros((config["num_classes"],
+                                          size_samples)).to(device, dtype=torch.long)
+        predicted_classes = torch.argmax(predictions_test, dim=1).to(device,dtype=torch.long)
+        targets = torch.zeros((config["num_classes"],
+                                          size_samples)).to(device, dtype=torch.long)
+        test_labels = test_labels.to(device)
+        expand_pred = torch.ones([1,config['sliding_window_length']]).squeeze().to(device,dtype=torch.long)
+        index = 0
+        prediction_unsegmented = []
+        #labels_per_window = harwindow_batched["label"][:,0]
+        for i in range(predicted_classes.size(0)):
+            # ignore the windows which are less than of size=100
+            if(index +config['sliding_window_length'])>size_samples:
+                print("exit on"+i)
+                break
+            accumulated_predictions[predicted_classes[i].item(),index:(index +config['sliding_window_length'])] += expand_pred 
+            targets[test_labels[i].item(),index:(index +config['sliding_window_length'])] += expand_pred
+            #temp = np.ones(1,config['sliding_window_length'])
+            index += config["step_size"]
+        Final_pred = torch.argmax(accumulated_predictions, dim=0).to(device,dtype=torch.long)
+        Final_pred = Final_pred.unsqueeze(1)
+        #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
+        #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
+        #data = df.values
+        #true_labels = torch.tensor(data[:,31])
+        true_labels = torch.argmax(targets, dim=0).to(device,dtype=torch.long)
+        true_labels = true_labels.unsqueeze(1)
+        metrics_obj = Metrics(config, device)
+        # unsegmented accuracy
+        true_labels = true_labels.to(device, dtype=torch.float)
+        print(true_labels.size(),Final_pred.size())
+        results_test = metrics_obj.metric(true_labels, Final_pred, mode="classification")
+        predictions_labels = results_test["classification"]['predicted_classes'].to("cpu", torch.double).numpy()
+        print('Network_User: Testing:  after de- segmented acc {}, f1_weighted {}, f1_mean {}'.format(
+                results_test["classification"]['acc'], results_test["classification"]['f1_weighted'],
+                results_test["classification"]['f1_mean']))
+        #test_file_labels = test_file_labels.to("cpu", dtype=torch.long)
+        #test_labels_window = test_labels_window.to(self.device, dtype=torch.long)
+        #segmented accuracy
+        results_test_segment = metrics_obj.metric(test_labels, predicted_classes, mode="classification")
+        #print statistics
+        print('Network_User: Testing Segmentation:  acc {}, '
+            'f1_weighted {}, f1_mean {}'.format(results_test_segment["classification"]['acc'],
+                                                results_test_segment["classification"]['f1_weighted'],
+                                                results_test_segment["classification"]['f1_mean']))
+
+        
+        
         
     print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
-    test_acc = 100. * correct / total       
+        
     cm = confusion_matrix(trueValue, prediction)
+    test_acc = 100. * correct / total        
+    
     print(cm)
     #precision, recall = performance_metrics(cm)
     precision, recall = get_precision_recall(trueValue, prediction)
     F1_weighted, F1_mean = F1_score(trueValue, prediction, precision, recall)
     print("precision", precision)
     print("recall", recall)
-    print("F1 weighted", F1_weighted)
-    print("F1 mean",F1_mean)
+    #print("F1 weighted", F1_weighted)
+    #print("F1 mean",F1_mean)
     
-    print('Finished Validation')
+    print('Finished Testing')
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
+    #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
+    #with open('/data/sawasthi/JHMDB/results/result_12.csv', 'w') as myfile:
+     #    wr = csv.writer(myfile, quoting=csv.QUOTE_ALL)
+         #wr.writerow(accuracy)
+         #wr.writerow(l)
+             
     return F1_weighted, test_acc
 
 if __name__ == '__main__':
@@ -377,6 +486,7 @@ if __name__ == '__main__':
         "network":"cnn_imu",
         "output":"softmax",
         "num_classes":16,
+        "step_size":22,
         "reshape_input":False,
         "dataset": "pamap2"
         }
@@ -409,9 +519,9 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_75.pth'
+        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_50.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/data/PAMAP2/trainData_75_new/'
+        path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
