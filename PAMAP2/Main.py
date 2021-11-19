@@ -488,7 +488,8 @@ if __name__ == '__main__':
         "num_classes":16,
         "step_size":22,
         "reshape_input":False,
-        "dataset": "pamap2"
+        "dataset": "pamap2",
+        "model_path": '/data/sawasthi/data/PAMAP2/model/model_new_cimu_50.pth'
         }
 
     iterations = 4
@@ -519,7 +520,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=0.00001, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_50.pth'
+        
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
         path = '/data/sawasthi/data/PAMAP2/trainData_50_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
