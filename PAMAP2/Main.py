@@ -500,7 +500,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 80
+        epochs = 100
         batch_size = 200
         learning_rate = 0.00001
               
