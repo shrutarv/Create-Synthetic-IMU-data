@@ -489,7 +489,7 @@ if __name__ == '__main__':
         "step_size":22,
         "reshape_input":False,
         "dataset": "pamap2",
-        "model_path": '/data/sawasthi/data/PAMAP2/model/model_new_cimu_50.pth'
+        "model_path": '/data/sawasthi/data/PAMAP2/model/model_new_cimu_75.pth'
         }
 
     iterations = 4
@@ -508,7 +508,7 @@ if __name__ == '__main__':
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
         #value = df.values.tolist()
         #print(len(df),len(value), len(value[0]))
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_30.pth'
+        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cimu_75.pth'
         model = Network(config)
         model = model.float()
         model = model.to(device)
