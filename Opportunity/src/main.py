@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_PAMAP2_cimu_pose_nf_c1_c2.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_JHMDB_PAMAP2_cimu_pose_nf_c1.pt'}
     
     return configuration
 
