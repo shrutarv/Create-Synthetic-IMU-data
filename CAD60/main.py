@@ -518,7 +518,7 @@ if __name__ == '__main__':
         "dataset":"CAD60"
         }
 
-    iterations = 1
+    iterations = 4
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -526,7 +526,7 @@ if __name__ == '__main__':
 
         ws=100
         accumulation_steps = 10
-        epochs = 1
+        epochs = 100
         batch_size = 200
         learning_rate = 0.00001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
