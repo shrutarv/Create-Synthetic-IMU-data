@@ -625,7 +625,7 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     
-        path = '/data/sawasthi/JHMDB/trainData_tf/' #trainData_pose_12
+        path = '/data/sawasthi/JHMDB/trainData_acc_up4_tf/' #trainData_pose_12
         #path = 'S:/Datasets/JHMDB/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -639,7 +639,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/JHMDB/validationData_tf/'
+        path = '/data/sawasthi/JHMDB/validationData_acc_up4/'
     
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
