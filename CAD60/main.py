@@ -233,7 +233,7 @@ def validation(dataLoader_validation, device):
     print('\nValidation set:  Percent Validation Accuracy: {:.4f}\n'.format(100. * correct / total))
     return (100. * correct / total, total_loss/(b+1))
 
-def training(dataLoader_train, dataLoader_validation, device):
+def training(dataLoader_train, dataLoader_validation, device,flag):
     print('Start Training')
     correct = 0
     total_loss = 0
@@ -313,21 +313,22 @@ def training(dataLoader_train, dataLoader_validation, device):
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
           '''
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,'r',label='training accuracy')
-    plt.plot(ep,validation_acc, 'g',label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/CAD60/results/result_1.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
+    if(flag):
+        print('Finished Training')
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,'r',label='training accuracy')
+        plt.plot(ep,validation_acc, 'g',label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/CAD60/results/result_1.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
 def testing(config):
     print('Start Testing')
@@ -506,97 +507,108 @@ if __name__ == '__main__':
         "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":12,
         "reshape_input":False,
-        "step_size":12
+        "step_size":12,
+        "dataset":"CAD60"
         }
 
+    iterations = 1
+    weighted_F1_array = []
+    test_acc_array = []
+    flag = True
+    for iter in range(iterations):
 
-    ws=30
-    accumulation_steps = 5
-    correct = 0
-    total_loss = 0.0
-    total_correct = 0
-    epochs = 60
-    batch_size = 100
-    lr_factor = 1
-    l = []
-    tot_loss = 0
-    accuracy = []
-    learning_rate = 0.00001
-    print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
-    #value = df.values.tolist()
-    #print(len(df),len(value), len(value[0]))
-    model = Network(config)
-    model = model.float()
-    model = model.to(device)
-    #model.load_state_dict(torch.load())
-    #print("model loaded")   # 
-    normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
-    #noise = noise.float()
+        ws=100
+        accumulation_steps = 10
+        epochs = 1#00
+        batch_size = 200
+        learning_rate = 0.00001
+        print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
+        #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
+        #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
+        #value = df.values.tolist()
+        #print(len(df),len(value), len(value[0]))
+        model = Network(config)
+        model = model.float()
+        model = model.to(device)
+        #model.load_state_dict(torch.load())
+        #print("model loaded")   # 
+        normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+        #noise = noise.float()
+        
+        criterion = nn.CrossEntropyLoss()
+        #optimizer = optim.Adam(model.parameters(), lr=0.001)
+        optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+        #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
+        model_path = '/data/sawasthi/CAD60/model/model_pose_tf.pth'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
+       
+        path = '/data/sawasthi/CAD60/trainData_pose_tf/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
+        train_dataset = CustomDataSet(path)
+        dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+      
+        
+        # Validation data    
+        path = '/data/sawasthi/CAD60/validationData_pose/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        validation_dataset = CustomDataSet(path)
+        dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+       
+        training(dataLoader_train, dataLoader_validation,device,flag)
+        # Test data    
+        print("Calculating accuracy for the trained model on validation set ")
+        path = '/data/sawasthi/CAD60/validationData_pose/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+        #testing(config)
+        # Test data    
+        path = '/data/sawasthi/CAD60/testData_pose/'
+        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        test_dataset = CustomDataSet(path)
+        print("Calculating accuracy for the trained model on test set ")
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        flag = False
+        WF, TA = testing(config)
+        weighted_F1_array.append(WF)
+        test_acc_array.append(TA)
+        
+        testing(config)
+    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
+    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
+    print("weighted F1 array",weighted_F1_array )
+    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
+    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
     
-    criterion = nn.CrossEntropyLoss()
-    #optimizer = optim.Adam(model.parameters(), lr=0.001)
-    optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
-    #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-    model_path = '/data/sawasthi/CAD60/model/model_pose_tf.pth'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-   
-    path = '/data/sawasthi/CAD60/trainData_pose_tf/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-    train_dataset = CustomDataSet(path)
-    dataLoader_train = DataLoader(train_dataset, shuffle=True,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-  
-    
-    # Validation data    
-    path = '/data/sawasthi/CAD60/validationData_pose/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    validation_dataset = CustomDataSet(path)
-    dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    
-   
-    training(dataLoader_train, dataLoader_validation,device)
-    # Test data    
-    print("Calculating accuracy for the trained model on validation set ")
-    path = '/data/sawasthi/CAD60/validationData_pose/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    testing(config)
-    # Test data    
-    path = '/data/sawasthi/CAD60/testData_pose/'
-    #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
-    #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-    test_dataset = CustomDataSet(path)
-    print("Calculating accuracy for the trained model on test set ")
-    dataLoader_test = DataLoader(test_dataset, shuffle=False,
-                                  batch_size=batch_size,
-                                   num_workers=0,
-                                   pin_memory=True,
-                                   drop_last=True)
-    #testing(config)
     '''
     print('Finished Validation')
     #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
