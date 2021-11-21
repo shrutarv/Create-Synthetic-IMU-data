@@ -518,7 +518,7 @@ if __name__ == '__main__':
         "dataset":"CAD60"
         }
 
-    iterations = 4
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -550,7 +550,7 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/data/CAD60/trainData_acc_up3/'
+        path = '/data/sawasthi/data/CAD60/trainData_acc_up3_tf/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
