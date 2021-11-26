@@ -527,7 +527,7 @@ if __name__ == '__main__':
         ws=100
         accumulation_steps = 10
         epochs = 100
-        batch_size = 200
+        batch_size = 50
         learning_rate = 0.00001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
