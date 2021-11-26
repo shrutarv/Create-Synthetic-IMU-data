@@ -181,7 +181,7 @@ if __name__ == '__main__':
     sliding_window_length = 90   
     #sliding_window_length = 100    
     sliding_window_step = 12
-    df = pd.read_csv('/data/sawasthi/data/CAD60/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/CAD60/train_data_tf.csv')
    # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
@@ -260,7 +260,7 @@ if __name__ == '__main__':
     
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/data/CAD60/trainData_acc_up3/'
+    data_dir =  '/data/sawasthi/data/CAD60/trainData_acc_up3_tf/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
