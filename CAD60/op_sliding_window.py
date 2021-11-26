@@ -267,7 +267,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-   # example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
     data_dir =  '/data/sawasthi/data/CAD60/testData_acc_up3/'
