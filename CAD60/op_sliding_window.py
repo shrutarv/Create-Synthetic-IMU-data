@@ -173,9 +173,9 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 1
+    up = 3
     #ws = (100,31)
-    ws = (30,45) 
+    ws = (90,45) 
     ss = (12,45)     
     #ss = (25,31)
     sliding_window_length = 30   
@@ -260,17 +260,17 @@ if __name__ == '__main__':
     
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/data/CAD60/trainData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/CAD60/trainData_acc_up3/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+   # example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir =  '/data/sawasthi/data/CAD60/testData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/CAD60/testData_acc_up3/'
     df = pd.read_csv('/data/sawasthi/data/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -304,7 +304,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/data/CAD60/validation_data.csv')
-    data_dir =  '/data/sawasthi/data/CAD60/validationData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/CAD60/validationData_acc_up3/'
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
