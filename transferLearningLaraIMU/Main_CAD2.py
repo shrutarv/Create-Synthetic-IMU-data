@@ -571,7 +571,7 @@ if __name__ == '__main__':
         "step_size":12,
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_ci_tf_up3.pth', #'model_pose_tf.pth',model_acc_up3_tf
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_ci_up3_tf.pth', #'model_pose_tf.pth',model_acc_up3_tf
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         "freeze":False
         }
