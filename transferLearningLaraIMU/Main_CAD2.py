@@ -567,6 +567,7 @@ if __name__ == '__main__':
         "filter_size":5,
         "num_filters":64,
         "network":"cnn_imu",
+        "dataset" : 'JHMDB',
         "output":"softmax",
         "step_size":12,
         "num_classes":8,
