@@ -361,7 +361,7 @@ class Network(nn.Module):
                     idx_LA = np.arange(9, 15)
                     idx_LA = np.concatenate([idx_LA, np.arange(33, 36)])
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
-                elif self.config["dataset"] == 'CAD60':
+                elif self.config["dataset"] == 'LaraIMU':
                     idx_LA = np.arange(0, 6)
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
 
