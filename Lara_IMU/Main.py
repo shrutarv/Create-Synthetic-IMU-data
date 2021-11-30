@@ -419,7 +419,7 @@ if __name__ == '__main__':
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         model_path = '/data/sawasthi/data/Lara_IMU/model/model_ci_100.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
-        path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_30/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
