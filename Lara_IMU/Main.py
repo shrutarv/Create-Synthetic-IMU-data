@@ -376,7 +376,7 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "dataset": "LaraIMU",
         "output":"softmax",
         "num_classes":8,
@@ -417,7 +417,7 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/LaraIMU/model/model_ci_100.pth'
+        model_path = '/data/sawasthi/LaraIMU/model/model_cnn_100.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
         path = '/data/sawasthi/LaraIMU/trainData_100/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
