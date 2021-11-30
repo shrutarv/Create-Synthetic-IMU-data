@@ -451,7 +451,7 @@ if __name__ == '__main__':
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
-        #training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
         weighted_F1_array.append(WF)
