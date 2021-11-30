@@ -376,7 +376,8 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
+        "dataset": "LaraIMU",
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False
@@ -416,9 +417,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/Lara_IMU/model/model_50.pth'
+        model_path = '/data/sawasthi/data/Lara_IMU/model/model_ci_100.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
-        path = '/data/sawasthi/data/Lara_IMU/trainData_50_new/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -430,7 +431,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/data/Lara_IMU/validationData_new/'
+        path = '/data/sawasthi/data/Lara_IMU/validationData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -441,7 +442,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/data/Lara_IMU/testData_new/'
+        path = '/data/sawasthi/data/Lara_IMU/testData_100w/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
