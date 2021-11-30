@@ -311,7 +311,7 @@ def training(dataLoader_train, dataLoader_validation,device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/Lara_IMU/results/result.png') 
+        plt.savefig('/data/sawasthi/LaraIMU/results/result.png') 
        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
     
@@ -451,7 +451,7 @@ if __name__ == '__main__':
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
         weighted_F1_array.append(WF)
