@@ -243,14 +243,15 @@ def set_required_grad(network):
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 
                            'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                          
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias',
                            'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 
                            'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias'
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias'
                            ]
 
         for pn, pv in network.named_parameters():
@@ -276,14 +277,15 @@ def load_weights(network):
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 
                            'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                          
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias',
                            'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 
                            'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias'
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias'
                            
                            ]
 
@@ -672,7 +674,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_c2_pose_nf.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_c2_c3_pose_nf.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
