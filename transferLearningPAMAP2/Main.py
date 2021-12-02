@@ -246,7 +246,7 @@ def set_required_grad(network):
                            
                            'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
                            
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            ]
 
         for pn, pv in network.named_parameters():
@@ -445,9 +445,10 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":16,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_ci_tf.pth',
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
-        "dataset": "pamap2"
+        "dataset": "pamap2",
+        "freeze": False
         }
     
     iterations = 3
@@ -500,10 +501,12 @@ if __name__ == '__main__':
         model.fc5 = PAMAP_net.fc5
         model.softmax = PAMAP_net.softmax
         '''
+        if config["freeze"]:
+            model = set_required_grad(model)
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/PAMAP2/trainData_30_new/'
+        path = '/data/sawasthi/PAMAP2/trainData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -543,7 +546,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Penn/model/model_tl_J_PAMAP_new_acc_c1_30.pth'
+        model_path_tl = '/data/sawasthi/Penn/model/model_tl_J_PAMAP_new_acc_c1_nf.pth'
         training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
