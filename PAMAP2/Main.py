@@ -489,7 +489,7 @@ if __name__ == '__main__':
         "step_size":22,
         "reshape_input":False,
         "dataset": "pamap2",
-        "model_path": '/data/sawasthi/data/PAMAP2/model/model_new_cnn.pth'
+        "model_path": '/data/sawasthi/PAMAP2/model/model_new_cnn.pth'
         }
 
     iterations = 1
@@ -562,7 +562,7 @@ if __name__ == '__main__':
             value = max_min_values(data_x,value)
         '''
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
         WF, TA = testing(config)
         weighted_F1_array.append(WF)
