@@ -271,7 +271,7 @@ def load_weights(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = [['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
                            
                            'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
                            
