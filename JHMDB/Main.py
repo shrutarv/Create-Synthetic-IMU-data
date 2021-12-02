@@ -581,7 +581,7 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_cnn_up4.pth',
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth',
         "dataset" : 'JHMDB'
         
         }
@@ -625,7 +625,7 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     
-        path = '/data/sawasthi/JHMDB/trainData_acc_up4/' #trainData_pose_12
+        path = '/data/sawasthi/JHMDB/trainData_acc_up4_tf/' #trainData_pose_12
         #path = 'S:/Datasets/JHMDB/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -683,8 +683,8 @@ if __name__ == '__main__':
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
-        training(dataLoader_train, dataLoader_validation,device,flag)
-        print("Calculating accuracy for the trained model on validation set ")
+        
+        print("Calculating accuracy for the trained model on test set ")
         
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
