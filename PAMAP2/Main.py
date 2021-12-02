@@ -508,7 +508,7 @@ if __name__ == '__main__':
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
         #value = df.values.tolist()
         #print(len(df),len(value), len(value[0]))
-        model_path = '/data/sawasthi/data/PAMAP2/model/model_new_cnn.pth'
+        model_path = '/data/sawasthi/PAMAP2/model/model_new_cnn.pth'
         model = Network(config)
         model = model.float()
         model = model.to(device)
@@ -523,7 +523,7 @@ if __name__ == '__main__':
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/data/PAMAP2/trainData_new/'
+        path = '/data/sawasthi/PAMAP2/trainData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -535,7 +535,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/data/PAMAP2/validationData_new/'
+        path = '/data/sawasthi/PAMAP2/validationData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -546,7 +546,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/data/PAMAP2/testData_new/'
+        path = '/data/sawasthi/PAMAP2/testData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
