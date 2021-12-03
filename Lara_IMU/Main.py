@@ -431,7 +431,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/LaraIMU/validationData_new/'
+        path = '/data/sawasthi/LaraIMU/validationData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -442,7 +442,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/LaraIMU/testData_new/'
+        path = '/data/sawasthi/LaraIMU/testData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
