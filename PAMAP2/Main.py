@@ -508,7 +508,7 @@ if __name__ == '__main__':
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
         #value = df.values.tolist()
         #print(len(df),len(value), len(value[0]))
-        model_path = '/data/sawasthi/PAMAP2/model/model_new_cnn.pth'
+        model_path = '/data/sawasthi/PAMAP2/model/model_new_cnn_10.pth'
         model = Network(config)
         model = model.float()
         model = model.to(device)
