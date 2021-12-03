@@ -131,8 +131,8 @@ sliding_window_length = 100   # for MoCAP
 #sliding_window_length = 100    
 sliding_window_step = 22
 
-prop = 1
-data_dir =  "/data/sawasthi/PAMAP2/trainData_new/"
+prop = 0.1
+data_dir =  "/data/sawasthi/PAMAP2/trainData_10/"
 #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
 #data_dir = "S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files/"
@@ -150,10 +150,10 @@ lab[:,0] = label
 X = X_t.astype(object)
 k = 0
 example_creating_windows_file(k, X, lab, data_dir)
-'''
+
 partition_modus = "test"
 X_t,Y_t = get_PAMAP2_data(dataset,  partition_modus, prop)
-data_dir =  "/data/sawasthi/data/PAMAP2/testData_new/"
+data_dir =  "/data/sawasthi/PAMAP2/testData_10/"
 label = Y_t.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -163,7 +163,7 @@ example_creating_windows_file(k, X, lab,data_dir)
 
 partition_modus = "val"
 X_t,Y_t = get_PAMAP2_data(dataset,  partition_modus, prop)
-data_dir =  "/data/sawasthi/data/PAMAP2/validationData_new/"
+data_dir =  "/data/sawasthi/PAMAP2/validationData_10/"
 label = Y_t.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -177,5 +177,5 @@ example_creating_windows_file(k, X, lab,data_dir)
 #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
 #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
 
-'''  
+ 
 

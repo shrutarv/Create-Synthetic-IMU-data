@@ -86,7 +86,9 @@ class Pamap2(data.Dataset):
 
         if self.partition_modus == 'train':
             # dx_files = [ids for ids in range(0,10)]
-            if self.config["proportions"] == 0.2:
+            if self.config["proportions"] == 0.1:
+                idx_files = [0]
+            elif self.config["proportions"] == 0.2:
                 idx_files = [0, 4, 9]
             elif self.config["proportions"] == 0.5:
                 idx_files = [0, 2, 4, 6, 8]

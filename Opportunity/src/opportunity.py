@@ -113,7 +113,9 @@ class Opportunity(data.Dataset):
 
         if self.partition_modus == 'train':
             #idx_files = [ids for ids in range(0,12)]
-            if self.config["proportions"] == 0.2:
+            if self.config["proportions"] == 0.1:
+                idx_files = [0]
+            elif self.config["proportions"] == 0.2:
                 idx_files = [0, 4, 8, 10]
             elif self.config["proportions"] == 0.5:
                 idx_files = [0, 2, 4, 6, 8, 10, 11]

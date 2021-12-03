@@ -285,7 +285,9 @@ def generate_data(dataset, partition_modus, prop ):
     counter_files = 0
     if partition_modus == 'train':
             # dx_files = [ids for ids in range(0,10)]
-            if prop == 0.3:
+            if prop == 0.1:
+                idx_files = [0]
+            elif prop == 0.2:
                 idx_files = [0, 9]
             elif prop == 0.5:
                 idx_files = [0, 2, 4, 6, 8]
