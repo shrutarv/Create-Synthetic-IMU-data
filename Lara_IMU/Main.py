@@ -372,7 +372,7 @@ if __name__ == '__main__':
           
     device = torch.device(dev)
     config = {
-        "NB_sensor_channels":29,
+        "NB_sensor_channels":30,
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
@@ -419,7 +419,7 @@ if __name__ == '__main__':
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         model_path = '/data/sawasthi/LaraIMU/model/model_cnn_10.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/LaraIMU/trainData_10/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -431,7 +431,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/LaraIMU/validationData_100/'
+        path = '/data/sawasthi/LaraIMU/validationData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -442,7 +442,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/LaraIMU/testData_100/'
+        path = '/data/sawasthi/LaraIMU/testData_new/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/valid/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
