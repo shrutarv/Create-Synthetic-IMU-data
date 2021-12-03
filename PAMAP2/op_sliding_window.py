@@ -153,7 +153,7 @@ example_creating_windows_file(k, X, lab, data_dir)
 
 partition_modus = "test"
 X_t,Y_t = get_PAMAP2_data(dataset,  partition_modus, prop)
-data_dir =  "/data/sawasthi/PAMAP2/testData_10/"
+data_dir =  "/data/sawasthi/PAMAP2/testData_30/"
 label = Y_t.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
@@ -163,7 +163,7 @@ example_creating_windows_file(k, X, lab,data_dir)
 
 partition_modus = "val"
 X_t,Y_t = get_PAMAP2_data(dataset,  partition_modus, prop)
-data_dir =  "/data/sawasthi/PAMAP2/validationData_10/"
+data_dir =  "/data/sawasthi/PAMAP2/validationData_30/"
 label = Y_t.astype(int)
 lab = np.zeros((len(label),20), dtype=int)
 lab[:,0] = label
