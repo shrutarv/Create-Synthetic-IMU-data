@@ -376,7 +376,7 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "dataset": "LaraIMU",
         "output":"softmax",
         "num_classes":8,
@@ -417,7 +417,7 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/LaraIMU/model/model_cnn_10.pth'
+        model_path = '/data/sawasthi/LaraIMU/model/model_ci_10.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/model.pth'
         path = '/data/sawasthi/LaraIMU/trainData_10/'
        # path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
@@ -462,5 +462,7 @@ if __name__ == '__main__':
     
     print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array)
     
                  
