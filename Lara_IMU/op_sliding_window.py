@@ -155,7 +155,7 @@ if __name__ == '__main__':
     # validation set : S05,S11,S12
     # test set : S06,13,14
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
-    df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     value = df.values.tolist()
    
     data_dir =  "/data/sawasthi/data/Lara_IMU/trainData_10/"
