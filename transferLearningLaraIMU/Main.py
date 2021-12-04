@@ -238,16 +238,16 @@ def set_required_grad(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight', 'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight', 'conv_RL_2_2.bias']
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
+                           
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
+                           ]
 
         for pn, pv in network.named_parameters():
             if pn in list_layers:
@@ -271,16 +271,16 @@ def load_weights(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight', 'conv_RL_2_2.bias']
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
+                           
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
+                           ]
 
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in list_layers}
         #print(pretrained_dict)
@@ -549,7 +549,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_acc_ci_c4.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_acc_ci_c1.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
@@ -566,4 +566,5 @@ if __name__ == '__main__':
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
     print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
-   
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array)
