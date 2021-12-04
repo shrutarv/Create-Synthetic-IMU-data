@@ -462,7 +462,5 @@ if __name__ == '__main__':
     
     print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
-    print("weighted F1 array",weighted_F1_array)
-    print("test accuracy array",test_acc_array)
     
                  
