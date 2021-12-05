@@ -672,7 +672,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_JHMDB_LIMU_acc_ci_c1_50.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_acc_ci_c1_50.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
