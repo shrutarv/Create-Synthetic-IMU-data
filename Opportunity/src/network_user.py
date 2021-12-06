@@ -343,9 +343,9 @@ class Network_User(object):
             list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            ]
         elif self.config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias',
                            
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias',
                            
                            'conv_N_1_1.weight', 'conv_N_1_1.bias', 
                            
@@ -382,13 +382,13 @@ class Network_User(object):
             list_layers = ['conv1_1.weight', 'conv1_1.bias'
                           ]
         elif self.config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias',
                            
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias',
                            
                            'conv_N_1_1.weight', 'conv_N_1_1.bias', 
                            
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 
                            
                            'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            ]
