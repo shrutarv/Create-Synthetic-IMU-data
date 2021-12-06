@@ -242,17 +242,15 @@ def set_required_grad(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
                            
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            ]
 
         for pn, pv in network.named_parameters():
@@ -277,17 +275,15 @@ def load_weights(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
                            
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            ]
 
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in list_layers}
@@ -636,7 +632,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/LaraIMU/trainData_100/'
+        path = '/data/sawasthi/LaraIMU/trainData_50/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -676,7 +672,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_pose_cnn_c4.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_JHMDB_LIMU_pose_cnn_c1_50.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
