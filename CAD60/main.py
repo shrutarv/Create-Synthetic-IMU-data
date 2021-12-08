@@ -546,11 +546,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up3_tf.pth'
+        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/data/CAD60/trainData_acc_up3_tf/'
+        path = '/data/sawasthi/data/CAD60/trainData_acc_up1_tf/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -563,7 +563,7 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/data/CAD60/validationData_acc_up3/'
+        path = '/data/sawasthi/data/CAD60/validationData_acc_up1/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -590,7 +590,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/data/CAD60/testData_acc_up3/'
+        path = '/data/sawasthi/data/CAD60/testData_acc_up1/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
