@@ -507,7 +507,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":45,
-        "sliding_window_length":90,
+        "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -524,7 +524,7 @@ if __name__ == '__main__':
     flag = True
     for iter in range(iterations):
 
-        ws=100
+        ws=30
         accumulation_steps = 10
         epochs = 100
         batch_size = 200
