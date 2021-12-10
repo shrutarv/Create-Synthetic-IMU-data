@@ -117,8 +117,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-        #folder_exp = '/data/sawasthi/PAMAP2/model/'
-       # folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_u' #model_up1_3a.pt
+        folder_exp = '/data/sawasthi/Opportunity/model/'
+       # folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_CAD60_loc_cnn_c1_30_pose_nf.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_ci.pt'}
     
     return configuration
 
