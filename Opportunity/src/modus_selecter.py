@@ -81,7 +81,7 @@ class Modus_Selecter(object):
         
         return
 
-    def train(self, itera=1, testing=False):
+    def train(self, itera=1, testing=True):
         
         logging.info('    Network_selecter: Train')
         
