@@ -585,7 +585,7 @@ if __name__ == '__main__':
           print("cuda is available")
     else:  
           dev = "cpu"  
-    iterations = 3
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -623,7 +623,7 @@ if __name__ == '__main__':
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/NTU/trainData_up_1a/'
+        path = '/data/sawasthi/NTU/trainData_tf_1a/'
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
