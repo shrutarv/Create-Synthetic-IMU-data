@@ -379,22 +379,24 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               param_group['lr'] = lr_factor*param_group['lr']
           #scheduler.step(val_loss)
           '''
-    print('Finished Training')
-    ep = list(range(1,e+2))   
-    plt.subplot(1,2,1)
-    plt.title('epoch vs loss')
-    plt.plot(ep,l, 'r', label='training loss')
-    plt.plot(ep,validation_loss, 'g',label='validation loss')
-    plt.legend()
-    plt.subplot(1,2,2)
-    plt.title('epoch vs accuracy')
-    plt.plot(ep,accuracy,'r',label='training accuracy')
-    plt.plot(ep,validation_acc, 'g',label='validation accuracy')
-    plt.legend()
-    plt.savefig('/data/sawasthi/NTU/results/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-    #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
-
+    if(flag):
+            
+        print('Finished Training')
+        ep = list(range(1,e+2))   
+        plt.subplot(1,2,1)
+        plt.title('epoch vs loss')
+        plt.plot(ep,l, 'r', label='training loss')
+        plt.plot(ep,validation_loss, 'g',label='validation loss')
+        plt.legend()
+        plt.subplot(1,2,2)
+        plt.title('epoch vs accuracy')
+        plt.plot(ep,accuracy,label='training accuracy')
+        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.legend()
+        plt.savefig('/data/sawasthi/Penn/results/result_tl_50.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
+    
     
 def testing(config):
     print('Start Testing')
@@ -652,7 +654,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,config,flag)
         print("Calculating accuracy for the trained model on validation set ")
         path = '/data/sawasthi/NTU/validationData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
