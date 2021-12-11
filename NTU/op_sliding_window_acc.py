@@ -127,12 +127,13 @@ def max_min_values(data):
     return values
 
 
-def normalize(data, min_max, string):
+def normalize(dat, min_max, string):
     #print(len(min_max), len(min_max[0]))
-    
-    for j in range(1,len(data[0])-1):
-        data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,1:31])
+    for j in range(1,len(dat[0])-1):
+        if (j==4 or j==5 or j==6):
+            continue;
+        dat[:,j] = (dat[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
+    test = np.array(dat[:,1:len(dat[0])-1])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -213,17 +214,20 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 3
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_75_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_new.csv')
     data = df.values
     attr = np.zeros((30,1))
+    #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv')
+    
     value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
+    value = max_min_values(data)
     with open("S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["min","max"])
-        fc.writerows(values)
+        fc.writerows(value2)
     plt.plot(data[:,0],data[:,1])
     '''
     
@@ -324,7 +328,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     data_dir =  '/data/sawasthi/NTU/validationData_up_1a/'
@@ -357,7 +361,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
