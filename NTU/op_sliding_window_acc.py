@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 3
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_new.csv')
     data = df.values
     attr = np.zeros((30,1))
@@ -283,7 +283,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_up_1a/'
+    data_dir =  '/data/sawasthi/NTU/trainData_tf_1a/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
     label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -296,7 +296,7 @@ if __name__ == '__main__':
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
     data_dir =  '/data/sawasthi/NTU/testData_up_1a/'
-    df = pd.read_csv('/data/sawasthi/NTU/test_data_tf.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/test_data_new.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -329,7 +329,7 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/NTU/validationData_up_1a/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/val_data_new.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
