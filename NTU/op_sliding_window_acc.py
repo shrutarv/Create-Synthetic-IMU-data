@@ -214,16 +214,16 @@ if __name__ == '__main__':
     sliding_window_step = 3
     
     df = pd.read_csv('/data/sawasthi/NTU/train_data_new.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data.csv')
+    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_new.csv')
     data = df.values
     attr = np.zeros((30,1))
     value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
-    with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
+    with open("S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["min","max"])
-        fc.writerows(value)
+        fc.writerows(values)
     plt.plot(data[:,0],data[:,1])
     '''
     
