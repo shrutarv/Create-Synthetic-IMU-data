@@ -577,7 +577,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_up1_acc_75_tf.pt'
+        "model_path": '/data/sawasthi/NTU/model/model_up1_acc_tf.pt'
         }
 
     if torch.cuda.is_available():  
@@ -623,7 +623,7 @@ if __name__ == '__main__':
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/NTU/trainData_75_new/'
+        path = '/data/sawasthi/NTU/trainData_tf_1a/'
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
