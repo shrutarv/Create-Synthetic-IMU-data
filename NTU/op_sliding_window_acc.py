@@ -218,7 +218,7 @@ if __name__ == '__main__':
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data = df.values
     attr = np.zeros((30,1))
-    #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv')
+    #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values_tf.csv')
     
     value = pd.read_csv('/data/sawasthi/NTU/norm_values_tf.csv')
     value = value.values
@@ -227,7 +227,7 @@ if __name__ == '__main__':
     with open("S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values_tf.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["min","max"])
-        fc.writerows(value2)
+        fc.writerows(value)
     plt.plot(data[:,0],data[:,1])
     '''
     
@@ -288,7 +288,7 @@ if __name__ == '__main__':
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/NTU/trainData_tf_1a/'
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+    #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
