@@ -497,7 +497,7 @@ class Network(nn.Module):
                     idx_RA = np.arange(18, 24)
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
                 elif self.config["dataset"] == 'NTU':
-                    idx_RA = np.arange(13, 24)
+                    idx_RA = np.arange(12, 24)
                     idx_RA = np.concatenate([idx_RA, np.arange(63, 69)])
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
                 
