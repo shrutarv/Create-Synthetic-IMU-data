@@ -576,12 +576,12 @@ if __name__ == '__main__':
         "sliding_window_length":25,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_cnn_up1_tf.pth',
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_ci_up1_tf_test.pth',
         "dataset" : 'JHMDB'
         
         }
