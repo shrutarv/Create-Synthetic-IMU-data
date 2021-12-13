@@ -109,6 +109,10 @@ data_train_val = data_imp(1:146000,:);
 data_train = data_imp(1:130000,:);
 data_test = data_imp(146000:163842,:);
 data_val = data_imp(130001:146000,:);
+data_train_75 = data_train(1:0.75*130000,:);
+data_train_50 = data_train(1:0.5*130000,:);
+data_train_75 = data_train(1:0.75*130000,:);
+
 writematrix(data_train,[savePath + 'train_data.csv']);
 writematrix(data_test,[savePath + 'test_data.csv']);
 writematrix(data_val,[savePath + 'val_data.csv']);
