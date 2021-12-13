@@ -571,13 +571,13 @@ if __name__ == '__main__':
         "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_ci_up1_acc_tf.pt',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_up1_acc_tf.pt',
         "dataset":"NTU"
         }
 
@@ -596,7 +596,7 @@ if __name__ == '__main__':
         ws=30
         accumulation_steps = 5
         epochs = 60
-        batch_size = 800
+        batch_size = 1000
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
