@@ -200,7 +200,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
     
-def validation(dataLoader_validation,device):
+def validation(dataLoader_validation,device,mod):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -216,7 +216,7 @@ def validation(dataLoader_validation,device):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             test_batch_l = test_batch_l.long()
-            out = model(test_batch_v)
+            out = mod(test_batch_v)
             loss = criterion(out,test_batch_l)
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
@@ -358,7 +358,7 @@ def training(dataLoader_train, dataLoader_validation, device,config):
           
           model.eval()
           
-          val_acc, val_loss =  validation(dataLoader_validation,device)
+          val_acc, val_loss =  validation(dataLoader_validation,device,model)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):

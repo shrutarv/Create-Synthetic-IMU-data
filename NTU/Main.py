@@ -200,7 +200,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
     
-def validation(dataLoader_validation,device,ep):
+def validation(dataLoader_validation,device,ep,mod):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -216,7 +216,7 @@ def validation(dataLoader_validation,device,ep):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             test_batch_l = test_batch_l.long()
-            out = model(test_batch_v)
+            out = mod(test_batch_v)
             loss = criterion(out,test_batch_l)
             #print("Next Batch result")
             predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
@@ -360,7 +360,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
           
           model.eval()
           
-          val_acc, val_loss =  validation(dataLoader_validation,device,e)
+          val_acc, val_loss =  validation(dataLoader_validation,device,e,model)
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
@@ -405,9 +405,9 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    model = torch.load(config['model_path'])
-    model.eval()
-    model.to(device)
+    mod = torch.load(config['model_path'])
+    mod.eval()
+    mod.to(device)
     loss_test = 0.0
     with torch.no_grad():
             
@@ -420,7 +420,7 @@ def testing(config):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            predictions = model(test_batch_v)
+            predictions = mod(test_batch_v)
             test_batch_l = test_batch_l.long()
             loss = criterion(predictions, test_batch_l)
             loss_test = loss_test + loss.item()
