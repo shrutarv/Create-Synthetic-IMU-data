@@ -595,7 +595,7 @@ if __name__ == '__main__':
         device = torch.device(dev)
         ws=30
         accumulation_steps = 5
-        epochs = 30
+        epochs = 60
         batch_size = 400
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
