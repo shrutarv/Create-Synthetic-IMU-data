@@ -581,14 +581,14 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_acc_ci_up1_tf_test.pth',
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_ci_up1_test.pth',
         "dataset" : 'JHMDB'
         
         }
 
 
     flag = True
-    iterations = 1
+    iterations = 4
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -625,7 +625,7 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     
-        path = '/data/sawasthi/JHMDB/trainData_acc_up1_tf/' #trainData_pose_12
+        path = '/data/sawasthi/JHMDB/trainData_acc_up1/' #trainData_pose_12
         #path = 'S:/Datasets/JHMDB/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
