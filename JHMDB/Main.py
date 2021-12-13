@@ -588,7 +588,7 @@ if __name__ == '__main__':
 
 
     flag = True
-    iterations = 4
+    iterations = 
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
