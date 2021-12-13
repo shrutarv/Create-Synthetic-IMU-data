@@ -577,7 +577,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_c1_up1_acc_tf.pt',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_up1_acc_tf.pt',
         "dataset":"NTU"
         }
 
