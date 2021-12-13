@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_jhmdb_pamap_cnn_acc_10.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_pamap_cnn_30.pt'}
     
     return configuration
 
@@ -282,11 +282,11 @@ def pamap2_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=3, network_idx=0, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=3, network_idx=0, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=0, gpudevice="0")
+                                               freeze=0, proportions_id=1, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_Jhmdb_PAMAP2_cnn_acc_nf_10.txt")
+                                                filename=config['folder_exp'] + "logger_PAMAP2_cnn_nf_30.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
