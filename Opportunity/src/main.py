@@ -151,7 +151,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
         folder_exp = '/data/sawasthi/PAMAP2/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+        folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_cad_pamap_cnn_acc_10.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_cad_pamap_cnn_pose_10.pt'}
     
     return configuration
 
@@ -286,7 +286,7 @@ def pamap2_main():
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
                                                freeze=0, proportions_id=0, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_cad_PAMAP2_cnn_acc_nf_10.txt")
+                                                filename=config['folder_exp'] + "logger_cad_PAMAP2_cnn_pose_nf_10.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
