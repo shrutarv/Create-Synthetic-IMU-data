@@ -513,7 +513,7 @@ if __name__ == '__main__':
         "step_size":1
         }
 
-    iterations = 1
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -548,11 +548,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Penn/model/model_cnn_acc_up2_tf.pth'
+        model_path = '/data/sawasthi/Penn/model/model_acc_up2.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/Penn/trainData_acc_up2_tf/'
+        path = '/data/sawasthi/Penn/trainData_acc_up2/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
