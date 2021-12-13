@@ -130,6 +130,8 @@ def normalize(data, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
     for j in range(1,len(data[0])-1):
+        if (j==1 or j==2):
+            continue;
         data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
     test = np.array(data[:,1:len(data[0])-1])
         
@@ -203,17 +205,17 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 1
+    up = 2
     #ws = (100,31)
-    ws = (50,26) 
+    ws = (100,26) 
     ss = (1,26)     
     #ss = (25,31)
-    sliding_window_length = 50   
+    sliding_window_length = 100   
     #sliding_window_length = 100    
     sliding_window_step = 1
     
     df = pd.read_csv('/data/sawasthi/data/Penn/train_data.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
+    #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/norm_data.csv')
     data = df.values
     data_new = data[:,1:27]
     attr = np.zeros((100,1))
@@ -264,7 +266,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/trainData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/Penn/trainData_acc_up2/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = np.repeat(data[:,27],up).astype(int)
@@ -277,7 +279,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/data/Penn/testData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/Penn/testData_acc_up2/'
     df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -313,9 +315,9 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
      
-    data_dir =  '/data/sawasthi/data/Penn/validationData_acc_up1/'
+    data_dir =  '/data/sawasthi/data/Penn/validationData_acc_up2/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/Penn/val_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")

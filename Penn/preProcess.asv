@@ -32,7 +32,7 @@ video_size = [];
 % train 1:1350
 % validation 1350:1840
 % test 1840:2326
-for j = 30:2328
+for j = 3:2328
     i = j;
     labels = [];
     filePattern = fullfile(root_folder + Files_root(i).name + "\");
@@ -100,3 +100,19 @@ data = [time,data];
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
 writematrix(data,[savePath + 'train_data_tf.csv']);
+data_imp = data;
+for i=2:length(data_imp)
+    data_imp(i,2:2:26) = data_imp(i,2:2:26) - data_imp(i,2);
+    data_imp(i,3:2:27) = data_imp(i,3:2:26) - data_imp(i,3);
+end
+
+data_train = data_imp(1:130000,:);
+data_test = data_test
+X = data(1,1:2:end-1);
+Y = data(1,2:2:end);
+n = [1:25];
+figure;
+scatter(X,Y,'filled');
+for ii = 1: numel(n) 
+    text (X(ii), Y (ii), cellstr(num2str(n(ii))));
+end

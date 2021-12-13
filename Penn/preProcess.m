@@ -99,4 +99,27 @@ time = transpose(linspace(0, 0.02*size(final,1),size(final,1)));
 data = [time,data];     
 empt = zeros([1,size(data,2)]);
 data = [empt;data];
-writematrix(data,[savePath + 'train_data_tf.csv']);
+data_imp = data;
+for i=2:length(data_imp)
+    data_imp(i,2:2:26) = data_imp(i,2:2:26) - data_imp(i,2);
+    data_imp(i,3:2:27) = data_imp(i,3:2:27) - data_imp(i,3);
+end
+writematrix(data_imp,[savePath + 'train_data_tf.csv']);
+data_train_val = data_imp(1:146000,:);
+data_train = data_imp(1:130000,:);
+data_test = data_imp(146000:163842,:);
+data_val = data_imp(130001:146000,:);
+writematrix(data_train,[savePath + 'train_data.csv']);
+writematrix(data_test,[savePath + 'test_data.csv']);
+writematrix(data_val,[savePath + 'val_data.csv']);
+
+writematrix(data_imp,[savePath + 'norm_data.csv']);
+
+X = data(1,1:2:end-1);
+Y = data(1,2:2:end);
+n = [1:25];
+figure;
+scatter(X,Y,'filled');
+for ii = 1: numel(n) 
+    text (X(ii), Y (ii), cellstr(num2str(n(ii))));
+end
