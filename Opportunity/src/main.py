@@ -336,7 +336,7 @@ def gestures_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=1, network_idx=2, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=1, network_idx=2, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
                                                freeze=0, proportions_id = 1, gpudevice = "0")
                         setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_ges_ci_30.txt")
