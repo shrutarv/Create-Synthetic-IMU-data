@@ -284,7 +284,7 @@ def pamap2_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=3, network_idx=2, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=1, gpudevice="1")
+                                               freeze=0, proportions_id=1, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
                                                 filename=config['folder_exp'] + "logger_PAMAP2_ci_acc_nf.txt")
                         logging.info('Finished')
