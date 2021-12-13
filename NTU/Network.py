@@ -132,6 +132,8 @@ class Network(nn.Module):
                     self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
                 elif self.config["dataset"] == 'LaraIMU':
                     self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'NTU':
+                    self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 18, 256)
 
             # LL
             self.conv_LL_1_1 = nn.Conv2d(in_channels=in_channels,
@@ -172,6 +174,8 @@ class Network(nn.Module):
                     self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
                 elif self.config["dataset"] == 'LaraIMU':
                     self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'NTU':
+                    self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 12, 256)
 
 
             # N
@@ -214,6 +218,8 @@ class Network(nn.Module):
                     self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
                 elif self.config["dataset"] == 'LaraIMU':
                     self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'NTU':
+                    self.fc3_N = nn.Linear(self.config['num_filters'] * int(Wx) * 15, 256)
 
             # RA
             self.conv_RA_1_1 = nn.Conv2d(in_channels=in_channels,
@@ -254,7 +260,8 @@ class Network(nn.Module):
                     self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
                 elif self.config["dataset"] == 'LaraIMU':
                     self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
-
+                elif self.config["dataset"] == 'NTU':
+                    self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 18, 256)
 
             # RL
             self.conv_RL_1_1 = nn.Conv2d(in_channels=in_channels,
@@ -295,6 +302,8 @@ class Network(nn.Module):
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
                 elif self.config["dataset"] == 'LaraIMU':
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
+                elif self.config["dataset"] == 'NTU':
+                    self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 12, 256)
 
 
         if self.config["network"] == "cnn":
@@ -364,6 +373,10 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'LaraIMU':
                     idx_LA = np.arange(0, 6)
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
+                elif self.config["dataset"] == 'NTU':
+                    idx_LA = np.arange(24, 36)
+                    idx_LA = np.concatenate([idx_LA, np.arange(69, 75)])
+                    x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
 
             x_LA = F.relu(self.conv_LA_1_2(x_LA))
             x_LA = F.relu(self.conv_LA_2_1(x_LA))
@@ -400,6 +413,9 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'LaraIMU':
                     idx_LL = np.arange(6, 12)
                     x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
+                elif self.config["dataset"] == 'NTU':
+                    idx_LL = np.arange(48, 60)
+                    x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
                 
 
             x_LL = F.relu(self.conv_LL_1_2(x_LL))
@@ -434,8 +450,12 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'CAD60':    
                     idx_N = np.arange(0, 9)
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-                elif self.config["dataset"] == 'LaaIMU':    
+                elif self.config["dataset"] == 'LaraIMU':    
                     idx_N = np.arange(12, 18)
+                    x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
+                elif self.config["dataset"] == 'NTU':    
+                    idx_N = np.arange(0, 12)
+                    idx_N = np.concatenate([idx_N, np.arange(59, 62)])
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
                    
             x_N = F.relu(self.conv_N_1_2(x_N))
@@ -476,6 +496,10 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'LaraIMU':
                     idx_RA = np.arange(18, 24)
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
+                elif self.config["dataset"] == 'NTU':
+                    idx_RA = np.arange(13, 24)
+                    idx_RA = np.concatenate([idx_RA, np.arange(63, 69)])
+                    x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
                 
             x_RA = F.relu(self.conv_RA_1_2(x_RA))
             x_RA = F.relu(self.conv_RA_2_1(x_RA))
@@ -512,6 +536,9 @@ class Network(nn.Module):
                     x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
                 elif self.config["dataset"] == 'LaraIMU':
                     idx_RL = np.arange(24, 30)
+                    x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
+                elif self.config["dataset"] == 'NTU':
+                    idx_RL = np.arange(36, 48)
                     x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
                 
 
