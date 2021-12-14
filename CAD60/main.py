@@ -338,7 +338,8 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     #model = torch.load(model_path)
-    torch.load('/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth', map_location=torch.device('cpu'))['state_dict']
+    torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
+    model.load_state_dict(torch.load('/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth'))
     model.eval()
     model.to(device)
     loss_test = 0.0
