@@ -525,12 +525,12 @@ if __name__ == '__main__':
         total_loss = 0.0
         total_correct = 0
         epochs = 50
-        batch_size = 400
+        batch_size = 500
         lr_factor = 1
         l = []
         tot_loss = 0
         accuracy = []
-        learning_rate = 0.00001
+        learning_rate = 0.000001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
