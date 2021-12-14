@@ -339,9 +339,6 @@ def testing(config):
     prediction = np.array([], dtype=np.int64)
     #model = torch.load(model_path)
     torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
-    model = Network(config)
-        
-    model.load_state_dict(torch.load('/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth', map_location=device))
     model.eval()
     model.to(device)
     loss_test = 0.0
@@ -549,7 +546,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf_test.pth'
+        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
@@ -578,7 +575,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
        
-        #training(dataLoader_train, dataLoader_validation,device,flag)
+        training(dataLoader_train, dataLoader_validation,device,flag)
         # Test data    
         print("Calculating accuracy for the trained model on validation set ")
         path = '/data/sawasthi/data/CAD60/validationData_acc_up3/'

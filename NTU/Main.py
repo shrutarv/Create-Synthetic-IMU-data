@@ -365,6 +365,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save({'state_dict': model.state_dict()}, config['model_path'])
+              torch.save(model, config['model_complete'])
               
               #torch.save({'state_dict': model.state_dict()}, config['model_path'])
               print("model saved on epoch", e)
@@ -406,10 +407,12 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    #mod = torch.load(config['model_path'])
-    model.load_state_dict(torch.load(config['model_path']))
-    model.eval()
-    model.to(device)
+    mod = torch.load(config['model_complete'])
+    #model.load_state_dict(torch.load(config['model_path']))
+    #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
+    
+    mod.eval()
+    mod.to(device)
     loss_test = 0.0
     with torch.no_grad():
             
@@ -422,7 +425,7 @@ def testing(config):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            predictions = model(test_batch_v)
+            predictions = mod(test_batch_v)
             test_batch_l = test_batch_l.long()
             loss = criterion(predictions, test_batch_l)
             loss_test = loss_test + loss.item()
@@ -573,13 +576,14 @@ if __name__ == '__main__':
         "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_cnn_imu_up1_acc_tf.pth',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_up1_acc_tf.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_cnn_up1_acc_tf_2.pth',
         "dataset":"NTU"
         }
 
