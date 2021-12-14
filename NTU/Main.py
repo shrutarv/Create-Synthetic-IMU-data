@@ -406,8 +406,10 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    mod = torch.load(config['model_path'])
-    mod.to(device)
+    #mod = torch.load(config['model_path'])
+    model.load_state_dict(torch.load(config['model_path']))
+    model.eval()
+    model.to(device)
     loss_test = 0.0
     with torch.no_grad():
             
@@ -420,7 +422,7 @@ def testing(config):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            predictions = mod(test_batch_v)
+            predictions = model(test_batch_v)
             test_batch_l = test_batch_l.long()
             loss = criterion(predictions, test_batch_l)
             loss_test = loss_test + loss.item()
