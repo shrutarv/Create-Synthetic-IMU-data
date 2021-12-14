@@ -407,7 +407,6 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     mod = torch.load(config['model_path'])
-    mod.eval()
     mod.to(device)
     loss_test = 0.0
     with torch.no_grad():
