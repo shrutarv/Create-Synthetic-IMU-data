@@ -127,11 +127,13 @@ def max_min_values(data):
     return values
 
 
-def normalize(data, min_max, string):
+def normalize(dat, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
     for j in range(1,len(data[0])-1):
-        data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
+        if (j==4 or j==5 or j==6):
+            continue;
+        dat[:,j] = (dat[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
     test = np.array(data[:,1:76])
         
     if (string=="train"):
@@ -144,7 +146,7 @@ def normalize(data, min_max, string):
         test[test < 0] = 0
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
-    return data
+    return dat
 
 def derivative(f,a,method='central',h=0.00001):
     '''Compute the difference formula for f'(a) with step size h.
@@ -212,10 +214,10 @@ if __name__ == '__main__':
     sliding_window_step = 12
     
     df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
-    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf.csv')
+    #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data_x = df.values
     attr = np.zeros((30,1))
-    #value = pd.read_csv(('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv'))
+    #value = pd.read_csv(('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values_tf.csv'))
     value = pd.read_csv('/data/sawasthi/NTU/norm_values_tf.csv')
     value = value.values
     '''

@@ -280,7 +280,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
+    data_dir =  'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
     df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")

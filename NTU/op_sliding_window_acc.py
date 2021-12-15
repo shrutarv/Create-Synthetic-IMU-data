@@ -145,7 +145,7 @@ def normalize(dat, min_max, string):
         test[test < 0] = 0
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
-    return data
+    return dat
 
 def derivative(f,a,method='central',h=0.00001):
     '''Compute the difference formula for f'(a) with step size h.
@@ -214,7 +214,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 3
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_new.csv')
     data = df.values
     attr = np.zeros((30,1))
@@ -287,7 +287,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_up_1a/'
+    data_dir =  '/data/sawasthi/NTU/trainData_tf_1a/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
