@@ -463,6 +463,8 @@ def testing(config):
         print('\nTest set:  Percent Accuracy: {:.4f}\n'.format(100. * correct / total))
             
         cm = confusion_matrix(trueValue, prediction)
+        test_acc = 100. * correct / total        
+        
         print(cm)
         #precision, recall = performance_metrics(cm)
         precision, recall = get_precision_recall(trueValue, prediction)
@@ -473,6 +475,7 @@ def testing(config):
         print("F1 mean",F1_mean)
         
         print('Finished Testing')
+        return F1_weighted, test_acc
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         #with open('/data/sawasthi/JHMDB/results/result_12.csv', 'w') as myfile:
