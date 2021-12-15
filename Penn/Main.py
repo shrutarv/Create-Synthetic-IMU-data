@@ -516,7 +516,7 @@ if __name__ == '__main__':
         "num_classes":15,
         "reshape_input":False,
         "step_size":1,
-        'model_complete': '/data/sawasthi/Penn/model/model_acc_up2_2.pth'
+        'model_complete': '/data/sawasthi/Penn/model/model_acc_up2_tf_2.pth'
         }
 
     iterations = 1
@@ -554,11 +554,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Penn/model/model_acc_up2.pth'
+        model_path = '/data/sawasthi/Penn/model/model_acc_up2_tf.pth'
         #model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/Penn/trainData_acc_up2/'
+        path = '/data/sawasthi/Penn/trainData_acc_up2_tf/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
