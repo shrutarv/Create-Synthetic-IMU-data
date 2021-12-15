@@ -339,7 +339,7 @@ def testing(config):
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
     #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
-    mod = torch.load(config['model_complete'], map_location=torch.device('cpu'))
+    mod = torch.load(config['model_complete'])
     mod.eval()
     mod.to(device)
     loss_test = 0.0
@@ -516,7 +516,7 @@ if __name__ == '__main__':
         "num_classes":15,
         "reshape_input":False,
         "step_size":1,
-        'model_complete': 'S:/Datasets/Penn_Action/model_acc_up2_2.pth'
+        'model_complete': '/data/sawasthi/Penn/model/model_acc_up2_2.pth'
         }
 
     iterations = 1
