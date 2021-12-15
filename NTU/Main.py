@@ -579,8 +579,8 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_ci_up1_acc.pth',
-        "model_complete":'/data/sawasthi/NTU/model/model_ci_up1_acc_tf_2.pth',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_imu_up1_acc_tf.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_cnn_imu_up1_acc_tf_2.pth',
         "dataset":"NTU"
         }
 
@@ -599,7 +599,7 @@ if __name__ == '__main__':
         ws=30
         accumulation_steps = 5
         epochs = 60
-        batch_size = 1000
+        batch_size = 1200
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -627,7 +627,7 @@ if __name__ == '__main__':
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data/sawasthi/NTU/trainData_up_1a/'
+        path = '/data/sawasthi/NTU/trainData_tf_1a/'
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
