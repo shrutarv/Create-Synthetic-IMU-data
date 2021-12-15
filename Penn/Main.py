@@ -299,6 +299,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
               torch.save({'state_dict': model.state_dict()}, model_path)
+              torch.save(model, config['model_complete'])
               #torch.save({'state_dict': model.state_dict()}, model_path)
               print("model saved on epoch", e)
               best_acc = val_acc
@@ -337,9 +338,10 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
-    model.eval()
-    model.to(device)
+    #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
+    mod = torch.load(config['model_complete'])
+    mod.eval()
+    mod.to(device)
     loss_test = 0.0
     with torch.no_grad():
             
@@ -352,7 +354,7 @@ def testing(config):
             test_batch_v = test_batch_v.to(device)
             test_batch_l = test_batch_l.to(device)
             
-            predictions = model(test_batch_v)
+            predictions = mod(test_batch_v)
             test_batch_l = test_batch_l.long()
             loss = criterion(predictions, test_batch_l)
             loss_test = loss_test + loss.item()
@@ -510,10 +512,11 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":15,
         "reshape_input":False,
-        "step_size":1
+        "step_size":1,
+        'model_complete': '/data/sawasthi/Penn/model/model_acc_up2_2.pth'
         }
 
-    iterations = 3
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -548,12 +551,12 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        #model_path = '/data/sawasthi/Penn/model/model_acc_up2.pth'
-        model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
+        model_path = '/data/sawasthi/Penn/model/model_acc_up2.pth'
+        #model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        #path = '/data/sawasthi/Penn/trainData_acc_up2/'
-        path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
+        path = '/data/sawasthi/Penn/trainData_acc_up2/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -565,8 +568,8 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        #path = '/data/sawasthi/Penn/validationData_acc_up2/'
-        path = 'S:/Datasets/Penn_Action/Penn_Action/val_pkl/'
+        path = '/data/sawasthi/Penn/validationData_acc_up2/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/val_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -580,9 +583,9 @@ if __name__ == '__main__':
         training(dataLoader_train, dataLoader_validation,device,flag)
          # Test data    
         print("Calculating accuracy for the trained model on validation set ")
-        #path = '/data/sawasthi/Penn/testData_acc_up2/'
-        path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
-        #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
+        path = '/data/sawasthi/Penn/testData_acc_up2/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         test_dataset = CustomDataSet(path)
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                       batch_size=batch_size,
