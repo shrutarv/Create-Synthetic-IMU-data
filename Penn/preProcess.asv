@@ -1,4 +1,4 @@
-root_folder = "S:\Datasets\Penn_Action\Penn_Action\labels_val\";
+root_folder = "S:\Datasets\Penn_Action\Penn_Action\labels_test\";
 savePath =  "S:\Datasets\Penn_Action\Penn_Action\train\";
 %if ~isdir(myFolder)
  % errorMessage = sprintf('Error: The following folder does not exist:\n%s', myFolder);
@@ -104,7 +104,7 @@ for i=2:length(data_imp)
     data_imp(i,2:2:26) = data_imp(i,2:2:26) - data_imp(i,2);
     data_imp(i,3:2:27) = data_imp(i,3:2:27) - data_imp(i,3);
 end
-writematrix(data_imp,[savePath + 'val_data.csv']);
+writematrix(data_imp,[savePath + 'train_data.csv']);
 data_train_val = data_imp(1:146000,:);
 data_train = data_imp(1:130000,:);
 data_test = data_imp(146000:163842,:);
