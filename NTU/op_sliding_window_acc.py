@@ -214,13 +214,13 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 3
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_new.csv')
     data = df.values
     attr = np.zeros((30,1))
-    #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values_tf.csv')
+    #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv')
     
-    value = pd.read_csv('/data/sawasthi/NTU/norm_values_tf.csv')
+    value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
     value = max_min_values(data)
@@ -295,7 +295,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
@@ -328,7 +328,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    ##example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     data_dir =  '/data/sawasthi/NTU/validationData_up_1a/'
@@ -361,7 +361,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
