@@ -130,11 +130,11 @@ def max_min_values(data):
 def normalize(dat, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
-    for j in range(1,len(data[0])-1):
+    for j in range(1,len(dat[0])-1):
         if (j==4 or j==5 or j==6):
             continue;
         dat[:,j] = (dat[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,1:76])
+    test = np.array(dat[:,1:76])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -242,7 +242,7 @@ if __name__ == '__main__':
     ''
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_pose/'
+    data_dir =  '/data/sawasthi/NTU/trainData_pose_tf/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/pkl/'
     label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
