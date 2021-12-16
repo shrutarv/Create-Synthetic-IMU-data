@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 12
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_pose_tf.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data_x = df.values
     attr = np.zeros((30,1))
@@ -242,7 +242,7 @@ if __name__ == '__main__':
     ''
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_pose_1/'
+    data_dir =  '/data/sawasthi/NTU/trainData_pose/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/pkl/'
     label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -254,8 +254,8 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/NTU/testData_pose_12/'
-    df = pd.read_csv('/data/sawasthi/NTU/test_data_tf.csv')
+    data_dir =  '/data/sawasthi/NTU/testData_pose/'
+    df = pd.read_csv('/data/sawasthi/NTU/test_data_new.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -268,9 +268,9 @@ if __name__ == '__main__':
     #example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/NTU/validationData_pose_12/'
+    data_dir =  '/data/sawasthi/NTU/validationData_pose/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/NTU/val_data_tf.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/val_data_new.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
