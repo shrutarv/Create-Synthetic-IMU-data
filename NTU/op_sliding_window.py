@@ -213,7 +213,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 12
     
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_pose_tf.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data_x = df.values
     attr = np.zeros((30,1))
