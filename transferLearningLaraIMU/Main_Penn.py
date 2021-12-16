@@ -581,7 +581,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_penn_limu_new_c1_30_pose.pth'
+        model_path_tl = '/data/sawasthi/data/Lara_IMU/model/model_tl_penn_limu_c4_acc.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
