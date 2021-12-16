@@ -573,14 +573,14 @@ if __name__ == '__main__':
         "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":60,
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_cnn_imu_up1_acc_tf.pth',
-        "model_complete":'/data/sawasthi/NTU/model/model_cnn_imu_up1_acc_tf_2.pth',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_up1_acc_tf.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_cnn_up1_acc_tf_2.pth',
         "dataset":"NTU"
         }
 
@@ -598,7 +598,7 @@ if __name__ == '__main__':
         device = torch.device(dev)
         ws=30
         accumulation_steps = 5
-        epochs = 60
+        epochs = 70
         batch_size = 1200
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
