@@ -480,7 +480,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model_pose_1.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/data/Penn/model/model_acc_up2_tf_2.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
@@ -536,7 +536,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/data/Lara_IMU/trainData_30_new/'
+        path = '/data/sawasthi/data/Lara_IMU/trainData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -591,5 +591,12 @@ if __name__ == '__main__':
     logging.info("Standard deviation of Weighted F1 score after 5 runs is {}".format(np.std(weighted_F1_array)))
     sys.stdout.write("Standard deviation of Weighted F1 score after 5 runs is {}".format(np.std(weighted_F1_array)))
     logging.info("Mean Test accuracy score after 5 runs is {}".format(np.mean(test_acc_array)))
+    sys.stdout.write("Mean Test accuracy score after 5 runs is {}".format(np.mean(test_acc_array)))
     sys.stdout.write("Standard deviation of Test accuracy score after 5 runs is {}".format(np.std(test_acc_array)))
     logging.info('Standard deviation of Test accuracy score after 5 runs is {}'.format(np.std(test_acc_array)))
+    
+    logging.info('Weighted F1 score {}'.format(weighted_F1_array))
+    sys.stdout.write("Weighted F1 score {}".format(weighted_F1_array))
+    logging.info('Test accuracy score {}'.format(test_acc_array))
+    sys.stdout.write("Test accuracy score {}".format(test_acc_array))
+    
