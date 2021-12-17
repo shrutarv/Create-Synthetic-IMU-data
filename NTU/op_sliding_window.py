@@ -228,7 +228,7 @@ if __name__ == '__main__':
     plt.plot(data[:,0],data[:,1])
     '''
     
-    data2 = normalize(data_x,value, "train")
+    data = normalize(data_x,value, "train")
     print("train data normalized")
     # time sampled
      
