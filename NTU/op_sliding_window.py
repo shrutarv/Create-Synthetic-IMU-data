@@ -34,7 +34,6 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos):
     print("Sliding window: Creating windows {} with step {}".format(ws, ss))
     
     data_x = sliding_window(data_x,(ws,data_x.shape[1]),(ss,1))
-    data_x = sliding_window(data_x, (ws, data_x.shape[1]), (ss, 1))
     if label_pos == 'end':
         data_y_labels = np.asarray([[i[-1]] for i in sliding_window(data_y, ws, ss)])
     elif label_pos== 'middle':
