@@ -461,7 +461,7 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/Lara_IMU/logger_new_c1_75.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/LaraIMU/logger_new_c1_75.txt")
     logging.info('Finished')
     logging.info(':Python Platform {}'.format(platform.python_version()))
      
