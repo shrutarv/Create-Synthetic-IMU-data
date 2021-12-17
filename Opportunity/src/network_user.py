@@ -343,15 +343,17 @@ class Network_User(object):
             list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            ]
         elif self.config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
-                           
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
-                           
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
-                           
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
-                           
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias' ]
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+                           ]
 
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in list_layers}
         #print(pretrained_dict)
@@ -381,15 +383,17 @@ class Network_User(object):
             list_layers = ['conv1_1.weight', 'conv1_1.bias'
                           ]
         elif self.config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
-                           
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
-                           
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
-                           
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias',
-                           
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias' ]
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
+                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
+                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
+                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
+                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
+                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+                           ]
 
         for pn, pv in network.named_parameters():
             if pn in list_layers:
