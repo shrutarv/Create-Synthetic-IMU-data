@@ -151,7 +151,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
         folder_exp = '/data/sawasthi/PAMAP2/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_up1_acc_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
