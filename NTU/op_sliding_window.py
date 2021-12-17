@@ -14,7 +14,7 @@ from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
 
-def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
+def opp_sliding_window(data_x, data_y, ws, ss, label_pos):
     '''
     Performs the sliding window approach on the data and the labels
     
@@ -34,44 +34,27 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     print("Sliding window: Creating windows {} with step {}".format(ws, ss))
     
     data_x = sliding_window(data_x,(ws,data_x.shape[1]),(ss,1))
-    
-    # Label from the end
-    if label_pos_end:
-        data_y = np.asarray([[i[-1]] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
-    else:
-    
-        #Label from the middle
-        if False:
-            data_y_labels = np.asarray([[i[i.shape[0] // 2]] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
-        else:
-            count_l=[]
-            idy = []
-            #Label according to mode
-            try:
-                
-                data_y_labels = []
-                for sw in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
-                    labels = np.zeros((20)).astype(int)
-                    count_l = np.bincount(sw[:,0], minlength = NUM_CLASSES)
-                    idy = np.argmax(count_l)
-                    attrs = np.sum(sw[:,1:], axis = 0)
-                    attrs[attrs > 0] = 1
-                    labels[0] = idy  
-                    labels[1:] = attrs
-                    data_y_labels.append(labels)
-                print(len(data_y_labels))
-                data_y_labels = np.asarray(data_y_labels)
-                
-            
-            except:
-                print("Sliding window: error with the counting {}".format(count_l))
-                print("Sliding window: error with the counting {}".format(idy))
-                return np.Inf
-            
-            #All labels per window
-            data_y_all = np.asarray([i[:] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
-    
+    data_x = sliding_window(data_x, (ws, data_x.shape[1]), (ss, 1))
+    if label_pos == 'end':
+        data_y_labels = np.asarray([[i[-1]] for i in sliding_window(data_y, ws, ss)])
+    elif label_pos== 'middle':
+        # Segmenting the data with labels from the middle of the window
+        data_y_labels = np.asarray([[i[i.shape[0] // 2]] for i in sliding_window(data_y, ws, ss)])
+    elif label_pos == 'mode':
+        data_y_labels = []
+        for sw in sliding_window(data_y, ws, ss):
+            count_l = np.bincount(sw.astype(int), minlength=self.config['num_classes'])
+            idy = np.argmax(count_l)
+            data_y_labels.append(idy)
+        data_y_labels = np.asarray(data_y_labels)
+
+    # Labels of each sample per window
+         #All labels per window
+    data_y_all = np.asarray([i[:] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
+
     return data_x.astype(np.float32), data_y_labels.astype(np.uint8), data_y_all.astype(np.uint8)
+
+  
 
 def example_creating_windows_file(k, data_x, labels, data_dir):
         # Sliding window approach
@@ -81,7 +64,7 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
     print(labels.shape)
     X, y, y_all = opp_sliding_window(data_x, labels,
                                      sliding_window_length,
-                                     sliding_window_step, label_pos_end = False)
+                                     sliding_window_step, label_pos)
     print(X.shape)
     print(y.shape)
     print(y_all.shape)
@@ -212,7 +195,7 @@ if __name__ == '__main__':
     sliding_window_length = 30   
     #sliding_window_length = 100    
     sliding_window_step = 3
-    
+    label_pos = "mode"
     df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data = df.values
