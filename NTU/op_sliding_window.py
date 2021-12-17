@@ -134,7 +134,7 @@ def normalize(dat, min_max, string):
         if (j==4 or j==5 or j==6):
             continue;
         dat[:,j] = (dat[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(dat[:,1:76])
+    test = np.array(dat[:,1:len(dat[0])-1])
         
     if (string=="train"):
         if(np.max(test)>1.001):
