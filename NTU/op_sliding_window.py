@@ -13,7 +13,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-
+NUM_CLASSES = 60
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos):
     '''
     Performs the sliding window approach on the data and the labels
