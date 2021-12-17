@@ -25,7 +25,6 @@ class CustomDataSet(Dataset):
         file = os.path.join(self.main_dir, self.all_files[idx])
         #print(idx)
         f = open(file,'rb')
-        f.seek(0)
         #image = Image.open(img_loc).convert("RGB")
         #tensor_image = self.transform(image)
         data = pickle.load(f, encoding='latin1')

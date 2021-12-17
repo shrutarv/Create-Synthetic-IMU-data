@@ -13,7 +13,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-NUM_CLASSES = 60
+
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -207,11 +207,11 @@ if __name__ == '__main__':
    
     #ws = (100,31)
     ws = (30,75) 
-    ss = (12,75)     
+    ss = (3,75)     
     #ss = (25,31)
     sliding_window_length = 30   
     #sliding_window_length = 100    
-    sliding_window_step = 12
+    sliding_window_step = 3
     
     df = pd.read_csv('/data/sawasthi/NTU/train_data_tf.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
