@@ -41,12 +41,19 @@ def opp_sliding_window(data_x, data_y, ws, ss, label_pos):
         data_y_labels = np.asarray([[i[i.shape[0] // 2]] for i in sliding_window(data_y, ws, ss)])
     elif label_pos == 'mode':
         data_y_labels = []
-        for sw in sliding_window(data_y, ws, ss):
-            count_l = np.bincount(sw.astype(int), minlength=self.config['num_classes'])
+        for sw in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
+            labels = np.zeros((20)).astype(int)
+            count_l = np.bincount(sw[:,0], minlength = NUM_CLASSES)
             idy = np.argmax(count_l)
-            data_y_labels.append(idy)
+            attrs = np.sum(sw[:,1:], axis = 0)
+            attrs[attrs > 0] = 1
+            labels[0] = idy  
+            labels[1:] = attrs
+            data_y_labels.append(labels)
+                    
+        print(len(data_y_labels))
         data_y_labels = np.asarray(data_y_labels)
-
+                
     # Labels of each sample per window
          #All labels per window
     data_y_all = np.asarray([i[:] for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1))])
