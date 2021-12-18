@@ -580,7 +580,7 @@ if __name__ == '__main__':
         "step_size":3,
         "device": "cuda:0",
         "model_path": '/data/sawasthi/NTU/model/model_ci_pose_tf.pth',
-        "model_complete":'/data/sawasthi/NTU/model/model_cnn_pose_tf_2.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_ci_pose_tf_2.pth',
         "dataset":"NTU"
         }
 
