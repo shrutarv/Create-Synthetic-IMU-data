@@ -220,7 +220,7 @@ if __name__ == '__main__':
     attr = np.zeros((30,1))
     #value = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values.csv')
     
-    value = pd.read_csv('/data/sawasthi/NTU/norm_values_tf.csv')
+    value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
     value = max_min_values(data)
