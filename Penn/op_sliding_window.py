@@ -12,7 +12,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-NUM_CLASSES = 8
+NUM_CLASSES = 15
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -212,7 +212,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/data/Penn/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
     data = df.values
     data_new = data[:,1:27]
@@ -236,7 +236,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/trainData_pose/'
+    data_dir =  '/data/sawasthi/Penn/trainData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -247,7 +247,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -257,7 +257,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/testData_pose/'
+    data_dir =  '/data/sawasthi/Penn/testData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -269,7 +269,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/val_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/validationData_pose/'
+    data_dir =  '/data/sawasthi/Penn/validationData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
