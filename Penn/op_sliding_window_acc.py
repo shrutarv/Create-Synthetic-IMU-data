@@ -214,7 +214,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/train_data_tf.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/norm_data.csv')
     data = df.values
@@ -265,7 +265,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_acc_down2/'
+    data_dir =  '/data/sawasthi/Penn/trainData_acc_down2_tf/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = data[:,len(data[0])-1].astype(int)
@@ -315,7 +315,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     data_dir =  '/data/sawasthi/Penn/validationData_acc_down2/'
@@ -355,7 +355,7 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
