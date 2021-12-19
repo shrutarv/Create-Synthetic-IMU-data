@@ -12,7 +12,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-NUM_CLASSES = 8
+NUM_CLASSES = 15
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -205,16 +205,16 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 2
+    up = 0.5
     #ws = (100,31)
-    ws = (100,26) 
+    ws = (25,26) 
     ss = (1,26)     
     #ss = (25,31)
-    sliding_window_length = 100   
+    sliding_window_length = 25   
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/train_data_tf.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/norm_data.csv')
     data = df.values
@@ -267,7 +267,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_acc_up2_tf/'
+    data_dir =  '/data/sawasthi/Penn/trainData_acc_down2_tf/'
     #data_dir = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = np.repeat(data[:,27],up).astype(int)
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir = '/data/sawasthi/Penn/testData_acc_up2/'
+    data_dir = '/data/sawasthi/Penn/testData_acc_down2/'
     
     #data_dir =  'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
     df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
@@ -314,10 +314,10 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
      
-    data_dir = '/data/sawasthi/Penn/validationData_acc_up2/'
+    data_dir = '/data/sawasthi/Penn/validationData_acc_down2/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
     data = df.values
