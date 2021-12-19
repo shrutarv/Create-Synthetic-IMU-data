@@ -236,7 +236,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/trainData_pose_1/'
+    data_dir =  '/data/sawasthi/data/Penn/trainData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -257,7 +257,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/testData_pose_1/'
+    data_dir =  '/data/sawasthi/data/Penn/testData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -269,7 +269,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/data/Penn/val_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/data/Penn/validationData_pose_1/'
+    data_dir =  '/data/sawasthi/data/Penn/validationData_pose/'
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)

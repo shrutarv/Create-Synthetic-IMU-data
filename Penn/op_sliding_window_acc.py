@@ -205,7 +205,7 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-   # up = 0.5
+    up = 0.5
     #ws = (100,31)
     ws = (25,26) 
     ss = (1,26)     
@@ -232,8 +232,10 @@ if __name__ == '__main__':
     data = normalize(data,value, "train")
     print("train data normalized")
      #up sampled
-    x_sampled=data[0::2]
-    x_sampled = x_sampled[:,0]
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    # down sampled
+    #x_sampled=data[0::2]
+    #x_sampled = x_sampled[:,0]
     
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = np.zeros((len(x_sampled),1))
@@ -266,10 +268,9 @@ if __name__ == '__main__':
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     data_dir =  '/data/sawasthi/Penn/trainData_acc_down2_tf/'
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
+    #data_dir = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = data[:,len(data[0])-1].astype(int)
-    label = label[0::2]
+    label = np.repeat(data[:,27],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
     #X = data[:,1:31]
@@ -278,16 +279,17 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/Penn/testData_acc_down2/'
+    data_dir = '/data/sawasthi/Penn/testData_acc_down2/'
+    
+    #data_dir =  'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
     df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
-   # x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
    # down sampled
-    x_sampled=data[0::2] 
-    x_sampled = x_sampled[:,0]
+    #x_sampled=data[0::2] 
+    #x_sampled = x_sampled[:,0]
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
@@ -307,27 +309,24 @@ if __name__ == '__main__':
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = data[:,len(data[0])-1].astype(int)
-    label = label[0::2]
-    
+    label = np.repeat(data[:,27],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
-    #X = data[:,1:31]
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
-    
-    data_dir =  '/data/sawasthi/Penn/validationData_acc_down2/'
+     
+    data_dir = '/data/sawasthi/Penn/validationData_acc_up2/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
-    #x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
     # down sampled
-    x_sampled=data[0::2] 
-    x_sampled = x_sampled[:,0]
+    #x_sampled=data[0::2] 
+    #x_sampled = x_sampled[:,0]
     y_sampled = np.zeros((len(x_sampled),1))
     sampled_data = []
     for i in range(1,(data.shape[1]-1)):
@@ -347,17 +346,14 @@ if __name__ == '__main__':
          # plt.plot(data[1:10,0],data[1:10,i],'o',x_new[1:10],y_new,'x')
     data_new = y_sampled[:,1:]
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
-    label = data[:,len(data[0])-1].astype(int)
-    label = label[0::2]
-    
+    label = np.repeat(data[:,27],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
-    #X = data[:,1:31]
     X = data_new
     k = 0
     #example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
-    #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
+     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
     #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/")
     #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name)
