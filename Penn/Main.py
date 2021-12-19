@@ -516,7 +516,7 @@ if __name__ == '__main__':
         "num_classes":15,
         "reshape_input":False,
         "step_size":1,
-        'model_complete': '/data/sawasthi/Penn/model/model_acc_down2_tf_2.pth'
+        'model_complete': '/data/sawasthi/Penn/model/model_pose_tf_2.pth'
         }
 
     iterations = 1
@@ -554,11 +554,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Penn/model/model_acc_down2_tf.pth'
+        model_path = '/data/sawasthi/Penn/model/model_pose_tf.pth'
         #model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/Penn/trainData_acc_down2_tf/'
+        path = '/data/sawasthi/Penn/trainData_pose_tf/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -571,7 +571,7 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/Penn/validationData_acc_down2/'
+        path = '/data/sawasthi/Penn/validationData_pose/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/val_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -586,7 +586,7 @@ if __name__ == '__main__':
         training(dataLoader_train, dataLoader_validation,device,flag)
          # Test data    
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data/sawasthi/Penn/testData_acc_down2/'
+        path = '/data/sawasthi/Penn/testData_pose/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         test_dataset = CustomDataSet(path)
