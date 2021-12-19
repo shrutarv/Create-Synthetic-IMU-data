@@ -287,7 +287,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_up_3a_tf/'
+    data_dir =  '/data/sawasthi/NTU/trainData_tf_up_3a/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
