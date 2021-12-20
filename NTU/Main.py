@@ -599,7 +599,7 @@ if __name__ == '__main__':
         ws=30
         accumulation_steps = 5
         epochs = 70
-        batch_size = 1200
+        batch_size = 1500
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
