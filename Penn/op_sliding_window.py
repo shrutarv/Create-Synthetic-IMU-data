@@ -110,15 +110,15 @@ def example_creating_windows_file(k, data_x, labels, data_dir):
         print("dumping")
         f.close()
  
-def max_min_values(data):
+def max_min_values(dat):
     values = []
     
     #print(data.shape)
     
-    for attr in range(data.shape[1]):
+    for attr in range(dat.shape[1]):
         attribute = []
-        temp_max = np.max(data[:,attr])
-        temp_min = np.min(data[:,attr])
+        temp_max = np.max(dat[:,attr])
+        temp_min = np.min(dat[:,attr])
         attribute.append(temp_min)
         attribute.append(temp_max)
         values.append(attribute)  
@@ -126,12 +126,14 @@ def max_min_values(data):
     return values
 
 
-def normalize(data, min_max, string):
+def normalize(dat, min_max, string):
     #print(len(min_max), len(min_max[0]))
     
-    for j in range(1,len(data[0])-1):
-        data[:,j] = (data[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
-    test = np.array(data[:,1:len(data[0])-1])
+    for j in range(1,len(dat[0])-1):
+        if (j==1 or j==2):
+            continue;
+        dat[:,j] = (dat[:,j] - min_max[j-1][0])/(min_max[j-1][1] - min_max[j-1][0]) 
+    test = np.array(dat[:,1:len(dat[0])-1])
         
     if (string=="train"):
         if(np.max(test)>1.001):
@@ -143,7 +145,7 @@ def normalize(data, min_max, string):
         test[test < 0] = 0
     #data = data.reshape(data.shape[0],1,data.shape[1], data.shape[2])
     #data = torch.tensor(data)
-    return data
+    return dat
 
 def derivative(f,a,method='central',h=0.00001):
     '''Compute the difference formula for f'(a) with step size h.
@@ -213,11 +215,13 @@ if __name__ == '__main__':
     sliding_window_step = 1
     
     df = pd.read_csv('/data/sawasthi/Penn/train_data_tf.csv')
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
+    #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data_tf.csv')
     data = df.values
     data_new = data[:,1:27]
     attr = np.zeros((100,1))
     value = max_min_values(data_new)
+    #value2 = max_min_values(data)
+    
     '''
     with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
