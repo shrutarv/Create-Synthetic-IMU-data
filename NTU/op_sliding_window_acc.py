@@ -287,7 +287,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_tf_up_3a/'
+    data_dir =  '/data2/sawasthi/NTU/trainData_tf_up_3a/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
     label = np.repeat(data[:,76],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -299,7 +299,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
-    data_dir =  '/data/sawasthi/NTU/testData_up_3a/'
+    data_dir =  '/data2/sawasthi/NTU/testData_up_3a/'
     df = pd.read_csv('/data/sawasthi/NTU/test_data_new.csv')
     data = df.values
     data = normalize(data,value, "test")
@@ -328,10 +328,10 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/NTU/validationData_up_3a/'
+    data_dir =  '/data2/sawasthi/NTU/validationData_up_3a/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/NTU/val_data_new.csv')
     data = df.values
@@ -361,7 +361,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    #example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
