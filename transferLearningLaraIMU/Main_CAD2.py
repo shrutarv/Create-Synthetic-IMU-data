@@ -572,7 +572,7 @@ if __name__ == '__main__':
         "step_size":12,
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_up3_tf.pth', #'model_pose_tf.pth',model_acc_up3_tf, model_acc_ci_up3_tf
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_tf.pth', #'model_pose_tf.pth',model_acc_up3_tf, model_acc_ci_up3_tf
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         "freeze":False
         }
@@ -671,7 +671,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_10_acc_nf.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_tl_CAD_laraimu_c1_10_pose_nf.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
