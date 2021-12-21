@@ -175,10 +175,10 @@ if __name__ == '__main__':
     # up sampling rate
     up = 3
     #ws = (100,31)
-    ws = (30,45) 
+    ws = (90,45) 
     ss = (12,45)     
     #ss = (25,31)
-    sliding_window_length = 30   
+    sliding_window_length = 90   
     #sliding_window_length = 100    
     sliding_window_step = 12
     df = pd.read_csv('/data/sawasthi/CAD60/train_data_tf.csv')
@@ -260,7 +260,7 @@ if __name__ == '__main__':
     
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up1_tf/'
+    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up3_tf/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
