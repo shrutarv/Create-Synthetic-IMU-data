@@ -118,7 +118,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
         folder_exp = '/data/sawasthi/Opportunity/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/Opportunity/model/network_lpamap2_ci_ft.pth' #model_acc_up4.pth #model_up1_3a.pt
+        folder_exp_base_fine_tuning = '/data/sawasthi/Opportunity/model/network_loc_ci_nf_10.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_cad_loc_ci_acc_c1_10.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_loc_ci_acc_10.pt'}
     
     return configuration
 
@@ -310,10 +310,10 @@ def locomotion_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=0, network_idx=2, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=0, network_idx=0, output_idx=0, usage_modus_idx=0,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
                                            freeze=0, proportions_id = 0, gpudevice = "0")
-                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_cad_loc_ci_acc_c1_10.txt")
+                        setup_experiment_logger(logging_level=logging.DEBUG, filename= config['folder_exp'] + "logger_loc_ci_acc_10.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
