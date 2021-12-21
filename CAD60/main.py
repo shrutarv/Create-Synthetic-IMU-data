@@ -297,8 +297,8 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              #torch.save(model, model_path)
-              torch.save({'state_dict': model.state_dict()}, model_path)
+              torch.save(model, model_path)
+              #torch.save({'state_dict': model.state_dict()}, model_path)
 
               print("model saved on epoch", e)
               best_acc = val_acc
@@ -337,8 +337,8 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    #model = torch.load(model_path)
-    torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
+    model = torch.load(model_path)
+    #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
     model.eval()
     model.to(device)
     loss_test = 0.0
@@ -526,7 +526,7 @@ if __name__ == '__main__':
 
         ws=30
         accumulation_steps = 10
-        epochs = 1
+        epochs = 64
         batch_size = 200
         learning_rate = 0.00001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
@@ -546,11 +546,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_tf.pth'
+        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/data/CAD60/trainData_acc_up1_tf/'
+        path = '/data/sawasthi/data/CAD60/trainData_acc_up1/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
