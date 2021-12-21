@@ -297,8 +297,8 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path)
-              #torch.save({'state_dict': model.state_dict()}, model_path)
+              torch.save(model, model_path_2)
+              torch.save({'state_dict': model.state_dict()}, model_path)
 
               print("model saved on epoch", e)
               best_acc = val_acc
@@ -337,7 +337,7 @@ def testing(config):
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
     prediction = np.array([], dtype=np.int64)
-    model = torch.load(model_path)
+    model = torch.load(model_path_2)
     #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
     model.eval()
     model.to(device)
@@ -547,6 +547,7 @@ if __name__ == '__main__':
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
         model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up3_tf.pth'
+        model_path_2 = '/data/sawasthi/CAD60/model/model_acc_cnn_up3_tf_2.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
