@@ -578,7 +578,7 @@ if __name__ == '__main__':
         training(dataLoader_train, dataLoader_validation,device,flag)
         # Test data    
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data/sawasthi/data/CAD60/validationData_acc_up3/'
+        path = '/data/sawasthi/data/CAD60/validationData_acc_up1/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
