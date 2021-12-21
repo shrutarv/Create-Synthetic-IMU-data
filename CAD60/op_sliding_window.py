@@ -173,12 +173,12 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 1
+    up = 3
     #ws = (100,31)
-    ws = (30,45) 
+    ws = (90,45) 
     ss = (12,45)     
     #ss = (25,31)
-    sliding_window_length = 30   
+    sliding_window_length = 90   
     #sliding_window_length = 100    
     sliding_window_step = 12
     df = pd.read_csv('/data/sawasthi/CAD60/train_data_tf.csv')
