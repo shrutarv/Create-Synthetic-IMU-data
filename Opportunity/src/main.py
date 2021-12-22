@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_ges_cnn_pose_c1_30.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_pamap_cnn_pose_c4.pt'}
     
     return configuration
 
@@ -282,11 +282,11 @@ def pamap2_main():
             for arch in networks_arc:
                 for fopt in frezze_opts:
                     for pp in proportions_opts:
-                        config = configuration(dataset_idx=3, network_idx=2, output_idx=0, usage_modus_idx=5,
+                        config = configuration(dataset_idx=3, network_idx=0, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=1, gpudevice="0")
+                                               freeze=0, proportions_id=4, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_ntu_PAMAP2_ci_pose_nf_c4_30.txt")
+                                                filename=config['folder_exp'] + "logger_penn_PAMAP2_cnn_pose_nf_c4.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
@@ -376,8 +376,8 @@ def NTU_nain():
 if __name__ == '__main__':
     
     
-    #pamap2_main()
+    pamap2_main()
     #locomotion_main()
-    gestures_main()
+    #gestures_main()
     
     print("Done")
