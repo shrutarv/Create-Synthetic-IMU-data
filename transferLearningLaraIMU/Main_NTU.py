@@ -242,16 +242,15 @@ def set_required_grad(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias',
+                           
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            
                            ]
 
@@ -277,17 +276,15 @@ def load_weights(network):
         if config["network"] == 'cnn':
             list_layers = ['conv1_1.weight', 'conv1_1.bias']
         elif config["network"] == 'cnn_imu':
-            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
-                           'conv_LA_2_1.weight', 'conv_LA_2_1.bias', 'conv_LA_2_2.weight', 'conv_LA_2_2.bias',
-                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 'conv_LL_1_2.weight', 'conv_LL_1_2.bias',
-                           'conv_LL_2_1.weight', 'conv_LL_2_1.bias', 'conv_LL_2_2.weight', 'conv_LL_2_2.bias',
-                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 'conv_N_1_2.weight', 'conv_N_1_2.bias',
-                           'conv_N_2_1.weight', 'conv_N_2_1.bias', 'conv_N_2_2.weight', 'conv_N_2_2.bias',
-                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 'conv_RA_1_2.weight', 'conv_RA_1_2.bias',
-                           'conv_RA_2_1.weight', 'conv_RA_2_1.bias', 'conv_RA_2_2.weight', 'conv_RA_2_2.bias',
-                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias', 'conv_RL_1_2.weight',  'conv_RL_1_2.bias',
-                           'conv_RL_2_1.weight', 'conv_RL_2_1.bias', 'conv_RL_2_2.weight',  'conv_RL_2_2.bias'
+            list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias',
                            
+                           'conv_LL_1_1.weight', 'conv_LL_1_1.bias', 
+                           
+                           'conv_N_1_1.weight', 'conv_N_1_1.bias', 
+                           
+                           'conv_RA_1_1.weight', 'conv_RA_1_1.bias', 
+                           
+                           'conv_RL_1_1.weight', 'conv_RL_1_1.bias'
                            ]
 
         pretrained_dict = {k: v for k, v in pretrained_dict.items() if k in list_layers}
@@ -590,7 +587,7 @@ if __name__ == '__main__':
    
         ws=100
         accumulation_steps = 5
-        epochs = 30
+        epochs = 60
         batch_size = 700
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
