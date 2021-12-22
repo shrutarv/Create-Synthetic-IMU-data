@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_pamap_cnn_pose_c1.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_Penn_pamap_cnn_pose_c4.pt'}
     
     return configuration
 
@@ -284,9 +284,9 @@ def pamap2_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=3, network_idx=0, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=0, gpudevice="0")
+                                               freeze=0, proportions_id=4, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_penn_PAMAP2_cnn_pose_nf_c1_10.txt")
+                                                filename=config['folder_exp'] + "logger_penn_PAMAP2_cnn_pose_nf_c4.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
