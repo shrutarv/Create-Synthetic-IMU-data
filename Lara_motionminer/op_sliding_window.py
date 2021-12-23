@@ -214,7 +214,7 @@ if __name__ == '__main__':
             data_x = data_x.values
             data_x = data_x[:,2:]
             x = normalize(data_x,value,'train')
-            example_creating_windows_file(k, folder_name, x, lab)
+            #example_creating_windows_file(k, folder_name, x, lab)
     d = 0        
     for n in test_set:
             
@@ -271,7 +271,7 @@ if __name__ == '__main__':
             data_x = data_x.values
             data_x = data_x[:,2:]
             x = normalize(data_x,value,'test')
-            ##example_creating_windows_file(k, folder_name, x, lab)
+            example_creating_windows_file(k, folder_name, x, lab)
     d = 0        
     for p in validation_set:
             
@@ -328,7 +328,7 @@ if __name__ == '__main__':
             data_x = data_x.values
             data_x = data_x[:,2:]
             x = normalize(data_x,value,'validation')
-            #example_creating_windows_file(k, folder_name, x, lab)
+            example_creating_windows_file(k, folder_name, x, lab)
      
             #if(k == 2):
         #  break
