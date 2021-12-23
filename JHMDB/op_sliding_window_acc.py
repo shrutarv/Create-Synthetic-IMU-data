@@ -186,13 +186,13 @@ def plot_graphs(t_sampled,data,acceleration,sampled_dat):
     plt.plot(data[1:100,0],data[1:100,11],'c')
     
     plt.figure()
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,0],'k')
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,2],'b')
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,4],'g')
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,12],'r')
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,14],'y')
-    plt.plot(t_sampled[1:400],sampled_dat[1:400,10],'c')
-    
+    plt.plot(time,data_new[1:101,0],'k')
+    plt.plot(time,data_new[1:101,11],'b')
+    plt.plot(time,data_new[1:101,12],'g')
+    plt.plot(time,data_new[1:101,14],'r')
+    plt.plot(time,data_new[1:101,8],'y')
+    plt.plot(time,data_new[1:101,6],'c')
+
     plt.figure()
     plt.plot(t_sampled[1:400],acceleration[1:400,0],'k')
     plt.plot(t_sampled[1:400],acceleration[1:400,2],'b')
