@@ -155,10 +155,11 @@ if __name__ == '__main__':
     validation_set = ["S12"]
     test_set = ["S13"]
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
-    #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
+    #df = pd.read_csv('S:/Datasets/flw_recordings_annotated/norm_value.csv')
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
     value = df.values.tolist()
     d = 0
+    train = np.zeros((1,27))
     for m in training_set:
             
         data_dir =  "/data/sawasthi/Lara_motionminer/trainData_5_100_new/"
@@ -171,8 +172,7 @@ if __name__ == '__main__':
         folder_name = training_set[d]
         FileList_y = []
         #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
-        #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
-        #os.chdir("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/")
+        #os.chdir("S:/Datasets/flw_recordings_annotated/" + folder_name)
         os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
         #os.chdir("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name)
         FileList_y = glob.glob('*labels.csv')
@@ -201,7 +201,7 @@ if __name__ == '__main__':
             k += 1
             data_y = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + j) 
             #data_y = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S07/"+j)
-            #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name+ "/" + j) 
+            #data_y = pd.read_csv("S:/Datasets/flw_recordings_annotated/" + folder_name+ "/" + j) 
             #data_y = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + j) 
             data_y = data_y.values
             label = data_y[:,0].astype(int)
@@ -209,12 +209,13 @@ if __name__ == '__main__':
             lab[:,0] = label
             data_x = pd.read_csv("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name + "/" + i) 
             #data_x = pd.read_csv("/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/S13/"+i)
-            #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/" + folder_name +"/" + i)
+            #data_x = pd.read_csv("S:/Datasets/flw_recordings_annotated/" + folder_name +"/" + i)
             #data_x = pd.read_csv("S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/OMoCap data/" + folder_name + "/" + i)
             data_x = data_x.values
             data_x = data_x[:,2:]
+            #train = np.append(train,data_x,0)
             x = normalize(data_x,value,'train')
-            #example_creating_windows_file(k, folder_name, x, lab)
+            example_creating_windows_file(k, folder_name, x, lab)
     d = 0        
     for n in test_set:
             
@@ -344,10 +345,10 @@ if __name__ == '__main__':
         temp_list.append(minim)
         value.append(temp_list) 
     norm_values=max_min_values(train_x, value)
-    with open("S:/MS A&R/4th Sem/Thesis/flw_recordings_annotated/norm_value.csv", 'w') as f:
+    with open("S:/Datasets/flw_recordings_annotated/norm_value.csv", 'w') as f:
         fc = csv.writer(f, lineterminator='\n')
         fc.writerow(["max","min"])
-        fc.writerows(norm_values)
+        fc.writerows(norm_v)
     '''
           
     
