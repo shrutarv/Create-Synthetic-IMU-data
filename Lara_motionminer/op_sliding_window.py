@@ -162,7 +162,7 @@ if __name__ == '__main__':
     train = np.zeros((1,27))
     for m in training_set:
             
-        data_dir =  "/data/sawasthi/Lara_motionminer/trainData_5_100_new/"
+        data_dir =  "/data/sawasthi/Lara_motionminer/trainData_5_100/"
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
