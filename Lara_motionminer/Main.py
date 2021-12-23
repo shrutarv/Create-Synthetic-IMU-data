@@ -276,7 +276,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,'r',label='training accuracy')
         plt.plot(ep,validation_acc, 'g',label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/LaraMM/results/result_10_50.png') 
+        plt.savefig('/data/sawasthi/Lara_motionminer/results/result_10_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
@@ -342,7 +342,7 @@ if __name__ == '__main__':
     # Python RNG
     np.random.seed(seed)
     random.seed(seed)
-    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/data/LaraMM/logger_10_50.txt")
+    setup_experiment_logger(logging_level=logging.DEBUG, filename= "/data/sawasthi/Lara_motionminer/logger_10_50.txt")
     
     print(":Python Platform {}".format(platform.python_version()))
     
@@ -406,9 +406,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/data/LaraMM/model/Laramm_model_5_100.pth'
+        model_path = '/data/sawasthi/Lara_motionminer/model/Laramm_model_5_100.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-        path = '/data/sawasthi/data/LaraMM/trainData_5_100/'
+        path = '/data/sawasthi/Lara_motionminer/trainData_5_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -420,7 +420,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/data/LaraMM/validationData_5/'
+        path = '/data/sawasthi/Lara_motionminer/validationData_5/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -431,7 +431,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/data/LaraMM/testData_5/'
+        path = '/data/sawasthi/Lara_motionminer/testData_5/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
