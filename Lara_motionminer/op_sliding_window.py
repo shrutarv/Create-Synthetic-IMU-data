@@ -143,14 +143,14 @@ def max_min_values(data, values):
     return values
 
 if __name__ == '__main__':
-       
+     #previously it was ss =12  
     #ws = (100,31)
     ws = (100,30)  
-    ss = (12,30)    
+    ss = (5,30)    
     #ss = (25,31)
     sliding_window_length = 100   
     #sliding_window_length = 100    
-    sliding_window_step = 12
+    sliding_window_step = 5
     training_set = ["S07", "S08","S09","S10"]
     validation_set = ["S11","S12"]
     test_set = ["13","14"]
@@ -160,7 +160,7 @@ if __name__ == '__main__':
     value = df.values.tolist()
     for m in training_set:
             
-        data_dir =  "/data/sawasthi/Lara_motionminer/trainData_12/"
+        data_dir =  "/data/sawasthi/Lara_motionminer/trainData_5_100/"
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -217,7 +217,7 @@ if __name__ == '__main__':
             
     for n in test_set:
             
-        data_dir =  "/data/sawasthi/Lara_motionminer/testData_12/"
+        data_dir =  "/data/sawasthi/Lara_motionminer/testData_5/"
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -274,7 +274,7 @@ if __name__ == '__main__':
              
     for p in validation_set:
             
-        data_dir =  "/data/sawasthi/Lara_motionminer/validationData_12/"
+        data_dir =  "/data/sawasthi/Lara_motionminer/validationData_5/"
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
         #data_dir = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
