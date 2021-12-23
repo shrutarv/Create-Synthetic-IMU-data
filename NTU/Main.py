@@ -579,8 +579,8 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth',
-        "model_complete":'/data/sawasthi/NTU/model/model_ci_acc_up3_tf_2.pth',
+        "model_path": '/data/sawasthi/NTU/model/model_ci_acc_up3.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_ci_acc_up3_2.pth',
         "dataset":"NTU"
         }
 
@@ -589,7 +589,7 @@ if __name__ == '__main__':
           print("cuda is available")
     else:  
           dev = "cpu"  
-    iterations = 1
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     flag = True
@@ -598,7 +598,7 @@ if __name__ == '__main__':
         device = torch.device(dev)
         ws=30
         accumulation_steps = 5
-        epochs = 70
+        epochs = 45
         batch_size = 250
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
@@ -627,7 +627,7 @@ if __name__ == '__main__':
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data2/sawasthi/NTU/trainData_tf_up_3a/'
+        path = '/data2/sawasthi/NTU/trainData_up_3a/'
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
