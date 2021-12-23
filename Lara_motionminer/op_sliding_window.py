@@ -153,7 +153,7 @@ if __name__ == '__main__':
     sliding_window_step = 5
     training_set = ["S07", "S08","S09","S10"]
     validation_set = ["S11","S12"]
-    test_set = ["13","14"]
+    test_set = ["S13","S14"]
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
     #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_motionminer/norm_value.csv')
