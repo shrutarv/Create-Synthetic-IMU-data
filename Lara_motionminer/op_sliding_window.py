@@ -168,7 +168,7 @@ if __name__ == '__main__':
         #for i in sliding_window(data_y,(ws,data_y.shape[1]),(ss,1)):
         
         #    print (np.shape(i[:,0]))
-        folder_name = training_set[i]
+        folder_name = training_set[d]
         FileList_y = []
         #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
         #os.chdir("/vol/actrec/DFG_Project/2019/LARa_dataset/Motionminers/2019/flw_recordings_annotated/" + folder_name)
@@ -272,7 +272,7 @@ if __name__ == '__main__':
             data_x = data_x[:,2:]
             x = normalize(data_x,value,'test')
             example_creating_windows_file(k, folder_name, x, lab)
-     d = 0        
+    d = 0        
     for p in validation_set:
             
         data_dir =  "/data/sawasthi/Lara_motionminer/validationData_5/"
