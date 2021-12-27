@@ -72,7 +72,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                            'cnn_imu' : {'softmax' : 32, 'attribute': 32}},
               'pamap2' : {'cnn' : {'softmax' : 50, 'attribute': 32},
                           'lstm' : {'softmax' : 25, 'attribute': 1},
-                          'cnn_imu' : {'softmax' : 50, 'attribute': 32}},
+                          'cnn_imu' : {'softmax' : 70, 'attribute': 32}},
               'orderpicking' : {'cnn' : {'softmax' : 10, 'attribute': 10},
                                 'lstm' : {'softmax' : 25, 'attribute': 1},
                                 'cnn_imu' : {'softmax' : 24, 'attribute': 32}},
@@ -376,8 +376,8 @@ def NTU_nain():
 if __name__ == '__main__':
     
     
-    #pamap2_main()
+    pamap2_main()
     #locomotion_main()
-    gestures_main()
+    #gestures_main()
     
     print("Done")
