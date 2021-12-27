@@ -72,7 +72,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                            'cnn_imu' : {'softmax' : 32, 'attribute': 32}},
               'pamap2' : {'cnn' : {'softmax' : 50, 'attribute': 32},
                           'lstm' : {'softmax' : 25, 'attribute': 1},
-                          'cnn_imu' : {'softmax' : 50, 'attribute': 32}},
+                          'cnn_imu' : {'softmax' : 70, 'attribute': 32}},
               'orderpicking' : {'cnn' : {'softmax' : 10, 'attribute': 10},
                                 'lstm' : {'softmax' : 25, 'attribute': 1},
                                 'cnn_imu' : {'softmax' : 24, 'attribute': 32}},
@@ -151,7 +151,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
         '''
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
         folder_exp = '/data/sawasthi/PAMAP2/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+        folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data2/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
@@ -233,7 +233,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'proportions': proportions[proportions_id],
                      'fully_convolutional': fully_convolutional,
-                     'model_path': '/data/sawasthi/Opportunity/model/network_ntu_pamap_ci_acc_c4_30.pt'}
+                     'model_path': '/data/sawasthi/Opportunity/model/network_ntu_pamap_cnn_pose_c4.pt'}
     
     return configuration
 
@@ -276,7 +276,7 @@ def pamap2_main():
     networks_arc = [0]
     fine_tunings = [3]
     frezze_opts = [0]
-    proportions_opts = [0]
+    proportions_opts = [0, 1, 2, 3, 4]
     for dset in datasets_opts:
         for ft in fine_tunings:
             for arch in networks_arc:
@@ -284,9 +284,9 @@ def pamap2_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=3, network_idx=2, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=1, gpudevice="0")
+                                               freeze=0, proportions_id=pp, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_ntu_PAMAP2_ci_acc_nf_c4_30.txt")
+                                                filename=config['folder_exp'] + "logger_ntu_PAMAP2_cnn_pose_nf_c4.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
