@@ -6,6 +6,8 @@ import pickle
 from sliding_window import sliding_window
 import glob
 import csv
+import matplotlib.pyplot as plt
+
 
 NUM_CLASSES = 8
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
@@ -142,6 +144,17 @@ def max_min_values(data, values):
     values = temp_values
     return values
 
+def plot_graphs(t_sampled,data,acceleration,sampled_dat):
+    time = np.linspace(0,4,100)
+    plt.figure()
+    plt.plot(time,data[1:101,1],'k')
+    plt.plot(time,data[1:101,12],'b')
+    plt.plot(time,data[1:101,13],'g')
+    plt.plot(time,data[1:101,15],'r')
+    plt.plot(time,data[1:101,9],'y')
+    plt.plot(time,data[1:101,7],'c')
+
+
 if __name__ == '__main__':
        
     #ws = (100,31)
@@ -154,7 +167,9 @@ if __name__ == '__main__':
     # training set : S01, S02,S03,S04,S07,S08,S09,S10
     # validation set : S05,S11,S12
     # test set : S06,13,14
+    
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/Lara_IMU/norm_IMU.csv')
+    df = pd.read_csv('S:/Datasets/IMU data/IMU data/S07/L01_S07_R01.csv')
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/Lara_IMU/norm_IMU.csv')
     value = df.values.tolist()
    
