@@ -572,7 +572,7 @@ if __name__ == '__main__':
         "step_size":12,
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/NTU/model/model_cnn_pose_tf.pth',
+        "folder_exp_base_fine_tuning": '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         "dataset" : 'LaraIMU',
         "freeze":False
@@ -633,7 +633,7 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
-        path = '/data/sawasthi/LaraIMU/trainData_30per/'
+        path = '/data/sawasthi/LaraIMU/trainData_100/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -673,7 +673,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_pose_cnn_c1_30.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1_100.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
