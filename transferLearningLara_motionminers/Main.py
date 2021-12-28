@@ -509,15 +509,15 @@ if __name__ == '__main__':
             
             #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
             if prop==0:
-                path = '/data/sawasthi/LaraIMU/trainData_10_10/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
             elif prop==1:
-                path = '/data/sawasthi/LaraIMU/trainData_10_30/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
             elif prop==2:
-                path = '/data/sawasthi/LaraIMU/trainData_10_50/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_50/'
             elif prop==3:
-                path = '/data/sawasthi/LaraIMU/trainData_10_75/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
             elif prop==4:
-                path = '/data/sawasthi/LaraIMU/trainData_10_100/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_100/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -557,7 +557,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_ci_c1_'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraMM_acc_ci_c1_'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device)
             WF, TA = testing(config)
