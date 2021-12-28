@@ -458,9 +458,8 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth',
+        "folder_exp_base_fine_tuning": '/data/sawasthi/JHMDB/model/model_pose.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
-        "freeze":False
         }
 
 
@@ -470,7 +469,7 @@ if __name__ == '__main__':
     batch_size = 100
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    iterations = 3
+    iterations = 2
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -494,15 +493,14 @@ if __name__ == '__main__':
         model = load_weights(Lara_net)
         model = model.to(device)
         print("model loaded")  
-        if config["freeze"]:
-            model = set_required_grad(model)
+        model = set_required_grad(model)
         
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         optimizer.zero_grad()
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        path = '/data/sawasthi/Lara_motionminer/trainData_10/'
+        path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -542,7 +540,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_acc_c1.pth'
+        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_JHMDB_pose_c1_75.pth'
         training(dataLoader_train, dataLoader_validation,device)
         WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
@@ -555,6 +553,4 @@ if __name__ == '__main__':
     
     print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
     print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
-    print("weighted F1 array",weighted_F1_array)
-    print("test accuracy array",test_acc_array)
     
