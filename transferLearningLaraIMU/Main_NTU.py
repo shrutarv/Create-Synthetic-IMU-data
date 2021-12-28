@@ -567,7 +567,7 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "step_size":12,
         "num_classes":8,
@@ -673,7 +673,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1_100.pth'
+        model_path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_ci_c1_100.pth'
         print('Start Training')
                  
         training(dataLoader_train, dataLoader_validation,device,flag)
