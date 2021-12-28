@@ -276,7 +276,7 @@ def pamap2_main():
     networks_arc = [0]
     fine_tunings = [3]
     frezze_opts = [0]
-    proportions_opts = 0#[0, 1, 2, 3, 4]
+    proportions_opts = [0]#[0, 1, 2, 3, 4]
     for dset in datasets_opts:
         for ft in fine_tunings:
             for arch in networks_arc:
