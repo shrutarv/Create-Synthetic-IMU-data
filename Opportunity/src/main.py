@@ -276,7 +276,7 @@ def pamap2_main():
     networks_arc = [0]
     fine_tunings = [3]
     frezze_opts = [0]
-    proportions_opts = [0, 1, 2, 3, 4]
+    proportions_opts = 0#[0, 1, 2, 3, 4]
     for dset in datasets_opts:
         for ft in fine_tunings:
             for arch in networks_arc:
@@ -284,7 +284,7 @@ def pamap2_main():
                     for pp in proportions_opts:
                         config = configuration(dataset_idx=3, network_idx=2, output_idx=0, usage_modus_idx=5,
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
-                                               freeze=0, proportions_id=pp, gpudevice="0")
+                                               freeze=0, proportions_id=4, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
                                                 filename=config['folder_exp'] + "logger_ntu_PAMAP2_cnn_pose_nf_c1.txt")
                         logging.info('Finished')
