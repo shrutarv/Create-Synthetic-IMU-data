@@ -265,7 +265,8 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:0').state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:0')['state_dict']
+        
         #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
@@ -361,9 +362,10 @@ def training(dataLoader_train, dataLoader_validation, device):
           validation_loss.append(val_loss)
           validation_acc.append(val_acc)
           if (val_acc >= best_acc):
-              torch.save(model, model_path_tl)
-              print("model saved on epoch", e)
-              best_acc = val_acc
+             torch.save(model, model_path_tl)
+             print("model saved on epoch", e)
+             
+             best_acc = val_acc
           l.append(total_loss/((e+1)*(b + 1)))
           accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
           #torch.save(model, model_path)
