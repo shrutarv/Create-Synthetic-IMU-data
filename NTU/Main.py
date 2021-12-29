@@ -660,7 +660,7 @@ if __name__ == '__main__':
         '''
         training(dataLoader_train, dataLoader_validation,device,config,flag)
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data/sawasthi/NTU/validationData_up_3a/'
+        path = '/data2/sawasthi/NTU/validationData_up_3a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
