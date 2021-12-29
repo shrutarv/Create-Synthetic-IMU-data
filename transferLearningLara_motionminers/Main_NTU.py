@@ -545,7 +545,7 @@ if __name__ == '__main__':
                                            drop_last=True)
             
             # Test data    
-            path = '/data/sawasthi/data/dLara_motionminer/testData_10/'
+            path = '/data/sawasthi/data/Lara_motionminer/testData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
             test_dataset = CustomDataSet(path)
