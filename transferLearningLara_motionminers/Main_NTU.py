@@ -513,16 +513,16 @@ if __name__ == '__main__':
             
             #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
             if prop==0:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_10/'
             elif prop==1:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_30/'
             elif prop==2:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_50/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_50/'
             elif prop==3:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_75/'
             elif prop==4:
                 print('100 percent data used')
-                path = '/data/sawasthi/Lara_motionminer/trainData_10/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -535,7 +535,7 @@ if __name__ == '__main__':
           
            
             # Validation data    
-            path = '/data/sawasthi/Lara_motionminer/validationData_10/'
+            path = '/data/sawasthi/data/Lara_motionminer/validationData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -547,7 +547,7 @@ if __name__ == '__main__':
                                            drop_last=True)
             
             # Test data    
-            path = '/data/sawasthi/Lara_motionminer/testData_10/'
+            path = '/data/sawasthi/data/Lara_motionminer/testData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
             test_dataset = CustomDataSet(path)
