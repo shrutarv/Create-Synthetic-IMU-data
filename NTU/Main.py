@@ -699,7 +699,98 @@ if __name__ == '__main__':
     print("weighted F1 array",weighted_F1_array)
     print("test accuracy array",test_acc_array)
     
+    
+    
+    
     '''
     with open('S:/Datasets/nturgbd_skeletons_s001_to_s017/train/seq__0_2.pkl', 'rb') as f:
         data = pickle.load(f)
     '''
+    config = {
+        "NB_sensor_channels":75,
+        "sliding_window_length":30,
+        "filter_size":5,
+        "num_filters":64,
+        "network":"cnn",
+        "output":"softmax",
+        "num_classes":60,
+        "reshape_input":False,
+        "step_size":3,
+        "device": "cuda:0",
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_pose.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_cnn_pose_2.pth',
+        "dataset":"NTU"
+        }
+    print("Calculating for pose data")
+    iterations = 3
+    weighted_F1_array = []
+    test_acc_array = []
+    flag = True
+    for iter in range(iterations):
+              
+        device = torch.device(dev)
+        ws=30
+        accumulation_steps = 5
+        epochs = 45
+        batch_size = 250
+        learning_rate = 0.00001
+        print("Starting for step size",config["step_size"])
+        print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
+            
+        model = Network(config)
+        model = model.float()
+        model = model.to(device)
+        normal = torch.distributions.Normal(torch.tensor([0.0]),torch.tensor([0.001]))
+        
+        criterion = nn.CrossEntropyLoss()
+        optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
+        path = '/data2/sawasthi/NTU/trainData_pose/'
+        train_dataset = CustomDataSet(path)
+        dataLoader_train = DataLoader(train_dataset, shuffle=True,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+      
+       
+        # Validation data    
+        path = '/data2/sawasthi/NTU/validationData_pose/'
+        validation_dataset = CustomDataSet(path)
+        dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+       
+        training(dataLoader_train, dataLoader_validation,device,config,flag)
+        print("Calculating accuracy for the trained model on validation set ")
+        path = '/data2/sawasthi/NTU/validationData_pose/'
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(validation_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
+        #testing(config)
+        path = '/data2/sawasthi/NTU/testData_pose/'
+        test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+       
+        flag = False
+        WF, TA = testing(config)
+        weighted_F1_array.append(WF)
+        test_acc_array.append(TA)
+            
+    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
+    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
+    
+    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
+    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array)
