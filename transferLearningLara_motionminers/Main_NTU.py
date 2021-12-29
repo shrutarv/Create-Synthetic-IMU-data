@@ -478,7 +478,7 @@ if __name__ == '__main__':
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
     proportions_opts = [4]
     flag = True
-    iterations = 3
+    iterations = 2
     
     for prop in proportions_opts:
         weighted_F1_array = []
