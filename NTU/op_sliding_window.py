@@ -202,12 +202,12 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 3
     label_pos = "mode"
-    df = pd.read_csv('/data/sawasthi/NTU/train_data_tf_new.csv')
+    df = pd.read_csv('/data/sawasthi/NTU/train_data_new.csv')
     #df = pd.read_csv('S:/Datasets/nturgbd_skeletons_s001_to_s017/train_data_tf_new.csv')
     data = df.values
     #attr = np.zeros((30,1))
     #value = pd.read_csv(('S:/Datasets/nturgbd_skeletons_s001_to_s017/norm_values_tf.csv'))
-    value = pd.read_csv('/data/sawasthi/NTU/norm_values_tf.csv')
+    value = pd.read_csv('/data/sawasthi/NTU/norm_values.csv')
     value = value.values
     '''
     with open("S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/norm_values.csv", 'w') as f:
@@ -231,7 +231,7 @@ if __name__ == '__main__':
     ''
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/NTU/trainData_pose_tf/'
+    data_dir =  '/data/sawasthi/NTU/trainData_pose/'
     #data_dir = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/pkl/'
     label = data[:,76].astype(int)
     lab = np.zeros((len(label),20), dtype=int)

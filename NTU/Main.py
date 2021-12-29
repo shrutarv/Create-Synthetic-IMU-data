@@ -690,16 +690,16 @@ if __name__ == '__main__':
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         weighted_F1_array.append(WF)
         test_acc_array.append(TA)
-        
-print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
-print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
-
-print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
-print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
-print("weighted F1 array",weighted_F1_array)
-print("test accuracy array",test_acc_array)
-
-'''
-with open('S:/Datasets/nturgbd_skeletons_s001_to_s017/train/seq__0_2.pkl', 'rb') as f:
-    data = pickle.load(f)
-'''
+            
+    print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
+    print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
+    
+    print("Mean Test accuracy score after 5 runs is",np.mean(test_acc_array))
+    print("Standard deviation of Test accuracy score after 5 runs is",np.std(test_acc_array))
+    print("weighted F1 array",weighted_F1_array)
+    print("test accuracy array",test_acc_array)
+    
+    '''
+    with open('S:/Datasets/nturgbd_skeletons_s001_to_s017/train/seq__0_2.pkl', 'rb') as f:
+        data = pickle.load(f)
+    '''
