@@ -518,7 +518,7 @@ if __name__ == '__main__':
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
             elif prop==4:
                 print('100 percent data used')
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_100/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
