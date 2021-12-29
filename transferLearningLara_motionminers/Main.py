@@ -468,11 +468,11 @@ if __name__ == '__main__':
 
     ws=100
     accumulation_steps = 2
-    epochs = 40
+    epochs = 60
     batch_size = 700
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    proportions_opts = [0, 1, 2, 3]
+    proportions_opts = [4]
     flag = True
     iterations = 3
     
@@ -517,6 +517,7 @@ if __name__ == '__main__':
             elif prop==3:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
             elif prop==4:
+                print('100 percent data used')
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_100/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -557,7 +558,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraMM_acc_ci_c1_'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_jhmdb_laraMM_acc_ci_c1_'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device)
             WF, TA = testing(config)
@@ -565,7 +566,8 @@ if __name__ == '__main__':
             #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
             weighted_F1_array.append(WF)
             test_acc_array.append(TA)
-            
+        print('Percentage data used',prop)    
+           
         print("Mean Weighted F1 score after 5 runs is",np.mean(weighted_F1_array))
         print("Standard deviation of Weighted F1 score after 5 runs is",np.std(weighted_F1_array))
         
