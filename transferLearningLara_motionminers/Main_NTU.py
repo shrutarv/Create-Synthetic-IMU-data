@@ -240,7 +240,8 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
                            ]
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
@@ -275,7 +276,8 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
                            ]
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 'conv_LA_1_2.weight', 'conv_LA_1_2.bias',
@@ -474,7 +476,7 @@ if __name__ == '__main__':
     batch_size = 700
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    proportions_opts = [4]
+    proportions_opts = [0,1,3]
     flag = True
     iterations = 2
     
@@ -560,7 +562,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraMM_acc_ci_c1_'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraMM_acc_cnn_c4_'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device)
             WF, TA = testing(config)
