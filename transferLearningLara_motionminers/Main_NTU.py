@@ -469,14 +469,14 @@ if __name__ == '__main__':
 
 
     ws=100
-    accumulation_steps = 3
+    accumulation_steps = 2
     epochs = 60
     batch_size = 700
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
     proportions_opts = [4]
     flag = True
-    iterations = 2
+    iterations = 3
     
     for prop in proportions_opts:
         weighted_F1_array = []
