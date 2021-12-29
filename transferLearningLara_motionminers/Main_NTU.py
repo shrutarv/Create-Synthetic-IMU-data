@@ -476,7 +476,7 @@ if __name__ == '__main__':
     batch_size = 700
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
-    proportions_opts = [0,1,2,3]
+    proportions_opts = [1,2,3]
     flag = True
     iterations = 3
     
