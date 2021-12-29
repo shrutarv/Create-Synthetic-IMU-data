@@ -570,7 +570,7 @@ if __name__ == '__main__':
     
     config = {
         "NB_sensor_channels":75,
-        "sliding_window_length":30,
+        "sliding_window_length":90,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
