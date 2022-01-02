@@ -375,7 +375,7 @@ if __name__ == '__main__':
     batch_size = 700
    
     flag = True
-    iterations = 5
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
@@ -406,9 +406,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Lara_motionminer/model/Laramm_model_5_100.pth'
+        model_path = '/data/sawasthi/Lara_motionminer/model/Laramm_model_10.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-        path = '/data/sawasthi/Lara_motionminer/trainData_5_100_new/'
+        path = '/data/sawasthi/Lara_motionminer/trainData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -420,7 +420,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/Lara_motionminer/validationData_5/'
+        path = '/data/sawasthi/Lara_motionminer/validationData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -431,7 +431,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/Lara_motionminer/testData_5/'
+        path = '/data/sawasthi/Lara_motionminer/testData_10/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
