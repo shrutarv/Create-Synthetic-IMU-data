@@ -240,7 +240,9 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+                           ]
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
                            
@@ -273,7 +275,9 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias']
+            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
+                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+                           ]
         elif config["network"] == 'cnn_imu':
             list_layers = ['conv_LA_1_1.weight', 'conv_LA_1_1.bias', 
                            
@@ -577,7 +581,7 @@ if __name__ == '__main__':
         "freeze":False
         
         }
-    proportions_opts = [1]
+    proportions_opts = [4]
     flag = True
     iterations = 3
     
@@ -589,7 +593,7 @@ if __name__ == '__main__':
             ws=100
             accumulation_steps = 5
             epochs = 60
-            batch_size = 500
+            batch_size = 700
             learning_rate = 0.00001
             print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
                    
