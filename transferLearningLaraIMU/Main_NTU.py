@@ -566,18 +566,18 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "step_size":12,
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth',
+        "folder_exp_base_fine_tuning": '/data/sawasthi/NTU/model/model_cnn_acc_up3_tf.pth',
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         "dataset" : 'LaraIMU',
         "freeze":False
         
         }
-    proportions_opts = [0, 1, 2, 3]
+    proportions_opts = [4]
     flag = True
     iterations = 3
     
@@ -684,7 +684,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_ci_c1_'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1_'+str(prop)+'.pth'
             model_path_tl = path_tl
             print('Start Training')
                      
