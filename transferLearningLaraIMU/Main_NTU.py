@@ -577,7 +577,7 @@ if __name__ == '__main__':
         "freeze":False
         
         }
-    proportions_opts = [4]
+    proportions_opts = [2]
     flag = True
     iterations = 3
     
@@ -684,7 +684,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1_'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1_50_'+str(prop)+'.pth'
             model_path_tl = path_tl
             print('Start Training')
                      
