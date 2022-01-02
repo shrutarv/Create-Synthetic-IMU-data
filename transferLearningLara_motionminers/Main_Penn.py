@@ -264,7 +264,7 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location='cuda:0').state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'], map_location=dev).state_dict()
         #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
@@ -473,7 +473,7 @@ if __name__ == '__main__':
         ws=100
         accumulation_steps = 5
         epochs = 40
-        batch_size = 500
+        batch_size = 200
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
             
