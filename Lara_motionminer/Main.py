@@ -358,7 +358,7 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":8,
         "dataset" : 'LaraMM',
@@ -444,7 +444,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         print('Start Testing')
         WF, TA = Testing(config)
         flag = False
