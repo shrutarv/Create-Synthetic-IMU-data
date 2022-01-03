@@ -534,15 +534,15 @@ if __name__ == '__main__':
             optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
             optimizer.zero_grad()
             if prop==0:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_10/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
             elif prop==1:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_30/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
             elif prop==2:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_50/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_50/'
             elif prop==3:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_75/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
             elif prop==4:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10/' #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10/' #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
             train_dataset = CustomDataSet(path)
@@ -554,7 +554,7 @@ if __name__ == '__main__':
           
            
             # Validation data    
-            path = '/data/sawasthi/data/Lara_motionminer/validationData_10/'
+            path = '/data/sawasthi/Lara_motionminer/validationData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -566,7 +566,7 @@ if __name__ == '__main__':
                                            drop_last=True)
             
             # Test data    
-            path = '/data/sawasthi/data/Lara_motionminer/testData_10'
+            path = '/data/sawasthi/Lara_motionminer/testData_10'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
             test_dataset = CustomDataSet(path)
@@ -581,7 +581,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            model_path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_tl_penn_LaraMM_cnn_c1_acc.pth'
+            model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_penn_LaraMM_cnn_c1_acc.pth'
             
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
