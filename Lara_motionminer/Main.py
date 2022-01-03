@@ -373,11 +373,11 @@ if __name__ == '__main__':
     correct = 0
     total_loss = 0.0
     total_correct = 0
-    epochs = 40
+    epochs = 35
     batch_size = 200
    
     flag = True
-    iterations = 1
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
