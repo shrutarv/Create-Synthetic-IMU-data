@@ -220,11 +220,11 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
-              print(out.size())
+              #print(out.size())
               loss = criterion(out,train_batch_l)/accumulation_steps
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
-              print(out.size())
+              #print(out.size())
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
              # a = list(model.parameters())[0].clone() 
@@ -242,13 +242,15 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-          model.eval()
-          
-          val_acc, val_loss =  validation(dataLoader_validation,device)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path)
+              model.eval()
+              print(out.size())
+              val_acc, val_loss =  validation(dataLoader_validation,device)
+              print(out.size())
+              print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+              validation_loss.append(val_loss)
+              validation_acc.append(val_acc)
+              if (val_acc >= best_acc):
+                  torch.save(model, model_path)
               
               print("model saved on epoch", e)
               best_acc = val_acc
