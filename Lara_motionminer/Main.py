@@ -358,7 +358,7 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False
@@ -375,7 +375,7 @@ if __name__ == '__main__':
     batch_size = 700
    
     flag = True
-    iterations = 3
+    iterations = 1
     weighted_F1_array = []
     test_acc_array = []
     for iter in range(iterations):
