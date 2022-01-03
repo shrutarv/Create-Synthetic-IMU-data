@@ -359,9 +359,11 @@ class Network(nn.Module):
                     idx_LA = np.concatenate([idx_LA, np.arange(33, 36)])
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
                 elif self.config["dataset"] == 'LaraMM':
+                    print('inside LA')
                     idx_LA = np.arange(0, 9)
                     x_LA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LA])) 
-
+                    print(x_LA.size())
+                    
             x_LA = F.relu(self.conv_LA_1_2(x_LA))
             x_LA = F.relu(self.conv_LA_2_1(x_LA))
             x_LA = F.relu(self.conv_LA_2_2(x_LA))
@@ -428,9 +430,11 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'CAD60':    
                     idx_N = np.arange(0, 9)
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
-                elif self.config["dataset"] == 'LaraMM':    
+                elif self.config["dataset"] == 'LaraMM':  
+                    print('inside N')
                     idx_N = np.arange(9, 18)
                     x_N = F.relu(self.conv_LA_1_1(x[:, :, :, idx_N]))
+                    print(x_N.size())
                    
             x_N = F.relu(self.conv_N_1_2(x_N))
             x_N = F.relu(self.conv_N_2_1(x_N))
@@ -468,8 +472,10 @@ class Network(nn.Module):
                     idx_RA = np.concatenate([idx_RA, np.arange(36, 39)])
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
                 elif self.config["dataset"] == 'LaraMM':
+                    print('inside RA')
                     idx_RA = np.arange(18, 27)
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
+                    print(x_RA.size())
                 
             x_RA = F.relu(self.conv_RA_1_2(x_RA))
             x_RA = F.relu(self.conv_RA_2_1(x_RA))
