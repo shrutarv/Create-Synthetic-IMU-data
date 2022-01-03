@@ -361,7 +361,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-           if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+              if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
                     val_acc, val_loss =  validation(dataLoader_validation,device)
@@ -370,7 +370,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
                     validation_loss.append(val_loss)
                     validation_acc.append(val_acc)
                     if (val_acc >= best_acc):
-                        torch.save(model, model_path)
+                        torch.save(model, model_path_tl)
                     
                     print("model saved on epoch", e)
                     best_acc = val_acc
