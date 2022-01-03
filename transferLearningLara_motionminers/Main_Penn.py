@@ -359,7 +359,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-              if (itera + 1) % 10 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+              if (itera + 1) % divide == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
                     val_acc, val_loss =  validation(dataLoader_validation)
@@ -535,14 +535,20 @@ if __name__ == '__main__':
             optimizer.zero_grad()
             if prop==0:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
+                divide = 40
             elif prop==1:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
+                divide = 60
             elif prop==2:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_50/'
+                divide = 80
             elif prop==3:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
+                divide = 100
             elif prop==4:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10/' #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+                path = '/data/sawasthi/Lara_motionminer/trainData_10/' 
+                divide = 100
+                #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
             train_dataset = CustomDataSet(path)
