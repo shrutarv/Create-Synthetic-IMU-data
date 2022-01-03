@@ -579,7 +579,7 @@ if __name__ == '__main__':
         "freeze":False
         
         }
-    proportions_opts = [0,1,2,3]
+    proportions_opts = [0,1,2]
     flag = True
     iterations = 3
     
@@ -591,7 +591,7 @@ if __name__ == '__main__':
             ws=100
             accumulation_steps = 5
             epochs = 60
-            batch_size = 700
+            batch_size = 200
             learning_rate = 0.00001
             print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
                    
