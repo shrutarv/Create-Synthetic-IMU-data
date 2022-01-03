@@ -460,7 +460,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_up3_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_up3_tf_2.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
@@ -468,7 +468,7 @@ if __name__ == '__main__':
     ws=100
     accumulation_steps = 5
     epochs = 30
-    batch_size = 100
+    batch_size = 300
     learning_rate = 0.00001
     print("epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
     iterations = 2
