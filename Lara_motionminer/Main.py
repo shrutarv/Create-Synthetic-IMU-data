@@ -220,10 +220,11 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               out = model(train_batch_v)
               train_batch_l = train_batch_l.long()
               #loss = criterion(out.view(-1, n_classes), train_y.view(-1))
+              print(out.size())
               loss = criterion(out,train_batch_l)/accumulation_steps
               #predicted_classes = torch.argmax(out, dim=1).type(dtype=torch.LongTensor)
               #predicted_classes = predicted_classes.to(device)
-              
+              print(out.size())
               #correct += torch.sum(train_batch_l == predicted_classes)
               #counter += out.size(0)
              # a = list(model.parameters())[0].clone() 

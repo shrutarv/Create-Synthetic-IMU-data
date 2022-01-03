@@ -521,13 +521,9 @@ class Network(nn.Module):
             x = torch.cat((x_LA, x_N, x_RA), 1)
         
         x = F.dropout(x, training=self.training)
-        print('before fc4')
         x = F.relu(self.fc4(x))
-        print(x.size())
         x = F.dropout(x, training=self.training)
-        print('before fc5')
         x = self.fc5(x)
-        print(x.size())
         
         if self.config['output'] == 'attribute':
             x = self.sigmoid(x)
