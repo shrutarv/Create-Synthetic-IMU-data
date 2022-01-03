@@ -463,7 +463,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_acc_up2_tf_2.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_cnn_pose_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
     flag = True
@@ -474,8 +474,8 @@ if __name__ == '__main__':
         
         ws=100
         accumulation_steps = 5
-        epochs = 40
-        batch_size = 200
+        epochs = 30
+        batch_size = 500
         learning_rate = 0.00001
         print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
             
@@ -559,7 +559,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_penn_LaraMM_cnn_c4_acc.pth'
+        model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_penn_LaraMM_cnn_c4_pose.pth'
         
         training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
