@@ -525,7 +525,7 @@ class Network(nn.Module):
         x = F.relu(self.fc4(x))
         print(x.size())
         x = F.dropout(x, training=self.training)
-        print('before fc4')
+        print('before fc5')
         x = self.fc5(x)
         print(x.size())
         
