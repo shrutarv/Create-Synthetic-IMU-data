@@ -378,7 +378,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               
                     l.append(total_loss/((e+1)*(b + 1)))
                     accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-                   
+    '''               
     if(flag):
         print('Finished Training')
         ep = list(range(1,e+2))   
@@ -395,7 +395,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.savefig('/data/sawasthi/CAD60/results/result_tl_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-        
+    '''    
 def testing(config):
     print('Start Testing')
     test_acc = 0
@@ -554,7 +554,7 @@ if __name__ == '__main__':
             value = max_min_values(data_x,value)
         '''
         model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_CAD_acc_c1.pth'
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
