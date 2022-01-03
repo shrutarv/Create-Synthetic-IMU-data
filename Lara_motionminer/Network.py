@@ -297,7 +297,7 @@ class Network(nn.Module):
         if self.config["network"] == "cnn":
             self.fc4 = nn.Linear(256, 256)
         elif self.config["network"] == "cnn_imu":
-            self.fc4 = nn.Linear(256 * 5, 256)
+            self.fc4 = nn.Linear(256 * 3, 256)
         
         if self.config['output'] == 'softmax': 
             self.fc5 = nn.Linear(256, self.config['num_classes'])
