@@ -263,7 +263,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
                     l.append(total_loss/((e+1)*(b + 1)))
                     accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
                    
-        
+    '''    
     if (flag):
                   
         print('Finished Training')
@@ -281,7 +281,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.savefig('/data/sawasthi/Lara_motionminer/results/result_10_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
-
+        '''
 def Testing(config):
     total = 0.0
     correct = 0.0
@@ -446,7 +446,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         print('Start Testing')
         WF, TA = Testing(config)
         flag = False
