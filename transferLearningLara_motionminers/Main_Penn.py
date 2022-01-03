@@ -359,7 +359,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-          if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+              if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
                     val_acc, val_loss =  validation(dataLoader_validation,device)
@@ -581,8 +581,8 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_penn_LaraMM_cnn_c1_acc.pth'
-            
+            path_tl = '/data/sawasthi/LaraIMU/model/model_ntu_laraIMU_acc_cnn_c1'+str(prop)+'.pth'
+            model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
             flag = False
