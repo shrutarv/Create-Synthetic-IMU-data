@@ -134,6 +134,7 @@ class Network(nn.Module):
                     self.fc3_LA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
             # LL
+            '''
             self.conv_LL_1_1 = nn.Conv2d(in_channels=in_channels,
                                      out_channels=self.config['num_filters'],
                                      kernel_size=(self.config['filter_size'], 1),
@@ -171,7 +172,7 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'CAD60':
                     self.fc3_LL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
-
+            '''
             # N
             self.conv_N_1_1 = nn.Conv2d(in_channels=in_channels,
                                      out_channels=self.config['num_filters'],
@@ -253,7 +254,7 @@ class Network(nn.Module):
                 elif self.config["dataset"] == 'LaraMM':
                     self.fc3_RA = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
 
-
+            '''
             # RL
             self.conv_RL_1_1 = nn.Conv2d(in_channels=in_channels,
                                      out_channels=self.config['num_filters'],
@@ -291,7 +292,7 @@ class Network(nn.Module):
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 6, 256)
                 elif self.config["dataset"] == 'CAD60':
                     self.fc3_RL = nn.Linear(self.config['num_filters'] * int(Wx) * 9, 256)
-
+            '''
 
         if self.config["network"] == "cnn":
             self.fc4 = nn.Linear(256, 256)
