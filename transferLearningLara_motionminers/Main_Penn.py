@@ -362,7 +362,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               if (itera + 1) % 10 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
-                    val_acc, val_loss =  validation(dataLoader_validation,device)
+                    val_acc, val_loss =  validation(dataLoader_validation)
                     #print(out.size())
                     #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
                     validation_loss.append(val_loss)
