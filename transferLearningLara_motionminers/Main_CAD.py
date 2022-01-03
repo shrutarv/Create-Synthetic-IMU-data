@@ -382,7 +382,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/CAD60/results/result_tl_50.png') 
+        plt.savefig('/data/sawasthi/CAD60/results/result_tl_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
         
@@ -544,7 +544,7 @@ if __name__ == '__main__':
             value = max_min_values(data_x,value)
         '''
         model_path_tl = '/data/sawasthi/Lara_motionminer/model/model_tl_CAD_acc_c1.pth'
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         WF, TA = testing(config)
         flag = False
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
