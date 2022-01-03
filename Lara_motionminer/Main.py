@@ -191,16 +191,20 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     best_acc = 0.0
     validation_loss = []
     validation_acc = []
+    itera = 0
     accuracy = []
     l = []
     for e in range(epochs):
           
-          model.train()
-          logging.info('epoch {}'.format(e))
-          #loop per batch:
+        model.train()
+        logging.info('epoch {}'.format(e))
+        #loop per batch:
           
-          for b, harwindow_batched in enumerate(dataLoader_train):
-             
+        for b, harwindow_batched in enumerate(dataLoader_train):
+           
+               # Counting iterations
+              itera = (e * harwindow_batched["data"].shape[0]) + b
+   
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
@@ -241,30 +245,25 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
+              if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+                    model.eval()
+                    #print(out.size())
+                    val_acc, val_loss =  validation(dataLoader_validation,device)
+                    #print(out.size())
+                    #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+                    validation_loss.append(val_loss)
+                    validation_acc.append(val_acc)
+                    if (val_acc >= best_acc):
+                        torch.save(model, model_path)
+                    
+                    print("model saved on epoch", e)
+                    best_acc = val_acc
           
-              model.eval()
-              print(out.size())
-              val_acc, val_loss =  validation(dataLoader_validation,device)
-              print(out.size())
-              print('validation accuracy', val_acc, 'validaion loss', val_loss) 
-              validation_loss.append(val_loss)
-              validation_acc.append(val_acc)
-              if (val_acc >= best_acc):
-                  torch.save(model, model_path)
               
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          
-          
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-         
-          '''
-          for param_group in optimizer.param_groups:
-              print(param_group['lr'])        
-              param_group['lr'] = lr_factor*param_group['lr']
-          #scheduler.step(val_loss)
-          '''
+                    l.append(total_loss/((e+1)*(b + 1)))
+                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                   
+        
     if (flag):
                   
         print('Finished Training')
