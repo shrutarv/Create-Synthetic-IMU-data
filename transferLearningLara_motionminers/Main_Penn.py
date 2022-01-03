@@ -310,13 +310,16 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     validation_loss = []
     validation_acc = []
     accuracy = []
+    iter = 0
     l = []
     for e in range(epochs):
           model.train()
           print("next epoch",e)
           #loop per batch:
           for b, harwindow_batched in enumerate(dataLoader_train):
-             
+              # Counting iterations
+              itera = (e * harwindow_batched["data"].shape[0]) + b
+   
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               #train_batch_v.to(device)
@@ -356,20 +359,28 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-          model.eval()
-          val_acc, val_loss =  validation(dataLoader_validation)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save(model, model_path_tl)
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct.item()/((e+1)*(b + 1)*batch_size))
-          #torch.save(model, model_path)
-   
-    print('Finished Training')
-    if(flag):
+          if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+                    model.eval()
+                    #print(out.size())
+                    val_acc, val_loss =  validation(dataLoader_validation,device)
+                    #print(out.size())
+                    #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+                    validation_loss.append(val_loss)
+                    validation_acc.append(val_acc)
+                    if (val_acc >= best_acc):
+                        torch.save(model, model_path_tl)
+                    
+                    print("model saved on epoch", e)
+                    best_acc = val_acc
+          
+              
+                    l.append(total_loss/((e+1)*(b + 1)))
+                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                   
+    '''    
+    if (flag):
+                  
+        print('Finished Training')
         ep = list(range(1,e+2))   
         plt.subplot(1,2,1)
         plt.title('epoch vs loss')
@@ -378,13 +389,13 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.legend()
         plt.subplot(1,2,2)
         plt.title('epoch vs accuracy')
-        plt.plot(ep,accuracy,label='training accuracy')
-        plt.plot(ep,validation_acc, label='validation accuracy')
+        plt.plot(ep,accuracy,'r',label='training accuracy')
+        plt.plot(ep,validation_acc, 'g',label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/data/Lara_motionminer/results/result_tl.png') 
+        plt.savefig('/data/sawasthi/Lara_motionminer/results/result_10_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
-        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-        
+        #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
+        '''
 def testing(config):
     print('Start Testing')
     
@@ -478,7 +489,7 @@ if __name__ == '__main__':
             ws=100
             accumulation_steps = 5
             epochs = 40
-            batch_size = 700
+            batch_size = 100
             learning_rate = 0.00001
             print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
                 
