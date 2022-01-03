@@ -395,12 +395,12 @@ class Network(nn.Module):
                     x_LL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_LL]))
                 
 
-            x_LL = F.relu(self.conv_LL_1_2(x_LL))
-            x_LL = F.relu(self.conv_LL_2_1(x_LL))
-            x_LL = F.relu(self.conv_LL_2_2(x_LL))
+           # x_LL = F.relu(self.conv_LL_1_2(x_LL))
+            #x_LL = F.relu(self.conv_LL_2_1(x_LL))
+            #x_LL = F.relu(self.conv_LL_2_2(x_LL))
             # view is reshape
-            x_LL = x_LL.view(-1, x_LL.size()[1] * x_LL.size()[2] * x_LL.size()[3])
-            x_LL = F.relu(self.fc3_LL(x_LL))
+            #x_LL = x_LL.view(-1, x_LL.size()[1] * x_LL.size()[2] * x_LL.size()[3])
+            #x_LL = F.relu(self.fc3_LL(x_LL))
 
             # N
             if self.config["reshape_input"]:
@@ -466,7 +466,7 @@ class Network(nn.Module):
                     idx_RA = np.arange(15, 21)
                     idx_RA = np.concatenate([idx_RA, np.arange(36, 39)])
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
-                elif self.config["dataset"] == 'CAD60':
+                elif self.config["dataset"] == 'LaraMM':
                     idx_RA = np.arange(18, 27)
                     x_RA = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RA]))
                 
@@ -505,14 +505,14 @@ class Network(nn.Module):
                     x_RL = F.relu(self.conv_LA_1_1(x[:, :, :, idx_RL]))
                 
 
-            x_RL = F.relu(self.conv_RL_1_2(x_RL))
-            x_RL = F.relu(self.conv_RL_2_1(x_RL))
-            x_RL = F.relu(self.conv_RL_2_2(x_RL))
+           # x_RL = F.relu(self.conv_RL_1_2(x_RL))
+            #x_RL = F.relu(self.conv_RL_2_1(x_RL))
+            #x_RL = F.relu(self.conv_RL_2_2(x_RL))
             # view is reshape
-            x_RL = x_RL.view(-1, x_RL.size()[1] * x_RL.size()[2] * x_RL.size()[3])
-            x_RL = F.relu(self.fc3_RL(x_RL))
+            #x_RL = x_RL.view(-1, x_RL.size()[1] * x_RL.size()[2] * x_RL.size()[3])
+            #x_RL = F.relu(self.fc3_RL(x_RL))
 
-            x = torch.cat((x_LA, x_LL, x_N, x_RA, x_RL), 1)
+            x = torch.cat((x_LA, x_N, x_RA), 1)
         
         x = F.dropout(x, training=self.training)
         x = F.relu(self.fc4(x))
