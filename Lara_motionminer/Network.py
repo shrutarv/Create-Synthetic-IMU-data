@@ -517,16 +517,17 @@ class Network(nn.Module):
             # view is reshape
             #x_RL = x_RL.view(-1, x_RL.size()[1] * x_RL.size()[2] * x_RL.size()[3])
             #x_RL = F.relu(self.fc3_RL(x_RL))
-            print('before concat')
+        #    print('before concat')
             x = torch.cat((x_LA, x_N, x_RA), 1)
-            print(x_LA.size())
-            print(x_N.size())
-            print(x_RA.size())
-            print(x.size())
+        
         x = F.dropout(x, training=self.training)
+        print('before fc4')
         x = F.relu(self.fc4(x))
+        print(x.size())
         x = F.dropout(x, training=self.training)
+        print('before fc4')
         x = self.fc5(x)
+        print(x.size())
         
         if self.config['output'] == 'attribute':
             x = self.sigmoid(x)
