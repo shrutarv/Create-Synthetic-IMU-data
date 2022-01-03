@@ -374,7 +374,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 35
-    batch_size = 200
+    batch_size = 100
    
     flag = True
     iterations = 3
