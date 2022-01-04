@@ -243,6 +243,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
     validation_loss = []
     validation_acc = []
     accuracy = []
+    itera = 0
     l = []
     for e in range(epochs):
           
@@ -251,7 +252,9 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
-             
+             # Counting iterations
+              itera = (e * harwindow_batched["data"].shape[0]) + b
+   
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
@@ -292,29 +295,27 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               total_loss += loss.item()
               total_correct += correct
           
-          model.eval()
+              if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+                    model.eval()
+                    #print(out.size())
+                    val_acc, val_loss =  validation(dataLoader_validation)
+                    #print(out.size())
+                    #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+                    validation_loss.append(val_loss)
+                    validation_acc.append(val_acc)
+                    if (val_acc >= best_acc):
+                        torch.save(model, model_path)
+                    
+                        print("model saved on epoch", e)
+                        best_acc = val_acc
           
-          val_acc, val_loss =  validation(dataLoader_validation,device, model)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save({'state_dict': model.state_dict()}, model_path)
-              torch.save(model, config['model_complete'])
-              #torch.save({'state_dict': model.state_dict()}, model_path)
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          
-          
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-         
-          '''
-          for param_group in optimizer.param_groups:
-              print(param_group['lr'])        
-              param_group['lr'] = lr_factor*param_group['lr']
-          #scheduler.step(val_loss)
-          '''
-    if(flag):
+              
+                    l.append(total_loss/((e+1)*(b + 1)))
+                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                   
+    '''    
+    if (flag):
+                  
         print('Finished Training')
         ep = list(range(1,e+2))   
         plt.subplot(1,2,1)
@@ -327,10 +328,10 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,'r',label='training accuracy')
         plt.plot(ep,validation_acc, 'g',label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/Penn/results/result_1.png') 
+        plt.savefig('/data/sawasthi/Lara_motionminer/results/result_10_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
-
+        '''
 def testing(config):
     print('Start Testing')
     
@@ -508,7 +509,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":26,
-        "sliding_window_length":50,
+        "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -516,7 +517,7 @@ if __name__ == '__main__':
         "num_classes":15,
         "reshape_input":False,
         "step_size":1,
-        'model_complete': '/data/sawasthi/Penn/model/model_pose_tf_2.pth'
+        'model_complete': '/data/sawasthi/Penn/model/model_acc_cnn_up2_2.pth'
         }
 
     iterations = 1
@@ -530,13 +531,13 @@ if __name__ == '__main__':
         correct = 0
         total_loss = 0.0
         total_correct = 0
-        epochs = 150
-        batch_size = 1200
+        epochs = 80
+        batch_size = 500
         lr_factor = 1
         l = []
         tot_loss = 0
         accuracy = []
-        learning_rate = 0.000001
+        learning_rate = 0.00001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
         #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Github/Thesis- Create Synthetic IMU data/MoCAP/norm_values.csv')
@@ -554,11 +555,11 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Penn/model/model_pose_tf.pth'
+        model_path = '/data/sawasthi/Penn/model/model_acc_cnn_up2.pth'
         #model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/Penn/trainData_pose_tf/'
+        path = '/data/sawasthi/Penn/trainData_acc_up2/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -571,7 +572,7 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/Penn/validationData_pose/'
+        path = '/data/sawasthi/Penn/validationData_acc_up2/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/val_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -586,7 +587,7 @@ if __name__ == '__main__':
         training(dataLoader_train, dataLoader_validation,device,flag)
          # Test data    
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data/sawasthi/Penn/testData_pose/'
+        path = '/data/sawasthi/Penn/testData_acc_up2/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         test_dataset = CustomDataSet(path)
