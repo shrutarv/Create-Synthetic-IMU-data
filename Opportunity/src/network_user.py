@@ -67,6 +67,7 @@ class Network_User(object):
         elif self.config['dataset'] == 'pamap2':
             self.harwindows_train = Pamap2(self.config, partition_modus='train')
             self.harwindows_val = Pamap2(self.config, partition_modus='val')
+            print('Test------------------')
             self.harwindows_test = Pamap2(self.config, partition_modus='test')
         #elif self.config['dataset'] == 'orderpicking':
          #   self.harwindows_train = OderPicking(self.config, partition_modus='train')

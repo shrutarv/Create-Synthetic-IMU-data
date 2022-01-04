@@ -376,8 +376,8 @@ def NTU_nain():
 if __name__ == '__main__':
     
     
-    #pamap2_main()
-    locomotion_main()
+    pamap2_main()
+    #locomotion_main()
     #gestures_main()
     
     print("Done")

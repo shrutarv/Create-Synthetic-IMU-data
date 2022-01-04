@@ -288,6 +288,9 @@ class Pamap2(data.Dataset):
 
         # Segmenting the data with labels taken from the end of the window
         data_x = sliding_window(data_x, (ws, data_x.shape[1]), (ss, 1))
+        print('Check here --------------------------------------------------------------------')
+        print(data_x.shape)
+      
         if self.config['label_pos'] == 'end':
             data_y_labels = np.asarray([[i[-1]] for i in sliding_window(data_y, ws, ss)])
         elif self.config['label_pos'] == 'middle':
