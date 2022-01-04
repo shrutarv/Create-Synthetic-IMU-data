@@ -372,7 +372,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
                     if (val_acc >= best_acc):
                         torch.save(model, model_path_tl)                    
                         print("model saved on epoch", e)
-                    best_acc = val_acc
+                        best_acc = val_acc
           
               
                     l.append(total_loss/((e+1)*(b + 1)))
