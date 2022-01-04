@@ -118,7 +118,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
         folder_exp = '/data/sawasthi/PAMAP2/model/'
-        folder_exp_base_fine_tuning = '/data/sawasthi/Opportunity/model/network_ges_ci_nf_10.pth' #model_acc_up4.pth #model_up1_3a.pt
+        folder_exp_base_fine_tuning = '/data/sawasthi/Pamap2/model/network_pamap_ci_nf.pth' #model_acc_up4.pth #model_up1_3a.pt
         '''
         folder_exp = '/data/fmoya/HAR/pytorch/' + dataset[dataset_idx] + '/' + \
                      network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + '/' \
