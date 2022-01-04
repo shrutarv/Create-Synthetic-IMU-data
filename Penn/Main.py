@@ -201,7 +201,7 @@ def metrics(predictions, true):
     accuracy = 100.*correct.item()/counter
     return accuracy, correct
 
-def validation(dataLoader_validation, device, mod):
+def validation(dataLoader_validation, mod):
     total = 0.0
     correct = 0.0
     trueValue = np.array([], dtype=np.int64)
@@ -298,7 +298,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
-                    val_acc, val_loss =  validation(dataLoader_validation)
+                    val_acc, val_loss =  validation(dataLoader_validation,model)
                     #print(out.size())
                     #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
                     validation_loss.append(val_loss)
