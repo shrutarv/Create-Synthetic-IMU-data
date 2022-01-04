@@ -13,6 +13,7 @@ class CustomDataSet(Dataset):
         self.main_dir = main_dir
         #self.transform = transform
         self.all_files = os.listdir(main_dir)
+        print(len(self.all_files))
         random.shuffle(self.all_files)
         #for file_name in self.all_files:
           #  if '.txt' in file_name: self.total_imgs.remove(file_name)
@@ -30,8 +31,9 @@ class CustomDataSet(Dataset):
         data = pickle.load(f, encoding='latin1')
         f.close()
         X = data['data']
-       
+        print(X.shape())
         y = data['label']
+        print(X.shape())
         Y = data['labels']
         
         window_data = {"data" : X, "label" : y, "labels" : Y}
