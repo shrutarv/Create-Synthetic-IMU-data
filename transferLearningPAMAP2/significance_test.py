@@ -8,9 +8,9 @@ import scipy.stats
 import scipy.misc
 import numpy as np
 import itertools
-import tqdm
+#import tqdm
 
-from patrec.evaluation._mt_permutation_test import permutation_test as mt_perm_test
+#from patrec.evaluation._mt_permutation_test import permutation_test as mt_perm_test
 
 
 
@@ -108,8 +108,14 @@ class DifferenceProportions(SignificanceBase):
 
 
 if __name__ == '__main__':
-    d = DifferenceProportions(11364)
-    bool,p = d.significance_test(0.1333,0.1435)
+    '''
+    LaraMM : 39973
+    LaraIMU: 51863
+    PAMAP2: 3785
+    Opportunity: 9894
+    '''
+    d = DifferenceProportions(3785)
+    bool,p = d.significance_test(0.1333,0.0867)
     print(p)
     
     d = DifferenceProportions(34180)
