@@ -58,8 +58,11 @@ class Network_User(object):
         logging.info('        Network_User:     Creating Dataloader---->')
 
         if self.config['dataset'] == 'locomotion' or self.config['dataset'] == 'gesture':
+            print('TRain------------------')
             self.harwindows_train = Opportunity(self.config, partition_modus='train')
+            print('val------------------')
             self.harwindows_val = Opportunity(self.config, partition_modus='val')
+            print('Test------------------')
             self.harwindows_test = Opportunity(self.config, partition_modus='test')
         elif self.config['dataset'] == 'pamap2':
             self.harwindows_train = Pamap2(self.config, partition_modus='train')
