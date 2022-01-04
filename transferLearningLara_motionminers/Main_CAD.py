@@ -266,8 +266,8 @@ def load_weights(network):
         logging.info('        Network_User:        Loading Weights')
 
         #print(torch.load(self.config['folder_exp_base_fine_tuning'] + 'network.pt')['state_dict'])
-        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning']).state_dict()
-        #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
+        #pretrained_dict = torch.load(config['folder_exp_base_fine_tuning']).state_dict()
+        pretrained_dict = torch.load(config['folder_exp_base_fine_tuning'])['state_dict']
         logging.info('        Network_User:        Pretrained model loaded')
 
         #for k, v in pretrained_dict.items():
