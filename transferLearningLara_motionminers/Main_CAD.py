@@ -239,8 +239,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            
                            ]
         elif config["network"] == 'cnn_imu':
@@ -275,8 +274,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            
                            ]
         elif config["network"] == 'cnn_imu':
