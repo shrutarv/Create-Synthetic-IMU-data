@@ -474,7 +474,7 @@ if __name__ == '__main__':
         }
 
 
-    proportions_opts = [0,1,2]
+    proportions_opts = [3]
     flag = True
     iterations = 3
     
