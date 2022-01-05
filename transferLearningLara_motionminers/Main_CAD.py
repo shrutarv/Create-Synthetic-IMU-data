@@ -239,8 +239,7 @@ def set_required_grad(network):
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            
                            ]
         elif config["network"] == 'cnn_imu':
@@ -275,8 +274,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            
                            ]
         elif config["network"] == 'cnn_imu':
@@ -476,7 +474,7 @@ if __name__ == '__main__':
         }
 
 
-    proportions_opts = [4]
+    proportions_opts = [2]
     flag = True
     iterations = 3
     
@@ -571,7 +569,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraIMU_acc_cnn_c4'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraIMU_acc_cnn_c1'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
