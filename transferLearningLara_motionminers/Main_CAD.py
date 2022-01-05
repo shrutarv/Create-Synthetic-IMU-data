@@ -573,7 +573,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraIMU_acc_ci_c4'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_ntu_laraIMU_acc_ci_c1'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
