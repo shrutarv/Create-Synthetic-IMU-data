@@ -286,7 +286,7 @@ def pamap2_main():
                                                dataset_fine_tuning_idx=ft, learning_rates_idx=1, name_counter=0,
                                                freeze=0, proportions_id=pp, gpudevice="0")
                         setup_experiment_logger(logging_level=logging.DEBUG,
-                                                filename=config['folder_exp'] + "logger_ntu_PAMAP2_ci_c4"+pp + ".txt")
+                                                filename=config['folder_exp'] + "logger_ntu_PAMAP2_ci_c4.txt")
                         logging.info('Finished')
                         modus = Modus_Selecter(config)
                         #Starting process
