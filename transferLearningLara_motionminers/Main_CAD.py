@@ -471,6 +471,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
+        "freeze":False,
         "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_ci_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
@@ -510,8 +511,9 @@ if __name__ == '__main__':
             model = load_weights(Lara_net)
             model = model.to(device)
             print("model loaded")  
-            model = set_required_grad(model)
-            
+            if config["freeze"]:
+                model = set_required_grad(model)
+        
             #optimizer = optim.Adam(model.parameters(), lr=0.001)
             optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
             optimizer.zero_grad()
