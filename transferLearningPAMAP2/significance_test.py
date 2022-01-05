@@ -113,9 +113,11 @@ if __name__ == '__main__':
     LaraIMU: 51863
     PAMAP2: 3785
     Opportunity: 9894
+    
+    for pamap2 cnn above 88-17 is significant
     '''
     d = DifferenceProportions(3785)
-    bool,p = d.significance_test(0.1333,0.0867)
+    bool,p = d.significance_test(0.1333,0.1180)
     print(p)
     
     d = DifferenceProportions(34180)
