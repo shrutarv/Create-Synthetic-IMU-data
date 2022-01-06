@@ -523,7 +523,7 @@ if __name__ == '__main__':
             
             #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
             if prop==0:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10_10/'
                 divide = 40
             elif prop==1:
                 path = '/data/sawasthi/data/Lara_motionminer/trainData_10_30/'
@@ -535,7 +535,7 @@ if __name__ == '__main__':
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
                 divide = 100
             elif prop==4:
-                path = '/data/sawasthi/data/Lara_motionminer/trainData_10/' 
+                path = '/data/sawasthi/Lara_motionminer/trainData_10/' 
                 divide = 100
              #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
