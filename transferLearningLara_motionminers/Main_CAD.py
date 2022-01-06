@@ -468,18 +468,18 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
         "dataset" : 'LaraMM',
         "freeze":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_ci_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_pose_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
-    proportions_opts = [0,1,2,3]
+    proportions_opts = [4]
     flag = True
     iterations = 3
     
@@ -534,7 +534,7 @@ if __name__ == '__main__':
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
                 divide = 100
             elif prop==4:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10/' 
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10/' 
                 divide = 100
              #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -548,7 +548,7 @@ if __name__ == '__main__':
           
            
             # Validation data    
-            path = '/data/sawasthi/Lara_motionminer/validationData_10/'
+            path = '/data/sawasthi/data/Lara_motionminer/validationData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -560,7 +560,7 @@ if __name__ == '__main__':
                                            drop_last=True)
             
             # Test data    
-            path = '/data/sawasthi/Lara_motionminer/testData_10/'
+            path = '/data/sawasthi/data/Lara_motionminer/testData_10/'
             #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
             #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
             test_dataset = CustomDataSet(path)
@@ -575,7 +575,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_ci_c4'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/data/Lara_motionminer/model/model_penn_laraMM_pose_cnn_c4'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
