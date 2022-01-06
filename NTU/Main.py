@@ -568,7 +568,7 @@ if __name__ == '__main__':
     
     config = {
         "NB_sensor_channels":75,
-        "sliding_window_length":90,
+        "sliding_window_length":30,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -597,7 +597,7 @@ if __name__ == '__main__':
         ws=30
         accumulation_steps = 5
         epochs = 60
-        batch_size = 300
+        batch_size = 500
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
