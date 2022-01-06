@@ -670,7 +670,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         #testing(config)
-        path = '/data/sawasthi/NTU/testData_up_3a/'
+        path = '/data/sawasthi/NTU/testData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/Test_pkl/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
