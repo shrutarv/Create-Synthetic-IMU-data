@@ -524,7 +524,7 @@ if __name__ == '__main__':
             #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
             if prop==0:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_10/'
-                print(prop,' percent target dataset used')
+                print('10 percent target dataset used')
                 divide = 40
             elif prop==1:
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_30/'
