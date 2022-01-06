@@ -474,7 +474,7 @@ if __name__ == '__main__':
         "reshape_input":False,
         "dataset" : 'LaraMM',
         "freeze":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_pose_ci_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_ci_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
