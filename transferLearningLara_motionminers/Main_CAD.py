@@ -480,7 +480,7 @@ if __name__ == '__main__':
         }
 
 
-    proportions_opts = [1]
+    proportions_opts = [0]
     flag = True
     iterations = 3
     
@@ -535,7 +535,7 @@ if __name__ == '__main__':
                 path = '/data/sawasthi/Lara_motionminer/trainData_10_75/'
                 divide = 100
             elif prop==4:
-                path = '/data/sawasthi/Lara_motionminer/trainData_10/' 
+                path = '/data/sawasthi/data/Lara_motionminer/trainData_10/' 
                 divide = 100
              #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
             #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
