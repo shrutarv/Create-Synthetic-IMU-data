@@ -475,12 +475,12 @@ if __name__ == '__main__':
         "reshape_input":False,
         "dataset" : 'LaraMM',
         "freeze":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/Penn/model/model_pose_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
-    proportions_opts = [4]
+    proportions_opts = [3]
     flag = True
     iterations = 3
     
@@ -576,7 +576,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_penn_laraMM_pose_cnn_c4'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_cnn_c4'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
