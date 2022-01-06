@@ -311,6 +311,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
     validation_acc = []
     accuracy = []
     l = []
+    itera = 0
     for e in range(epochs):
           
           model.train()
@@ -318,7 +319,9 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
           #loop per batch:
           
           for b, harwindow_batched in enumerate(dataLoader_train):
-             
+               # Counting iterations
+              itera = (e * harwindow_batched["data"].shape[0]) + b
+   
               train_batch_v = harwindow_batched["data"]
               train_batch_l = harwindow_batched["label"][:, 0]
               train_batch_all = harwindow_batched["labels"][:,:,:]
@@ -358,31 +361,25 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               total_loss += loss.item()
               total_correct += correct
           
-          model.eval()
+          if (itera + 1) % 750 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+                    model.eval()
+                    #print(out.size())
+                    val_acc, val_loss =  validation(dataLoader_validation)
+                    #print(out.size())
+                    #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+                    validation_loss.append(val_loss)
+                    validation_acc.append(val_acc)
+                    if (val_acc >= best_acc):
+                        torch.save({'state_dict': model.state_dict()}, config['model_path'])
+                        torch.save(model, config['model_complete'])
+                        print("model saved on epoch", e)
+                        best_acc = val_acc
           
-          val_acc, val_loss =  validation(dataLoader_validation,device,e,model)
-          validation_loss.append(val_loss)
-          validation_acc.append(val_acc)
-          if (val_acc >= best_acc):
-              torch.save({'state_dict': model.state_dict()}, config['model_path'])
-              torch.save(model, config['model_complete'])
               
-              #torch.save({'state_dict': model.state_dict()}, config['model_path'])
-              print("model saved on epoch", e)
-              best_acc = val_acc
-          
-          
-          l.append(total_loss/((e+1)*(b + 1)))
-          accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-         
-          '''
-          for param_group in optimizer.param_groups:
-              print(param_group['lr'])        
-              param_group['lr'] = lr_factor*param_group['lr']
-          #scheduler.step(val_loss)
-          '''
+                    l.append(total_loss/((e+1)*(b + 1)))
+                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+    '''               
     if(flag):
-            
         print('Finished Training')
         ep = list(range(1,e+2))   
         plt.subplot(1,2,1)
@@ -395,10 +392,11 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
         plt.plot(ep,accuracy,label='training accuracy')
         plt.plot(ep,validation_acc, label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/Penn/results/result_tl_50.png') 
+        plt.savefig('/data/sawasthi/CAD60/results/result_tl_50.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png')
-    
+    '''    
+
     
 def testing(config):
     print('Start Testing')
@@ -579,8 +577,8 @@ if __name__ == '__main__':
         "reshape_input":False,
         "step_size":3,
         "device": "cuda:0",
-        "model_path": '/data/sawasthi/NTU/model/model_cnn_acc_up3_tf.pth',
-        "model_complete":'/data/sawasthi/NTU/model/model_cnn_acc_up3_tf_2.pth',
+        "model_path": '/data/sawasthi/NTU/model/model_cnn_acc_up1.pth',
+        "model_complete":'/data/sawasthi/NTU/model/model_cnn_acc_up1.pth',
         "dataset":"NTU"
         }
 
@@ -599,7 +597,7 @@ if __name__ == '__main__':
         ws=30
         accumulation_steps = 5
         epochs = 60
-        batch_size = 300
+        batch_size = 500
         learning_rate = 0.00001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
@@ -627,7 +625,7 @@ if __name__ == '__main__':
         
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-        path = '/data2/sawasthi/NTU/trainData_tf_up_3a/'
+        path = '/data2/sawasthi/NTU/trainData_up_1a/'
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -641,7 +639,7 @@ if __name__ == '__main__':
        
         # Validation data    
         #path = 'S:/Datasets/nturgbd_skeletons_s001_to_s017/val/'
-        path = '/data2/sawasthi/NTU/validationData_up_3a/'
+        path = '/data2/sawasthi/NTU/validationData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -660,7 +658,7 @@ if __name__ == '__main__':
         '''
         training(dataLoader_train, dataLoader_validation,device,config,flag)
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data2/sawasthi/NTU/validationData_up_3a/'
+        path = '/data2/sawasthi/NTU/validationData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
