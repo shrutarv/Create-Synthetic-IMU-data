@@ -19,7 +19,7 @@ import datetime
 
 def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, dataset_fine_tuning_idx=0,
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, percentage_idx=0,
-                  fully_convolutional=False,per_data):
+                  fully_convolutional=False,per_data="train.csv"):
     """
     Set a configuration of all the possible variables that were set in the experiments.
     This includes the datasets, hyperparameters for training, networks, outputs, datasets paths,
@@ -460,7 +460,7 @@ def main():
                                                            freeze=fr,
                                                            percentage_idx=pr,
                                                            fully_convolutional=False,
-                                                           per_data = "trainData_75.csv")
+                                                           per_data = "train_75.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
