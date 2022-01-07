@@ -365,6 +365,9 @@ def create_dataset(identity_bool = False):
     @param half: set for creating dataset with half the frequence.
     '''
     train_ids = ["S07", "S08", "S09", "S10"]
+    train_id_75 = ["S07", "S08", "S09"]
+    train_id_50 = ["S07", "S08"]
+    train_id_30 = ["S07"]
     train_final_ids = ["S07", "S08", "S09", "S10", "S11", "S12"]
     val_ids = ["S11", "S12"]
     test_ids = ["S13", "S14"]
@@ -380,17 +383,28 @@ def create_dataset(identity_bool = False):
     base_directory = '/data/sawasthi/mbientlab/'
 
     data_dir_train = base_directory + 'sequences_train/'
+    data_dir_train_75 = base_directory + 'sequences_train_75/'
+    data_dir_train_50 = base_directory + 'sequences_train_50/'
+    data_dir_train_30 = base_directory + 'sequences_train_30/'
     data_dir_val = base_directory + 'sequences_val/'
     data_dir_test = base_directory + 'sequences_test/'
 
-    generate_data(train_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train)
-    generate_data(val_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_val)
-    generate_data(test_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_test)
+    generate_data(train_id_75, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_75)
+    generate_data(train_id_50, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_50)
+    generate_data(train_id_30, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_30)
+    
+    #generate_data(train_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train)
+    #generate_data(val_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_val)
+    #generate_data(test_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_test)
 
-    generate_CSV(base_directory, "train.csv", data_dir_train)
-    generate_CSV(base_directory, "val.csv", data_dir_val)
-    generate_CSV(base_directory, "test.csv", data_dir_test)
-    generate_CSV_final(base_directory + "train_final.csv", data_dir_train, data_dir_val)
+    generate_CSV(base_directory, "train_75.csv", data_dir_train_75)
+    generate_CSV(base_directory, "train_50.csv", data_dir_train_50)
+    generate_CSV(base_directory, "train_30.csv", data_dir_train_30)
+    
+    #generate_CSV(base_directory, "train.csv", data_dir_train)
+    #generate_CSV(base_directory, "val.csv", data_dir_val)
+    #generate_CSV(base_directory, "test.csv", data_dir_test)
+    #generate_CSV_final(base_directory + "train_final.csv", data_dir_train, data_dir_val)
 
     return
 
