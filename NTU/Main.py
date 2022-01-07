@@ -398,7 +398,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
     '''    
 
     
-def testing(config):
+def testing(config,mod):
     print('Start Testing')
     
     total = 0.0
@@ -656,7 +656,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        training(dataLoader_train, dataLoader_validation,device,config,flag)
+        #training(dataLoader_train, dataLoader_validation,device,config,flag)
         print("Calculating accuracy for the trained model on validation set ")
         path = '/data/sawasthi/NTU/validationData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
@@ -681,9 +681,8 @@ if __name__ == '__main__':
                                        drop_last=True)
        
         #model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_pose_c1_30_new.pth'
-        #training(dataLoader_train, dataLoader_validation,device,flag)
         flag = False
-        WF, TA = testing(config)
+        WF, TA = testing(config,model)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         weighted_F1_array.append(WF)
