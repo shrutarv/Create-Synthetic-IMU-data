@@ -479,7 +479,7 @@ if __name__ == '__main__':
         }
 
 
-    proportions_opts = [0,1,3,4]
+    proportions_opts = [0,1,2,4]
     flag = True
     iterations = 3
     
@@ -576,7 +576,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_cnn_c1'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_ci_c1'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
