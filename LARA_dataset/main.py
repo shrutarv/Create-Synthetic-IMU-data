@@ -19,7 +19,7 @@ import datetime
 
 def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, dataset_fine_tuning_idx=0,
                   reshape_input=False, learning_rates_idx=0, name_counter=0, freeze=0, percentage_idx=0,
-                  fully_convolutional=False):
+                  fully_convolutional=False,per_data):
     """
     Set a configuration of all the possible variables that were set in the experiments.
     This includes the datasets, hyperparameters for training, networks, outputs, datasets paths,
@@ -40,7 +40,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     """
     # Flags
     plotting = False
-
+    percent_data = per_data
     # Options
     dataset = {0: 'mocap', 1: 'mbientlab', 2: 'virtual', 3: 'mocap_half', 4: 'virtual_quarter', 5: 'mocap_quarter',
                6: 'mbientlab_50_p', 7: 'mbientlab_10_p', 8: 'mbientlab_50_r', 9: 'mbientlab_10_r',
@@ -273,7 +273,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
        folder_exp = '/data/sawasthi/LaraIMU/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraIMU/model/network_LaraIMU_100.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/LaraIMU/model/network_LaraIMU_75.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -388,7 +388,9 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'percentages_names': percentages_names[percentage_idx],
                      'fully_convolutional': fully_convolutional,
+                     'prop':percent_data,
                      'labeltype': labeltype}
+                     
 
     return configuration
 
@@ -457,7 +459,8 @@ def main():
                                                            name_counter=counter_exp,
                                                            freeze=fr,
                                                            percentage_idx=pr,
-                                                           fully_convolutional=False)
+                                                           fully_convolutional=False,
+                                                           per_data = "trainData_75.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
