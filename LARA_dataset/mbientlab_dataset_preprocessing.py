@@ -17,7 +17,7 @@ from sliding_window import sliding_window
 import pickle
 
 # folder path
-FOLDER_PATH = "path_to_dataset_LARa_Mbientlab"
+FOLDER_PATH = "/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/recordings_2019/06_IMU_annotated/"
 
 PERSONS = ['S14']
 
@@ -377,7 +377,7 @@ def create_dataset(identity_bool = False):
     # base_directory = '/path_where_sequences_will_ve_stored/mbientlab_50_persons/'
     # base_directory = '/path_where_sequences_will_ve_stored/mbientlab_10_recordings/'
     #base_directory = '/path_where_sequences_will_ve_stored/mbientlab_50_recordings/'
-    base_directory = '/path_where_sequences_will_ve_stored/mbientlab/'
+    base_directory = '/data/sawasthi/mbientlab/'
 
     data_dir_train = base_directory + 'sequences_train/'
     data_dir_val = base_directory + 'sequences_val/'
