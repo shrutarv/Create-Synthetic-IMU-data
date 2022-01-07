@@ -361,7 +361,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               total_loss += loss.item()
               total_correct += correct
           
-              if (itera + 1) % 10000 == 0 or e%1==0:
+              if (itera + 1) % 1000 == 0:
                     model.eval()
                     #print(out.size())
                     val_acc, val_loss =  validation(dataLoader_validation,model)
@@ -376,8 +376,26 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
                         best_acc = val_acc
           
               
-                    l.append(total_loss/((e+1)*(b + 1)))
-                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                    #l.append(total_loss/((e+1)*(b + 1)))
+                    #accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                    
+          model.eval()
+          #print(out.size())
+          val_acc, val_loss =  validation(dataLoader_validation,model)
+          #print(out.size())
+          #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+          validation_loss.append(val_loss)
+          validation_acc.append(val_acc)
+          if (val_acc >= best_acc):
+              torch.save({'state_dict': model.state_dict()}, config['model_path'])
+              torch.save(model, config['model_complete'])
+              print("model saved on epoch", e)
+              best_acc = val_acc
+          
+          
+          l.append(total_loss/((e+1)*(b + 1)))
+          accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+           
     '''               
     if(flag):
         print('Finished Training')
