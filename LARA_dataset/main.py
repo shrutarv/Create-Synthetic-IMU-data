@@ -309,7 +309,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
 
     # Paths are given according to the ones created in *preprocessing.py for the datasets
     dataset_root = {'mocap': "path_to_datasets_folder/" + 'MoCap_dataset/',
-                    'mbientlab': "/vol/actrec/DFG_Project/2019/LARa_dataset/Mbientlab/",
+                    'mbientlab': '/data/sawasthi/mbientlab/',
                     'virtual': "path_to_datasets_folder/" + 'Virtual_IMUs/',
                     'mocap_half': "path_to_datasets_folder/" + 'MoCap_dataset_half_freq/',
                     'virtual_quarter': "path_to_datasets_folder/" + 'Virtual_IMUs/',
