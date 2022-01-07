@@ -188,7 +188,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
 
     # Batch size
     batch_size_train = {
-        'cnn': {'mocap': 100, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100, 'virtual_quarter': 100,
+        'cnn': {'mocap': 100, 'mbientlab': 200, 'virtual': 100, 'mocap_half': 100, 'virtual_quarter': 100,
                 'mocap_quarter': 100, 'mbientlab_50_p': 100, 'mbientlab_10_p': 100, 'mbientlab_50_r': 100,
                 'mbientlab_10_r': 25, 'mbientlab_quarter': 100, 'motionminers_real': 100, 'motionminers_flw': 100},
         'lstm': {'mocap': 100, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100, 'virtual_quarter': 100,
@@ -273,7 +273,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
        folder_exp = '/data/sawasthi/LaraIMU/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraIMU/model/network_LaraIMU_75.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/LaraIMU/model/network_LaraIMU.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -460,7 +460,7 @@ def main():
                                                            freeze=fr,
                                                            percentage_idx=pr,
                                                            fully_convolutional=False,
-                                                           per_data = "train_50.csv")
+                                                           per_data = "train.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
