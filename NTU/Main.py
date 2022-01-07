@@ -616,7 +616,7 @@ if __name__ == '__main__':
         accumulation_steps = 5
         epochs = 60
         batch_size = 500
-        learning_rate = 0.0001
+        learning_rate = 0.000001
         print("Starting for step size",config["step_size"])
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
             
@@ -674,7 +674,7 @@ if __name__ == '__main__':
             data_x.to(device)
             value = max_min_values(data_x,value)
         '''
-        training(dataLoader_train, dataLoader_validation,device,config,flag)
+        #training(dataLoader_train, dataLoader_validation,device,config,flag)
         print("Calculating accuracy for the trained model on validation set ")
         path = '/data/sawasthi/NTU/validationData_up_1a/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
