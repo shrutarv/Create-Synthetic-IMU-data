@@ -276,8 +276,7 @@ def load_weights(network):
         #    print(k)
 
         if config["network"] == 'cnn':
-            list_layers = ['conv1_1.weight', 'conv1_1.bias','conv1_2.weight', 'conv1_2.bias',
-                           'conv2_1.weight', 'conv2_1.bias','conv2_2.weight', 'conv2_2.bias'
+            list_layers = ['conv1_1.weight', 'conv1_1.bias'
                            
                            ]
         elif config["network"] == 'cnn_imu':
@@ -469,18 +468,18 @@ if __name__ == '__main__':
         "sliding_window_length":100,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn",
+        "network":"cnn_imu",
         "output":"softmax",
         "num_classes":8,
         "reshape_input":False,
         "dataset" : 'LaraMM',
         "freeze":False,
-        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_pose_tf.pth'
+        "folder_exp_base_fine_tuning": '/data/sawasthi/CAD60/model/model_acc_ci_up3_tf.pth'
         #"folder_exp_base_fine_tuning": 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model_full.pth'
         }
 
 
-    proportions_opts = [0]
+    proportions_opts = [0,1,3,4]
     flag = True
     iterations = 3
     
@@ -577,7 +576,7 @@ if __name__ == '__main__':
                 data_x.to(device)
                 value = max_min_values(data_x,value)
             '''
-            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_cnn_c4'+str(prop)+'.pth'
+            path_tl = '/data/sawasthi/Lara_motionminer/model/model_cad_laraMM_pose_cnn_c1'+str(prop)+'.pth'
             model_path_tl = path_tl
             training(dataLoader_train, dataLoader_validation,device,flag)
             WF, TA = testing(config)
