@@ -116,8 +116,8 @@ if __name__ == '__main__':
     
     for pamap2 cnn above 88-17 is significant
     '''
-    d = DifferenceProportions(3785)
-    bool,p = d.significance_test(0.1333,0.1180)
+    d = DifferenceProportions(9894)
+    bool,p = d.significance_test(0.2453,0.2333)
     print(p)
     
     d = DifferenceProportions(34180)
