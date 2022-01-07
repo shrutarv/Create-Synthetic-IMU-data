@@ -361,7 +361,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               total_loss += loss.item()
               total_correct += correct
           
-              if (itera + 1) % 1000 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+              if (itera + 1) % 2000 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
                     model.eval()
                     #print(out.size())
                     val_acc, val_loss =  validation(dataLoader_validation,model)
@@ -398,7 +398,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
     '''    
 
     
-def testing(config,mod):
+def testing(config):
     print('Start Testing')
     
     total = 0.0
@@ -682,7 +682,7 @@ if __name__ == '__main__':
        
         #model_path_tl = '/data/sawasthi/Penn/model/model_tl_Penn_PAMAP_pose_c1_30_new.pth'
         flag = False
-        WF, TA = testing(config,model)
+        WF, TA = testing(config)
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.csv', 'w', newline='') as myfile:
         #with open('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.csv', 'w', newline='') as myfile:
         weighted_F1_array.append(WF)
