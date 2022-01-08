@@ -456,7 +456,7 @@ def main():
                                     config = configuration(dataset_idx=dataset_idx[dts],
                                                            network_idx=network_idx[nt],
                                                            output_idx=opt,
-                                                           usage_modus_idx=5,
+                                                           usage_modus_idx=0,
                                                            dataset_fine_tuning_idx=dft,
                                                            reshape_input=reshape_input[rsi],
                                                            learning_rates_idx=lr,
@@ -464,7 +464,7 @@ def main():
                                                            freeze=fr,
                                                            percentage_idx=pr,
                                                            fully_convolutional=False,
-                                                           per_data = "train.csv")
+                                                           per_data = "train_50.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
