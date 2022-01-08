@@ -626,6 +626,7 @@ class Network_User(object):
             'Total training time {}'.format(e, b, itera, elapsed_time_train))
 
         # Storing the acc, f1s and losses of training and validation for the current training run
+        '''
         np.savetxt(self.config['folder_exp'] + 'plots/acc_train.txt', accs_train_val, delimiter=",", fmt='%s')
         np.savetxt(self.config['folder_exp'] + 'plots/f1m_train.txt', f1m_train_val, delimiter=",", fmt='%s')
         np.savetxt(self.config['folder_exp'] + 'plots/f1w_train.txt', f1w_train_val, delimiter=",", fmt='%s')
@@ -635,7 +636,7 @@ class Network_User(object):
         np.savetxt(self.config['folder_exp'] + 'plots/f1m_val.txt', f1m_val, delimiter=",", fmt='%s')
         np.savetxt(self.config['folder_exp'] + 'plots/f1w_val.txt', f1w_val, delimiter=",", fmt='%s')
         np.savetxt(self.config['folder_exp'] + 'plots/loss_val.txt', losses_val, delimiter=",", fmt='%s')
-
+        '''
         del losses_train, accs_train, f1w_train, f1m_train
         del losses_val, accs_val, f1w_val, f1m_val
         del loss_train_val, accs_train_val, f1w_train_val, f1m_train_val
