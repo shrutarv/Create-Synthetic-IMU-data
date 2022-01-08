@@ -298,7 +298,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/'
+       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_c1_100'
        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        '''
