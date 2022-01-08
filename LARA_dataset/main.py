@@ -273,7 +273,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
        folder_exp = '/data/sawasthi/LaraIMU/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraIMU/model/network_LaraIMU_50.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/LaraI/model/network_LaraIMU_50.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -298,8 +298,10 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_acc_c1_100'
+       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_acc_cnn_c4_100'
        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       
+       
        
        '''
         folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -307,7 +309,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      '/' + reshape_folder + '/' + 'fine_tuning/'
         folder_exp_base_fine_tuning = folder_base + dataset[dataset_fine_tuning_idx] + '/' + \
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
-          '''                            '/' + reshape_folder + '/' + 'final/'
+                                      '/' + reshape_folder + '/' + 'final/'
+                                      '''
     else:
         raise ("Error: Not selected fine tuning option")
 
@@ -444,39 +447,41 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
+    proport = ["train_10.csv","train_30.csv","train_50.csv","train_75.csv","train.csv"]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
             for opt in output_idxs:
                 for dft in dataset_ft_idx:
                     for pr in percentages:
-                        for rsi in range(len(reshape_input)):
-                            for fr in freeze:
-                                for lr in lrs:
-                                    config = configuration(dataset_idx=dataset_idx[dts],
-                                                           network_idx=network_idx[nt],
-                                                           output_idx=opt,
-                                                           usage_modus_idx=5,
-                                                           dataset_fine_tuning_idx=dft,
-                                                           reshape_input=reshape_input[rsi],
-                                                           learning_rates_idx=lr,
-                                                           name_counter=counter_exp,
-                                                           freeze=fr,
-                                                           percentage_idx=pr,
-                                                           fully_convolutional=False,
-                                                           per_data = "train.csv")
-
-                                    setup_experiment_logger(logging_level=logging.DEBUG,
-                                                            filename=config['folder_exp'] + "logger.txt")
-
-                                    logging.info('Finished')
-
-                                    modus = Modus_Selecter(config)
-
-                                    # Starting process
-                                    modus.net_modus()
-                                    counter_exp += 1
-
+                        for pp in proport:
+                            for rsi in range(len(reshape_input)):
+                                for fr in freeze:
+                                    for lr in lrs:
+                                        config = configuration(dataset_idx=dataset_idx[dts],
+                                                               network_idx=network_idx[nt],
+                                                               output_idx=opt,
+                                                               usage_modus_idx=5,
+                                                               dataset_fine_tuning_idx=dft,
+                                                               reshape_input=reshape_input[rsi],
+                                                               learning_rates_idx=lr,
+                                                               name_counter=counter_exp,
+                                                               freeze=fr,
+                                                               percentage_idx=pr,
+                                                               fully_convolutional=False,
+                                                               per_data = "train.csv")
+    
+                                        setup_experiment_logger(logging_level=logging.DEBUG,
+                                                                filename=config['folder_exp'] + "logger.txt")
+    
+                                        logging.info('Finished')
+    
+                                        modus = Modus_Selecter(config)
+    
+                                        # Starting process
+                                        modus.net_modus()
+                                        counter_exp += 1
+    
 
     return
 
