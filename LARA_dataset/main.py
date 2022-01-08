@@ -460,7 +460,7 @@ def main():
                                                            freeze=fr,
                                                            percentage_idx=pr,
                                                            fully_convolutional=False,
-                                                           per_data = "train_75.csv")
+                                                           per_data = "train_50.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
