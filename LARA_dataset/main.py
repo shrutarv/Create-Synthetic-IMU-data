@@ -298,8 +298,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_c1_100'
-       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_acc_c1_100'
+       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        '''
         folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -456,7 +456,7 @@ def main():
                                     config = configuration(dataset_idx=dataset_idx[dts],
                                                            network_idx=network_idx[nt],
                                                            output_idx=opt,
-                                                           usage_modus_idx=0,
+                                                           usage_modus_idx=5,
                                                            dataset_fine_tuning_idx=dft,
                                                            reshape_input=reshape_input[rsi],
                                                            learning_rates_idx=lr,
@@ -464,7 +464,7 @@ def main():
                                                            freeze=fr,
                                                            percentage_idx=pr,
                                                            fully_convolutional=False,
-                                                           per_data = "train_50.csv")
+                                                           per_data = "train.csv")
 
                                     setup_experiment_logger(logging_level=logging.DEBUG,
                                                             filename=config['folder_exp'] + "logger.txt")
