@@ -299,8 +299,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_pose_cnn_c1' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/mbientlab/model/ntu_LaraIMU_acc_cnn_c1' + str(per_data) 
+       folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
@@ -448,7 +448,7 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
-    proport = [1]
+    proport = [0,1,2,3,4]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
