@@ -40,7 +40,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     """
     # Flags
     plotting = False
-    percent_data = per_data
+    percent_data = ["train_10.csv","train_30.csv","train_50.csv","train_75.csv","train.csv"]
+
     # Options
     dataset = {0: 'mocap', 1: 'mbientlab', 2: 'virtual', 3: 'mocap_half', 4: 'virtual_quarter', 5: 'mocap_quarter',
                6: 'mbientlab_50_p', 7: 'mbientlab_10_p', 8: 'mbientlab_50_r', 9: 'mbientlab_10_r',
@@ -298,7 +299,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_acc_cnn_c4_100'
+       folder_exp = '/data/sawasthi/mbientlab/model/Jhmdb_Lara_acc_cnn_c4' + per_data 
        folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
@@ -395,7 +396,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                      'freeze_options': freeze_options[freeze],
                      'percentages_names': percentages_names[percentage_idx],
                      'fully_convolutional': fully_convolutional,
-                     'prop':percent_data,
+                     'prop':percent_data[per_data],
                      'labeltype': labeltype}
                      
 
@@ -447,7 +448,7 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
-    proport = ["train_10.csv","train_30.csv","train_50.csv","train_75.csv","train.csv"]
+    proport = [0,1,2,3]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
@@ -469,7 +470,7 @@ def main():
                                                                freeze=fr,
                                                                percentage_idx=pr,
                                                                fully_convolutional=False,
-                                                               per_data = "train.csv")
+                                                               per_data = pp)
     
                                         setup_experiment_logger(logging_level=logging.DEBUG,
                                                                 filename=config['folder_exp'] + "logger.txt")
