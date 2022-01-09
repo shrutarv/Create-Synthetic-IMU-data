@@ -328,7 +328,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                     'mbientlab_10_r': "path_to_datasets_folder/" + 'mbientlab_10_recordings/',
                     'mbientlab_quarter': "path_to_datasets_folder/" + 'mbientlab/',
                     'motionminers_real': "path_to_datasets_folder/" + 'motionminers_real/',
-                    'motionminers_flw': "path_to_datasets_folder/" + 'motionminers_flw/'}
+                    'motionminers_flw': '/data/sawasthi/LaraMM/'}
 
     # GPU
     os.environ["CUDA_VISIBLE_DEVICES"] = "0"
