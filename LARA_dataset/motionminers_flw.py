@@ -10,7 +10,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import csv_reader
-import csv_save
+#import csv_save
 
 from sliding_window import sliding_window
 import pickle
@@ -370,8 +370,8 @@ def create_annotated_sequences():
                     if annotated_sequence.shape[0] == data_labels.shape[0]:
                         save_data(annotated_sequence, dataset_path_imu_sequences + file_name_imu, headers_bool=True,
                                   seq_annotated=True)
-                        csv_save.save_attr_csv(data_labels.astype(int),
-                                               filename=dataset_path_imu_sequences + file_name_imu_attr)
+                        #csv_save.save_attr_csv(data_labels.astype(int),
+                         #                      filename=dataset_path_imu_sequences + file_name_imu_attr)
                 except:
                     print("4 - Error saving atts in {}".format(dataset_path_imu_sequences + file_name_imu_attr))
 
@@ -456,12 +456,12 @@ def create_labels_imus_from_mocap():
                     except:
                         print("3 - Error getting annotated labels in {}".format(dir_dataset + file_name_mocap_attr))
                         continue
-
+                    '''
                     try:
                         csv_save.save_attr_csv(labels_imus.astype(int), filename=dataset_path_imu_sequences + file_name_imu_attr)
                     except:
                         print("5 - Error saving atts in {}".format(dataset_path_imu_sequences + file_name_imu_attr))
-
+                    '''
                     print("\n\n------------------------------------------------------------------")
             except KeyboardInterrupt:
                 print('You cancelled the operation.')
