@@ -462,7 +462,7 @@ def main():
                                         config = configuration(dataset_idx=dataset_idx[dts],
                                                                network_idx=network_idx[nt],
                                                                output_idx=opt,
-                                                               usage_modus_idx=5,
+                                                               usage_modus_idx=0,
                                                                dataset_fine_tuning_idx=dft,
                                                                reshape_input=reshape_input[rsi],
                                                                learning_rates_idx=lr,
