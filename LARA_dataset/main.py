@@ -441,7 +441,7 @@ def main():
 
     """
     dataset_idx = [1]
-    network_idx = [0]
+    network_idx = [2]
     reshape_input = [False]
     output_idxs = [0]
     lrs = [0]
