@@ -273,8 +273,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
 
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
-       folder_exp = '/data/sawasthi/LaraIMU/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraI/model/network_LaraIMU_30.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/LaraMM/model/'
+       #folder_exp_base_fine_tuning = '/data/sawasthi/LaraMM/model/network_LaraIMU_30.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -440,7 +440,7 @@ def main():
     for more information about all of possible configurations for the experiments
 
     """
-    dataset_idx = [1]
+    dataset_idx = [12]
     network_idx = [0]
     reshape_input = [False]
     output_idxs = [0]
