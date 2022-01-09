@@ -300,7 +300,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
        folder_exp = '/data/sawasthi/mbientlab/model/ntu_LaraIMU_acc_cnn_c4' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_ci_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
@@ -331,8 +331,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                     'motionminers_flw': "path_to_datasets_folder/" + 'motionminers_flw/'}
 
     # GPU
-    os.environ["CUDA_VISIBLE_DEVICES"] = "2"
-    GPU = 2
+    os.environ["CUDA_VISIBLE_DEVICES"] = "0"
+    GPU = 0
 
     # Labels position on the segmented window
     label_pos = {0: 'middle', 1: 'mode', 2: 'end'}
