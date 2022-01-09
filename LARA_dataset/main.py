@@ -300,7 +300,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
        folder_exp = '/data/sawasthi/mbientlab/model/cad_LaraIMU_pose_cnn_c4' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_pose_tf.pth.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/CAD60/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
