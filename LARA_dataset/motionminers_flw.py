@@ -15,7 +15,7 @@ import csv_reader
 from sliding_window import sliding_window
 import pickle
 
-from IMUSequenceContainer import IMUSequenceContainer
+#from IMUSequenceContainer import IMUSequenceContainer
 
 
 dataset_path = "/vol/actrec/DFG_Project/2019/Motionminers/2019/Data_Real/DFG-Data/"
@@ -136,7 +136,7 @@ def save_data(data, filename, headers_bool=False, seq_annotated=False):
 
     return
 
-
+'''
 def extract_data_flw(IMUcontainer):
     #dataset_path = "/vol/actrec/DFG_Project/2019/Motionminers/2019/Dock_data_organized/"
     #new_dataset_path = "/vol/actrec/DFG_Project/2019/Motionminers/2019/flw_data/"
@@ -162,7 +162,7 @@ def extract_data_flw(IMUcontainer):
         save_data(data, new_dataset_path + skey + "/" + skey + '_data.csv')
 
     return data
-
+'''
 
 def read_data_flw():
     #dataset_path = "/vol/actrec/DFG_Project/2019/Motionminers/2019/Dock_data_organized/"
