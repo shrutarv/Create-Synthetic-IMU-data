@@ -299,8 +299,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/ntu_LaraIMU_acc_cnn_c4' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_acc_up3_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/mbientlab/model/ntu_LaraIMU_pose_cnn_c4' + str(per_data) 
+       folder_exp_base_fine_tuning = '/data/sawasthi/NTU/model/model_cnn_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
