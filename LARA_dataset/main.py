@@ -274,7 +274,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
        folder_exp = '/data/sawasthi/LaraIMU/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraI/model/network_LaraIMU_50.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/LaraI/model/network_LaraIMU_10.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -448,7 +448,7 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
-    proport = [4]
+    proport = [0]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
@@ -462,7 +462,7 @@ def main():
                                         config = configuration(dataset_idx=dataset_idx[dts],
                                                                network_idx=network_idx[nt],
                                                                output_idx=opt,
-                                                               usage_modus_idx=5,
+                                                               usage_modus_idx=0,
                                                                dataset_fine_tuning_idx=dft,
                                                                reshape_input=reshape_input[rsi],
                                                                learning_rates_idx=lr,
