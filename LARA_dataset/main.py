@@ -58,7 +58,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     sliding_window_length = {'mocap': 200, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100, 'virtual_quarter': 25,
                              'mocap_quarter': 25, 'mbientlab_50_p': 100, 'mbientlab_10_p': 100, 'mbientlab_50_r': 100,
                              'mbientlab_10_r': 100, 'mbientlab_quarter': 25, 'motionminers_real': 100,
-                             'motionminers_flw': 150}
+                             'motionminers_flw': 100}
     sliding_window_step = {'mocap': 25, 'mbientlab': 12, 'virtual': 12, 'mocap_half': 12, 'virtual_quarter': 12,
                            'mocap_quarter': 12, 'mbientlab_50_p': 12, 'mbientlab_10_p': 12, 'mbientlab_50_r': 12,
                            'mbientlab_10_r': 12, 'mbientlab_quarter': 12, 'motionminers_real': 12,

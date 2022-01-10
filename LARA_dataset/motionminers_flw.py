@@ -830,13 +830,13 @@ def create_dataset(identity_bool = False):
         generate_data(all_data, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_test,
                       identity_bool=identity_bool, usage_modus='test')
     else:
-        generate_data(train_id_75, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_75)
-        generate_data(train_id_50, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_50)
-        generate_data(train_id_30, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_30)
+        #generate_data(train_id_75, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_75)
+        #generate_data(train_id_50, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_50)
+        #generate_data(train_id_30, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train_30)
     
-        generate_data(train_ids, sliding_window_length=150, sliding_window_step=12, data_dir=data_dir_train)
-        generate_data(val_ids, sliding_window_length=150, sliding_window_step=12, data_dir=data_dir_val)
-        generate_data(test_ids, sliding_window_length=150, sliding_window_step=12, data_dir=data_dir_test)
+        generate_data(train_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_train)
+        generate_data(val_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_val)
+        generate_data(test_ids, sliding_window_length=100, sliding_window_step=12, data_dir=data_dir_test)
         print("done")
 
     generate_CSV(base_directory, "train.csv", data_dir_train)
