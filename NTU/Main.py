@@ -360,7 +360,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
-          '''
+          
               if (itera + 1) % 1000 == 0:
                     model.eval()
                     #print(out.size())
@@ -378,7 +378,7 @@ def training(dataLoader_train, dataLoader_validation, device,config,flag):
               
                     #l.append(total_loss/((e+1)*(b + 1)))
                     #accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-             '''       
+                   
           model.eval()
           #print(out.size())
           val_acc, val_loss =  validation(dataLoader_validation,model)
