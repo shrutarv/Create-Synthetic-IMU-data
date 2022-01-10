@@ -357,7 +357,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":27,
-        "sliding_window_length":100,
+        "sliding_window_length":150,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn_imu",
