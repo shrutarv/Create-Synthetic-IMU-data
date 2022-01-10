@@ -376,7 +376,7 @@ if __name__ == '__main__':
     total_loss = 0.0
     total_correct = 0
     epochs = 35
-    batch_size = 100
+    batch_size = 200
    
     flag = True
     iterations = 3
@@ -387,7 +387,7 @@ if __name__ == '__main__':
         l = []
         tot_loss = 0
         accuracy = []
-        learning_rate = 0.00001
+        learning_rate = 0.0001
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
             
         #df = pd.read_csv('/data/sawasthi/Thesis--Create-Synthetic-IMU-data/MoCAP/norm_values.csv')
@@ -410,9 +410,9 @@ if __name__ == '__main__':
         #scheduler = lr_scheduler.ReduceLROnPlateau(optimizer, patience=5)
         
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Lara_motionminer/model/Laramm_model_cnn_10.pth'
+        model_path = '/data/sawasthi/LaraMM/model/Laramm_model_cnn.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/model.pth'
-        path = '/data/sawasthi/Lara_motionminer/trainData_10_tf/'
+        path = '/data/sawasthi/LaraMM/sequences_train'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -424,7 +424,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/Lara_motionminer/validationData_10/'
+        path =  '/data/sawasthi/LaraMM/sequences_val'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -435,7 +435,7 @@ if __name__ == '__main__':
                                        drop_last=True)
         
         # Test data    
-        path = '/data/sawasthi/Lara_motionminer/testData_10/'
+        path =  '/data/sawasthi/LaraMM/sequences_test'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)

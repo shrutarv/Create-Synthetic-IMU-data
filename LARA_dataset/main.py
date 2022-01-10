@@ -440,8 +440,8 @@ def main():
     for more information about all of possible configurations for the experiments
 
     """
-    dataset_idx = [1]
-    network_idx = [2]
+    dataset_idx = [12]
+    network_idx = [0]
     reshape_input = [False]
     output_idxs = [0]
     lrs = [0]
@@ -462,7 +462,7 @@ def main():
                                         config = configuration(dataset_idx=dataset_idx[dts],
                                                                network_idx=network_idx[nt],
                                                                output_idx=opt,
-                                                               usage_modus_idx=5,
+                                                               usage_modus_idx=0,
                                                                dataset_fine_tuning_idx=dft,
                                                                reshape_input=reshape_input[rsi],
                                                                learning_rates_idx=lr,
