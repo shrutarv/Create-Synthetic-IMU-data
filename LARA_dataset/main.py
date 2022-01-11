@@ -448,7 +448,7 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
-    proport = [3]
+    proport = [4]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
