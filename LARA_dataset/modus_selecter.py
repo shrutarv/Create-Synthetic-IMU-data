@@ -228,5 +228,5 @@ class Modus_Selecter(object):
         elif self.config['usage_modus'] == 'train_final':
             self.train(itera=1,  testing=True)
         elif self.config['usage_modus'] == 'fine_tuning':
-            self.train(itera=3, testing=True)
+            self.train(itera=4, testing=True)
         return
