@@ -219,7 +219,7 @@ class Modus_Selecter(object):
         """
         logging.info('    Network_selecter: Net modus: {}'.format(self.config['usage_modus']))
         if self.config['usage_modus'] == 'train':
-            self.train(itera=3, testing=True)
+            self.train(itera=4, testing=True)
         elif self.config['usage_modus'] == 'test':
             self.test()
         elif self.config['usage_modus'] == 'evolution':
