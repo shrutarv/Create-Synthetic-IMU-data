@@ -202,7 +202,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     batch_size_val = {'cnn': {'mocap': 100, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100,
                               'virtual_quarter': 100, 'mocap_quarter': 100, 'mbientlab_50_p': 100,
                               'mbientlab_10_p': 100, 'mbientlab_50_r': 100, 'mbientlab_10_r': 25,
-                              'mbientlab_quarter': 100, 'motionminers_real': 100, 'motionminers_flw': 100},
+                              'mbientlab_quarter': 100, 'motionminers_real': 100, 'motionminers_flw': 200},
                       'lstm': {'mocap': 100, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100,
                                'virtual_quarter': 100, 'mocap_quarter': 100, 'mbientlab_50_p': 100,
                                'mbientlab_10_p': 100, 'mbientlab_50_r': 100, 'mbientlab_10_r': 100,
@@ -210,7 +210,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                       'cnn_imu': {'mocap': 100, 'mbientlab': 100, 'virtual': 100, 'mocap_half': 100,
                                   'virtual_quarter': 100, 'mocap_quarter': 100, 'mbientlab_50_p': 100,
                                   'mbientlab_10_p': 100, 'mbientlab_50_r': 100, 'mbientlab_10_r': 25,
-                                  'mbientlab_quarter': 100, 'motionminers_real': 100, 'motionminers_flw': 100}}
+                                  'mbientlab_quarter': 100, 'motionminers_real': 100, 'motionminers_flw': 200}}
 
     # Number of iterations for accumulating the gradients
     accumulation_steps = {'mocap': 4, 'mbientlab': 4, 'virtual': 4, 'mocap_half': 4, 'virtual_quarter': 4,
@@ -274,7 +274,7 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
     # Folder
     if usage_modus[usage_modus_idx] == 'train':
        folder_exp = '/data/sawasthi/LaraMM/model/'
-       folder_exp_base_fine_tuning = '/data/sawasthi/LaraMM/model/network_LaraMM_ci.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp_base_fine_tuning = '/data/sawasthi/LaraMM/model/network_LaraMM_cnn.pth' #model_acc_up4.pth #model_up1_3a.pt
        '''
         
        folder_exp = folder_base + dataset[dataset_idx] + '/' + \
@@ -448,7 +448,7 @@ def main():
     dataset_ft_idx = [0]
     counter_exp = 0
     freeze = [0]
-    proport = [0,1,2,3,4]
+    proport = [4]
     percentages = [12]
     for dts in range(len(dataset_idx)):
         for nt in range(len(network_idx)):
@@ -462,7 +462,7 @@ def main():
                                         config = configuration(dataset_idx=dataset_idx[dts],
                                                                network_idx=network_idx[nt],
                                                                output_idx=opt,
-                                                               usage_modus_idx=5,
+                                                               usage_modus_idx=0,
                                                                dataset_fine_tuning_idx=dft,
                                                                reshape_input=reshape_input[rsi],
                                                                learning_rates_idx=lr,
