@@ -299,8 +299,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/jhmdb_LaraMM_acc_cnn_c1' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_cnn_up1_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/mbientlab/model/penn_LaraIMU_pose_cnn_c4' + str(per_data) 
+       folder_exp_base_fine_tuning = '/data/sawasthi/Penn/model/model_pose_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
@@ -440,7 +440,7 @@ def main():
     for more information about all of possible configurations for the experiments
 
     """
-    dataset_idx = [12]
+    dataset_idx = [1]
     network_idx = [0]
     reshape_input = [False]
     output_idxs = [0]
@@ -462,7 +462,7 @@ def main():
                                         config = configuration(dataset_idx=dataset_idx[dts],
                                                                network_idx=network_idx[nt],
                                                                output_idx=opt,
-                                                               usage_modus_idx=0,
+                                                               usage_modus_idx=5,
                                                                dataset_fine_tuning_idx=dft,
                                                                reshape_input=reshape_input[rsi],
                                                                learning_rates_idx=lr,
