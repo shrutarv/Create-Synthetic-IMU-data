@@ -234,7 +234,7 @@ class Network_User(object):
         @return network: network with frozen layers
         '''
         print('inside set required grad')
-        model_dict = network.state_dict()
+        model_dict = network.stat_dict()
         # 1. filter out unnecessary keys
         logging.info('        Network_User:        Setting Required_grad to Weights')
 
