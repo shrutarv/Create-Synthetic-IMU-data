@@ -299,8 +299,8 @@ def configuration(dataset_idx, network_idx, output_idx, usage_modus_idx=0, datas
                                       network[network_idx] + '/' + output[output_idx] + '/' + fully_convolutional + \
                                       '/' + reshape_folder + '/' + 'final/'
     elif usage_modus[usage_modus_idx] == 'fine_tuning':
-       folder_exp = '/data/sawasthi/mbientlab/model/jhmdb_LaraIMU_acc_cnn_c1' + str(per_data) 
-       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_cnn_up4_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
+       folder_exp = '/data/sawasthi/mbientlab/model/jhmdb_LaraIMU_acc_ci_c1' + str(per_data) 
+       folder_exp_base_fine_tuning = '/data/sawasthi/JHMDB/model/model_acc_ci_up4_tf.pth' #model_acc_up4.pth #model_up1_3a.pt
        
        
        
@@ -441,7 +441,7 @@ def main():
 
     """
     dataset_idx = [1]
-    network_idx = [0]
+    network_idx = [2]
     reshape_input = [False]
     output_idxs = [0]
     lrs = [0]
