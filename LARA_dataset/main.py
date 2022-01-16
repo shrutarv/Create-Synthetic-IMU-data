@@ -440,7 +440,7 @@ def main():
     for more information about all of possible configurations for the experiments
 
     """
-    dataset_idx = [12]
+    dataset_idx = [1]
     network_idx = [0]
     reshape_input = [False]
     output_idxs = [0]
