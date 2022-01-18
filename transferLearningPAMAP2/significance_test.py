@@ -109,15 +109,15 @@ class DifferenceProportions(SignificanceBase):
 
 if __name__ == '__main__':
     '''
-    LaraMM : 39973
-    LaraIMU: 51863
+    LaraMM : 56319
+    LaraIMU: 52540
     PAMAP2: 3785
     Opportunity: 9894
     
     for pamap2 cnn above 88-17 is significant
     '''
-    d = DifferenceProportions(9894)
-    bool,p = d.significance_test(0.2453,0.2333)
+    d = DifferenceProportions(3785)
+    bool,p = d.significance_test(0.4242,0.409)
     print(p)
     
     d = DifferenceProportions(34180)
