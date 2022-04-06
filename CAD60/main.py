@@ -601,6 +601,19 @@ if __name__ == '__main__':
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
+        
+        #testing(config)
+        # Test data    
+        path = '/data/sawasthi/CAD60/validationData_acc_up3_2s/'
+        
+        test_dataset = CustomDataSet(path)
+        print("Calculating accuracy for the trained model on validation set ")
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        
         flag = False
         WF, TA = testing(config)
         weighted_F1_array.append(WF)
