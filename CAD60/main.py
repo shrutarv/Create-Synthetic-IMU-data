@@ -551,8 +551,8 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        #path = '/data/sawasthi/CAD60/trainData_acc_up3_tf/'
-        path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
+        path = '/data/sawasthi/CAD60/trainData_acc_up3_tf/'
+        #path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -564,8 +564,8 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        #path = '/data/sawasthi/CAD60/validationData_acc_up3/'
-        path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up3/'
+        #path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -591,8 +591,8 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        #path = '/data/sawasthi/CAD60/testData_acc_up3/'
-        path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
+        path = '/data/sawasthi/CAD60/testData_acc_up3/'
+        #path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
         print("Calculating accuracy for the trained model on test set ")
