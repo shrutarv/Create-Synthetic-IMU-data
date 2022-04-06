@@ -302,7 +302,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/CAD60/validation_data_new.csv')
@@ -338,7 +338,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    #example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir)
     print("validation data pickled")
     #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)
