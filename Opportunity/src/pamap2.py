@@ -95,7 +95,7 @@ class Pamap2(data.Dataset):
             elif self.config["proportions"] == 0.75:
                 idx_files = [0, 2, 3, 4, 5, 6, 8]            
             elif self.config["proportions"] == 1.0:
-                idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+                idx_files = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
         elif self.partition_modus == 'val':
             # idx_files = [ids for ids in range(10,12)]
             idx_files = [10, 11]

@@ -178,11 +178,11 @@ if __name__ == '__main__':
     ws = (180,45) 
     ss = (12,45)     
     #ss = (25,31)
-    sliding_window_length = 90   
+    sliding_window_length = 180   
     #sliding_window_length = 100    
     sliding_window_step = 12
     df = pd.read_csv('/data/sawasthi/CAD60/train_data_tf.csv')
-   # df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/CAD 60/train_data.csv')
+    #df = pd.read_csv('S:/Datasets/CAD60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
     value = max_min_values(data_new)
@@ -258,9 +258,9 @@ if __name__ == '__main__':
     
     # creating labels
     
-    #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
+    df = pd.read_csv('/data/sawasthi/CAD60/train_data_new.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up3_2s_tf/'
+    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up3_2s/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -271,7 +271,9 @@ if __name__ == '__main__':
     print("train data pickled")
     
     data_dir =  '/data/sawasthi/CAD60/testData_acc_up3_2s/'
+    #data_dir = 'S:/Datasets/CAD60/testData_acc_up3_2s'
     df = pd.read_csv('/data/sawasthi/CAD60/test_data_new.csv')
+    #df = pd.read_csv('S:/Datasets/CAD60/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -305,6 +307,9 @@ if __name__ == '__main__':
     
     df = pd.read_csv('/data/sawasthi/CAD60/validation_data_new.csv')
     data_dir =  '/data/sawasthi/CAD60/validationData_acc_up3_2s/'
+    #data_dir = 'S:/Datasets/CAD60/validationData_acc_up3_2s'
+    #df = pd.read_csv('S:/Datasets/CAD60/validation_data.csv')
+    
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")

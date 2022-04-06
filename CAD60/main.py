@@ -326,7 +326,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
         plt.plot(ep,accuracy,'r',label='training accuracy')
         plt.plot(ep,validation_acc, 'g',label='validation accuracy')
         plt.legend()
-        plt.savefig('/data/sawasthi/CAD60/results/result_1.png') 
+        #plt.savefig('/data/sawasthi/CAD60/results/result_1.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/result.png') 
         #plt.savefig('S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/result.png'
 
@@ -507,7 +507,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":45,
-        "sliding_window_length":90,
+        "sliding_window_length":180,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -524,7 +524,7 @@ if __name__ == '__main__':
     flag = True
     for iter in range(iterations):
 
-        ws=30
+        ws=180
         accumulation_steps = 10
         epochs = 60
         batch_size = 200
@@ -551,8 +551,8 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/CAD60/trainData_acc_up3_tf/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = '/data/sawasthi/CAD60/trainData_acc_up3_tf/'
+        path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
         train_dataset = CustomDataSet(path)
@@ -564,8 +564,8 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up3/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
+        #path = '/data/sawasthi/CAD60/validationData_acc_up3/'
+        path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         validation_dataset = CustomDataSet(path)
@@ -591,8 +591,8 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/testData_acc_up3/'
-        #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
+        #path = '/data/sawasthi/CAD60/testData_acc_up3/'
+        path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
         print("Calculating accuracy for the trained model on test set ")
