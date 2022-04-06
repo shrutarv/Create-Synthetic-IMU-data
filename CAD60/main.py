@@ -518,7 +518,7 @@ if __name__ == '__main__':
         "dataset":"CAD60"
         }
 
-    iterations = 1
+    iterations = 3
     weighted_F1_array = []
     test_acc_array = []
     flag = True
