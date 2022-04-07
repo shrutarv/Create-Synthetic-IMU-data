@@ -207,7 +207,7 @@ if __name__ == '__main__':
     # up sampled
     # up sampling rate
     up = 1
-    ws = (50,31)
+    ws = (50,30)
     #ws = (25,30) 
     ss = (12,30)     
     #ss = (25,31)
