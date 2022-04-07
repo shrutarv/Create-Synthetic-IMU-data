@@ -576,12 +576,12 @@ if __name__ == '__main__':
                                        drop_last=True)
         
        
-        training(dataLoader_train, dataLoader_validation,device,flag)
+        #training(dataLoader_train, dataLoader_validation,device,flag)
         # Test data    
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/testData_acc_up3_3s/'
+        path = '/data/sawasthi/CAD60/testData_acc_up3_1s/'
         #path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -595,7 +595,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up3_3s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up3_1s/'
         test_dataset = CustomDataSet(path)
         print("Calculating accuracy for the trained model on validation set ")
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
