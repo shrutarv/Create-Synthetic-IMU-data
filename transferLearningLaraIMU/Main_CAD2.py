@@ -579,7 +579,7 @@ if __name__ == '__main__':
     
     proportions_opts = [0,1,2,4]
     flag = True
-    iterations = 3
+    iterations = 2
     
     for prop in proportions_opts:
         weighted_F1_array = []
