@@ -294,25 +294,25 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
               #lo, correct = Training(train_batch_v, train_batch_l, noise, model_path, batch_size, tot_loss, accumulation_steps)
               total_loss += loss.item()
               total_correct += correct
-          
-              if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
-                    model.eval()
-                    #print(out.size())
-                    val_acc, val_loss =  validation(dataLoader_validation,model)
-                    #print(out.size())
-                    #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
-                    validation_loss.append(val_loss)
-                    validation_acc.append(val_acc)
-                    if (val_acc >= best_acc):
-                        torch.save(model, model_path)
-                    
-                        print("model saved on epoch", e)
-                        best_acc = val_acc
-          
+        
+#            if (itera + 1) % 100 == 0 or (itera) == (epochs * harwindow_batched["data"].shape[0]):
+              model.eval()
+              #print(out.size())
+              val_acc, val_loss =  validation(dataLoader_validation,model)
+              #print(out.size())
+              #print('validation accuracy', val_acc, 'validaion loss', val_loss) 
+              validation_loss.append(val_loss)
+              validation_acc.append(val_acc)
+              if (val_acc >= best_acc):
+                  torch.save(model, model_path)
               
-                    l.append(total_loss/((e+1)*(b + 1)))
-                    accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
-                   
+                  print("model saved on epoch", e)
+                  best_acc = val_acc
+                
+                
+              l.append(total_loss/((e+1)*(b + 1)))
+              accuracy.append(100*total_correct/((e+1)*(b + 1)*batch_size))
+                 
     '''    
     if (flag):
                   
