@@ -175,10 +175,10 @@ if __name__ == '__main__':
     # up sampling rate
     up = 1
     #ws = (100,31)
-    ws = (120,45) 
+    ws = (150,45) 
     ss = (12,45)     
     #ss = (25,31)
-    sliding_window_length = 120   
+    sliding_window_length = 150   
     #sliding_window_length = 100    
     sliding_window_step = 12
     df = pd.read_csv('/data/sawasthi/CAD60/train_data_tf.csv')
@@ -260,7 +260,7 @@ if __name__ == '__main__':
     
     df = pd.read_csv('/data/sawasthi/CAD60/train_data_new.csv')
     #data_dir =  'S:/MS A&R/4th Sem/Thesis/CAD 60/pkl/'
-    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up1_4s/'
+    data_dir =  '/data/sawasthi/CAD60/trainData_acc_up1_5s/'
     label = np.repeat(data[:,46],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
     lab[:,0] = label
@@ -270,7 +270,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir =  '/data/sawasthi/CAD60/testData_acc_up1_4s/'
+    data_dir =  '/data/sawasthi/CAD60/testData_acc_up1_5s/'
     #data_dir = 'S:/Datasets/CAD60/testData_acc_up3_2s'
     df = pd.read_csv('/data/sawasthi/CAD60/test_data_new.csv')
     #df = pd.read_csv('S:/Datasets/CAD60/test_data.csv')
@@ -306,7 +306,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/CAD60/validation_data_new.csv')
-    data_dir =  '/data/sawasthi/CAD60/validationData_acc_up1_4s/'
+    data_dir =  '/data/sawasthi/CAD60/validationData_acc_up1_5s/'
     #data_dir = 'S:/Datasets/CAD60/validationData_acc_up3_2s'
     #df = pd.read_csv('S:/Datasets/CAD60/validation_data.csv')
     
