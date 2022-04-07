@@ -507,7 +507,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":45,
-        "sliding_window_length":60,
+        "sliding_window_length":90,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -524,7 +524,7 @@ if __name__ == '__main__':
     flag = True
     for iter in range(iterations):
 
-        ws=60
+        ws=90
         accumulation_steps = 10
         epochs = 150
         batch_size = 50
@@ -546,12 +546,12 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up2_2sec_tf.pth'
-        model_path_2 = '/data/sawasthi/CAD60/model/model_acc_cnn_up3_3sec_tf_2.pth'
+        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_3sec_tf.pth'
+        model_path_2 = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_3sec_tf_2.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/CAD60/trainData_acc_up1_2s/'
+        path = '/data/sawasthi/CAD60/trainData_acc_up1_3s/'
         #path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -564,7 +564,7 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up1_2s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up1_3s/'
         #path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -581,7 +581,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/testData_acc_up1_2s/'
+        path = '/data/sawasthi/CAD60/testData_acc_up1_3s/'
         #path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -595,7 +595,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up1_2s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up1_3s/'
         test_dataset = CustomDataSet(path)
         print("Calculating accuracy for the trained model on validation set ")
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
