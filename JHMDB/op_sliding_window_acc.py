@@ -285,7 +285,7 @@ if __name__ == '__main__':
     
     #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/JHMDB/trainData_acc_up_3s/'
+    data_dir =  '/data/sawasthi/JHMDB/trainData_acc_up1_3s/'
     #data_dir = 'S:/Datasets/JHMDB/train/'
     label = np.repeat(data[:,31],up).astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -297,7 +297,7 @@ if __name__ == '__main__':
     print("train data pickled")
     
     #data_dir = 'S:/Datasets/JHMDB/test/'
-    data_dir =  '/data/sawasthi/JHMDB/testData_acc_up4_3s/'
+    data_dir =  '/data/sawasthi/JHMDB/testData_acc_up1_3s/'
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/test_data.csv')
     #df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/test_data.csv')
     
@@ -331,7 +331,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
     
-    data_dir =  '/data/sawasthi/JHMDB/validationData_acc_up4_3s/'
+    data_dir =  '/data/sawasthi/JHMDB/validationData_acc_up1_3s/'
     #data_dir =  'S:/Datasets/JHMDB/val/'
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
     #df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
