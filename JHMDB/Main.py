@@ -576,12 +576,12 @@ if __name__ == '__main__':
         "sliding_window_length":50,
         "filter_size":5,
         "num_filters":64,
-        "network":"cnn_imu",
+        "network":"cnn",
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_pose_ci.pth',
+        "model_path": '/data/sawasthi/JHMDB/model/model_pose_ci_test.pth',
         "dataset" : 'JHMDB'
         
         }
