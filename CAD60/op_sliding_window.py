@@ -181,7 +181,7 @@ if __name__ == '__main__':
     sliding_window_length = 90   
     #sliding_window_length = 100    
     sliding_window_step = 12
-    df = pd.read_csv('/data/sawasthi/CAD60/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/CAD60/train_data_new.csv')
     #df = pd.read_csv('S:/Datasets/CAD60/train_data.csv')
     data = df.values
     data_new = data[:,1:46]
