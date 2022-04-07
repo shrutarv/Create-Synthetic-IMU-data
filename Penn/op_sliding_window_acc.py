@@ -214,8 +214,8 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    #df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
-    df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/norm_data.csv')
     data = df.values
     data_new = data[:,1:27]
