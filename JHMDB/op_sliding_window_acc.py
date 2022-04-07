@@ -333,8 +333,8 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/JHMDB/validationData_acc_up4_2s/'
     #data_dir =  'S:/Datasets/JHMDB/val/'
-    #df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
-    df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
+    #df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/validation_data.csv')
     
     data = df.values
     data = normalize(data,value, "validation")
