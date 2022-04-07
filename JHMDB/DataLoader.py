@@ -31,9 +31,9 @@ class CustomDataSet(Dataset):
         data = pickle.load(f, encoding='latin1')
         f.close()
         X = data['data']
-        print(X.shape())
+        #print(X.shape())
         y = data['label']
-        print(X.shape())
+        #print(X.shape())
         Y = data['labels']
         
         window_data = {"data" : X, "label" : y, "labels" : Y}
