@@ -212,7 +212,7 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/data/Penn/train_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/Penn_Action/train/train_data.csv')
     data = df.values
     data_new = data[:,1:27]
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl'
     data_dir =  '/data/sawasthi/Penn/testData_acc_down2_2s/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/test_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
     data = normalize(data,value, "test")
     print("test data normalized")
@@ -319,7 +319,7 @@ if __name__ == '__main__':
     
     data_dir =  '/data/sawasthi/Penn/validationData_acc_down2_2s/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/data/Penn/validation_data.csv')
+    df = pd.read_csv('/data/sawasthi/Penn/validation_data.csv')
     data = df.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
