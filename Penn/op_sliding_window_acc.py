@@ -232,7 +232,7 @@ if __name__ == '__main__':
     data = normalize(data,value, "train")
     print("train data normalized")
      #up sampled
-    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
+    x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), int(len(data)*up))
     # down sampled
     #x_sampled=data[0::2]
     #x_sampled = x_sampled[:,0]
