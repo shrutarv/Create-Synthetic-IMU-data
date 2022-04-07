@@ -526,7 +526,7 @@ if __name__ == '__main__':
 
         ws=300
         accumulation_steps = 10
-        epochs = 1
+        epochs = 150
         batch_size = 200
         learning_rate = 0.00001
         print("accumulation_steps ", accumulation_steps, "batch_size",  batch_size, "epochs", epochs, "accumulation_steps ", accumulation_steps,"sliding_window_length", config["sliding_window_length"])    
@@ -601,6 +601,7 @@ if __name__ == '__main__':
                                        num_workers=0,
                                        pin_memory=True,
                                        drop_last=True)
+        WF, TA = testing(config)
         
         #testing(config)
         # Test data    
