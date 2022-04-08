@@ -580,7 +580,7 @@ if __name__ == '__main__':
         "output":"softmax",
         "num_classes":21,
         "reshape_input":False,
-        "step_size":12,
+        "step_size":6,
         "model_path": '/data/sawasthi/JHMDB/model/model_pose_ci_test.pth',
         "dataset" : 'JHMDB'
         
