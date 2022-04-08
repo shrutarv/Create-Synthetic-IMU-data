@@ -577,9 +577,9 @@ if __name__ == '__main__':
         "freeze":False
         }
     
-    proportions_opts = [0,1,2,4]
+    proportions_opts = [4]
     flag = True
-    iterations = 2
+    iterations = 1
     
     for prop in proportions_opts:
         weighted_F1_array = []
@@ -588,7 +588,7 @@ if __name__ == '__main__':
             
             ws=100
             accumulation_steps = 5
-            epochs = 30
+            epochs = 1
             batch_size = 100
             learning_rate = 0.00001
             print("sliding_window_length", config["sliding_window_length"],"epoch: ",epochs,"batch_size: ",batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
