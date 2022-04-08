@@ -207,13 +207,13 @@ if __name__ == '__main__':
     # up sampled
     # up sampling rate
     up = 1
-    ws = (13,30)
+    ws = (25,30)
     #ws = (25,30) 
-    ss = (6,30)     
+    ss = (12,30)     
     #ss = (25,31)
-    sliding_window_length = 13  
+    sliding_window_length = 25 
     #sliding_window_length = 100    
-    sliding_window_step = 6
+    sliding_window_step = 12
     
     df = pd.read_csv('/home/sawasthi/Thesis--Create-Synthetic-IMU-data/JHMDB/train_data.csv')
     #df = pd.read_csv('S:/GitHub/Transfer_Learning_HAR/Create-Synthetic-IMU-data/JHMDB/train_data.csv')

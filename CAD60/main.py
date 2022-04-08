@@ -546,12 +546,12 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_5sec_tf.pth'
+        model_path = '/data/sawasthi/CAD60/model/model_acc_cnn_up3_5sec_tf.pth'
         model_path_2 = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_5sec_tf_2.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/CAD60/trainData_acc_up1_5s/'
+        path = '/data/sawasthi/CAD60/trainData_acc_up3_5s/'
         #path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
@@ -564,7 +564,7 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up1_5s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up3_5s/'
         #path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
@@ -581,7 +581,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/testData_acc_up1_5s/'
+        path = '/data/sawasthi/CAD60/testData_acc_up3_5s/'
         #path = 'S:/Datasets/CAD60/testData_acc_up3_2s/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
         test_dataset = CustomDataSet(path)
@@ -595,7 +595,7 @@ if __name__ == '__main__':
         
         #testing(config)
         # Test data    
-        path = '/data/sawasthi/CAD60/validationData_acc_up1_5s/'
+        path = '/data/sawasthi/CAD60/validationData_acc_up3_5s/'
         test_dataset = CustomDataSet(path)
         print("Calculating accuracy for the trained model on validation set ")
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
