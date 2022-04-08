@@ -306,7 +306,7 @@ if __name__ == '__main__':
     print("test data pickled")
     
     df = pd.read_csv('/data/sawasthi/CAD60/validation_data_new.csv')
-    data_dir =  '/data/sawasthi/CAD607validationData_acc_up3_7s/'
+    data_dir =  '/data/sawasthi/CAD60/validationData_acc_up3_7s/'
     #data_dir = 'S:/Datasets/CAD60/validationData_acc_up3_2s'
     #df = pd.read_csv('S:/Datasets/CAD60/validation_data.csv')
     
