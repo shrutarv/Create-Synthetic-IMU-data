@@ -581,7 +581,7 @@ if __name__ == '__main__':
         "num_classes":21,
         "reshape_input":False,
         "step_size":12,
-        "model_path": '/data/sawasthi/JHMDB/model/model_pose_ci_test.pth',
+        "model_path": '/data/sawasthi/JHMDB/model/model_acc_cnn_test.pth',
         "dataset" : 'JHMDB'
         
         }
