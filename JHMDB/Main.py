@@ -573,7 +573,7 @@ if __name__ == '__main__':
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":30,
-        "sliding_window_length":150,
+        "sliding_window_length":400,
         "filter_size":5,
         "num_filters":64,
         "network":"cnn",
@@ -593,7 +593,7 @@ if __name__ == '__main__':
     test_acc_array = []
     for iter in range(iterations):
         
-        ws = 150
+        ws = 400
         accumulation_steps = 5
         epochs = 200
         batch_size = 50
@@ -625,7 +625,7 @@ if __name__ == '__main__':
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/model.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
     
-        path = '/data/sawasthi/JHMDB/trainData_acc_up1_6s/' #trainData_pose_12
+        path = '/data/sawasthi/JHMDB/trainData_acc_up4_4s/' #trainData_pose_12
         #path = 'S:/Datasets/JHMDB/train/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -639,7 +639,7 @@ if __name__ == '__main__':
       
        
         # Validation data    
-        path = '/data/sawasthi/JHMDB/validationData_acc_up1_6s/'
+        path = '/data/sawasthi/JHMDB/validationData_acc_up4_4s/'
         #path = 'S:/Datasets/JHMDB/val/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
@@ -660,7 +660,7 @@ if __name__ == '__main__':
         '''
         training(dataLoader_train, dataLoader_validation,device, config)
         print("Calculating accuracy for the trained model on validation set ")
-        path = '/data/sawasthi/JHMDB/validationData_acc_up1_6s/'
+        path = '/data/sawasthi/JHMDB/validationData_acc_up4_4s/'
         #path = 'S:/Datasets/JHMDB/val/'
         #path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
@@ -675,7 +675,7 @@ if __name__ == '__main__':
         testing(config)
         WF1, TA1 = testing(config)
 
-        path = '/data/sawasthi/JHMDB/testData_acc_up1_5s/'
+        path = '/data/sawasthi/JHMDB/testData_acc_up4_4s/'
         #path = 'S:/Datasets/JHMDB/test/'
         test_dataset = CustomDataSet(path)
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
