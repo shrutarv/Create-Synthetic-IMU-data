@@ -207,10 +207,10 @@ if __name__ == '__main__':
     # up sampling rate
     up = 2
     #ws = (100,31)
-    ws = (400,26) 
+    ws = (500,26) 
     ss = (1,26)     
     #ss = (25,31)
-    sliding_window_length = 400   
+    sliding_window_length = 500   
     #sliding_window_length = 100    
     sliding_window_step = 1
     
@@ -267,7 +267,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_acc_up2_4s/'
+    data_dir =  '/data/sawasthi/Penn/trainData_acc_up2_5s/'
     #data_dir = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = np.repeat(data[:,27],up).astype(int)
@@ -279,7 +279,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("train data pickled")
     
-    data_dir = '/data/sawasthi/Penn/testData_acc_up2_4s/'
+    data_dir = '/data/sawasthi/Penn/testData_acc_up2_5s/'
     #data_dir =  'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
     df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
     data = df.values
@@ -316,7 +316,7 @@ if __name__ == '__main__':
     example_creating_windows_file(k, X, lab, data_dir)
     print("test data pickled")
      
-    data_dir = '/data/sawasthi/Penn/validationData_acc_up2_4s/'
+    data_dir = '/data/sawasthi/Penn/validationData_acc_up2_5s/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
     df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
     data = df.values
