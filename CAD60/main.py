@@ -550,7 +550,7 @@ if __name__ == '__main__':
         model_path_2 = '/data/sawasthi/CAD60/model/model_acc_cnn_up1_5sec_tf_2.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/pkl/'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
-       
+        '''
         path = '/data/sawasthi/CAD60/trainData_acc_up3_6s/'
         #path = 'S:/Datasets/CAD60/trainData_acc_up3_2s/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
@@ -562,7 +562,7 @@ if __name__ == '__main__':
                                        pin_memory=True,
                                        drop_last=True)
       
-        
+        '''
         # Validation data    
         path = '/data/sawasthi/CAD60/validationData_acc_up3_6s/'
         #path = 'S:/Datasets/CAD60/validationData_acc_up3_2s/'
