@@ -596,7 +596,7 @@ if __name__ == '__main__':
         ws = 500
         accumulation_steps = 5
         epochs = 200
-        batch_size = 100
+        batch_size = 50
         learning_rate = 0.00001
         print("epoch: ",epochs,"batch_size: ", batch_size,"accumulation steps: ",accumulation_steps,"ws: ",ws, "learning_rate: ",learning_rate)
         
