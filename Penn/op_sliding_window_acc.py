@@ -205,15 +205,40 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 2
-    #ws = (100,31)
-    ws = (500,26) 
-    ss = (1,26)     
-    #ss = (25,31)
-    sliding_window_length = 500   
-    #sliding_window_length = 100    
-    sliding_window_step = 1
-    NUM_CLASSES = 15
+    
+    dataset = "JHMDB"
+    if dataset == "Penn":
+        up = 2
+        #ws = (100,31)
+        ws = (100,26) 
+        ss = (1,26)     
+        #ss = (25,31)
+        NUM_CLASSES = 15
+    elif dataset == "JHMDB":
+        up = 4
+        ws = (100,30)
+        #ws = (25,30) 
+        ss = (12,30)     
+        #ss = (25,31)
+        NUM_CLASSES = 21
+    elif dataset == "NTU":
+        up = 3
+        #ws = (100,31)
+        ws = (100,75) 
+        ss = (3,75)     
+        #ss = (25,31)
+        NUM_CLASSES = 60
+    elif dataset == "CAD60":
+        up = 3
+        #ws = (100,31)
+        ws = (100,75) 
+        ss = (12,75)     
+        #ss = (25,31)
+        NUM_CLASSES = 12
+        
+    sliding_window_length =  ws[0]   
+        #sliding_window_length = 100    
+    sliding_window_step = ss[0]    
     df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     data_dir_train =  '/data/sawasthi/Penn/trainData_acc/'
     df_test = pd.read_csv('/data/sawasthi/Penn/test_data.csv')

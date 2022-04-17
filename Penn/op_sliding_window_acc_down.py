@@ -203,6 +203,8 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
+    
+        
     down = 2
     #ws = (100,31)
     ws = (50,26) 
@@ -210,7 +212,7 @@ if __name__ == '__main__':
     #ss = (25,31)
     sliding_window_length = ws[0]   
     #sliding_window_length = 100    
-    sliding_window_step = 1
+    sliding_window_step = ss[0]
     NUM_CLASSES = 8
     
     df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')

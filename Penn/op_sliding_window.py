@@ -205,14 +205,38 @@ if __name__ == '__main__':
     # The training, test and validation data have been separately interpolated and 
     # up sampled
     # up sampling rate
-    up = 1
-    #ws = (100,31)
-    ws = (50,26) 
-    ss = (1,26)     
-    #ss = (25,31)
-    sliding_window_length = 50   
+    dataset = "JHMDB"
+    if dataset == "Penn":
+        
+        #ws = (100,31)
+        ws = (50,26) 
+        ss = (1,26)     
+        #ss = (25,31)
+        NUM_CLASSES = 15
+    elif dataset == "JHMDB":
+       
+        ws = (25,30)
+        #ws = (25,30) 
+        ss = (12,30)     
+        #ss = (25,31)
+        NUM_CLASSES = 21
+    elif dataset == "NTU":
+        
+        #ws = (100,31)
+        ws = (30,75) 
+        ss = (3,75)     
+        #ss = (25,31)
+        NUM_CLASSES = 60
+    elif dataset == "CAD60":
+        
+        #ws = (100,31)
+        ws = (30,75) 
+        ss = (12,75)     
+        #ss = (25,31)
+        NUM_CLASSES = 12
+    sliding_window_length =  ws[0]      
     #sliding_window_length = 100    
-    sliding_window_step = 1
+    sliding_window_step = ss[0]
     NUM_CLASSES = 8
     df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     data_dir_train =  '/data/sawasthi/Penn/trainData_pose/'
