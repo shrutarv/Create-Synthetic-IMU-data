@@ -237,7 +237,7 @@ if __name__ == '__main__':
     sliding_window_length =  ws[0]      
     #sliding_window_length = 100    
     sliding_window_step = ss[0]
-    NUM_CLASSES = 8
+    
     df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     data_dir_train =  '/data/sawasthi/Penn/trainData_pose/'
     df_test = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
