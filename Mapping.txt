@@ -1,0 +1,80 @@
+Pre process the data first by deleting the columns which contain timestamps, label, and other information that is not important for the mapping process.
+
+--------------------------------------------------------------------------
+
+JHMDB
+It has 30 channels (columns), denoting 2D measurements from 15 joints.
+
+tCNN_IMU
+LA --> Channels [8,9,16,17,24,25]
+LL --> Channels [12,13,20,21,28,29]
+N  --> Channels [0,1,2,3,4,5]
+RA --> Channels [6,7,14,15,22,23]
+RL --> Channels [10,11,8,19,26,27]
+--------------------------------------------------------------------------
+
+CAD 60
+It has 30 channels (columns), denoting 3D measurements from 15 joints.
+
+tCNN_IMU
+LA --> Channels [9,10,11,12,13,14,33,34,35]
+LL --> Channels [21,22,23,24,25,26,39,40,41]
+N  --> Channels [0,1,2,3,4,5,6,7,8]
+RA --> Channels [15,16,17,18,19,20,36,37,38]
+RL --> Channels [27,28,29,30,31,32,42,43,44]
+--------------------------------------------------------------------------
+
+NTU 
+It has 75 channels (columns), denoting 3D measurements from 25 joints.
+
+tCNN_IMU
+LA --> Channels [24,25,26,27,28,29,30,31,32,33,34,35,69,70,71,72,73,74]
+LL --> Channels [48,49,50,51,52,53,54,55,56,57,58,59]
+N  --> Channels [0,1,2,3,4,5,6,7,8,9,10,11,59,60,61]
+RA --> Channels [12,13,14,15,16,17,18,19,20,21,22,23,63,64,65,66,67,68]
+RL --> Channels [36,37,38,39,40,41,42,43,44,45,46,47]
+--------------------------------------------------------------------------
+
+LARa mbient lab
+It has 30 channels (columns), denoting 3D linear and angular acceleration measurements from 5 joints.
+
+tCNN_IMU
+LA --> Channels [0,1,2,3,4,5]
+LL --> Channels [6,7,8,9,10,11]
+N  --> Channels [12,13,14,15,16,17]
+RA --> Channels [18,19,20,21,22,23]
+RL --> Channels [24,25,26,27,28,29]
+--------------------------------------------------------------------------
+
+LARa motion miner
+It has 27 channels (columns).
+
+tCNN_IMU
+LA --> Channels [0,1,2,3,4,5,6,7,8]
+LL --> Channels []
+N  --> Channels [9,10,11,12,13,14,15,16,17]
+RA --> Channels [18,19,20,21,22,23,24,25,26]
+RL --> Channels []
+--------------------------------------------------------------------------
+
+Opportunity (Locomotion or gesture)
+It has 113 channels (columns).
+
+tCNN_IMU
+LA --> Channels [0,35] and [63,71] and [72,80]
+LL --> Channels [0,35] and [81,96]
+N  --> Channels [0,35] and [36,44]
+RA --> Channels [0,35] and [54,62] and [63,71]
+RL --> Channels [0,35] and [81,96]
+--------------------------------------------------------------------------
+
+PAMAP2
+It has 40 channels (columns).
+
+tCNN_IMU
+LA --> Channels [1,13]
+LL --> Channels [27,39]
+N  --> Channels [0] and [14,26]
+RA --> Channels [1,13]
+RL --> Channels [27,39]
+--------------------------------------------------------------------------

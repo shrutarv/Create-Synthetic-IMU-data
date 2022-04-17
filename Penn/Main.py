@@ -304,7 +304,7 @@ def training(dataLoader_train, dataLoader_validation, device,flag):
                     validation_loss.append(val_loss)
                     validation_acc.append(val_acc)
                     if (val_acc >= best_acc):
-                        torch.save(model, model_path)
+                        torch.save(model, config['model_path'])
                     
                         print("model saved on epoch", e)
                         best_acc = val_acc
@@ -341,7 +341,7 @@ def testing(config):
     prediction = np.array([], dtype=np.int64)
     #torch.load(model_path, map_location=torch.device('cpu'))['state_dict']
     #mod = torch.load(config['model_complete'])
-    mod = torch.load(model_path)
+    mod = torch.load(config['model_path'])
     mod.eval()
     mod.to(device)
     loss_test = 0.0
@@ -507,6 +507,8 @@ if __name__ == '__main__':
     else:  
           dev = "cpu"  
           
+    # The config changes as per the dataset and network used to train. There is an option of saving partial or complete model.
+    # The path_train, path_validation and path_test contain the pkl files obtained after executing op_sliding_window.py.
     device = torch.device(dev)
     config = {
         "NB_sensor_channels":26,
@@ -518,7 +520,12 @@ if __name__ == '__main__':
         "num_classes":15,
         "reshape_input":False,
         "step_size":1,
-        'model_complete': '/data/sawasthi/Penn/model/model_cnn_up2_3s.pth'
+        'model_complete': '/data/sawasthi/Penn/model/model_cnn_up2_3s.pth',
+        'model_path': '/data/sawasthi/Penn/model/model_acc_cnn_up2_3s.pth',
+        'path_train': '/data/sawasthi/Penn/trainData_acc_up2_3s/',
+        'path_validation': '/data/sawasthi/Penn/validationData_acc_up2_3s/',
+        'path_test': '/data/sawasthi/Penn/testData_acc_up2_3s/'
+         
         }
 
     iterations = 1
@@ -526,7 +533,7 @@ if __name__ == '__main__':
     test_acc_array = []
     flag = True
     for iter in range(iterations):
-    
+        # Hyperparameters for training are defined below
         #ws=50
         accumulation_steps = 5
         correct = 0
@@ -556,15 +563,15 @@ if __name__ == '__main__':
         #optimizer = optim.Adam(model.parameters(), lr=0.001)
         optimizer = optim.RMSprop(model.parameters(), lr=learning_rate, alpha=0.9,weight_decay=0.0005, momentum=0.9)
         #optimizer = optim.SGD(model.parameters(), lr=0.0001, momentum=0.9)
-        model_path = '/data/sawasthi/Penn/model/model_acc_cnn_up2_3s.pth'
+        # model_path = '/data/sawasthi/Penn/model/model_acc_cnn_up2_3s.pth'
         #model_path = 'S:/Datasets/Penn_Action/Penn_Action/model_test.pth'
         #model_path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/'
        
-        path = '/data/sawasthi/Penn/trainData_acc_up2_3s/'
+       
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/PAMAP2_Dataset/pkl files'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Train_data/"
-        train_dataset = CustomDataSet(path)
+        train_dataset = CustomDataSet(config['path_train'])
         dataLoader_train = DataLoader(train_dataset, shuffle=True,
                                       batch_size=batch_size,
                                        num_workers=0,
@@ -573,11 +580,11 @@ if __name__ == '__main__':
       
         
         # Validation data    
-        path = '/data/sawasthi/Penn/validationData_acc_up2_3s/'
+        #path_validation = '/data/sawasthi/Penn/validationData_acc_up2_3s/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/val_pkl/'
         #path = 'S:/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows/'
         #path = "S:/MS A&R/4th Sem/Thesis/LaRa/OMoCap data/Test_data/"
-        validation_dataset = CustomDataSet(path)
+        validation_dataset = CustomDataSet(config['path_validation'])
         dataLoader_validation = DataLoader(validation_dataset, shuffle=False,
                                       batch_size=batch_size,
                                        num_workers=0,
@@ -585,13 +592,26 @@ if __name__ == '__main__':
                                        drop_last=True)
         
        
-        #training(dataLoader_train, dataLoader_validation,device,flag)
-         # Test data    
+        training(dataLoader_train, dataLoader_validation,device,flag)
+        '''
+        #validation set
         print("Calculating accuracy for the trained model on validation set ")
         path = '/data/sawasthi/Penn/testData_acc_up2_3s/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
         #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
         test_dataset = CustomDataSet(path)
+        dataLoader_test = DataLoader(test_dataset, shuffle=False,
+                                      batch_size=batch_size,
+                                       num_workers=0,
+                                       pin_memory=True,
+                                       drop_last=True)
+        ''' 
+        # Test data    
+        print("Calculating accuracy for the trained model on test set ")
+        #path_test = '/data/sawasthi/Penn/testData_acc_up2_3s/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
+        #path = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
+        test_dataset = CustomDataSet(config['path_test'])
         dataLoader_test = DataLoader(test_dataset, shuffle=False,
                                       batch_size=batch_size,
                                        num_workers=0,
