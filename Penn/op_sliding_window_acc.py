@@ -214,10 +214,16 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    data_dir_train =  '/data/sawasthi/Penn/trainData_acc/'
+    df_test = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
+    data_dir_test =  '/data/sawasthi/Penn/testData_acc/'
+    df_valid = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
+    data_dir_valid =  '/data/sawasthi/Penn/validationData_acc/'
+ 
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data.csv')
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/norm_data.csv')
-    data = df.values
+    data = df_train.values
     data_new = data[:,1:27]
     attr = np.zeros((100,1))
     value = max_min_values(data_new)
@@ -267,7 +273,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_acc_up2_5s/'
+    #data_dir =  '/data/sawasthi/Penn/trainData_acc_up2_5s/'
     #data_dir = 'S:/Datasets/Penn_Action/Penn_Action/train_pkl/'
     #label = np.repeat(data[:,len(data[0])-1],up).astype(int)
     label = np.repeat(data[:,27],up).astype(int)
@@ -276,13 +282,13 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_train)
     print("train data pickled")
     
-    data_dir = '/data/sawasthi/Penn/testData_acc_up2_5s/'
+    #data_dir = '/data/sawasthi/Penn/testData_acc_up2_5s/'
     #data_dir =  'S:/Datasets/Penn_Action/Penn_Action/test_pkl/'
-    df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
-    data = df.values
+    #df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
+    data = df_test.values
     data = normalize(data,value, "test")
     print("test data normalized")
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
@@ -313,13 +319,13 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_test)
     print("test data pickled")
      
-    data_dir = '/data/sawasthi/Penn/validationData_acc_up2_5s/'
+    #data_dir = '/data/sawasthi/Penn/validationData_acc_up2_5s/'
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
-    data = df.values
+   # df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
+    data = df_valid.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
     x_sampled = np.linspace(np.min(data[:,0]), np.max(data[:,0]), len(data)*up)
@@ -350,7 +356,7 @@ if __name__ == '__main__':
     lab[:,0] = label
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_valid)
     print("validation data pickled")
      #os.chdir('/vol/actrec/DFG_Project/2019/Mbientlab/recordings_2019/07_IMU_synchronized_annotated/' + folder_name)
     #os.chdir("/vol/actrec/DFG_Project/2019/MoCap/recordings_2019/14_Annotated_Dataset/" + folder_name)

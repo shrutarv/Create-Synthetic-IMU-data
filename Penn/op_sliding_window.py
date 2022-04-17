@@ -214,9 +214,14 @@ if __name__ == '__main__':
     #sliding_window_length = 100    
     sliding_window_step = 1
     
-    df = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
+    data_dir_train =  '/data/sawasthi/Penn/trainData_pose/'
+    df_test = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
+    data_dir_test =  '/data/sawasthi/Penn/testData_pose/'
+    df_valid = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
+    data_dir_valid =  '/data/sawasthi/Penn/validationData_pose/'
     #df = pd.read_csv('S:/Datasets/Penn_Action/Penn_Action/train/train_data_tf.csv')
-    data = df.values
+    data = df_train.values
     data_new = data[:,1:27]
     attr = np.zeros((100,1))
     value = max_min_values(data_new)
@@ -240,7 +245,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/trainData_pose/'
+   
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -248,11 +253,11 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_train)
     print("train data pickled")
     
-    df = pd.read_csv('/data/sawasthi/Penn/test_data.csv')
-    data = df.values
+    
+    data = df_test.values
     data = normalize(data,value, "test")
     print("test data normalized")
     data_new = data[:,1:27]
@@ -261,7 +266,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/testData_pose/'
+    
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -269,12 +274,12 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_test)
     print("test data pickled")
     
     #data_dir =  '/data/sawasthi/data/JHMDB/validationData/'
-    df = pd.read_csv('/data/sawasthi/Penn/val_data.csv')
-    data = df.values
+    
+    data = df_valid.values
     data = normalize(data,value, "validation")
     print("validation data normalized")
     data_new = data[:,1:27]
@@ -283,7 +288,7 @@ if __name__ == '__main__':
     # creating labels
         #data_dir = "/media/shrutarv/Drive1/MS A&R/4th Sem/Thesis/LaRa/IMU data/IMU data/Windows2/"
     #df = pd.read_csv('S:/MS A&R/4th Sem/Thesis/J-HMDB/joint_positions/train/train_data25_39.csv')
-    data_dir =  '/data/sawasthi/Penn/validationData_pose/'
+    
     #data_dir = 'S:/MS A&R/4th Sem/Thesis/Penn_Action/pkl_files/'
     label = data[:,len(data[0])-1].astype(int)
     lab = np.zeros((len(label),20), dtype=int)
@@ -291,5 +296,5 @@ if __name__ == '__main__':
     #X = data[:,1:31]
     X = data_new
     k = 0
-    example_creating_windows_file(k, X, lab, data_dir)
+    example_creating_windows_file(k, X, lab, data_dir_valid)
     print("validation data pickled")

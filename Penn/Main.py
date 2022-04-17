@@ -510,25 +510,81 @@ if __name__ == '__main__':
     # The config changes as per the dataset and network used to train. There is an option of saving partial or complete model.
     # The path_train, path_validation and path_test contain the pkl files obtained after executing op_sliding_window.py.
     device = torch.device(dev)
-    config = {
-        "NB_sensor_channels":26,
-        "sliding_window_length":300,
-        "filter_size":5,
-        "num_filters":64,
-        "network":"cnn",
-        "output":"softmax",
-        "num_classes":15,
-        "reshape_input":False,
-        "step_size":1,
-        'model_complete': '/data/sawasthi/Penn/model/model_cnn_up2_3s.pth',
-        'model_path': '/data/sawasthi/Penn/model/model_acc_cnn_up2_3s.pth',
-        'path_train': '/data/sawasthi/Penn/trainData_acc_up2_3s/',
-        'path_validation': '/data/sawasthi/Penn/validationData_acc_up2_3s/',
-        'path_test': '/data/sawasthi/Penn/testData_acc_up2_3s/'
-         
-        }
+    dataset = "JHMDB"
+    if dataset == "Penn":
+            
+        config = {
+            "NB_sensor_channels":26,
+            "sliding_window_length":300,
+            "filter_size":5,
+            "num_filters":64,
+            "network":"cnn",
+            "output":"softmax",
+            "num_classes":15,
+            "reshape_input":False,
+            "step_size":1,
+            "dataset":"Penn",
+            'model_complete': '/data/sawasthi/Penn/model/model_cnn_up2_3s.pth',
+            'model_path': '/data/sawasthi/Penn/model/model_acc_cnn_up2_3s.pth',
+            'path_train': '/data/sawasthi/Penn/trainData_acc_up2_3s/',
+            'path_validation': '/data/sawasthi/Penn/validationData_acc_up2_3s/',
+            'path_test': '/data/sawasthi/Penn/testData_acc_up2_3s/'
+             
+            }
+    elif dataset == "CAD60":
+          config = {
+            "NB_sensor_channels":45,
+            "sliding_window_length":180,
+            "filter_size":5,
+            "num_filters":64,
+            "network":"cnn",
+            "output":"softmax",
+            "num_classes":12,
+            "reshape_input":False,
+            "step_size":12,
+            "dataset":"CAD60",
+            'path_validation': '/data/CAD60/CAD60/validationData_acc_up2_3s/',
+            'path_test': '/data/sawasthi/CAD60/testData_acc_up2_3s/'
+            }
+    elif dataset == "NTU":
+        config = {
+            "NB_sensor_channels":75,
+            "sliding_window_length":90,
+            "filter_size":5,
+            "num_filters":64,
+            "network":"cnn",
+            "output":"softmax",
+            "num_classes":60,
+            "reshape_input":False,
+            "step_size":3,
+            "device": "cuda:0",
+            "model_path": '/data/sawasthi/NTU/model/model_cnn_up_3a.pth',
+            "model_complete":'/data/sawasthi/NTU/model/model_cnn_up_3a_2.pth',
+            "dataset":"NTU",
+            'path_validation': '/data/CAD60/NTU/validationData_acc_up2_3s/',
+            'path_test': '/data/sawasthi/NTU/testData_acc_up2_3s/'
+            }    
+        
+    elif dataset == "JHMDB":
+        config = {
+            "NB_sensor_channels":30,
+            "sliding_window_length":500,
+            "filter_size":5,
+            "num_filters":64,
+            "network":"cnn",
+            "output":"softmax",
+            "num_classes":21,
+            "reshape_input":False,
+            "step_size":12,
+            "model_path": '/data/sawasthi/JHMDB/model/model_acc_cnn_test.pth',
+            "dataset" : 'JHMDB',
+            'path_validation': '/data/sawasthi/JHMDB/validationData_acc_up2_3s/',
+            'path_test': '/data/sawasthi/JHMDB/testData_acc_up2_3s/'
+            
+            }
 
-    iterations = 1
+          
+    iterations = 5
     weighted_F1_array = []
     test_acc_array = []
     flag = True
