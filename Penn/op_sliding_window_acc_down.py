@@ -12,7 +12,7 @@ from scipy.interpolate import Rbf
 from scipy.interpolate import UnivariateSpline
 from scipy.interpolate import InterpolatedUnivariateSpline as IUS
 from scipy import interpolate
-NUM_CLASSES = 8
+
 def opp_sliding_window(data_x, data_y, ws, ss, label_pos_end = True):
     '''
     Performs the sliding window approach on the data and the labels
@@ -211,6 +211,7 @@ if __name__ == '__main__':
     sliding_window_length = ws[0]   
     #sliding_window_length = 100    
     sliding_window_step = 1
+    NUM_CLASSES = 8
     
     df_train = pd.read_csv('/data/sawasthi/Penn/train_data.csv')
     data_dir_train =  '/data/sawasthi/Penn/trainData_acc/'
