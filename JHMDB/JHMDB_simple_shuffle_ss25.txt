@@ -1,3 +1,0 @@
-('epoch: ', 250, 'batch_size: ', 'lr_factor: ', 0.98, 20, 'accumulation steps: ', 5, 'ws: ', 100, 'learning_rate: ', 0.001)
-Start Training
-('epoch ', 0)
